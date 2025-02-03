@@ -1,4 +1,4 @@
-# Project Lighthouse
+# Proyecto II Juego 2D
 
 
 
@@ -15,14 +15,14 @@ Already a pro? Just edit this README.md and make it your own. Want to make it ea
 
 ```
 cd existing_repo
-git remote add origin https://gitlab.com/ddgarpan147/project-lighthouse.git
+git remote add origin https://gitlab.com/Dorabyte-Dev/proyecto-ii-juego-2d.git
 git branch -M main
 git push -uf origin main
 ```
 
 ## Integrate with your tools
 
-- [ ] [Set up project integrations](https://gitlab.com/ddgarpan147/project-lighthouse/-/settings/integrations)
+- [ ] [Set up project integrations](https://gitlab.com/Dorabyte-Dev/proyecto-ii-juego-2d/-/settings/integrations)
 
 ## Collaborate with your team
 
