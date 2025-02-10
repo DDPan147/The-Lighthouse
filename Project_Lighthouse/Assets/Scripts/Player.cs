@@ -33,4 +33,12 @@ public class Player : MonoBehaviour
         Vector3 direction = nextPosition - currentPosition;
         transform.rotation = Quaternion.LookRotation(direction, transform.up);
     }
+
+    void OnTriggerStay(Collider other)
+    {
+        if (Input.GetKeyDown(KeyCode.Z) && other.gameObject.CompareTag("SplineSwitch"))
+        {
+            other.GetComponent<SplineSwitch>().SwitchSpline();
+        }
+    }
 }
