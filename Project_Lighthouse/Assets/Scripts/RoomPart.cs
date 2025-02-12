@@ -23,9 +23,10 @@ public class RoomPart : MonoBehaviour
     }
 
     void OnTriggerEnter(Collider other)
-    { 
+    {
         if (other.gameObject.CompareTag("Player"))
         {
+            Debug.Log("B");
             fadeOutTween.Pause();
             fadeInTween = DOTween.ToAlpha(() => mat.color, x => mat.color = x, 0, fadeTime).SetEase(Ease.OutCubic);
         }
