@@ -4,11 +4,14 @@ using UnityEngine.InputSystem;
 public class Knife : MonoBehaviour
 {
     public bool isCutting;
+    public GameObject Comida_Cortada;
     private Vector2 moveDirection;
     private float moveSpeed = 0.4f;
     private Vector3 originalPosition;
     private bool hasStarted;
+    private bool thereIsFood;
     public Transform minLimitX, minLimitZ, maxLimitX, maxLimitZ;
+    private GameObject Comida;
 
     private void Awake()
     {
@@ -43,6 +46,30 @@ public class Knife : MonoBehaviour
             transform.position = new Vector3(transform.position.x, transform.position.y, maxLimitZ.position.z);
         }
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Comida"))
+        {
+            thereIsFood = true;
+            Comida = other.gameObject;
+        }
+        if (isCutting)
+        {
+            Instantiate(Comida_Cortada, Comida.transform.position, Quaternion.Euler(0, 0, 90));
+            Destroy(Comida);
+            thereIsFood = false;
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("Comida"))
+        {
+            thereIsFood = false;
+        }
+    }
+
+
     public void OnCut(InputAction.CallbackContext context)
     {
         hasStarted = true;
@@ -53,6 +80,12 @@ public class Knife : MonoBehaviour
         else if(context.canceled)
         {
             isCutting = false;
+        }
+        if (context.performed && thereIsFood)
+        {
+            Instantiate(Comida_Cortada, Comida.transform.position, Quaternion.Euler(0,0,90));
+            Destroy(Comida);
+            thereIsFood = false;
         }
     }
 
