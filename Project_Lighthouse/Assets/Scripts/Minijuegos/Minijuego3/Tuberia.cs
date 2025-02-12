@@ -10,6 +10,10 @@ public class Tuberia : MonoBehaviour
         {
             isConnected = true;
         }
+        else
+        {
+            isConnected = false;
+        }
     }
 
 }
