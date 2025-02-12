@@ -154,6 +154,38 @@ Transform:
   - {fileID: 993712017}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &528520368 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3368865829637893953, guid: 8803c9cf758e61d4f90df8b4b9c73b13, type: 3}
+  m_PrefabInstance: {fileID: 7662316833665318580}
+  m_PrefabAsset: {fileID: 0}
+--- !u!54 &528520373
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 528520368}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &721803163
 GameObject:
   m_ObjectHideFlags: 0
@@ -474,32 +506,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2.4532738, y: 0.9459058, z: 0.17369843}
   m_Center: {x: 0.04618764, y: 0.50837797, z: -0.036866665}
---- !u!1 &1911214360 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7387162545703932680, guid: 1744f77e161f45d41a0a747687c17acb, type: 3}
-  m_PrefabInstance: {fileID: 1236825364641913011}
-  m_PrefabAsset: {fileID: 0}
---- !u!65 &1911214364
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1911214360}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1975058944
 GameObject:
   m_ObjectHideFlags: 0
@@ -931,6 +937,10 @@ PrefabInstance:
       propertyPath: minLimitZ
       value: 
       objectReference: {fileID: 721803164}
+    - target: {fileID: 904909346256893181, guid: 1744f77e161f45d41a0a747687c17acb, type: 3}
+      propertyPath: Comida_Cortada
+      value: 
+      objectReference: {fileID: 713118295505280308, guid: 2cb26865eb8fdf34e88f798a0aefac71, type: 3}
     - target: {fileID: 7387162545703932680, guid: 1744f77e161f45d41a0a747687c17acb, type: 3}
       propertyPath: m_Name
       value: Cuchillo_Minijuego2
@@ -938,10 +948,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 7387162545703932680, guid: 1744f77e161f45d41a0a747687c17acb, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1911214364}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1744f77e161f45d41a0a747687c17acb, type: 3}
 --- !u!1001 &7662316833665318580
 PrefabInstance:
@@ -998,7 +1005,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3368865829637893953, guid: 8803c9cf758e61d4f90df8b4b9c73b13, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 528520373}
   m_SourcePrefab: {fileID: 100100000, guid: 8803c9cf758e61d4f90df8b4b9c73b13, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
