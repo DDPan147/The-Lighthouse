@@ -7,11 +7,12 @@ public class Player_Movement_Minigame_7 : MonoBehaviour
     // --- Referencias ---
     private Rigidbody rb;
     private PlayerOnGround ground;
+    private Collider grabCollider;
 
     // --- Movimiento general ---
     [SerializeField] private Vector3 velocity;
     [SerializeField] private Vector3 desiredVelocity;
-    private Vector2 inputDirection;
+    public Vector2 inputDirection;
     private bool isMoving = false;
     private bool onGround;
     private bool onWall;
