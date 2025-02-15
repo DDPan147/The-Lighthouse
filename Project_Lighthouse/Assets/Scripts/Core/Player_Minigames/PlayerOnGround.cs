@@ -4,6 +4,7 @@ public class PlayerOnGround : MonoBehaviour
 {
     private bool onGround;
     private bool onWall;
+    private Vector3 playerDirection;
 
     [Header("Collider Settings")]
     [SerializeField][Tooltip("Length of the ground-checking collider")] private float groundLength = 0.95f;
@@ -22,21 +23,43 @@ public class PlayerOnGround : MonoBehaviour
         onGround = Physics.Raycast(transform.position + groundColliderOffset, Vector3.down, groundLength, groundLayer) || 
                         Physics.Raycast(transform.position - groundColliderOffset, Vector3.down, groundLength, groundLayer);
 
-        onWall = Physics.Raycast(transform.position + wallColliderOffset, transform.forward, wallLength, wallLayer) ||
-                        Physics.Raycast(transform.position - wallColliderOffset, transform.forward, wallLength, wallLayer);
+        onWall = CheckWalls();
+    }
+    public void UpdatePlayerDirection(Vector3 direction)
+    {
+        if (direction != Vector3.zero)
+        {
+            playerDirection = direction.normalized;
+        }
+    }
+    private bool CheckWalls()
+    {
+        bool frontWall = Physics.Raycast(transform.position + wallColliderOffset, transform.forward, wallLength, wallLayer) ||
+                         Physics.Raycast(transform.position - wallColliderOffset, transform.forward, wallLength, wallLayer);
+        bool leftWall = Physics.Raycast(transform.position + wallColliderOffset, -transform.right, wallLength, wallLayer);
+        bool rightWall = Physics.Raycast(transform.position + wallColliderOffset, transform.right, wallLength, wallLayer);
+        
+        return frontWall || leftWall || rightWall;
     }
 
     private void OnDrawGizmos()
     {
         //Draw the ground colliders on screen for debug purposes
         if (onGround) { Gizmos.color = Color.green; } else { Gizmos.color = Color.red; }
-        if (onWall) { Gizmos.color = Color.green; } else { Gizmos.color = Color.red; }
         Gizmos.DrawLine(transform.position + groundColliderOffset, transform.position +
                         groundColliderOffset + Vector3.down * groundLength);
 
-        Gizmos.DrawLine(transform.position - wallColliderOffset, transform.position -
-                        wallColliderOffset + transform.forward * wallLength);
+        if (onWall) { Gizmos.color = Color.green; } else { Gizmos.color = Color.red; }
+        if (playerDirection != Vector3.zero)
+        {
+            Gizmos.DrawLine(transform.position + wallColliderOffset, 
+                transform.position + wallColliderOffset + playerDirection * wallLength);
+            Gizmos.DrawLine(transform.position - wallColliderOffset, 
+                transform.position - wallColliderOffset + playerDirection * wallLength);
+        }
     }
+
+    
 
     //Send ground detection to other scripts
     public bool GetOnGround() { return onGround; }

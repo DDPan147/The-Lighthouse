@@ -16,7 +16,7 @@ public class Player_Movement_Minigame_7 : MonoBehaviour
     private bool onGround;
     private bool onWall;
 
-    // --- Dirección de movimiento ---
+    // --- Direccion de movimiento ---
     private float directionX;
     private float directionZ;
 
@@ -26,7 +26,7 @@ public class Player_Movement_Minigame_7 : MonoBehaviour
     private float deceleration;
     private float turnSpeed;
 
-    // --- Parámetros de movimiento ---
+    // --- Parametros de movimiento ---
     [Header("Movement Stats")]
     [SerializeField, Range(0f, 20f)][Tooltip("Maximum movement speed")] public float maxSpeed = 10f;
     [SerializeField, Range(0f, 100f)][Tooltip("How fast to reach max speed")] public float maxAcceleration = 52f;
@@ -54,11 +54,11 @@ public class Player_Movement_Minigame_7 : MonoBehaviour
     {
         if (onGround)
         {
-            runWithtAcceleration();
+            RunWithAcceleration();
         }
         else
         {
-            runWithoutAcceleration();
+            RunWithoutAcceleration();
         }
 
     }
@@ -68,8 +68,13 @@ public class Player_Movement_Minigame_7 : MonoBehaviour
         directionX = inputDirection.x; // Movimiento horizontal
         directionZ = inputDirection.y;
         isMoving = inputDirection != Vector2.zero;
+
+        if (isMoving)
+        {
+            ground.UpdatePlayerDirection(transform.position);
+        }
     }
-    private void runWithtAcceleration()
+    private void RunWithAcceleration()
     {
         acceleration = onGround ? maxAcceleration : 0f;
         deceleration = onGround ? maxDecceleration : 0f;
@@ -79,7 +84,6 @@ public class Player_Movement_Minigame_7 : MonoBehaviour
         {
             if (Mathf.Sign(directionX) != Mathf.Sign(velocity.x))
             {
-                Debug.Log(maxSpeedChange);
                 maxSpeedChange = turnSpeed * Time.deltaTime;
             }
             else
@@ -88,7 +92,6 @@ public class Player_Movement_Minigame_7 : MonoBehaviour
             }
             if (Mathf.Sign(directionZ) != Mathf.Sign(velocity.z))
             {
-                Debug.Log(maxSpeedChange);
                 maxSpeedChange = turnSpeed * Time.deltaTime;
             }
             else
@@ -103,7 +106,7 @@ public class Player_Movement_Minigame_7 : MonoBehaviour
         ApplyMovement();
     }
 
-    private void runWithoutAcceleration()
+    private void RunWithoutAcceleration()
     {
         rb.linearVelocity = new Vector3(0f,0f,0f);
     }
