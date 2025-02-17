@@ -5,43 +5,41 @@ public class Knife : MonoBehaviour
 {
     public bool isCutting;
     public GameObject Comida_Cortada;
-    private Vector2 moveDirection;
+    [HideInInspector] public Vector2 moveDirection;
     private float moveSpeed = 0.4f;
-    private Vector3 originalPosition;
-    private bool hasStarted;
+    [HideInInspector] public Vector3 origPosition;
     private bool thereIsFood;
     public Transform minLimitX, minLimitZ, maxLimitX, maxLimitZ;
     private GameObject Comida;
+    public bool isGrabbed;
 
-    private void Awake()
-    {
-        originalPosition = transform.position;
-    }
 
     private void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-        
+        origPosition = transform.position;
     }
 
     private void Update()
     {
         transform.position += new Vector3(moveDirection.x, 0, moveDirection.y);
-
-        if(transform.position.x < minLimitX.position.x)
+        LimitarMovimiento();
+        
+    }
+    void LimitarMovimiento()
+    {
+        if (transform.position.x < minLimitX.position.x)
         {
             transform.position = new Vector3(minLimitX.position.x, transform.position.y, transform.position.z);
         }
-        else if(transform.position.x > maxLimitX.position.x)
+        else if (transform.position.x > maxLimitX.position.x)
         {
             transform.position = new Vector3(maxLimitX.position.x, transform.position.y, transform.position.z);
         }
-        else if(transform.position.z < minLimitZ.position.z)
+        else if (transform.position.z < minLimitZ.position.z)
         {
             transform.position = new Vector3(transform.position.x, transform.position.y, minLimitZ.position.z);
         }
-        else if(transform.position.z > maxLimitZ.position.z)
+        else if (transform.position.z > maxLimitZ.position.z)
         {
             transform.position = new Vector3(transform.position.x, transform.position.y, maxLimitZ.position.z);
         }
@@ -56,8 +54,8 @@ public class Knife : MonoBehaviour
         }
         if (isCutting)
         {
-            Instantiate(Comida_Cortada, Comida.transform.position, Quaternion.Euler(0, 0, 90));
-            Destroy(Comida);
+            Comida.transform.Find("ComidaCortada_Minijuego2").gameObject.SetActive(true);
+            Comida.transform.Find("Comida_Minijuego2").gameObject.SetActive(false);
             thereIsFood = false;
         }
     }
@@ -72,30 +70,30 @@ public class Knife : MonoBehaviour
 
     public void OnCut(InputAction.CallbackContext context)
     {
-        hasStarted = true;
-        if (context.started)
+        if (context.started && isGrabbed)
         {
             isCutting = true;
         }
-        else if(context.canceled)
+        else if(context.canceled && isGrabbed)
         {
             isCutting = false;
         }
         if (context.performed && thereIsFood)
         {
-            Instantiate(Comida_Cortada, Comida.transform.position, Quaternion.Euler(0,0,90));
-            Destroy(Comida);
+            Comida.transform.Find("ComidaCortada_Minijuego2").gameObject.SetActive(true);
+            Comida.transform.Find("Comida_Minijuego2").gameObject.SetActive(false);
             thereIsFood = false;
         }
     }
 
     public void OnMove(InputAction.CallbackContext context)
     {
-        if (hasStarted)
+        if (isGrabbed)
         {
             moveDirection = context.ReadValue<Vector2>();
             moveDirection = moveDirection * Time.deltaTime * moveSpeed;
         }
     }
+
 
 }

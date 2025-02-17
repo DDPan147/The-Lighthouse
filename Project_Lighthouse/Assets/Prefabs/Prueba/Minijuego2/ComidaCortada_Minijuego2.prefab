@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 8335576781074615447}
   - component: {fileID: 8217396376966806985}
   - component: {fileID: 564751944480654463}
+  - component: {fileID: 7002219411930267534}
   m_Layer: 0
   m_Name: ComidaCortada_Minijuego2
-  m_TagString: Comida
+  m_TagString: Comida_Cortada
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -110,3 +111,17 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+--- !u!114 &7002219411930267534
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 713118295505280308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3a7ec354b2ffbd4c9ddbb8482e92980, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isGrabbed: 0
+  moveDirection: {x: 0, y: 0}

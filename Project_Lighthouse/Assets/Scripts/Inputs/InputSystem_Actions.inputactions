@@ -1012,6 +1012,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "Grab",
+                    "type": "Button",
+                    "id": "7d578906-47a9-4611-8327-93544f72e3e0",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -1056,6 +1065,17 @@
                     "processors": "",
                     "groups": ";Joystick",
                     "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c4358ee1-a69d-4f5d-8588-7e5f35ee23e9",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Grab",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
