@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -5,7 +6,6 @@ public class Minijuego3_GameManager : MonoBehaviour
 {
     private Camera cam;
     private Tuberia[] tuberias;
-
     void Start()
     {
         cam = Camera.main;
@@ -24,11 +24,13 @@ public class Minijuego3_GameManager : MonoBehaviour
         Ray ray = cam.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
-        if(Physics.Raycast(ray.origin, ray.direction * 10, out hit))
+        if(Physics.Raycast(ray.origin, ray.direction * 10, out hit) && context.performed)
         {
             if (hit.collider.gameObject.CompareTag("Tuberia"))
             {
-                hit.collider.gameObject.transform.eulerAngles += new Vector3(0, 0, 90);
+                float rotation = hit.collider.gameObject.GetComponent<Tuberia>().initialRotation += 90f;
+                //hit.collider.gameObject.transform.eulerAngles += new Vector3(0, 0, 90);
+                hit.collider.gameObject.transform.DORotate(new Vector3(0, 0, rotation), 0.5f, RotateMode.Fast);
             }
         }
         CheckPipes();
