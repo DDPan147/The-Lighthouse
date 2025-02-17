@@ -87,10 +87,10 @@ public class SplineSwitch : MonoBehaviour
     //Pasar la spline resultado al player
     //El player designa un estado de transición
     //El player se mueve a través de la spline de transición automáticamente
-    public Spline BuildTransitionSpline(Vector3 currentPosition, SplineContainer targetSpline)
+    /*public Spline BuildTransitionSpline(Vector3 currentPosition, SplineContainer targetSpline)
     {
         Spline newSpline = new Spline(2);
         newSpline.this[0] = currentPosition;
         newSpline.this[1] = targetSpline.EvaluatePosition();
-    }
+    }*/
 }
