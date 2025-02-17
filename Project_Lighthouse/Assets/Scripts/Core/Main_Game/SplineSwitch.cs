@@ -29,7 +29,7 @@ public class SplineSwitch : MonoBehaviour
 
     void Update()
     {
-        
+
     }
 
     public void SwitchSpline()
@@ -37,7 +37,6 @@ public class SplineSwitch : MonoBehaviour
         //IN
         if (CheckInOut())
         {
-            Debug.Log("I am here too");
             if (isButtonIn && !Input.GetKeyDown(KeyCode.Z))
             {
                 return;
@@ -46,6 +45,8 @@ public class SplineSwitch : MonoBehaviour
             player.spline = splines[1];
             player.splineLength = splines[1].CalculateLength();
             player.distancePercentage = percentageIn;
+            player.transitionSpline = BuildTransitionSpline(player.transform.position, splines[1], percentageIn);
+            player.StartTransition();
 
             if (!isButtonOut)
             {
@@ -57,15 +58,17 @@ public class SplineSwitch : MonoBehaviour
         //OUT
         else
         {
-            Debug.Log("Im here");
             if (isButtonOut && !Input.GetKeyDown(KeyCode.Z))
             {
                 return;
             }
-            Debug.Log("Im here 2");
 
             player.spline = splines[0];
+            player.splineLength = splines[0].CalculateLength();
             player.distancePercentage = percentageOut;
+
+            player.transitionSpline = BuildTransitionSpline(player.transform.position, splines[0], percentageOut);
+            player.StartTransition();
 
             if (!isButtonIn)
             {
@@ -83,14 +86,16 @@ public class SplineSwitch : MonoBehaviour
         //Crear una spline de 2 nudos **
         //Acceder a los knots de la spline y cambiarles la posición **
         //Knot numero 1: Posición del jugador **
-        //Knot número 2: Accede a la spline deseada en el porcentaje deseado
-    //Pasar la spline resultado al player
+        //Knot número 2: Accede a la spline deseada en el porcentaje deseado **
+    //Pasar la spline resultado al player**
     //El player designa un estado de transición
     //El player se mueve a través de la spline de transición automáticamente
-    /*public Spline BuildTransitionSpline(Vector3 currentPosition, SplineContainer targetSpline)
+    public Spline BuildTransitionSpline(Vector3 currentPosition, SplineContainer targetSpline, float percentage)
     {
-        Spline newSpline = new Spline(2);
-        newSpline.this[0] = currentPosition;
-        newSpline.this[1] = targetSpline.EvaluatePosition();
-    }*/
+        Spline newSpline = new Spline(0);
+        newSpline.Add(currentPosition);
+        newSpline.Add(targetSpline.EvaluatePosition(percentage));
+
+        return newSpline;
+    }
 }

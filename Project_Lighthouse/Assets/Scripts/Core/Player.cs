@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Splines;
 
@@ -7,8 +8,10 @@ public class Player : MonoBehaviour
     public Spline transitionSpline;
 
     public float speed;
+    public float transitionSpeed;
 
     public float distancePercentage;
+    public float transitionPercentage;
 
     public float splineLength;
 
@@ -16,7 +19,13 @@ public class Player : MonoBehaviour
 
     public SplineSwitch activeSplineSwitch;
 
-    
+    public enum MoveStates
+    {
+        Control,
+        Transition
+    }
+
+    public MoveStates moveState;
 
     void Start()
     {
@@ -25,32 +34,44 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        moveVector = Input.GetAxis("Horizontal");
-
-        distancePercentage -= moveVector * speed * Time.deltaTime / splineLength;
-        distancePercentage = Mathf.Clamp01(distancePercentage);
-
-        Vector3 currentPosition = spline.EvaluatePosition(distancePercentage);
-        transform.position = currentPosition;
-
-
-        Vector3 nextPosition = spline.EvaluatePosition(distancePercentage + 0.05f);
-        Vector3 direction = nextPosition - currentPosition;
-        Vector3 newDirection = new Vector3(direction.x, 0, direction.z);
-        if(newDirection.magnitude > 0)
+        if(moveState == MoveStates.Control)
         {
-            transform.rotation = Quaternion.LookRotation(newDirection, transform.up);
-        }
+            moveVector = Input.GetAxis("Horizontal");
 
-        if (activeSplineSwitch != null)
-        {
-            activeSplineSwitch.SwitchSpline();
+            distancePercentage -= moveVector * speed * Time.deltaTime / splineLength;
+            distancePercentage = Mathf.Clamp01(distancePercentage);
+
+            Vector3 currentPosition = spline.EvaluatePosition(distancePercentage);
+            transform.position = currentPosition;
+
+
+            Vector3 nextPosition = spline.EvaluatePosition(distancePercentage + 0.05f);
+            Vector3 direction = nextPosition - currentPosition;
+            Vector3 newDirection = new Vector3(direction.x, 0, direction.z);
+            if (newDirection.magnitude > 0)
+            {
+                transform.rotation = Quaternion.LookRotation(newDirection, transform.up);
+            }
+
+            if (activeSplineSwitch != null)
+            {
+                activeSplineSwitch.SwitchSpline();
+            }
         }
+        else if(moveState == MoveStates.Transition)
+        {
+            //transitionPercentage += speed * Time.deltaTime / splineLength;
+            //transitionPercentage = Mathf.Clamp01(transitionPercentage);
+
+            Vector3 currentPosition = transitionSpline.EvaluatePosition(transitionPercentage);
+            transform.position = currentPosition;
+        }
+        
     }
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("SplineSwitch"))
+        if (other.gameObject.CompareTag("SplineSwitch") && moveState != MoveStates.Transition)
         {
             CheckIsButtonSpline(other.gameObject.GetComponent<SplineSwitch>());
         }
@@ -58,7 +79,7 @@ public class Player : MonoBehaviour
 
     void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.CompareTag("SplineSwitch"))
+        if (other.gameObject.CompareTag("SplineSwitch") && moveState != MoveStates.Transition)
         {
             if(activeSplineSwitch == other.gameObject.GetComponent<SplineSwitch>())
             {
@@ -98,5 +119,19 @@ public class Player : MonoBehaviour
     public void UnassignActiveSwitch()
     {
         activeSplineSwitch = null;
+    }
+
+    public void StartTransition()
+    {
+        moveState = MoveStates.Transition;
+        float duration = transitionSpline.GetLength() * transitionSpeed;
+        DOTween.To(() => transitionPercentage, x => transitionPercentage = x, 1, duration).OnComplete(() => EndTransition());
+        //Play Transition Anim
+    }
+
+    void EndTransition()
+    {
+        moveState = MoveStates.Control;
+        transitionPercentage = 0;
     }
 }
