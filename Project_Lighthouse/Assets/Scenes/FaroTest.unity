@@ -948,8 +948,10 @@ MonoBehaviour:
   - {fileID: 1515788859}
   isButtonIn: 1
   isButtonOut: 0
-  percentageIn: 0
+  percentageIn: 1
   percentageOut: 0.4
+  transitionKnotIndexIn: 0
+  transitionKnotIndexOut: 0
 --- !u!65 &331814492
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1310,11 +1312,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spline: {fileID: 812233369}
+  transitionSpline:
+    m_EditModeType: 1
+    m_Knots: []
+    m_MetaData: []
+    m_Closed: 0
+    m_IntData:
+      m_Data: []
+    m_FloatData:
+      m_Data: []
+    m_Float4Data:
+      m_Data: []
+    m_ObjectData:
+      m_Data: []
   speed: 3
+  transitionSpeed: 1
   distancePercentage: 0
+  transitionPercentage: 0
   splineLength: 0
   moveVector: 0
   activeSplineSwitch: {fileID: 0}
+  moveState: 0
 --- !u!1 &561222763
 GameObject:
   m_ObjectHideFlags: 0
@@ -1443,6 +1461,8 @@ MonoBehaviour:
   isButtonOut: 1
   percentageIn: 0
   percentageOut: 0
+  transitionKnotIndexIn: 0
+  transitionKnotIndexOut: 0
 --- !u!1 &812233367
 GameObject:
   m_ObjectHideFlags: 0
@@ -1971,6 +1991,8 @@ MonoBehaviour:
   isButtonOut: 1
   percentageIn: 1
   percentageOut: 1
+  transitionKnotIndexIn: 0
+  transitionKnotIndexOut: 0
 --- !u!65 &1287395673
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2222,6 +2244,8 @@ MonoBehaviour:
   isButtonOut: 0
   percentageIn: 0
   percentageOut: 0.5
+  transitionKnotIndexIn: 0
+  transitionKnotIndexOut: 0
 --- !u!65 &1308959602
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2581,9 +2605,11 @@ MonoBehaviour:
   - {fileID: 1515788859}
   - {fileID: 911590994}
   isButtonIn: 0
-  isButtonOut: 0
+  isButtonOut: 1
   percentageIn: 0
   percentageOut: 0
+  transitionKnotIndexIn: 0
+  transitionKnotIndexOut: 0
 --- !u!65 &1688633296
 BoxCollider:
   m_ObjectHideFlags: 0
