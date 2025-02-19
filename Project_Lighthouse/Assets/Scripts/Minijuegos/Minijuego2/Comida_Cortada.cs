@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 public class Comida_Cortada : MonoBehaviour
 {
     public bool isGrabbed;
+    [HideInInspector] public bool isCutted;
     [HideInInspector] public Vector2 moveDirection;
     private float moveSpeed = 0.4f;
     void Start()

@@ -56,6 +56,7 @@ public class Knife : MonoBehaviour
         {
             Comida.transform.Find("ComidaCortada_Minijuego2").gameObject.SetActive(true);
             Comida.transform.Find("Comida_Minijuego2").gameObject.SetActive(false);
+            Comida.GetComponent<Comida_Cortada>().isCutted = true;
             thereIsFood = false;
         }
     }
@@ -82,6 +83,7 @@ public class Knife : MonoBehaviour
         {
             Comida.transform.Find("ComidaCortada_Minijuego2").gameObject.SetActive(true);
             Comida.transform.Find("Comida_Minijuego2").gameObject.SetActive(false);
+            Comida.GetComponent<Comida_Cortada>().isCutted = true;
             thereIsFood = false;
         }
     }

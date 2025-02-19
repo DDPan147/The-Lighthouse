@@ -91,4 +91,13 @@ public class Minijuego2_GameManager : MonoBehaviour
         }
         
     }
+
+    public void PutFoodInPot(Comida_Cortada comida)
+    {
+        comida.isGrabbed = false;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        comida.moveDirection = Vector2.zero;
+        grabObject = null;
+    }
 }
