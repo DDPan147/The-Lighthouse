@@ -6,6 +6,7 @@ public class Minijuego3_GameManager : MonoBehaviour
 {
     private Camera cam;
     private Tuberia[] tuberias;
+    public GameObject QueEsEsto;
     void Start()
     {
         cam = Camera.main;
@@ -30,10 +31,9 @@ public class Minijuego3_GameManager : MonoBehaviour
             {
                 float rotation = hit.collider.gameObject.GetComponent<Tuberia>().initialRotation += 90f;
                 //hit.collider.gameObject.transform.eulerAngles += new Vector3(0, 0, 90);
-                hit.collider.gameObject.transform.DORotate(new Vector3(0, 0, rotation), 0.5f, RotateMode.Fast);
+                hit.collider.gameObject.transform.DORotate(new Vector3(0, 0, rotation), 0.5f, RotateMode.Fast).OnComplete(() => CheckPipes());
             }
         }
-        CheckPipes();
     }
 
     public void CheckPipes()
@@ -51,6 +51,7 @@ public class Minijuego3_GameManager : MonoBehaviour
         {
             //Ha ganado el minijuego
             Debug.Log("Todo correcto");
+            QueEsEsto.transform.DOMove(Camera.main.transform.position, 1f);
         }
     }
 }

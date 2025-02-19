@@ -28,10 +28,10 @@ public class Olla : MonoBehaviour
             {
                 Sequence PutFood = DOTween.Sequence();
                 PutFood.Append(other.gameObject.transform.DOMove(transform.position + new Vector3(0, 0.5f, 0), 0.5f));
-                PutFood.Append(other.gameObject.transform.DOMove(transform.position, 2f));
+                gm.GetComponent<Minijuego2_GameManager>().PutFoodInPot(comida);
+                PutFood.Append(other.gameObject.transform.DOMove(transform.position, 0.5f));
                 PutFood.OnComplete(() =>
                 {
-                    gm.GetComponent<Minijuego2_GameManager>().PutFoodInPot(comida);
                     isFilledWithFood = true;
                 });
             }
