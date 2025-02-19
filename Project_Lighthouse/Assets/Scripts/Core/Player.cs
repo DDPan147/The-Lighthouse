@@ -75,6 +75,10 @@ public class Player : MonoBehaviour
         {
             CheckIsButtonSpline(other.gameObject.GetComponent<SplineSwitch>());
         }
+        if (other.gameObject.CompareTag("DialogueTrigger_Core"))
+        {
+            other.gameObject.GetComponent<DialogueTrigger>().TriggerComment();
+        }
     }
 
     void OnTriggerExit(Collider other)
