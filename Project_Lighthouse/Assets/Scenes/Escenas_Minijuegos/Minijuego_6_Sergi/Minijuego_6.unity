@@ -184,7 +184,8 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 5d41be4c14887f245a39a4905de9667a, type: 2}
+  - {fileID: 2100000, guid: 502504186288731478704c8646fcd802, type: 2}
+  - {fileID: 2100000, guid: e009a0035686e874ab9c0a218a87e111, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -243,6 +244,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   correctSlotPosition: 1
   detectionRadius: 0.5
+  outlineMaterial: {fileID: 0}
   zDepth: 0
   currentSlot: {fileID: 0}
 --- !u!54 &109935939
@@ -635,6 +637,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   correctSlotPosition: 9
   detectionRadius: 1
+  outlineMaterial: {fileID: 0}
   zDepth: 0
   currentSlot: {fileID: 0}
 --- !u!1 &457577715
@@ -760,6 +763,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   correctSlotPosition: 4
   detectionRadius: 1
+  outlineMaterial: {fileID: 0}
   zDepth: 0
   currentSlot: {fileID: 0}
 --- !u!1 &468254143
@@ -1047,6 +1051,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   correctSlotPosition: 7
   detectionRadius: 1
+  outlineMaterial: {fileID: 0}
   zDepth: 0
   currentSlot: {fileID: 0}
 --- !u!1 &637414196
@@ -1294,6 +1299,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   correctSlotPosition: 2
   detectionRadius: 1
+  outlineMaterial: {fileID: 0}
   zDepth: 0
   currentSlot: {fileID: 0}
 --- !u!1 &857119955
@@ -1419,6 +1425,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   correctSlotPosition: 3
   detectionRadius: 1
+  outlineMaterial: {fileID: 0}
   zDepth: 0
   currentSlot: {fileID: 0}
 --- !u!1 &863612799
@@ -1787,6 +1794,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   correctSlotPosition: 5
   detectionRadius: 1
+  outlineMaterial: {fileID: 0}
   zDepth: 0
   currentSlot: {fileID: 0}
 --- !u!1 &1318219831
@@ -2184,6 +2192,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   correctSlotPosition: 8
   detectionRadius: 1
+  outlineMaterial: {fileID: 0}
   zDepth: 0
   currentSlot: {fileID: 0}
 --- !u!1 &1503756756
@@ -2812,6 +2821,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   correctSlotPosition: 6
   detectionRadius: 1
+  outlineMaterial: {fileID: 0}
   zDepth: 0
   currentSlot: {fileID: 0}
 --- !u!1 &2108840668
