@@ -1,8 +1,16 @@
+using System;
 using UnityEngine;
 
 public class DragDrop_Item : MonoBehaviour
 {
+    public enum TypeDragDrop
+    {
+        NoResetPos, // Se puede poner en cualquier slot disponible del minijuego
+        ResetPos // Si no accede al slot correcto, este volvera a la posicion de origen
+    }
+
     [Header("Ajustes posicion")]
+    public TypeDragDrop type;
     public int correctSlotPosition;
     private Vector3 initialPosition;
     public float detectionRadius = 1f;
@@ -53,40 +61,56 @@ public class DragDrop_Item : MonoBehaviour
     }
     private void OnMouseUp()
     {
+        StickItemSlot();
+        currentSlot = null;
+    }
+
+    private void StickItemSlot()
+    {
         // Si se suelta sobre un slot valido
-        if (currentSlot != null && currentSlot.slotPosition == correctSlotPosition)
+        if (type == TypeDragDrop.ResetPos)
         {
-            Debug.Log("Encajado en el slot correcto");
-            transform.position = currentSlot.transform.position; // Encaja el item en el slot
+            if (currentSlot != null && currentSlot.slotPosition == correctSlotPosition)
+            {
+                Debug.Log("Tipo reset encajando en el slot correcto");
+                transform.position = currentSlot.transform.position;
+            }
+            else
+            {
+                Debug.Log("No se encontro un slot correcto, regresando a la posicion inicial");
+                ResetPosition();
+            }
         }
         else
         {
-            Debug.Log("No se encontro un slot correcto, regresando a la posici�n inicial");
-            ResetPosition(); // Vuelve a la posicion inicial
+            if (currentSlot != null && type == TypeDragDrop.NoResetPos)
+            {
+                Debug.Log("Tipo no reset encajando en el slot correcto");
+                transform.position = currentSlot.transform.position;
+            }
         }
-
-        // Resetea la referencia al slot actual
-        currentSlot = null;
     }
 
     private void OnTriggerEnter(Collider other)
     {
         DragDrop_Slot slot = other.GetComponent<DragDrop_Slot>();
-        if (slot != null && slot.slotPosition == correctSlotPosition)
+        if (slot != null )
         {
-            SetOutlineVisibility(true); // Muestra el outline
+            if (correctSlotPosition == slot.slotPosition)
+            {
+                SetOutlineVisibility(true); // Muestra el outline
+            }
             Debug.Log("Posicion correcta, puedes proceder a soltar el objeto");
-            currentSlot = slot; // Marca que el objeto est� en el slot correcto
+            currentSlot = slot; // Marca que el objeto esta en el slot correcto
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
         DragDrop_Slot slot = other.GetComponent<DragDrop_Slot>();
-        if (slot != null && slot == currentSlot)
+        if (slot != null)
         {
             SetOutlineVisibility(false); // Oculta el outline
-            Debug.Log("Sali� del slot correcto");
             currentSlot = null; // Ya no esta en el slot correcto
         }
     }
