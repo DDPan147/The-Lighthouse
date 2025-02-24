@@ -22,8 +22,11 @@ public class DragDrop_Item : MonoBehaviour
     [Space]
     private Vector3 mousePos;
     [SerializeField] private float zDepth; // Profundidad del objeto en la camara
+    [SerializeField] private bool isOnMouse;
+
     [Header("Script detection")]
     [SerializeField] private DragDrop_Slot currentSlot;
+    [SerializeField] private Transform slotPos;
 
 
     private void Awake()
@@ -42,7 +45,7 @@ public class DragDrop_Item : MonoBehaviour
             float outlineScale = outlineMaterial.GetFloat("_Scale");
             outlineScale = isVisible ? 1.05f : 0f;
             outlineColor.a = isVisible ? 1f : 0f;
-            outlineMaterial.SetColor("_Color", outlineColor);
+            outlineMaterial.SetColor("_Color", Color.yellow);
             outlineMaterial.SetFloat("_Scale", outlineScale);
         }
     }
@@ -61,6 +64,7 @@ public class DragDrop_Item : MonoBehaviour
     }
     private void OnMouseUp()
     {
+        isOnMouse = false;
         StickItemSlot();
         currentSlot = null;
     }
@@ -72,13 +76,13 @@ public class DragDrop_Item : MonoBehaviour
         {
             if (currentSlot != null && currentSlot.slotPosition == correctSlotPosition)
             {
-                Debug.Log("Tipo reset encajando en el slot correcto");
-                transform.position = currentSlot.transform.position;
+                transform.position = slotPos.position;
+                outlineMaterial.SetColor("_Color", Color.green);
             }
             else
             {
-                Debug.Log("No se encontro un slot correcto, regresando a la posicion inicial");
                 ResetPosition();
+                SetOutlineVisibility(false);
             }
         }
         else
@@ -86,7 +90,16 @@ public class DragDrop_Item : MonoBehaviour
             if (currentSlot != null && type == TypeDragDrop.NoResetPos)
             {
                 Debug.Log("Tipo no reset encajando en el slot correcto");
-                transform.position = currentSlot.transform.position;
+                transform.position = slotPos.position;
+                if (currentSlot.slotPosition == correctSlotPosition)
+                {
+                    outlineMaterial.SetColor("_Color", Color.green);
+                }
+                Debug.Log(currentSlot.slotPosition);
+            }
+            else
+            {
+                SetOutlineVisibility(false);
             }
         }
     }
@@ -96,27 +109,38 @@ public class DragDrop_Item : MonoBehaviour
         DragDrop_Slot slot = other.GetComponent<DragDrop_Slot>();
         if (slot != null )
         {
-            if (correctSlotPosition == slot.slotPosition)
-            {
-                SetOutlineVisibility(true); // Muestra el outline
-            }
-            Debug.Log("Posicion correcta, puedes proceder a soltar el objeto");
-            currentSlot = slot; // Marca que el objeto esta en el slot correcto
+            SetOutlineVisibility(true);
+            Debug.Log("Slot encontrado");
+            currentSlot = slot;
+            slotPos = slot.posSlot;
+        }
+
+    }
+    private void OnTriggerStay(Collider other)
+    {
+        DragDrop_Slot slot = other.GetComponent<DragDrop_Slot>();
+        if (slot != null && currentSlot == null && isOnMouse == true)
+        {
+            SetOutlineVisibility(true);
+            Debug.Log("Objeto sigue en el slot");
+            currentSlot = slot;
+            slotPos = slot.posSlot;
         }
     }
-
     private void OnTriggerExit(Collider other)
     {
         DragDrop_Slot slot = other.GetComponent<DragDrop_Slot>();
         if (slot != null)
         {
-            SetOutlineVisibility(false); // Oculta el outline
-            currentSlot = null; // Ya no esta en el slot correcto
+            SetOutlineVisibility(false);
+            currentSlot = null;
+            slotPos = null;
         }
     }
 
     private void OnMouseDrag()
     {
+        isOnMouse = true;
         // Actualiza la posicion del objeto manteniendo la profundidad z original
         Vector3 mouseScreenPos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, zDepth);
         Vector3 newWorldPos = Camera.main.ScreenToWorldPoint(mouseScreenPos - new Vector3(mousePos.x, mousePos.y, 0));
