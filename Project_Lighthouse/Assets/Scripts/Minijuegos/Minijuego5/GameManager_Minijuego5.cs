@@ -37,6 +37,7 @@ public class GameManager_Minijuego5 : MonoBehaviour
             //YOU WIN
             hasWon = true;
             ps.Play();
+            FindFirstObjectByType<GameManager>().MinigameCompleted(4);
         }
     }
 }

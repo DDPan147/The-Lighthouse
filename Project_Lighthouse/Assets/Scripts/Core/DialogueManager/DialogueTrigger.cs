@@ -19,13 +19,4 @@ public class DialogueTrigger : MonoBehaviour
             comentado = true;
         }
     }
-
-
-
-
-
-
-
-
-
 }

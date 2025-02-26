@@ -1,12 +1,11 @@
 using DG.Tweening;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Splines;
 
 public class Player : MonoBehaviour
 {
-    public SplineContainer spline;
-    public Spline transitionSpline;
-
     public float speed;
     public float transitionSpeed;
 
@@ -17,7 +16,14 @@ public class Player : MonoBehaviour
 
     public float moveVector;
 
+    public Spline transitionSpline;
+    public SplineContainer spline;
     public SplineSwitch activeSplineSwitch;
+
+
+    public MinigameSwitch activeMinigameSwitch;
+    public TMP_Text triggerMinigameText;
+    public GameObject playerCanvas;
 
     public enum MoveStates
     {
@@ -34,39 +40,57 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        if(moveState == MoveStates.Control)
+        if (!GameManager.minigameActive)
         {
-            moveVector = Input.GetAxis("Horizontal");
-
-            distancePercentage -= moveVector * speed * Time.deltaTime / splineLength;
-            distancePercentage = Mathf.Clamp01(distancePercentage);
-
-            Vector3 currentPosition = spline.EvaluatePosition(distancePercentage);
-            transform.position = currentPosition;
-
-
-            Vector3 nextPosition = spline.EvaluatePosition(distancePercentage + 0.05f);
-            Vector3 direction = nextPosition - currentPosition;
-            Vector3 newDirection = new Vector3(direction.x, 0, direction.z);
-            if (newDirection.magnitude > 0)
+            if (moveState == MoveStates.Control)
             {
-                transform.rotation = Quaternion.LookRotation(newDirection, transform.up);
+                ControlState();
             }
-
-            if (activeSplineSwitch != null)
+            else if (moveState == MoveStates.Transition)
             {
-                activeSplineSwitch.SwitchSpline();
+                TransitionState();
             }
+            CanvasLookToScreen();
         }
-        else if(moveState == MoveStates.Transition)
+    }
+
+    private void TransitionState()
+    {
+        //transitionPercentage += speed * Time.deltaTime / splineLength;
+        //transitionPercentage = Mathf.Clamp01(transitionPercentage);
+
+        Vector3 currentPosition = transitionSpline.EvaluatePosition(transitionPercentage);
+        transform.position = currentPosition;
+    }
+
+    private void ControlState()
+    {
+        moveVector = Input.GetAxis("Horizontal");
+
+        distancePercentage -= moveVector * speed * Time.deltaTime / splineLength;
+        distancePercentage = Mathf.Clamp01(distancePercentage);
+
+        Vector3 currentPosition = spline.EvaluatePosition(distancePercentage);
+        transform.position = currentPosition;
+
+
+        Vector3 nextPosition = spline.EvaluatePosition(distancePercentage + 0.05f);
+        Vector3 direction = nextPosition - currentPosition;
+        Vector3 newDirection = new Vector3(direction.x, 0, direction.z);
+        if (newDirection.magnitude > 0)
         {
-            //transitionPercentage += speed * Time.deltaTime / splineLength;
-            //transitionPercentage = Mathf.Clamp01(transitionPercentage);
-
-            Vector3 currentPosition = transitionSpline.EvaluatePosition(transitionPercentage);
-            transform.position = currentPosition;
+            transform.rotation = Quaternion.LookRotation(newDirection, transform.up);
         }
-        
+
+        if (activeSplineSwitch != null)
+        {
+            activeSplineSwitch.SwitchSpline();
+        }
+
+        if(activeMinigameSwitch != null && Input.GetKeyDown(KeyCode.Z))
+        {
+            activeMinigameSwitch.TriggerMinigame();
+        }
     }
 
     void OnTriggerEnter(Collider other)
@@ -79,6 +103,10 @@ public class Player : MonoBehaviour
         {
             other.gameObject.GetComponent<DialogueTrigger>().TriggerComment();
         }
+        if (other.gameObject.CompareTag("MinigameSwitch_Core"))
+        {
+            CheckCurrentMinigameSwitch(other.GetComponent<MinigameSwitch>());
+        }
     }
 
     void OnTriggerExit(Collider other)
@@ -87,11 +115,15 @@ public class Player : MonoBehaviour
         {
             if(activeSplineSwitch == other.gameObject.GetComponent<SplineSwitch>())
             {
-                UnassignActiveSwitch();
+                UnassignActiveSplineSwitch();
             }
         }
+        if (other.gameObject.CompareTag("MinigameSwitch_Core"))
+        {
+            UnassignActiveMinigameSwitch();
+        }
     }
-
+    #region SplineSystem
     void CheckIsButtonSpline(SplineSwitch _switch)
     {
 
@@ -120,7 +152,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void UnassignActiveSwitch()
+    public void UnassignActiveSplineSwitch()
     {
         activeSplineSwitch = null;
     }
@@ -138,4 +170,29 @@ public class Player : MonoBehaviour
         moveState = MoveStates.Control;
         transitionPercentage = 0;
     }
+    #endregion
+    #region MinigameSystem
+    void CheckCurrentMinigameSwitch(MinigameSwitch _switch)
+    {
+        MinigameData minigame = FindFirstObjectByType<GameManager>().minigames[_switch.minigameIndex];
+
+         if(minigame.isAvailable && !minigame.isCompleted)
+        {
+            triggerMinigameText.enabled = true;
+            activeMinigameSwitch = _switch;
+        }
+    }
+    public void UnassignActiveMinigameSwitch()
+    {
+        triggerMinigameText.enabled = false;
+        activeMinigameSwitch = null;
+    }
+    #endregion
+    void CanvasLookToScreen()
+    {
+        //playerCanvas.transform.LookAt(Camera.main.transform);
+
+        playerCanvas.transform.transform.rotation = Quaternion.LookRotation(playerCanvas.transform.position - Camera.main.transform.position);
+    }
+
 }

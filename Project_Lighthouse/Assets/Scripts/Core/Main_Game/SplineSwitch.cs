@@ -50,7 +50,7 @@ public class SplineSwitch : MonoBehaviour
 
             if (!isButtonOut)
             {
-                player.UnassignActiveSwitch();
+                player.UnassignActiveSplineSwitch();
             }
 
         }
@@ -72,7 +72,7 @@ public class SplineSwitch : MonoBehaviour
 
             if (!isButtonIn)
             {
-                player.UnassignActiveSwitch();
+                player.UnassignActiveSplineSwitch();
             }
         }
     }
