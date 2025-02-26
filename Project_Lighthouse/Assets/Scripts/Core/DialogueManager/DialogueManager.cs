@@ -8,7 +8,7 @@ using System.Linq;
 [RequireComponent(typeof(AudioSource))]
 public class DialogueManager : MonoBehaviour
 {
-    public static DialogueManager Instance { get; private set; }
+    /*public static DialogueManager Instance { get; private set; }
 
     [Tooltip("The amount of time the Dialogue waits between phrases")][SerializeField]
     private float waitTime = 1.0f;
@@ -28,7 +28,10 @@ public class DialogueManager : MonoBehaviour
     private Speaker lastSpeaker;
     public string[] sentencesTest = new string[] { };
 
-    [SerializeField] private TMP_Text textDisplay;
+    [SerializeField] private TMP_Text textDisplayGUI;
+    [SerializeField] private TMP_Text textDisplayAbuelo;
+    [SerializeField] private TMP_Text textDisplayLuna;
+
     private AudioSource sound;
 
     private void Awake()
@@ -44,7 +47,7 @@ public class DialogueManager : MonoBehaviour
         }
         DontDestroyOnLoad(this.gameObject);*/
         //
-    }
+    /*}
     void Start()
     {
         sound = GetComponent<AudioSource>();
@@ -65,7 +68,7 @@ public class DialogueManager : MonoBehaviour
         events.Clear();
         StopAllCoroutines();
 
-        foreach(string sentence in _comment.sentences) 
+        foreach (string sentence in _comment.sentences)
         {
             sentences.Enqueue(sentence);
         }
@@ -73,6 +76,9 @@ public class DialogueManager : MonoBehaviour
         {
             speakers.Enqueue(speaker);
         }
+
+        //EVENTS
+
         if (_comment.events.Length != 0)
         {
             foreach (DialogueEvent DialogueEvent in _comment.events)
@@ -85,28 +91,45 @@ public class DialogueManager : MonoBehaviour
             }
         }
 
-        DisplayNextSentence();
+        //SPEAKERS
+
+        DecideNextSpeaker(_comment);
     }
 
-    void DisplayNextSentence()
+    private void DecideNextSpeaker(DialogueComment _comment)
+    {
+        Speaker currentSpeaker = speakers.Dequeue();
+        if (_comment.type == DialogueComment.DialogueTypes.Popup)
+        {
+
+            if (currentSpeaker == Speaker.Abuelo)
+            {
+                DisplayNextSentence(textDisplayAbuelo, currentSpeaker);
+            }
+            else if (currentSpeaker == Speaker.Luna)
+            {
+                DisplayNextSentence(textDisplayLuna, currentSpeaker);
+            }
+        }
+        else
+        {
+            DisplayNextSentence(textDisplayGUI, currentSpeaker);
+        }
+    }
+
+    void DisplayNextSentence(TMP_Text target, Speaker currentSpeaker)
     {
         if(sentences.Count == 0) 
         {
-            EndComment();
+            EndComment(target);
             return;
         }
 
         string currentSentence = sentences.Dequeue();
 
-        Speaker currentSpeaker = speakers.Dequeue();
-        if(currentSpeaker != lastSpeaker)
-        {
-            CloseBubble(lastSpeaker);
-            OpenBubble(currentSpeaker);
-        }
 
-        lastSpeaker = currentSpeaker;
-
+        
+         //EVENTS
         if(events.Count > 0)
         {
             DialogueEvent nEvent = events.Dequeue();
@@ -120,8 +143,14 @@ public class DialogueManager : MonoBehaviour
                 nEvent.eventReceiver.Invoke(nEvent.eventName, nEvent.timeOffset);
             }
         }
-        
 
+        //SPEAKERS
+        if(target == textDisplayGUI)
+        {
+            StopAllCoroutines();
+            StartCoroutine(TypeSentence(currentSentence, target));
+        }
+        lastSpeaker = currentSpeaker;
         /*if (currentClip != null)
         {
             PlayVoice(currentClip);
@@ -130,23 +159,8 @@ public class DialogueManager : MonoBehaviour
         //textDisplay.text = currentSentence;
 
         // Por si se quiere que las letras salgan de una en una
-        StopAllCoroutines();
-        StartCoroutine(TypeSentence(currentSentence));
-
-        //StartCoroutine(WaitForNextSentence());
+        
     }
-
-    /*void PlayVoice(AudioClip _clip)
-    {
-        sound.clip = _clip;
-        sound.Play();
-    }*/
-
-    /*void StopVoice()
-    {
-        sound.Stop();
-    }*/
-
     /*IEnumerator WaitForNextSentence()
     {
         do
@@ -157,23 +171,23 @@ public class DialogueManager : MonoBehaviour
         DisplayNextSentence();
     }*/
     
-    IEnumerator TypeSentence(string _sentence)
+    /*IEnumerator TypeSentence(string _sentence, TMP_Text target)
     {
-        textDisplay.text = "";
+        target.text = "";
         foreach(char letter in _sentence.ToCharArray())
         {
-            textDisplay.text += letter;
+            target.text += letter;
             for(int i = 0; i < letterWaitFrames; i++)
             {
                 yield return null;
             }
         }
         yield return new WaitForSeconds(waitTime);
-        DisplayNextSentence();
+        DisplayNextSentence(target);
     }
-    void EndComment()
+    void EndComment(TMP_Text target)
     {
-        textDisplay.text = "";
+        target.text = "";
         CloseBubble(lastSpeaker);
     }
 
@@ -192,5 +206,5 @@ public class DialogueManager : MonoBehaviour
     void CloseBubble(Speaker speaker)
     {
         //CloseBubble depending of speaker
-    }
+    }*/
 }

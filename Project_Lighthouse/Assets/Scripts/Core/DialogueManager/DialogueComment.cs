@@ -13,6 +13,10 @@ public class DialogueComment
     public DialogueManager.Speaker[] speakers;
     public DialogueEvent[] events;
 
-    [Tooltip("¿Can the dialogue be reproduced infinitely or only once?")] 
-    public bool isPermanent;
+    public enum DialogueTypes
+    {
+        Popup,
+        UI
+    }
+    public DialogueTypes type;
 }
