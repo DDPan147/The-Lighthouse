@@ -8,7 +8,7 @@ public class Minijuego2_GameManager : MonoBehaviour
     private Camera cam;
     public bool imGrabing = false;
     private GameObject grabObject;
-    public float ScreenWidth, ScreenHeight;
+    private float ScreenWidth, ScreenHeight;
     [Range(50,150)]public float camaraUmbral;
     public float limitRotationCamera;
     public float speedRotation;

@@ -3,12 +3,17 @@ using UnityEngine;
 public class CloudSpawn : MonoBehaviour
 {
     private BoxCollider boxCollider;
+
+    [Header("Prefabs de Nubes")]
     public GameObject cloudObj;
+    public GameObject badCloudObj;
+    [Header("Variables")]
+    public float spawnTimeClouds;
     void Start()
     {
         boxCollider = GetComponent<BoxCollider>();
 
-        InvokeRepeating("SpawnCloud", 0.5f, 2f);
+        InvokeRepeating("SpawnCloud", 0.5f, spawnTimeClouds);
     }
 
     void Update()
@@ -33,6 +38,15 @@ public class CloudSpawn : MonoBehaviour
 
     void SpawnCloud()
     {
-        Instantiate(cloudObj, GetRandomPointInCollider(), Quaternion.identity, transform);
+        int random = Random.Range(1, 7);
+        if(random == 4)
+        {
+            Instantiate(badCloudObj, GetRandomPointInCollider(), Quaternion.identity, transform);
+        }
+        else
+        {
+            Instantiate(cloudObj, GetRandomPointInCollider(), Quaternion.identity, transform);
+        }
+        
     }
 }
