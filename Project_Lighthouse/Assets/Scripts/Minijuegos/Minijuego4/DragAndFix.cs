@@ -1,61 +1,111 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
 public class MesaReparacion : MonoBehaviour
 {
+    public PlayerMovementFP player;
+    private Vector3 originalCameraPosition;
+    private Quaternion originalCameraRotation;
+    private Transform playerCameraParent;
     public Camera posicionCamara;
     public Camera playerCamera;
     public Transform[] patas; // Array de patas
     public Transform[] posicionesFinales; // Posiciones donde deben ir las patas
-    public Transform[] posicionesCamara; // Posiciones específicas de la cámara
-    public Transform camara; // Referencia a la cámara principal
+    public Transform[] posicionesCamara; // Posiciones especï¿½ficas de la cï¿½mara
+    public Transform camara; // Referencia a la cï¿½mara principal
     [SerializeField] Vector3 pataOffset;
     public float velocidadMovimiento = 2f;
     public float velocidadCamara = 2f;
     private int pataActual = 0;
     private int camaraActual = 0;
-    private bool reparando = false;
+    [SerializeField] private bool reparandoObjeto = false;
+    private bool fixParte = false;
     private bool camaraPosicionada = false;
+
+    private void Start()
+    {
+        player = GameObject.Find("Player_Grand").GetComponent<PlayerMovementFP>();
+        if (playerCamera != null)
+        {
+            playerCameraParent = playerCamera.transform.parent;
+            originalCameraPosition = playerCamera.transform.localPosition;
+            originalCameraRotation = playerCamera.transform.localRotation;
+        }
+    }
 
     void OnMouseDown()
     {
-        Debug.Log("Mesa clickeada"); // Para depuración
-        // Cambiar la posición de la cámara
-        CambiarPosicionCamara();
-        if (!reparando && camaraPosicionada && pataActual < patas.Length)
+        Debug.Log("Mesa clickeada"); // Para depuraciï¿½n
+        // Cambiar la posiciï¿½n de la cï¿½mara
+        ChangeToFixObjectCamera();
+        if (!reparandoObjeto && camaraPosicionada && pataActual < patas.Length)
         {
             Debug.Log("Moviendo pata " + pataActual);
             StartCoroutine(MoverPata(patas[pataActual], posicionesFinales[pataActual]));
             pataActual++;
         }
 
+        if (pataActual >= patas.Length && !reparandoObjeto)
+        {
+            ChangeToPlayerCamera();
+        }
+
     }
 
     IEnumerator MoverPata(Transform pata, Transform destino)
     {
-        reparando = true;
+        reparandoObjeto = true;
         while (Vector3.Distance(pata.position, destino.position) > 0.01f)
         {
+            fixParte = true;
             pata.position = Vector3.MoveTowards(pata.position, destino.position, velocidadMovimiento * Time.deltaTime);
             yield return null;
         }
         pata.position = destino.position + pataOffset;
-        Debug.Log("Pata colocada en su posición");
-        reparando = false;
+        Debug.Log("Pata colocada en su posiciï¿½n");
+        reparandoObjeto = false;
     }
 
-    void CambiarPosicionCamara()
+    void ChangeToFixObjectCamera()
     {
         if (posicionesCamara.Length == 0 || camara == null) return;
 
+        // Primero desactivamos el movimiento del jugador
+        player.canMove = false;
+    
+        // Aseguramos que las cÃ¡maras cambien correctamente
         playerCamera.gameObject.SetActive(false);
         posicionCamara.gameObject.SetActive(true);
 
         camaraActual = (camaraActual + 1) % posicionesCamara.Length;
-        StartCoroutine(MoverCamara(posicionesCamara[camaraActual]));
+        StartCoroutine(MoveCameraFixPosition(posicionesCamara[camaraActual]));
     }
 
-    IEnumerator MoverCamara(Transform destino)
+    void ChangeToPlayerCamera()
+    {
+        // Desactivar la cÃ¡mara de reparaciÃ³n
+        posicionCamara.gameObject.SetActive(false);
+        
+        // Restaurar la posiciÃ³n original de la cÃ¡mara del jugador
+        if (playerCamera != null && playerCameraParent != null)
+        {
+            playerCamera.transform.parent = playerCameraParent;
+            playerCamera.transform.localPosition = originalCameraPosition;
+            playerCamera.transform.localRotation = originalCameraRotation;
+        }
+        
+        // Activar la cÃ¡mara del jugador
+        playerCamera.gameObject.SetActive(true);
+        
+        // Reactivar el movimiento del jugador
+        player.canMove = true;
+        
+        // Resetear estados
+        camaraPosicionada = false;
+    }
+
+    IEnumerator MoveCameraFixPosition(Transform destino)
     {
         while (Vector3.Distance(camara.position, destino.position) > 0.01f)
         {

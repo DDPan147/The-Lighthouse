@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovementFP : MonoBehaviour
 {
+    public bool canMove = true;
     // --- Referencias ---
     private Rigidbody rb;
     private PlayerOnGround ground;
@@ -48,15 +49,16 @@ public class PlayerMovementFP : MonoBehaviour
 
         velocity = rb.linearVelocity;
 
-        // Convertir la dirección de entrada a coordenadas locales del jugador
+        // Convertir la direcciï¿½n de entrada a coordenadas locales del jugador
         Vector3 inputDirection3D = new Vector3(inputDirection.x, 0f, inputDirection.y);
         Vector3 relativeDirection = transform.TransformDirection(inputDirection3D);
 
-        // Calcular la velocidad deseada en función de la dirección relativa
+        // Calcular la velocidad deseada en funciï¿½n de la direcciï¿½n relativa
         desiredVelocity = relativeDirection * Mathf.Max(maxSpeed - friction, 0f);
     }
     private void FixedUpdate()
     {
+        if (!canMove) return;
         if (onGround)
         {
             RunWithAcceleration();
@@ -65,7 +67,6 @@ public class PlayerMovementFP : MonoBehaviour
         {
             RunWithoutAcceleration();
         }
-
     }
     public void OnMoveCallback(InputAction.CallbackContext context)
     {
