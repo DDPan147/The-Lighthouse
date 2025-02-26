@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1002435823743466677}
   - component: {fileID: -892356672395744226}
   m_Layer: 0
-  m_Name: Cloud
+  m_Name: BadCloud
   m_TagString: Nube
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -66,7 +66,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e57605964e03fc64a9bbad86c9ea0fdb, type: 2}
+  - {fileID: 2100000, guid: 1481581caf7faa34c87dc3a79a97a8b5, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -124,4 +124,4 @@ MonoBehaviour:
   isInvincible: 0
   timeLighting: 0
   initialScale: {x: 0, y: 0, z: 0}
-  points: 1
+  points: -1
