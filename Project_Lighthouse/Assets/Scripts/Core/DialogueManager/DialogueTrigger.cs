@@ -15,7 +15,7 @@ public class DialogueTrigger : MonoBehaviour
     {
         if (comentado == false)
         {
-            FindFirstObjectByType<DialogueManager>().StartComment(comment);
+            //FindFirstObjectByType<DialogueManager>().StartComment(comment);
             comentado = true;
         }
     }
