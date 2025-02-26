@@ -207,4 +207,4 @@ public class DialogueManager : MonoBehaviour
     {
         //CloseBubble depending of speaker
     }*/
-}
+
