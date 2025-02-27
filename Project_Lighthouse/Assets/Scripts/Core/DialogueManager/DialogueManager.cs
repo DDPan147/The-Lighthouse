@@ -4,16 +4,22 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Linq;
+using DG.Tweening;
 
 [RequireComponent(typeof(AudioSource))]
 public class DialogueManager : MonoBehaviour
 {
-    /*public static DialogueManager Instance { get; private set; }
+    public static DialogueManager Instance { get; private set; }
 
-    [Tooltip("The amount of time the Dialogue waits between phrases")][SerializeField]
+    [Tooltip("The amount of time the Dialogue waits between phrases")]
+    [SerializeField]
     private float waitTime = 1.0f;
-    [Tooltip("The amount of frames the Dialogue waits between characters")][SerializeField]
+    [Tooltip("The amount of frames the Dialogue waits between characters")]
+    [SerializeField]
     private int letterWaitFrames;
+
+    [SerializeField]private float popupScaleDuration;
+    private bool sentenceTyped;
 
     private Queue<string> sentences = new Queue<string>();
     private Queue<Speaker> speakers = new Queue<Speaker>();
@@ -47,7 +53,7 @@ public class DialogueManager : MonoBehaviour
         }
         DontDestroyOnLoad(this.gameObject);*/
         //
-    /*}
+    }
     void Start()
     {
         sound = GetComponent<AudioSource>();
@@ -92,34 +98,34 @@ public class DialogueManager : MonoBehaviour
         }
 
         //SPEAKERS
+        Speaker currentSpeaker = speakers.Dequeue();
 
-        DecideNextSpeaker(_comment);
+        TMP_Text nextTarget = DecideNextSpeaker(_comment.type, currentSpeaker);
+        DisplayNextSentence(nextTarget);
     }
 
-    private void DecideNextSpeaker(DialogueComment _comment)
+    private TMP_Text DecideNextSpeaker(DialogueComment.DialogueTypes commentType, Speaker currentSpeaker)
     {
-        Speaker currentSpeaker = speakers.Dequeue();
-        if (_comment.type == DialogueComment.DialogueTypes.Popup)
+        if (commentType == DialogueComment.DialogueTypes.Popup)
         {
-
             if (currentSpeaker == Speaker.Abuelo)
             {
-                DisplayNextSentence(textDisplayAbuelo, currentSpeaker);
+                return textDisplayAbuelo;
             }
-            else if (currentSpeaker == Speaker.Luna)
+            else
             {
-                DisplayNextSentence(textDisplayLuna, currentSpeaker);
+                return textDisplayLuna;
             }
         }
         else
         {
-            DisplayNextSentence(textDisplayGUI, currentSpeaker);
+            return textDisplayGUI;
         }
     }
 
-    void DisplayNextSentence(TMP_Text target, Speaker currentSpeaker)
+    void DisplayNextSentence(TMP_Text target)
     {
-        if(sentences.Count == 0) 
+        if (sentences.Count == 0)
         {
             EndComment(target);
             return;
@@ -128,9 +134,9 @@ public class DialogueManager : MonoBehaviour
         string currentSentence = sentences.Dequeue();
 
 
-        
-         //EVENTS
-        if(events.Count > 0)
+
+        //EVENTS
+        if (events.Count > 0)
         {
             DialogueEvent nEvent = events.Dequeue();
 
@@ -145,49 +151,65 @@ public class DialogueManager : MonoBehaviour
         }
 
         //SPEAKERS
-        if(target == textDisplayGUI)
+        if (target == textDisplayGUI)
         {
             StopAllCoroutines();
             StartCoroutine(TypeSentence(currentSentence, target));
-        }
-        lastSpeaker = currentSpeaker;
-        /*if (currentClip != null)
-        {
-            PlayVoice(currentClip);
-        }*/
-        //Por si se quiere que las letras salgan todas a la vez
-        //textDisplay.text = currentSentence;
 
-        // Por si se quiere que las letras salgan de una en una
-        
+            //target.parent activates
+            //target starts typing text
+        }
+        else
+        {
+            target.text = currentSentence;
+            target.transform.GetChild(0).GetComponent<TMP_Text>().text = "";
+            target.transform.parent.transform.DOScale(1, popupScaleDuration).SetEase(Ease.OutBack).OnComplete(() =>
+            {
+                StartCoroutine(WaitForNextSentence(target));
+                StartCoroutine(TypeSentence(currentSentence, target.transform.GetChild(0).GetComponent<TMP_Text>()));
+            });
+            
+            
+        }
+
     }
-    /*IEnumerator WaitForNextSentence()
+    IEnumerator WaitForNextSentence(TMP_Text target)
     {
+        sentenceTyped = false;
         do
         {
             yield return null;
-        } while (sound.isPlaying);
-        yield return new WaitForSeconds(waitTime);
-        DisplayNextSentence();
-    }*/
-    
-    /*IEnumerator TypeSentence(string _sentence, TMP_Text target)
+        } while (!sentenceTyped);
+        //Descale parent
+        target.transform.parent.transform.DOScale(0, popupScaleDuration).SetEase(Ease.InBack).OnComplete(() =>
+        {
+
+            DisplayNextSentence(target);
+        });
+    }
+
+    IEnumerator TypeSentence(string _sentence, TMP_Text target)
     {
+        
         target.text = "";
-        foreach(char letter in _sentence.ToCharArray())
+        foreach (char letter in _sentence.ToCharArray())
         {
             target.text += letter;
-            for(int i = 0; i < letterWaitFrames; i++)
+            //Play Letter Sound
+            for (int i = 0; i < letterWaitFrames; i++)
             {
                 yield return null;
             }
         }
         yield return new WaitForSeconds(waitTime);
-        DisplayNextSentence(target);
+        sentenceTyped = true;
+        
     }
+
     void EndComment(TMP_Text target)
     {
         target.text = "";
+        target.transform.GetChild(0).GetComponent<TMP_Text>().text = "";
         CloseBubble(lastSpeaker);
     }
 
@@ -196,7 +218,7 @@ public class DialogueManager : MonoBehaviour
         sentences.Clear();
         events.Clear();
         StopAllCoroutines();
-        textDisplay.text = "";
+        //textDisplay.text = "";
     }
 
     void OpenBubble(Speaker speaker)
@@ -206,5 +228,6 @@ public class DialogueManager : MonoBehaviour
     void CloseBubble(Speaker speaker)
     {
         //CloseBubble depending of speaker
-    }*/
+    }
+}
 
