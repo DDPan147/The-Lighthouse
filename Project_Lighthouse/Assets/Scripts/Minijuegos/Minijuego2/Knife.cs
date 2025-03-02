@@ -22,7 +22,7 @@ public class Knife : MonoBehaviour
     private void Update()
     {
         transform.position += new Vector3(moveDirection.x, 0, moveDirection.y);
-        LimitarMovimiento();
+        
         
     }
     void LimitarMovimiento()
@@ -52,13 +52,6 @@ public class Knife : MonoBehaviour
             thereIsFood = true;
             Comida = other.gameObject;
         }
-        if (isCutting)
-        {
-            Comida.transform.Find("ComidaCortada_Minijuego2").gameObject.SetActive(true);
-            Comida.transform.Find("Comida_Minijuego2").gameObject.SetActive(false);
-            Comida.GetComponent<Comida_Cortada>().isCutted = true;
-            thereIsFood = false;
-        }
     }
     private void OnTriggerExit(Collider other)
     {
@@ -71,7 +64,7 @@ public class Knife : MonoBehaviour
 
     public void OnCut(InputAction.CallbackContext context)
     {
-        if (context.started && isGrabbed)
+        if (context.performed && isGrabbed)
         {
             isCutting = true;
         }
@@ -94,6 +87,7 @@ public class Knife : MonoBehaviour
         {
             moveDirection = context.ReadValue<Vector2>();
             moveDirection = moveDirection * Time.deltaTime * moveSpeed;
+            LimitarMovimiento();
         }
     }
 
