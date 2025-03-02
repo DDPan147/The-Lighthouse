@@ -1,31 +1,39 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class MesaReparacion : MonoBehaviour
 {
-    public PlayerMovementFP player;
+    [Header("Referencias del Jugador")]
+    public PlayerMovementFP playerMovement;
+    public CameraController playerCameraScript;
+    public Camera playerCamera;
+    private Transform playerCameraParent;
     private Vector3 originalCameraPosition;
     private Quaternion originalCameraRotation;
-    private Transform playerCameraParent;
-    public Camera posicionCamara;
-    public Camera playerCamera;
-    public Transform[] patas; // Array de patas
-    public Transform[] posicionesFinales; // Posiciones donde deben ir las patas
-    public Transform[] posicionesCamara; // Posiciones espec�ficas de la c�mara
-    public Transform camara; // Referencia a la c�mara principal
-    [SerializeField] Vector3 pataOffset;
-    public float velocidadMovimiento = 2f;
-    public float velocidadCamara = 2f;
-    private int pataActual = 0;
-    private int camaraActual = 0;
-    [SerializeField] private bool reparandoObjeto = false;
-    private bool fixParte = false;
-    private bool camaraPosicionada = false;
+
+     [Header("Referencias de Cámara")]
+    public Camera cameraObject;
+    public Transform[] posicionesCamara;
+    private int actualCamera = 0;
+    [SerializeField] private bool isCamerainPosition = false;
+
+    [Header("Sistema de Reparación")]
+    public Transform[] legs;
+    public Transform[] finalPositions;
+    [SerializeField] Vector3 legOffset;
+    public float movementSpeed = 2f;
+    private int actualLeg = 0;
+    
+    [Header("Estados")]
+    [SerializeField] private bool repairingObject = false;
+    private bool fixingPart = false;
 
     private void Start()
     {
-        player = GameObject.Find("Player_Grand").GetComponent<PlayerMovementFP>();
+        playerMovement = GameObject.Find("Player_Grand").GetComponent<PlayerMovementFP>();
+        playerCameraScript = GameObject.Find("Player_Grand").GetComponent<CameraController>();
         if (playerCamera != null)
         {
             playerCameraParent = playerCamera.transform.parent;
@@ -36,56 +44,57 @@ public class MesaReparacion : MonoBehaviour
 
     void OnMouseDown()
     {
-        Debug.Log("Mesa clickeada"); // Para depuraci�n
-        // Cambiar la posici�n de la c�mara
+        Debug.Log("Mesa clickeada");
+        playerCameraScript.UnlockCursor();
         ChangeToFixObjectCamera();
-        if (!reparandoObjeto && camaraPosicionada && pataActual < patas.Length)
+        if (!repairingObject && isCamerainPosition && actualLeg < legs.Length)
         {
-            Debug.Log("Moviendo pata " + pataActual);
-            StartCoroutine(MoverPata(patas[pataActual], posicionesFinales[pataActual]));
-            pataActual++;
+            Debug.Log("Moviendo pata " + actualLeg);
+            StartCoroutine(MoveLeg(legs[actualLeg], finalPositions[actualLeg]));
+            actualLeg++;
         }
 
-        if (pataActual >= patas.Length && !reparandoObjeto)
+        if (actualLeg >= legs.Length && !repairingObject)
         {
             ChangeToPlayerCamera();
         }
 
     }
 
-    IEnumerator MoverPata(Transform pata, Transform destino)
+    IEnumerator MoveLeg(Transform pata, Transform destino)
     {
-        reparandoObjeto = true;
+        repairingObject = true;
         while (Vector3.Distance(pata.position, destino.position) > 0.01f)
         {
-            fixParte = true;
-            pata.position = Vector3.MoveTowards(pata.position, destino.position, velocidadMovimiento * Time.deltaTime);
+            fixingPart = true;
+            pata.position = Vector3.MoveTowards(pata.position, destino.position, movementSpeed * Time.deltaTime);
             yield return null;
         }
-        pata.position = destino.position + pataOffset;
-        Debug.Log("Pata colocada en su posici�n");
-        reparandoObjeto = false;
+        pata.position = destino.position + legOffset;
+        repairingObject = false;
     }
 
     void ChangeToFixObjectCamera()
     {
-        if (posicionesCamara.Length == 0 || camara == null) return;
+        Debug.Log("Intentando cambiar a cámara de reparación");
+        if (posicionesCamara.Length == 0 || cameraObject == null) return;
 
         // Primero desactivamos el movimiento del jugador
-        player.canMove = false;
+        playerMovement.canMove = false;
     
-        // Aseguramos que las cámaras cambien correctamente
+        // Aseguramos que las camaras cambien correctamente
         playerCamera.gameObject.SetActive(false);
-        posicionCamara.gameObject.SetActive(true);
+        cameraObject.gameObject.SetActive(true);
+        
 
-        camaraActual = (camaraActual + 1) % posicionesCamara.Length;
-        StartCoroutine(MoveCameraFixPosition(posicionesCamara[camaraActual]));
+        actualCamera = (actualCamera + 1) % posicionesCamara.Length;
+        StartCoroutine(SetBoolWaitTime(.1f));
     }
 
     void ChangeToPlayerCamera()
     {
         // Desactivar la cámara de reparación
-        posicionCamara.gameObject.SetActive(false);
+        cameraObject.gameObject.SetActive(false);
         
         // Restaurar la posición original de la cámara del jugador
         if (playerCamera != null && playerCameraParent != null)
@@ -94,27 +103,15 @@ public class MesaReparacion : MonoBehaviour
             playerCamera.transform.localPosition = originalCameraPosition;
             playerCamera.transform.localRotation = originalCameraRotation;
         }
-        
-        // Activar la cámara del jugador
         playerCamera.gameObject.SetActive(true);
-        
-        // Reactivar el movimiento del jugador
-        player.canMove = true;
-        
-        // Resetear estados
-        camaraPosicionada = false;
+        playerCameraScript.LockCursor();
+        playerMovement.canMove = true;
+        isCamerainPosition = false;
     }
 
-    IEnumerator MoveCameraFixPosition(Transform destino)
+    IEnumerator SetBoolWaitTime(float delay)
     {
-        while (Vector3.Distance(camara.position, destino.position) > 0.01f)
-        {
-            camara.position = Vector3.Lerp(camara.position, destino.position, velocidadCamara * Time.deltaTime);
-            camara.rotation = Quaternion.Slerp(camara.rotation, destino.rotation, velocidadCamara * Time.deltaTime);
-            yield return null;
-        }
-        camara.position = destino.position;
-        camara.rotation = destino.rotation;
-        camaraPosicionada = true;
+        yield return new WaitForSeconds(delay);
+        isCamerainPosition = true;
     }
 }
