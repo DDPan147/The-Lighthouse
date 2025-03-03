@@ -162,11 +162,11 @@ public class DialogueManager : MonoBehaviour
         else
         {
             target.text = currentSentence;
-            target.transform.GetChild(0).GetComponent<TMP_Text>().text = "";
+            target.transform.GetChild(1).GetComponent<TMP_Text>().text = "";
             target.transform.parent.transform.DOScale(1, popupScaleDuration).SetEase(Ease.OutBack).OnComplete(() =>
             {
                 StartCoroutine(WaitForNextSentence(target));
-                StartCoroutine(TypeSentence(currentSentence, target.transform.GetChild(0).GetComponent<TMP_Text>()));
+                StartCoroutine(TypeSentence(currentSentence, target.transform.GetChild(1).GetComponent<TMP_Text>()));
             });
             
             
@@ -209,7 +209,7 @@ public class DialogueManager : MonoBehaviour
     void EndComment(TMP_Text target)
     {
         target.text = "";
-        target.transform.GetChild(0).GetComponent<TMP_Text>().text = "";
+        target.transform.GetChild(1).GetComponent<TMP_Text>().text = "";
         CloseBubble(lastSpeaker);
     }
 
