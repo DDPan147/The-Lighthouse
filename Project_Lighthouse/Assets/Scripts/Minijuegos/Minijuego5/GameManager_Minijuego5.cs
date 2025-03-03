@@ -37,7 +37,15 @@ public class GameManager_Minijuego5 : MonoBehaviour
             //YOU WIN
             hasWon = true;
             ps.Play();
-            FindFirstObjectByType<GameManager>().MinigameCompleted(4);
+            GameManager gm = FindFirstObjectByType<GameManager>();
+            if(gm != null)
+            {
+                FindFirstObjectByType<GameManager>().MinigameCompleted(4);
+            }
+            else
+            {
+                Debug.LogWarning("No se ha encontrado el Game Manager de la escena principal. No se va a volver al juego");
+            }
         }
     }
 }

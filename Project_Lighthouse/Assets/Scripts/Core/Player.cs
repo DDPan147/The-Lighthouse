@@ -192,7 +192,7 @@ public class Player : MonoBehaviour
     {
         //playerCanvas.transform.LookAt(Camera.main.transform);
 
-        playerCanvas.transform.transform.rotation = Quaternion.LookRotation(playerCanvas.transform.position - Camera.main.transform.position);
+        playerCanvas.transform.rotation = Quaternion.LookRotation(playerCanvas.transform.position - Camera.main.transform.position);
     }
 
 }

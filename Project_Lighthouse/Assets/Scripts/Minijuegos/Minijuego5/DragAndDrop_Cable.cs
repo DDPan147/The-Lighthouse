@@ -135,7 +135,12 @@ public class DragAndDrop_Cable: MonoBehaviour
         // Actualiza la posicion del objeto manteniendo la profundidad z original
         Vector3 mouseScreenPos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, zDepth);
         Vector3 newWorldPos = Camera.main.ScreenToWorldPoint(mouseScreenPos - new Vector3(mousePos.x, mousePos.y, 0));
-        transform.position = newWorldPos;
+
+        Vector3 parentLimit = transform.parent.parent.parent.position;
+        transform.position = new Vector3(Mathf.Clamp(newWorldPos.x, parentLimit.x - 5, parentLimit.x + 5), newWorldPos.y, Mathf.Clamp(newWorldPos.z, parentLimit.z - 4, parentLimit.z + 5));
+
+        
+
         gm.cableConnections[correctSlotPosition] = false;
     }
 

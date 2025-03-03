@@ -10,9 +10,10 @@ public class PlayerGrabObjects : MonoBehaviour
     public Collider detectionCollider;
     [SerializeField] private bool canGrab = false;
     [SerializeField] private Vector3 _objectPositionOffset;
+    [SerializeField] private TypeObject _objectType;
     
     [Header("Papelera")]
-    [SerializeField] private GameObject keyPromptUI; // Referencia al popup UI
+    [SerializeField] private GameObject keyPromptUI;
     private bool isNearTrashbin = false;
     
     private void Start()
@@ -35,8 +36,16 @@ public class PlayerGrabObjects : MonoBehaviour
     //Suscribimos el evento para poder agarrar el objeto
     public void OnGrab(InputAction.CallbackContext context)
     {
-        GrabObject();
+        if (objectToGrab != null)
+        {
+            GrabObject();
+        }
     }
+    public void OnSaveObject(InputAction.CallbackContext context)
+    {
+        SaveObject();
+    }
+
     public void OnThrow(InputAction.CallbackContext context)
     {
         if (context.performed && objectToGrab != null && isNearTrashbin)
@@ -47,6 +56,11 @@ public class PlayerGrabObjects : MonoBehaviour
     //OntriggerEnter para poder comprobar si se encuentra el objeto
     private void OnTriggerEnter(Collider other)
     {
+        TypeObject typeOb = other.GetComponent<TypeObject>();
+        if (typeOb != null)
+        {
+            _objectType = typeOb;
+        }
         CheckTag(other);
     }
     
@@ -110,12 +124,21 @@ public class PlayerGrabObjects : MonoBehaviour
             Destroy(objectToGrab);
             objectToGrab = null;
             
-            // Ocultar el popup
-            if (keyPromptUI != null)
-                keyPromptUI.SetActive(false);
-            
-            Debug.Log("Objeto tirado a la papelera");
+            Debug.Log("Objeto guardado");
         }
     }
-    
+
+    private void SaveObject()
+    {
+        if (_objectType.currentObjectType)
+        {
+            Debug.Log("RAFA PUTO");
+        }
+        else
+        {
+            Debug.Log("Arnau");
+        }
+
+    }
+
 }
