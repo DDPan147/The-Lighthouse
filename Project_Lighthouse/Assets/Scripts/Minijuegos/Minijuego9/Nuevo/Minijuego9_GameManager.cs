@@ -20,6 +20,7 @@ public class Minijuego9_GameManager : MonoBehaviour
         {
             Debug.Log("Has Ganado");
             jeje.transform.DOMove(new Vector3(0, 1.6f, -9.5f), 5f);
+            //
         }
     }
 

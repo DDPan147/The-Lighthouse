@@ -11,7 +11,8 @@ public class Minijuego3_GameManager : MonoBehaviour
     void Start()
     {
         cam = Camera.main;
-        tuberias = GetComponentsInChildren<Tuberia>();
+        //tuberias = GetComponentsInChildren<Tuberia>();
+        tuberias = GameObject.FindObjectsByType<Tuberia>(FindObjectsSortMode.None);
         Debug.Log(tuberias.Length);
     }
 
@@ -31,7 +32,8 @@ public class Minijuego3_GameManager : MonoBehaviour
             if (hit.collider.gameObject.CompareTag("Tuberia") && canRotate)
             {
                 canRotate = false;
-                float rotation = hit.collider.gameObject.GetComponent<Tuberia>().initialRotation += 90f;
+                float rotation = hit.collider.gameObject.transform.eulerAngles.z;
+                rotation += 90;
                 //hit.collider.gameObject.transform.eulerAngles += new Vector3(0, 0, 90);
                 hit.collider.gameObject.transform.DORotate(new Vector3(0, 0, rotation), 1.25f, RotateMode.Fast).OnComplete(() => CheckPipes());
             }

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3298638995127967253}
   - component: {fileID: 583618472115065468}
   - component: {fileID: 5347761886960208830}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: ColliderPunta1
   m_TagString: Tuberia_Entrada
   m_Icon: {fileID: 0}
@@ -163,7 +163,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 1481581caf7faa34c87dc3a79a97a8b5, type: 2}
+  - {fileID: 2100000, guid: bc598842ff9c4fb44af896d419ce9c36, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -221,7 +221,6 @@ MonoBehaviour:
   isPart1Connected: 0
   isPart2Connected: 0
   isConnected: 0
-  initialRotation: 0
 --- !u!1 &6262301034816780711
 GameObject:
   m_ObjectHideFlags: 0
@@ -234,7 +233,7 @@ GameObject:
   - component: {fileID: 3650358031448815417}
   - component: {fileID: 395927682725669184}
   - component: {fileID: 684235425311137896}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: ColliderPunta2
   m_TagString: Tuberia_Entrada
   m_Icon: {fileID: 0}
