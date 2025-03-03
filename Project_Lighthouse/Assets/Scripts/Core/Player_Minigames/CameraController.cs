@@ -9,9 +9,9 @@ public class CameraController : MonoBehaviour
     [Range(1, 150)] public float sensitivity = 15f;
     public float limitRotationCamera = 90f;
 
-    private Vector2 _lookInput;
-    private float _vertRot;
-    private bool _isCursorLocked = false;
+    public Vector2 _lookInput;
+    public float _vertRot;
+    public bool _isCursorLocked = false;
 
     private void Start()
     {
