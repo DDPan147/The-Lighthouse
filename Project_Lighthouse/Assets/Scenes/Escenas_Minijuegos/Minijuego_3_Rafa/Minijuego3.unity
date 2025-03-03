@@ -141,6 +141,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: TuberiaRecta (9)
       objectReference: {fileID: 0}
+    - target: {fileID: 3650358031448815417, guid: 00cc171e6edaad54b92e7cc548508d19, type: 3}
+      propertyPath: m_Size.x
+      value: 0.66
+      objectReference: {fileID: 0}
     - target: {fileID: 5536329686708227579, guid: 00cc171e6edaad54b92e7cc548508d19, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.93
@@ -668,17 +672,17 @@ Transform:
   - {fileID: 1214638835}
   - {fileID: 2026142462}
   - {fileID: 1193041859}
-  - {fileID: 1636805375}
   - {fileID: 1502847447}
-  - {fileID: 1917841636}
-  - {fileID: 1317822879}
-  - {fileID: 2095931364}
   - {fileID: 342181970}
   - {fileID: 1233471201}
   - {fileID: 2134801784}
   - {fileID: 285799798}
   - {fileID: 1330951324}
   - {fileID: 2069880217}
+  - {fileID: 1917841636}
+  - {fileID: 1636805375}
+  - {fileID: 1317822879}
+  - {fileID: 2095931364}
   - {fileID: 1529417540}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1121,13 +1125,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: TuberiaCurva_Centrado (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 4635490068067302957, guid: d4fd7ce4511c7ef468ca99c2b8e50ebb, type: 3}
+      propertyPath: m_Size.x
+      value: 0.37
+      objectReference: {fileID: 0}
+    - target: {fileID: 4635490068067302957, guid: d4fd7ce4511c7ef468ca99c2b8e50ebb, type: 3}
+      propertyPath: m_Size.y
+      value: 0.36
+      objectReference: {fileID: 0}
     - target: {fileID: 4909517711894524134, guid: d4fd7ce4511c7ef468ca99c2b8e50ebb, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.83
       objectReference: {fileID: 0}
     - target: {fileID: 4909517711894524134, guid: d4fd7ce4511c7ef468ca99c2b8e50ebb, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.5
+      value: -1.6
       objectReference: {fileID: 0}
     - target: {fileID: 4909517711894524134, guid: d4fd7ce4511c7ef468ca99c2b8e50ebb, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1884,6 +1896,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 510418271}
     m_Modifications:
+    - target: {fileID: 3086777324257999300, guid: d4fd7ce4511c7ef468ca99c2b8e50ebb, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3565646048516910645, guid: d4fd7ce4511c7ef468ca99c2b8e50ebb, type: 3}
       propertyPath: m_Name
       value: TuberiaCurva_Centrado (2)
@@ -2353,9 +2369,13 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 510418271}
     m_Modifications:
+    - target: {fileID: 3453263948632642783, guid: 00cc171e6edaad54b92e7cc548508d19, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3508659687179248112, guid: 00cc171e6edaad54b92e7cc548508d19, type: 3}
       propertyPath: m_Name
-      value: TuberiaRecta (11)
+      value: TuberiaFalsa3
       objectReference: {fileID: 0}
     - target: {fileID: 5536329686708227579, guid: 00cc171e6edaad54b92e7cc548508d19, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2397,7 +2417,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 6262301034816780711, guid: 00cc171e6edaad54b92e7cc548508d19, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8748420859048047603, guid: 00cc171e6edaad54b92e7cc548508d19, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 8748420859048047603, guid: 00cc171e6edaad54b92e7cc548508d19, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -2606,9 +2635,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 510418271}
     m_Modifications:
+    - target: {fileID: 143649199218528597, guid: d4fd7ce4511c7ef468ca99c2b8e50ebb, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276388599190485135, guid: d4fd7ce4511c7ef468ca99c2b8e50ebb, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3565646048516910645, guid: d4fd7ce4511c7ef468ca99c2b8e50ebb, type: 3}
       propertyPath: m_Name
-      value: TuberiaCurva_Centrado (11)
+      value: TuberiaFalsa5
       objectReference: {fileID: 0}
     - target: {fileID: 4909517711894524134, guid: d4fd7ce4511c7ef468ca99c2b8e50ebb, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2650,7 +2687,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 6800704875866070823, guid: d4fd7ce4511c7ef468ca99c2b8e50ebb, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 6800704875866070823, guid: d4fd7ce4511c7ef468ca99c2b8e50ebb, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -2924,9 +2966,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 510418271}
     m_Modifications:
+    - target: {fileID: 143649199218528597, guid: d4fd7ce4511c7ef468ca99c2b8e50ebb, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276388599190485135, guid: d4fd7ce4511c7ef468ca99c2b8e50ebb, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3565646048516910645, guid: d4fd7ce4511c7ef468ca99c2b8e50ebb, type: 3}
       propertyPath: m_Name
-      value: TuberiaCurva_Centrado (10)
+      value: TuberiaFalsa2
       objectReference: {fileID: 0}
     - target: {fileID: 4909517711894524134, guid: d4fd7ce4511c7ef468ca99c2b8e50ebb, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2968,7 +3018,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 6800704875866070823, guid: d4fd7ce4511c7ef468ca99c2b8e50ebb, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 6800704875866070823, guid: d4fd7ce4511c7ef468ca99c2b8e50ebb, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -3359,9 +3414,13 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 510418271}
     m_Modifications:
+    - target: {fileID: 3453263948632642783, guid: 00cc171e6edaad54b92e7cc548508d19, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3508659687179248112, guid: 00cc171e6edaad54b92e7cc548508d19, type: 3}
       propertyPath: m_Name
-      value: TuberiaRecta (10)
+      value: TuberiaFalsa
       objectReference: {fileID: 0}
     - target: {fileID: 5536329686708227579, guid: 00cc171e6edaad54b92e7cc548508d19, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3403,7 +3462,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 6262301034816780711, guid: 00cc171e6edaad54b92e7cc548508d19, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8748420859048047603, guid: 00cc171e6edaad54b92e7cc548508d19, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 8748420859048047603, guid: 00cc171e6edaad54b92e7cc548508d19, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -3602,9 +3670,13 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 510418271}
     m_Modifications:
+    - target: {fileID: 3453263948632642783, guid: 00cc171e6edaad54b92e7cc548508d19, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3508659687179248112, guid: 00cc171e6edaad54b92e7cc548508d19, type: 3}
       propertyPath: m_Name
-      value: TuberiaRecta (12)
+      value: TuberiaFalsa4
       objectReference: {fileID: 0}
     - target: {fileID: 5536329686708227579, guid: 00cc171e6edaad54b92e7cc548508d19, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3646,7 +3718,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 6262301034816780711, guid: 00cc171e6edaad54b92e7cc548508d19, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8748420859048047603, guid: 00cc171e6edaad54b92e7cc548508d19, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 8748420859048047603, guid: 00cc171e6edaad54b92e7cc548508d19, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
