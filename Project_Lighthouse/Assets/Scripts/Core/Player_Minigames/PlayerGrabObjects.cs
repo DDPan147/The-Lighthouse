@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem; 
 
@@ -16,6 +17,8 @@ public class PlayerGrabObjects : MonoBehaviour
     [SerializeField] private GameObject keyPromptUI;
     private bool isNearTrashbin = false;
     
+    [Header("Input Control")]
+    private bool canSave = true; // Para evitar múltiples guardados
     private void Start()
     {
         playerMovement = GetComponent<Player_Movement_Minigame_7>();
@@ -32,8 +35,9 @@ public class PlayerGrabObjects : MonoBehaviour
             detectionCollider.transform.rotation = Quaternion.Euler(0, angle, 0);
         }
     }
+    #region Inputs
 
-    //Suscribimos el evento para poder agarrar el objeto
+    //Suscribimos los inputs
     public void OnGrab(InputAction.CallbackContext context)
     {
         if (objectToGrab != null)
@@ -43,7 +47,12 @@ public class PlayerGrabObjects : MonoBehaviour
     }
     public void OnSaveObject(InputAction.CallbackContext context)
     {
-        SaveObject();
+        if (context.performed && canSave && objectToGrab != null && _objectType.isImportantObject)
+        {
+            SaveObject();
+            canSave = false; // Prevenir múltiples guardados
+            StartCoroutine(ResetSaveFlag());
+        }
     }
 
     public void OnThrow(InputAction.CallbackContext context)
@@ -53,6 +62,9 @@ public class PlayerGrabObjects : MonoBehaviour
             ThrowObject();
         }
     }
+    #endregion
+    
+    #region Triggers
     //OntriggerEnter para poder comprobar si se encuentra el objeto
     private void OnTriggerEnter(Collider other)
     {
@@ -71,7 +83,7 @@ public class PlayerGrabObjects : MonoBehaviour
         {
             canGrab = false;
             objectToGrab = null;
-            Debug.Log("Saliste del objeto");
+            canSave = true;
         }
         else if (other.CompareTag("Trashbin"))
         {
@@ -79,15 +91,15 @@ public class PlayerGrabObjects : MonoBehaviour
             // Ocultar el popup
              if (keyPromptUI != null)
                  keyPromptUI.SetActive(false);
-            Debug.Log("Alejado de la papelera");
         }
     }
+    #endregion
+    
     //Agarramos el objeto en caso de que el collider encuentre un objeto
     private void GrabObject()
     {
         if (canGrab && objectToGrab != null)
         {
-            Debug.Log("Objeto capturado");
             objectToGrab.transform.parent = transform;
             objectToGrab.transform.localPosition = _objectPositionOffset;
             Collider collider = objectToGrab.GetComponent<Collider>();
@@ -105,7 +117,6 @@ public class PlayerGrabObjects : MonoBehaviour
         {
             objectToGrab = other.gameObject;
             canGrab = true;
-            Debug.Log("Objeto encontrado");
         }
         else if (other.CompareTag("Trashbin") && objectToGrab != null)
         {
@@ -113,32 +124,40 @@ public class PlayerGrabObjects : MonoBehaviour
             // Mostrar el popup
             if (keyPromptUI != null)
                 keyPromptUI.SetActive(true);
-            Debug.Log("Cerca de la papelera");
         }
     }
+
+    #region ThrowOrSave
     private void ThrowObject()
     {
-        if (objectToGrab != null)
+        if (objectToGrab != null && _objectType != null)
         {
-            // Destruir el objeto
+            bool isImportant = _objectType.isImportantObject;
+            MinigameSevenManager.Instance.TrackObjectProcessed(isImportant, false);
+            
             Destroy(objectToGrab);
             objectToGrab = null;
-            
-            Debug.Log("Objeto guardado");
+            _objectType = null;
         }
     }
 
     private void SaveObject()
     {
-        if (_objectType.currentObjectType)
+        if (objectToGrab != null && _objectType != null)
         {
-            Debug.Log("RAFA PUTO");
+            bool isImportant = _objectType.isImportantObject;
+            MinigameSevenManager.Instance.TrackObjectProcessed(isImportant, true);
+            
+            Destroy(objectToGrab);
+            objectToGrab = null;
+            _objectType = null;
         }
-        else
-        {
-            Debug.Log("Arnau");
-        }
-
     }
+    private IEnumerator ResetSaveFlag()
+    {
+        yield return new WaitForSeconds(0.5f);
+        canSave = true;
+    }
+    #endregion
 
 }
