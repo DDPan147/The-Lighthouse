@@ -2,6 +2,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 /// <summary>
 /// A Text that can supply a custom shader with data for animated text.
@@ -19,7 +20,8 @@ public class TextAnimated : Text
 #pragma warning restore CS0114 // Unity will handle that since this is a Unity function.
     {
         this.material = Material.Instantiate(this.baseMaterial); // Make a copy so we don't modify the base material. Note that this means edits to the shader won't affect this while in Play mode.
-        this.SetText("Here's some text. `WOW!!!` It's great!\nLook, it even crosses `multiple\nlines!`"); // Just for demonstration.
+        //this.SetText("Here's some text. `WOW!!!` It's great!\nLook, it even crosses `multiple\nlines!`"); // Just for demonstration.
+        this.SetText("AB");
     }
 
     /// <summary>
@@ -67,6 +69,23 @@ public class TextAnimated : Text
     protected override void OnPopulateMesh(VertexHelper toFill)
     {
         base.OnPopulateMesh(toFill);
-        this.material.SetFloatArray("_AnimateVerts", this.animateVerts);
+        //this.material.SetFloatArray("_AnimateVerts", this.animateVerts);
+        string substring = "Numbers are: ";
+        foreach(float vert in animateVerts)
+        {
+            substring += vert + ", ";
+        }
+        Debug.Log(substring);
+        /*for(int x = 0; x < 4; x++)
+        {
+            for (int y = 0; y < 4; y++)
+            {
+                //0, 1, 2, 3
+                //
+                //
+                // this xy = animateVerts[x*4 + y]
+                animateVertsMatrix.this[x, y] = animateVerts[x * 4 + y];
+            }
+        }*/
     }
 }
