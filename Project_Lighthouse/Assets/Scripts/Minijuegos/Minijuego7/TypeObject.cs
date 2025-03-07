@@ -2,12 +2,12 @@ using UnityEngine;
 
 public class TypeObject : MonoBehaviour
 {
-    public enum ObjectType { Rafa, Arnau }
+    public enum ObjectType { Important, Nonimportant }
 
     [SerializeField] private ObjectType currentType;
 
-    // Propiedad para verificar el tipo
-    public bool currentObjectType => currentType == ObjectType.Rafa;
+    public bool isImportantObject => currentType == ObjectType.Important;
 
-
+    [SerializeField] private string objectDescription;
+    [SerializeField] private float emotionalWeight;
 }
