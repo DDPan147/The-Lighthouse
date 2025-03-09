@@ -78,6 +78,7 @@ public class DragDrop_Item : MonoBehaviour
             {
                 transform.position = slotPos.position;
                 outlineMaterial.SetColor("_Color", Color.green);
+                WindowRestorationManager.Instance.OnFragmentCorrectlyPlaced(currentSlot.slotPosition);
             }
             else
             {
@@ -94,6 +95,7 @@ public class DragDrop_Item : MonoBehaviour
                 if (currentSlot.slotPosition == correctSlotPosition)
                 {
                     outlineMaterial.SetColor("_Color", Color.green);
+                    WindowRestorationManager.Instance.OnFragmentCorrectlyPlaced(currentSlot.slotPosition);
                 }
                 Debug.Log(currentSlot.slotPosition);
             }
