@@ -10,6 +10,7 @@ using TMPro;
 public class TextAnimated : Text
 {
     private float[] animateVerts = new float[16]; // 16 is arbitrarily large. Make sure this matches the shader.
+    private float[] animateVertsTypes = new float[16];
 
     [SerializeField]
     private Material baseMaterial;
@@ -20,8 +21,8 @@ public class TextAnimated : Text
 #pragma warning restore CS0114 // Unity will handle that since this is a Unity function.
     {
         this.material = Material.Instantiate(this.baseMaterial); // Make a copy so we don't modify the base material. Note that this means edits to the shader won't affect this while in Play mode.
-        //this.SetText("Here's some text. `WOW!!!` It's great!\nLook, it even crosses `multiple\nlines!`"); // Just for demonstration.
-        this.SetText("AB");
+        this.SetText("Here's some text. `WOW!!!` It's great!\nLook, it even crosses `multiple\nlines!`"); // Just for demonstration.
+        //this.SetText("AB");
     }
 
     /// <summary>
@@ -70,6 +71,12 @@ public class TextAnimated : Text
     {
         base.OnPopulateMesh(toFill);
         //this.material.SetFloatArray("_AnimateVerts", this.animateVerts);
+
+        for(int i = 0; i <= 14; i += 2) //01, 23, 45, 67, 89, 1011, 1213, 1415
+        {
+            Vector2 newRange = new Vector2(this.animateVerts[i], this.animateVerts[i+1]);
+            this.material.SetVector("_Range" + (i/2+1), newRange);
+        }
         string substring = "Numbers are: ";
         foreach(float vert in animateVerts)
         {
