@@ -45,12 +45,15 @@ public class GameManager : MonoBehaviour
 
     public void MinigameCompleted(int index)
     {
+        //Activar Evento Final en escena (feedback visual de que el minijuego se ha completado
 
         //Descargar (Unload) escena de minijuego
         SceneManager.UnloadSceneAsync(minigames[index].sceneName);
 
         //Marcar minijuego como completado
         minigames[index].isCompleted = true;
+
+        //Lanzar diálogo
 
         //Activar todo en la escena principal de nuevo
         minigameActive = false;

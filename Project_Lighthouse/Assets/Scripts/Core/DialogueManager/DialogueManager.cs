@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using System.Linq;
 using DG.Tweening;
+using System.Xml.Linq;
 
 [RequireComponent(typeof(AudioSource))]
 public class DialogueManager : MonoBehaviour
@@ -25,6 +26,7 @@ public class DialogueManager : MonoBehaviour
     private Queue<Speaker> speakers = new Queue<Speaker>();
     private Queue<DialogueEvent> events = new Queue<DialogueEvent>();
 
+    [SerializeField]private Speaker currentSpeakerTest;
     public enum Speaker
     {
         Abuelo,
@@ -99,7 +101,7 @@ public class DialogueManager : MonoBehaviour
 
         //SPEAKERS
         Speaker currentSpeaker = speakers.Dequeue();
-
+        currentSpeakerTest = currentSpeaker;
         TMP_Text nextTarget = DecideNextSpeaker(_comment.type, currentSpeaker);
         DisplayNextSentence(nextTarget);
     }
@@ -120,6 +122,18 @@ public class DialogueManager : MonoBehaviour
         else
         {
             return textDisplayGUI;
+        }
+    }
+
+    private TMP_Text DecideNextSpeaker(Speaker currentSpeaker)
+    {
+        if (currentSpeaker == Speaker.Abuelo)
+        {
+            return textDisplayAbuelo;
+        }
+        else
+        {
+            return textDisplayLuna;
         }
     }
 
@@ -183,8 +197,10 @@ public class DialogueManager : MonoBehaviour
         //Descale parent
         target.transform.parent.transform.DOScale(0, popupScaleDuration).SetEase(Ease.InBack).OnComplete(() =>
         {
-
-            DisplayNextSentence(target);
+            Speaker currentSpeaker = speakers.Dequeue();
+            currentSpeakerTest = currentSpeaker;
+            TMP_Text nextTarget = DecideNextSpeaker(currentSpeaker);
+            DisplayNextSentence(nextTarget);
         });
     }
 
@@ -229,5 +245,12 @@ public class DialogueManager : MonoBehaviour
     {
         //CloseBubble depending of speaker
     }
+
+
+
+
+    //David: Kike por que vas al dentista
+    //Kike: []
+    
 }
 

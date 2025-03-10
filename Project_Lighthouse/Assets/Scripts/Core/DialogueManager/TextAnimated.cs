@@ -10,18 +10,19 @@ using TMPro;
 public class TextAnimated : Text
 {
     private float[] animateVerts = new float[16]; // 16 is arbitrarily large. Make sure this matches the shader.
-    private float[] animateVertsTypes = new float[16];
+    private float[] animateVertsTypes = new float[8];
 
     [SerializeField]
     private Material baseMaterial;
     private const char delimiter = '`';
+    private char[] identifiers = new char[] {'0', '1', '2', '3', '4', '5', '6', '7', '8'};
 
 #pragma warning disable CS0114 // Member hides inherited member; missing override keyword
     public void Start()
 #pragma warning restore CS0114 // Unity will handle that since this is a Unity function.
     {
         this.material = Material.Instantiate(this.baseMaterial); // Make a copy so we don't modify the base material. Note that this means edits to the shader won't affect this while in Play mode.
-        this.SetText("Here's some text. `WOW!!!` It's great!\nLook, it even crosses `multiple\nlines!`"); // Just for demonstration.
+        this.SetText("Here's some text. `5WOW!!!` It's great!\nLook, it even crosses `1multiple\nlines!`"); // Just for demonstration.
         //this.SetText("AB");
     }
 
@@ -37,7 +38,20 @@ public class TextAnimated : Text
             int charCount = 0;
             int spaces = 0; // Whitespace doesn't have a glyph, so we need to deduct from the vertex indices when counting characters.
             StringBuilder output = new StringBuilder(); // The actual output text should not have the delimiter.
-
+            for(int i = 1; i < substrings.Length; i += 2)
+            {
+                //Detectar identificador
+                for(int a = 0; a < identifiers.Length; a++)
+                {
+                    if (substrings[i].StartsWith(identifiers[a]))
+                    {
+                        animateVertsTypes[(i-1)/2] = a;
+                        break;
+                    }
+                }
+                //Quitar identificador de la string final
+                substrings[i] = substrings[i].Remove(0, 1);
+            }
             for (int s = 0; s < substrings.Length; s++)
             {
                 output.Append(substrings[s]);
@@ -77,22 +91,24 @@ public class TextAnimated : Text
             Vector2 newRange = new Vector2(this.animateVerts[i], this.animateVerts[i+1]);
             this.material.SetVector("_Range" + (i/2+1), newRange);
         }
+        for(int a = 0; a < animateVertsTypes.Length; a++)
+        {
+            this.material.SetFloat("_RangeType" + (a+1), animateVertsTypes[a]);
+        }
+
+        //DEBUG.LOG
         string substring = "Numbers are: ";
         foreach(float vert in animateVerts)
         {
             substring += vert + ", ";
         }
         Debug.Log(substring);
-        /*for(int x = 0; x < 4; x++)
+
+        string substring2 = "Types are: ";
+        foreach (float vert in animateVertsTypes)
         {
-            for (int y = 0; y < 4; y++)
-            {
-                //0, 1, 2, 3
-                //
-                //
-                // this xy = animateVerts[x*4 + y]
-                animateVertsMatrix.this[x, y] = animateVerts[x * 4 + y];
-            }
-        }*/
+            substring2 += vert + ", ";
+        }
+        Debug.Log(substring2);
     }
 }

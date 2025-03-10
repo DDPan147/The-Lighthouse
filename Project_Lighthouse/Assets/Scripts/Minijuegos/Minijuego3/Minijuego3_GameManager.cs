@@ -54,6 +54,15 @@ public class Minijuego3_GameManager : MonoBehaviour
         if (correctPipes == tuberias.Length)
         {
             //Ha ganado el minijuego
+            GameManager gm = FindFirstObjectByType<GameManager>();
+            if (gm != null)
+            {
+                FindFirstObjectByType<GameManager>().MinigameCompleted(2);
+            }
+            else
+            {
+                Debug.LogWarning("No se ha encontrado el Game Manager de la escena principal. No se va a volver al juego");
+            }
             Debug.Log("Todo correcto");
             QueEsEsto.transform.DOMove(Camera.main.transform.position, 0.5f);
         }
