@@ -10,6 +10,7 @@ public class Minijuego3_GameManager : MonoBehaviour
     private bool canRotate = true;
     void Start()
     {
+
         cam = Camera.main;
         //tuberias = GetComponentsInChildren<Tuberia>();
         tuberias = GameObject.FindObjectsByType<Tuberia>(FindObjectsSortMode.None);
