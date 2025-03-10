@@ -2713,6 +2713,7 @@ GameObject:
   - component: {fileID: 1557921313}
   - component: {fileID: 1557921312}
   - component: {fileID: 1557921314}
+  - component: {fileID: 1557921315}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -2881,11 +2882,31 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 98ffa835-9348-473d-a6c1-debb4352f3c7
     m_ActionName: 'Minijuego3Y8/Click[/Mouse/leftButton]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 2ff00e48-7531-405d-8324-46186aed7a75
+    m_ActionName: 'Player/Save[/Keyboard/r]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &1557921315
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1557921311}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a551e4f98309ac745a069fa4d1f9de3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  seleccionables:
+    serializedVersion: 2
+    m_Bits: 8
+  outlineMat: {fileID: 2100000, guid: c9d5a3581cf6c2d41891a3c4e152a752, type: 2}
 --- !u!1001 &1574295759
 PrefabInstance:
   m_ObjectHideFlags: 0
