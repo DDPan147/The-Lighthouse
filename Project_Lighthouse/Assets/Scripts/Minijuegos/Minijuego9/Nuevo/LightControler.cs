@@ -24,7 +24,7 @@ public class LightControler : MonoBehaviour
 
     void Update()
     {
-        transform.Translate(new Vector3(moveDirection.x, moveDirection.y,0), Space.Self);
+        //transform.Translate(new Vector3(moveDirection.x, moveDirection.y,0), Space.Self);
         rayDirection = cam.transform.position - transform.position;
         RaycastHit hit;
 
@@ -54,7 +54,7 @@ public class LightControler : MonoBehaviour
         }
     }
 
-    public void OnMove(InputAction.CallbackContext context)
+    /*public void OnMove(InputAction.CallbackContext context)
     {
         if(start)
         {
@@ -72,7 +72,7 @@ public class LightControler : MonoBehaviour
             Cursor.visible = false;
         }
     }
-
+    */
 
     /*private IEnumerator KillCloud(GameObject cloud)
     {

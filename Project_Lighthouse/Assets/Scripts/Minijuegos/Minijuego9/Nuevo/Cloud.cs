@@ -1,6 +1,9 @@
 using DG.Tweening;
+using System;
 using TMPro;
+using Unity.Mathematics;
 using UnityEngine;
+using System.Collections;
 
 public class Cloud : MonoBehaviour
 {
@@ -26,10 +29,12 @@ public class Cloud : MonoBehaviour
     public int points;
     public TMP_Text pointsText;
     public float timeFadeIn;
+    private Rigidbody rb;
     private void Awake()
     {
         mainRenderer = GetComponent<Renderer>();
         mainMat = mainRenderer.material;
+        rb = GetComponent<Rigidbody>();
     }
 
     void Start()
@@ -37,6 +42,7 @@ public class Cloud : MonoBehaviour
         pointsText.enabled = false;
         initialScale = transform.localScale;
         FadeIn();
+        InitialMovement();
     }
 
     void TextFadeOut()
@@ -66,6 +72,10 @@ public class Cloud : MonoBehaviour
 
     void InitialMovement()
     {
-        // Movimiento Inicial
+        Vector2 randomDirection = new Vector2(UnityEngine.Random.Range(-1.0f,1.0f), UnityEngine.Random.Range(-1.0f,1.0f));
+        //Linear velocity
+        rb.linearVelocity = new Vector3(randomDirection.x, randomDirection.y, 0);
+        //Add Force
+
     }
 }
