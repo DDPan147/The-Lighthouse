@@ -1,6 +1,8 @@
 using DG.Tweening;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.VFX;
 
 public class Minijuego3_GameManager : MonoBehaviour
 {
@@ -8,12 +10,19 @@ public class Minijuego3_GameManager : MonoBehaviour
     private Tuberia[] tuberias;
     public GameObject QueEsEsto;
     private bool canRotate = true;
-    void Start()
-    {
+    private VisualEffect steamVFX;
+    public float steamTimeRate;
 
+    private void Awake()
+    {
         cam = Camera.main;
         //tuberias = GetComponentsInChildren<Tuberia>();
         tuberias = GameObject.FindObjectsByType<Tuberia>(FindObjectsSortMode.None);
+        steamVFX = GameObject.Find("Vapor").GetComponent<VisualEffect>();
+    }
+    void Start()
+    {
+        InvokeRepeating("RandomSteamGenerator", 5, 2);
         Debug.Log(tuberias.Length);
     }
 
@@ -67,5 +76,22 @@ public class Minijuego3_GameManager : MonoBehaviour
             Debug.Log("Todo correcto");
             QueEsEsto.transform.DOMove(Camera.main.transform.position, 0.5f);
         }
+    }
+
+    public void RandomSteamGenerator()
+    {
+        int random = Random.Range(0, 10);
+        Debug.Log(random);
+        if(random == 4)
+        {
+            StartCoroutine(SteamInYoFace());
+        }
+    }
+
+    public IEnumerator SteamInYoFace()
+    {
+        steamVFX.Play();
+        yield return new WaitForSeconds(steamTimeRate);
+        steamVFX.Stop();
     }
 }
