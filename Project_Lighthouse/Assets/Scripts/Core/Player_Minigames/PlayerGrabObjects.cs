@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem; 
 
@@ -12,6 +13,8 @@ public class PlayerGrabObjects : MonoBehaviour
     [SerializeField] private bool canGrab = false;
     [SerializeField] private Vector3 _objectPositionOffset;
     [SerializeField] private TypeObject _objectType;
+    [SerializeField] private TMP_Text _playerText;
+    private bool objectGrabbed = false;
     
     [Header("Papelera")]
     [SerializeField] private GameObject keyPromptUI;
@@ -25,6 +28,16 @@ public class PlayerGrabObjects : MonoBehaviour
         OnTriggerEnter(detectionCollider);
         if (keyPromptUI != null)
             keyPromptUI.SetActive(false);
+        
+        UpdatePromptText("");
+    }
+    
+    private void UpdatePromptText(string message)
+    {
+        if (_playerText != null)
+        {
+            _playerText.text = message;
+        }
     }
     //Rotamos el collider en caso de que el jugador este moviendose por el mapa
     private void Update()
@@ -33,6 +46,11 @@ public class PlayerGrabObjects : MonoBehaviour
         {
             float angle = Mathf.Atan2(playerMovement.inputDirection.x, playerMovement.inputDirection.y) * Mathf.Rad2Deg;
             detectionCollider.transform.rotation = Quaternion.Euler(0, angle, 0);
+        }
+
+        if (objectGrabbed && !isNearTrashbin)
+        {
+            UpdatePromptText("Press R to Save Object");
         }
     }
     #region Inputs
@@ -84,6 +102,7 @@ public class PlayerGrabObjects : MonoBehaviour
             canGrab = false;
             objectToGrab = null;
             canSave = true;
+            UpdatePromptText("");
         }
         else if (other.CompareTag("Trashbin"))
         {
@@ -91,6 +110,7 @@ public class PlayerGrabObjects : MonoBehaviour
             // Ocultar el popup
              if (keyPromptUI != null)
                  keyPromptUI.SetActive(false);
+             UpdatePromptText("");
         }
     }
     #endregion
@@ -105,6 +125,7 @@ public class PlayerGrabObjects : MonoBehaviour
             Collider collider = objectToGrab.GetComponent<Collider>();
             collider.enabled = false;
             canGrab = false;
+            objectGrabbed = true;
         }
         else
         {
@@ -115,11 +136,13 @@ public class PlayerGrabObjects : MonoBehaviour
     {
         if (other.CompareTag("Objeto"))
         {
+            UpdatePromptText("Press E to grab object");
             objectToGrab = other.gameObject;
             canGrab = true;
         }
         else if (other.CompareTag("Trashbin") && objectToGrab != null)
         {
+            UpdatePromptText("Press Q to throw object");
             isNearTrashbin = true;
             // Mostrar el popup
             if (keyPromptUI != null)
@@ -134,10 +157,11 @@ public class PlayerGrabObjects : MonoBehaviour
         {
             bool isImportant = _objectType.isImportantObject;
             MinigameSevenManager.Instance.TrackObjectProcessed(isImportant, false);
-            
+            objectGrabbed = false;
             Destroy(objectToGrab);
             objectToGrab = null;
             _objectType = null;
+            UpdatePromptText("");
         }
     }
 
@@ -147,10 +171,12 @@ public class PlayerGrabObjects : MonoBehaviour
         {
             bool isImportant = _objectType.isImportantObject;
             MinigameSevenManager.Instance.TrackObjectProcessed(isImportant, true);
+            objectGrabbed = false;
             
             Destroy(objectToGrab);
             objectToGrab = null;
             _objectType = null;
+            UpdatePromptText("");
         }
     }
     private IEnumerator ResetSaveFlag()
