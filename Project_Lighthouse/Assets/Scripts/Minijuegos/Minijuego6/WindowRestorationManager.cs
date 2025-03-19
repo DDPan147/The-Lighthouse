@@ -69,13 +69,11 @@ public class WindowRestorationManager : MonoBehaviour
 
     public void OnFragmentCorrectlyPlaced(int slotPosition)
     {
-    
         if (isMinigameComplete) return;
         slotCompletionStatus[slotPosition] = true;
         correctPlacements = slotCompletionStatus.Count(kvp => kvp.Value);
         onFragmentPlaced?.Invoke(slotPosition);
         CheckMinigameCompletion();
-        Debug.Log($"Fragment placed in slot {slotPosition}. Total correct: {correctPlacements}");
     }
 
     private void CheckMinigameCompletion()
@@ -113,4 +111,5 @@ public class WindowRestorationManager : MonoBehaviour
     public bool IsMinigameComplete() => isMinigameComplete;
 
     private void OnDestroy() => Instance = null;
+    public int GetCorrectPlacements() => correctPlacements;
 }

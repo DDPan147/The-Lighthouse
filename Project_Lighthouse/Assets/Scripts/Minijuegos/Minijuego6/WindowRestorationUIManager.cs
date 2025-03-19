@@ -58,15 +58,7 @@ public class WindowRestorationUIManager : MonoBehaviour
 
         gameManager.onFragmentPlaced.AddListener((int slotPosition) => {
             Debug.Log($"UI Update - Fragment Placed in slot {slotPosition}");
-            // Obtener el conteo directamente del GameManager
-            int fragmentsPlaced = 0;
-            for (int i = 0; i < gameManager.GetTotalFragments(); i++)
-            {
-                if (gameManager.IsSlotCompleted(i))
-                    fragmentsPlaced++;
-            }
-            Debug.Log($"UI Update - Total fragments placed: {fragmentsPlaced}");
-            UpdateProgress(fragmentsPlaced);
+            UpdateProgress(gameManager.GetCorrectPlacements()); // Añadir este método al manager
         });
 
         gameManager.onMinigameComplete.AddListener(() => {
@@ -83,7 +75,6 @@ public class WindowRestorationUIManager : MonoBehaviour
 
     public void UpdateProgress(int fragmentsPlaced)
     {
-        Debug.Log($"Updating UI Progress: {fragmentsPlaced}/{gameManager.GetTotalFragments()}");
         if (progressText != null)
         {
             progressText.text = $"Fragmentos: {fragmentsPlaced}/{gameManager.GetTotalFragments()}";
@@ -114,4 +105,5 @@ public class WindowRestorationUIManager : MonoBehaviour
         // Aquí puedes poner la lógica para continuar al siguiente nivel
         // o cerrar el minijuego
     }
+    
 }

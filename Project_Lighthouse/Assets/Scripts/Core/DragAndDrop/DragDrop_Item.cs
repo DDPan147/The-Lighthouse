@@ -112,7 +112,6 @@ public class DragDrop_Item : MonoBehaviour
         if (slot != null )
         {
             SetOutlineVisibility(true);
-            Debug.Log("Slot encontrado");
             currentSlot = slot;
             slotPos = slot.posSlot;
         }
@@ -124,7 +123,6 @@ public class DragDrop_Item : MonoBehaviour
         if (slot != null && currentSlot == null && isOnMouse == true)
         {
             SetOutlineVisibility(true);
-            Debug.Log("Objeto sigue en el slot");
             currentSlot = slot;
             slotPos = slot.posSlot;
         }
