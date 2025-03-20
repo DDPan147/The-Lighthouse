@@ -1,4 +1,5 @@
 using System;
+using DG.Tweening;
 using UnityEngine;
 
 public class DragDrop_Item : MonoBehaviour
@@ -14,6 +15,7 @@ public class DragDrop_Item : MonoBehaviour
     public int correctSlotPosition;
     private Vector3 initialPosition;
     public float detectionRadius = 1f;
+    private bool isDragging = false;
     
     [Header("Material detection")]
     public Material outlineMaterial;
@@ -24,6 +26,21 @@ public class DragDrop_Item : MonoBehaviour
     [SerializeField] private float zDepth; // Profundidad del objeto en la camara
     [SerializeField] private bool isOnMouse;
 
+    [Header("Efectos")]
+    [SerializeField] private float hoverHeight = 0.2f;
+    [SerializeField] private float dragSpeed = 10f;
+    [SerializeField] private AnimationCurve dragCurve;
+    [SerializeField] private float pickupScale = 1.1f;
+    private Vector3 originalScale;
+    
+    [Header("Restricciones")]
+    [SerializeField] private bool canRotate = false;
+    [SerializeField] private Vector2 rotationLimits;
+    
+    [Header("Animación")]
+    [SerializeField] private float snapDuration = 0.3f;
+    [SerializeField] private Ease snapEase = Ease.OutBack;
+    
     [Header("Script detection")]
     [SerializeField] private DragDrop_Slot currentSlot;
     [SerializeField] private Transform slotPos;
@@ -33,7 +50,21 @@ public class DragDrop_Item : MonoBehaviour
     {
         outlineMaterial = GetComponent<MeshRenderer>().materials[1];
         initialPosition = transform.position;
+        originalScale = transform.localScale;
         SetOutlineVisibility(false);
+    }
+
+    private void Update()
+    {
+        if (isDragging)
+        {
+            UpdateDragPosition();
+            transform.localScale = Vector3.Lerp(transform.localScale, originalScale * pickupScale, Time.deltaTime * dragSpeed);
+        }
+        else
+        {
+            transform.localScale = Vector3.Lerp(transform.localScale, originalScale, Time.deltaTime * dragSpeed);
+        }
     }
 
     private void SetOutlineVisibility(bool isVisible)
@@ -50,20 +81,33 @@ public class DragDrop_Item : MonoBehaviour
         }
     }
 
-    private Vector3 GetMousePos()
+    private Vector3 GetMousePosDepth()
     {
         // Captura la posicion actual del objeto en la camara y calcula la profundidad
         Vector3 screenPos = Camera.main.WorldToScreenPoint(transform.position);
         zDepth = screenPos.z; // Guarda la profundidad del objeto
         return screenPos;
     }
+    private Vector3 GetMouseWorldPosition()
+    {
+        Vector3 mouseScreenPos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, zDepth);
+        return Camera.main.ScreenToWorldPoint(mouseScreenPos - new Vector3(mousePos.x, mousePos.y, 0));
+    }
+    private void UpdateDragPosition()
+    {
+        isOnMouse = true;
+        Vector3 targetPos = GetMouseWorldPosition();
+        transform.position = Vector3.Lerp(transform.position, targetPos, Time.deltaTime * dragSpeed);
+    }
 
     private void OnMouseDown()
     {
-        mousePos = Input.mousePosition - GetMousePos(); // Calcula el offset al hacer clic
+        isDragging = true;
+        mousePos = Input.mousePosition - GetMousePosDepth(); // Calcula el offset al hacer clic
     }
     private void OnMouseUp()
     {
+        isDragging = false;
         isOnMouse = false;
         StickItemSlot();
         currentSlot = null;
@@ -71,18 +115,17 @@ public class DragDrop_Item : MonoBehaviour
 
     private void StickItemSlot()
     {
-        // Si se suelta sobre un slot valido
         if (type == TypeDragDrop.ResetPos)
         {
             if (currentSlot != null && currentSlot.slotPosition == correctSlotPosition)
             {
-                transform.position = slotPos.position;
+                AnimateToPosition(slotPos.position);
                 outlineMaterial.SetColor("_Color", Color.green);
                 WindowRestorationManager.Instance.OnFragmentCorrectlyPlaced(currentSlot.slotPosition);
             }
             else
             {
-                ResetPosition();
+                AnimateToPosition(initialPosition);
                 SetOutlineVisibility(false);
             }
         }
@@ -90,20 +133,31 @@ public class DragDrop_Item : MonoBehaviour
         {
             if (currentSlot != null && type == TypeDragDrop.NoResetPos)
             {
-                Debug.Log("Tipo no reset encajando en el slot correcto");
-                transform.position = slotPos.position;
+                AnimateToPosition(slotPos.position);
                 if (currentSlot.slotPosition == correctSlotPosition)
                 {
                     outlineMaterial.SetColor("_Color", Color.green);
                     WindowRestorationManager.Instance.OnFragmentCorrectlyPlaced(currentSlot.slotPosition);
                 }
-                Debug.Log(currentSlot.slotPosition);
             }
             else
             {
                 SetOutlineVisibility(false);
             }
         }
+    }
+    private void AnimateToPosition(Vector3 targetPosition)
+    {
+        // Cancela cualquier animación previa
+        transform.DOKill();
+        
+        // Anima la posición
+        transform.DOMove(targetPosition, snapDuration)
+            .SetEase(snapEase)
+            .OnComplete(() => {
+                // Opcional: Añade un pequeño efecto de rebote al final
+                transform.DOPunchScale(Vector3.one * 0.1f, 0.2f, 1, 0.5f);
+            });
     }
 
     private void OnTriggerEnter(Collider other)
@@ -136,15 +190,6 @@ public class DragDrop_Item : MonoBehaviour
             currentSlot = null;
             slotPos = null;
         }
-    }
-
-    private void OnMouseDrag()
-    {
-        isOnMouse = true;
-        // Actualiza la posicion del objeto manteniendo la profundidad z original
-        Vector3 mouseScreenPos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, zDepth);
-        Vector3 newWorldPos = Camera.main.ScreenToWorldPoint(mouseScreenPos - new Vector3(mousePos.x, mousePos.y, 0));
-        transform.position = newWorldPos;
     }
 
     public void ResetPosition()
