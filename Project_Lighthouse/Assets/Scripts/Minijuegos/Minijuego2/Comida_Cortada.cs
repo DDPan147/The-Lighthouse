@@ -6,18 +6,36 @@ public class Comida_Cortada : MonoBehaviour
 {
     public bool isGrabbed;
     [HideInInspector] public bool isCutted;
+    [HideInInspector] public bool isRebozado;
     [HideInInspector] public Vector2 moveDirection;
+    [HideInInspector] public Material comidaMat;
+    public GameObject comida_Cortada;
     private float moveSpeed = 0.4f;
     private bool thereIsBread;
-    void Start()
+    
+    private GameObject rebozadoObj;
+
+    private void Awake()
     {
-        
+        rebozadoObj = transform.Find("Rebozado").gameObject;
     }
 
     void Update()
     {
         transform.position += new Vector3(moveDirection.x, 0, moveDirection.y);
+        if(isRebozado)
+        {
+            //comidaMat = GetMaterial();
+            //comidaMat.color = Color.yellow;
+            rebozadoObj.SetActive(true);
+        }
+        else
+        {
+            rebozadoObj.SetActive(false);
+        }
     }
+
+    
 
     private void OnTriggerEnter(Collider other)
     {
@@ -48,7 +66,14 @@ public class Comida_Cortada : MonoBehaviour
     {
         if (context.performed && thereIsBread && isGrabbed)
         {
-            GetComponentInChildren<Renderer>().material.color = Color.red;
+            isRebozado = true;
         }
     }
+
+    /*public Material GetMaterial()
+    {
+        Material mat;
+        mat = GetComponentInChildren<Renderer>().material;
+        return mat;
+    }*/
 }
