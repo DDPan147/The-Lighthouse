@@ -13,6 +13,7 @@ public class Minijuego2_GameManager : MonoBehaviour
     public float limitRotationCamera;
     public float speedRotation;
     private float cameraRotation;
+    
     void Start()
     {
         cam = Camera.main;
@@ -23,17 +24,22 @@ public class Minijuego2_GameManager : MonoBehaviour
 
     void Update()
     {
-        if(Input.mousePosition.x > ScreenWidth - camaraUmbral)
+        CameraMovement();
+    }
+
+    public void CameraMovement()
+    {
+        if (Input.mousePosition.x > ScreenWidth - camaraUmbral)
         {
-            if(cameraRotation < limitRotationCamera)
+            if (cameraRotation < limitRotationCamera)
             {
                 cam.transform.eulerAngles += new Vector3(0, 1, 0) * Time.deltaTime * speedRotation;
                 cameraRotation += Time.deltaTime * speedRotation;
             }
         }
-        if(Input.mousePosition.x < camaraUmbral)
+        if (Input.mousePosition.x < camaraUmbral)
         {
-            if(cameraRotation > -limitRotationCamera)
+            if (cameraRotation > -limitRotationCamera)
             {
                 cam.transform.eulerAngles -= new Vector3(0, 1, 0) * Time.deltaTime * speedRotation;
                 cameraRotation -= Time.deltaTime * speedRotation;

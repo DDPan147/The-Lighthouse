@@ -248,6 +248,19 @@ MonoBehaviour:
   outlineMaterial: {fileID: 0}
   zDepth: 0
   isOnMouse: 0
+  hoverHeight: 0.2
+  dragSpeed: 10
+  dragCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  pickupScale: 1.1
+  canRotate: 0
+  rotationLimits: {x: 0, y: 0}
+  snapDuration: 0.3
+  snapEase: 27
   currentSlot: {fileID: 0}
   slotPos: {fileID: 0}
 --- !u!54 &24272824
@@ -714,6 +727,19 @@ MonoBehaviour:
   outlineMaterial: {fileID: 0}
   zDepth: 0
   isOnMouse: 0
+  hoverHeight: 0.2
+  dragSpeed: 10
+  dragCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  pickupScale: 1.1
+  canRotate: 0
+  rotationLimits: {x: 0, y: 0}
+  snapDuration: 0.3
+  snapEase: 27
   currentSlot: {fileID: 0}
   slotPos: {fileID: 0}
 --- !u!54 &219258833
@@ -1503,6 +1529,19 @@ MonoBehaviour:
   outlineMaterial: {fileID: 0}
   zDepth: 0
   isOnMouse: 0
+  hoverHeight: 0.2
+  dragSpeed: 10
+  dragCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  pickupScale: 1.1
+  canRotate: 0
+  rotationLimits: {x: 0, y: 0}
+  snapDuration: 0.3
+  snapEase: 27
   currentSlot: {fileID: 0}
   slotPos: {fileID: 0}
 --- !u!54 &476796579
@@ -1882,6 +1921,19 @@ MonoBehaviour:
   outlineMaterial: {fileID: 0}
   zDepth: 0
   isOnMouse: 0
+  hoverHeight: 0.2
+  dragSpeed: 10
+  dragCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  pickupScale: 1.1
+  canRotate: 0
+  rotationLimits: {x: 0, y: 0}
+  snapDuration: 0.3
+  snapEase: 27
   currentSlot: {fileID: 0}
   slotPos: {fileID: 0}
 --- !u!54 &611315455
@@ -2174,6 +2226,19 @@ MonoBehaviour:
   outlineMaterial: {fileID: 0}
   zDepth: 0
   isOnMouse: 0
+  hoverHeight: 0.2
+  dragSpeed: 10
+  dragCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  pickupScale: 1.1
+  canRotate: 0
+  rotationLimits: {x: 0, y: 0}
+  snapDuration: 0.3
+  snapEase: 27
   currentSlot: {fileID: 0}
   slotPos: {fileID: 0}
 --- !u!54 &873029148
@@ -2417,6 +2482,19 @@ MonoBehaviour:
   outlineMaterial: {fileID: 0}
   zDepth: 0
   isOnMouse: 0
+  hoverHeight: 0.2
+  dragSpeed: 10
+  dragCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  pickupScale: 1.1
+  canRotate: 0
+  rotationLimits: {x: 0, y: 0}
+  snapDuration: 0.3
+  snapEase: 27
   currentSlot: {fileID: 0}
   slotPos: {fileID: 0}
 --- !u!136 &953337210
@@ -2667,6 +2745,28 @@ MonoBehaviour:
   outlineMaterial: {fileID: 0}
   zDepth: 0
   isOnMouse: 0
+  hoverHeight: 0.2
+  dragSpeed: 10
+  dragCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  pickupScale: 1.1
+  canRotate: 0
+  rotationLimits: {x: 0, y: 0}
+  snapDuration: 0.3
+  snapEase: 27
   currentSlot: {fileID: 0}
   slotPos: {fileID: 0}
 --- !u!54 &1038051691
@@ -2997,6 +3097,19 @@ MonoBehaviour:
   outlineMaterial: {fileID: 0}
   zDepth: 0
   isOnMouse: 0
+  hoverHeight: 0.2
+  dragSpeed: 10
+  dragCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  pickupScale: 1.1
+  canRotate: 0
+  rotationLimits: {x: 0, y: 0}
+  snapDuration: 0.3
+  snapEase: 27
   currentSlot: {fileID: 0}
   slotPos: {fileID: 0}
 --- !u!54 &1350187402
@@ -3634,6 +3747,19 @@ MonoBehaviour:
   outlineMaterial: {fileID: 0}
   zDepth: 0
   isOnMouse: 0
+  hoverHeight: 0.2
+  dragSpeed: 10
+  dragCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  pickupScale: 1.1
+  canRotate: 0
+  rotationLimits: {x: 0, y: 0}
+  snapDuration: 0.3
+  snapEase: 27
   currentSlot: {fileID: 0}
   slotPos: {fileID: 0}
 --- !u!54 &1521580609
@@ -3792,6 +3918,19 @@ MonoBehaviour:
   outlineMaterial: {fileID: 0}
   zDepth: 0
   isOnMouse: 0
+  hoverHeight: 0.2
+  dragSpeed: 10
+  dragCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  pickupScale: 1.1
+  canRotate: 0
+  rotationLimits: {x: 0, y: 0}
+  snapDuration: 0.3
+  snapEase: 27
   currentSlot: {fileID: 0}
   slotPos: {fileID: 0}
 --- !u!54 &1525214610
@@ -3950,6 +4089,19 @@ MonoBehaviour:
   outlineMaterial: {fileID: 0}
   zDepth: 0
   isOnMouse: 0
+  hoverHeight: 0.2
+  dragSpeed: 10
+  dragCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  pickupScale: 1.1
+  canRotate: 0
+  rotationLimits: {x: 0, y: 0}
+  snapDuration: 0.3
+  snapEase: 27
   currentSlot: {fileID: 0}
   slotPos: {fileID: 0}
 --- !u!54 &1541364050
@@ -4563,11 +4715,11 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 147418830}
+  - {fileID: 1827581001}
+  - {fileID: 1427134967}
   - {fileID: 295556191}
   - {fileID: 507378461}
   - {fileID: 2146623915}
   - {fileID: 1496194871}
-  - {fileID: 1827581001}
   - {fileID: 362836302}
   - {fileID: 1452026684}
-  - {fileID: 1427134967}

@@ -74,9 +74,12 @@ public class Knife : MonoBehaviour
         }
         if (context.performed && thereIsFood)
         {
-            Comida.transform.Find("ComidaCortada_Minijuego2").gameObject.SetActive(true);
-            Comida.transform.Find("Comida_Minijuego2").gameObject.SetActive(false);
-            Comida.GetComponent<Comida_Cortada>().isCutted = true;
+            Comida_Cortada comida_Cortada = Comida.GetComponent<Comida_Cortada>();
+            Destroy(Comida.transform.Find("Forma").gameObject);
+            Instantiate(comida_Cortada.comida_Cortada, Comida.transform);
+            //Comida.transform.Find("ComidaCortada_Minijuego2").gameObject.SetActive(true);
+            //Comida.transform.Find("Comida_Minijuego2").gameObject.SetActive(false);
+            comida_Cortada.isCutted = true;
             thereIsFood = false;
         }
     }

@@ -1,50 +1,43 @@
-using System;
 using DG.Tweening;
 using UnityEngine;
 
-public class DragDrop_Item : MonoBehaviour
+public class ClockGear : MonoBehaviour
 {
     public enum TypeDragDrop
     {
         NoResetPos, // Se puede poner en cualquier slot disponible del minijuego
         ResetPos // Si no accede al slot correcto, este volvera a la posicion de origen
     }
-
-    [Header("Ajustes posicion")]
-    public TypeDragDrop type;
+    
+    [Header("Configuración del Engranaje")]
+    public int gearID;
+    public TypeDragDrop type = TypeDragDrop.ResetPos;
     public int correctSlotPosition;
     private Vector3 initialPosition;
-    public float detectionRadius = 1f;
-    private bool isDragging = false;
     
     [Header("Material detection")]
     public Material outlineMaterial;
     private MeshRenderer meshRenderer;
     
-    [Space]
+    [Header("Drag Variables")]
     private Vector3 mousePos;
-    [SerializeField] private float zDepth; // Profundidad del objeto en la camara
+    [SerializeField] private float zDepth;
     [SerializeField] private bool isOnMouse;
-
+    private bool isDragging = false;
+    
     [Header("Efectos")]
-    [SerializeField] private float hoverHeight = 0.2f;
     [SerializeField] private float dragSpeed = 10f;
-    [SerializeField] private AnimationCurve dragCurve;
     [SerializeField] private float pickupScale = 1.1f;
     private Vector3 originalScale;
-    
-    [Header("Restricciones")]
-    [SerializeField] private bool canRotate = false;
-    [SerializeField] private Vector2 rotationLimits;
     
     [Header("Animación")]
     [SerializeField] private float snapDuration = 0.3f;
     [SerializeField] private Ease snapEase = Ease.OutBack;
     
-    [Header("Script detection")]
-    [SerializeField] private DragDrop_Slot currentSlot;
+    [Header("Referencias")]
+    [SerializeField] private GearSlot currentSlot;
     [SerializeField] private Transform slotPos;
-
+    public Camera playerCamera;
 
     private void Awake()
     {
@@ -71,7 +64,6 @@ public class DragDrop_Item : MonoBehaviour
     {
         if (outlineMaterial != null)
         {
-            // Cambia el color alpha para hacer visible/invisible el outline
             Color outlineColor = outlineMaterial.GetColor("_Color");
             float outlineScale = outlineMaterial.GetFloat("_Scale");
             outlineScale = isVisible ? 1.05f : 0f;
@@ -83,16 +75,17 @@ public class DragDrop_Item : MonoBehaviour
 
     private Vector3 GetMousePosDepth()
     {
-        // Captura la posicion actual del objeto en la camara y calcula la profundidad
-        Vector3 screenPos = Camera.main.WorldToScreenPoint(transform.position);
-        zDepth = screenPos.z; // Guarda la profundidad del objeto
+        Vector3 screenPos = playerCamera.WorldToScreenPoint(transform.position);
+        zDepth = screenPos.z;
         return screenPos;
     }
+
     private Vector3 GetMouseWorldPosition()
     {
         Vector3 mouseScreenPos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, zDepth);
-        return Camera.main.ScreenToWorldPoint(mouseScreenPos - new Vector3(mousePos.x, mousePos.y, 0));
+        return playerCamera.ScreenToWorldPoint(mouseScreenPos - new Vector3(mousePos.x, mousePos.y, 0));
     }
+
     private void UpdateDragPosition()
     {
         isOnMouse = true;
@@ -103,97 +96,71 @@ public class DragDrop_Item : MonoBehaviour
     private void OnMouseDown()
     {
         isDragging = true;
-        mousePos = Input.mousePosition - GetMousePosDepth(); // Calcula el offset al hacer clic
+        mousePos = Input.mousePosition - GetMousePosDepth();
     }
+
     private void OnMouseUp()
     {
         isDragging = false;
         isOnMouse = false;
-        StickItemSlot();
+        StickGearToSlot();
         currentSlot = null;
     }
 
-    private void StickItemSlot()
+    private void StickGearToSlot()
     {
-        if (type == TypeDragDrop.ResetPos)
+        if (currentSlot != null && currentSlot.slotPosition == correctSlotPosition)
         {
-            if (currentSlot != null && currentSlot.slotPosition == correctSlotPosition)
-            {
-                AnimateToPosition(slotPos.position);
-                outlineMaterial.SetColor("_Color", Color.green);
-                WindowRestorationManager.Instance.OnFragmentCorrectlyPlaced(currentSlot.slotPosition);
-            }
-            else
-            {
-                AnimateToPosition(initialPosition);
-                SetOutlineVisibility(false);
-            }
+            AnimateToPosition(slotPos.position);
+            outlineMaterial.SetColor("_Color", Color.green);
+            ClockManager.Instance.CheckCompletion();
+            StartGearRotation();
         }
         else
         {
-            if (currentSlot != null && type == TypeDragDrop.NoResetPos)
-            {
-                AnimateToPosition(slotPos.position);
-                if (currentSlot.slotPosition == correctSlotPosition)
-                {
-                    outlineMaterial.SetColor("_Color", Color.green);
-                    WindowRestorationManager.Instance.OnFragmentCorrectlyPlaced(currentSlot.slotPosition);
-                }
-            }
-            else
-            {
-                SetOutlineVisibility(false);
-            }
+            AnimateToPosition(initialPosition);
+            SetOutlineVisibility(false);
         }
     }
+
+    private void StartGearRotation()
+    {
+        // Determinar la dirección de rotación basada en la posición del engranaje
+        float rotationSpeed = (correctSlotPosition % 2 == 0) ? 90f : -90f;
+        transform.DORotate(new Vector3(0, 0, 360f), 3f, RotateMode.FastBeyond360)
+            .SetEase(Ease.Linear)
+            .SetLoops(-1);
+    }
+
     private void AnimateToPosition(Vector3 targetPosition)
     {
-        // Cancela cualquier animación previa
         transform.DOKill();
-        
-        // Anima la posición
         transform.DOMove(targetPosition, snapDuration)
             .SetEase(snapEase)
             .OnComplete(() => {
-                // Opcional: Añade un pequeño efecto de rebote al final
                 transform.DOPunchScale(Vector3.one * 0.1f, 0.2f, 1, 0.5f);
             });
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        DragDrop_Slot slot = other.GetComponent<DragDrop_Slot>();
-        if (slot != null )
+        GearSlot slot = other.GetComponent<GearSlot>();
+        if (slot != null)
         {
             SetOutlineVisibility(true);
             currentSlot = slot;
             slotPos = slot.posSlot;
         }
+    }
 
-    }
-    private void OnTriggerStay(Collider other)
-    {
-        DragDrop_Slot slot = other.GetComponent<DragDrop_Slot>();
-        if (slot != null && currentSlot == null && isOnMouse == true)
-        {
-            SetOutlineVisibility(true);
-            currentSlot = slot;
-            slotPos = slot.posSlot;
-        }
-    }
     private void OnTriggerExit(Collider other)
     {
-        DragDrop_Slot slot = other.GetComponent<DragDrop_Slot>();
+        GearSlot slot = other.GetComponent<GearSlot>();
         if (slot != null)
         {
             SetOutlineVisibility(false);
             currentSlot = null;
             slotPos = null;
         }
-    }
-
-    public void ResetPosition()
-    {
-        transform.position = initialPosition; // Vuelve a la posicion inicial si no es correcta
     }
 }
