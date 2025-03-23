@@ -1,16 +1,29 @@
+using DG.Tweening;
+using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    [Header("MinigameManager")]
     public MinigameData[] minigames;
     public Camera mainCamera;
     public GameObject eventSystem;
     public AudioListener audioListener;
 
-
     public static bool minigameActive;
+
+    [Header("MissionManager")]
+    public Mission[] missions;
+    [SerializeField] private GameObject playerMissionPopup;
+    [SerializeField] private TMP_Text playerMissionText;
+    [SerializeField] private GameObject GUIMissionHolder;
+    [SerializeField] private TMP_Text GUIMissionText;
+
+
+    
     
     void Start()
     {
@@ -23,7 +36,7 @@ public class GameManager : MonoBehaviour
     {
         
     }
-
+    #region MinigameManager
     public void LoadMinigame(int index)
     {
         //Cargar Escena de minijuego
@@ -63,5 +76,64 @@ public class GameManager : MonoBehaviour
         eventSystem.SetActive(true);
         audioListener.enabled = true;
     }
+    #endregion
+    #region MissionManager
+    public void UnlockNewMission(string _missionName)
+    {
+        int missionIndex = Array.FindIndex(missions, mission => mission.missionName == _missionName);
+        if (missions[missionIndex] != null)
+        {
+            missions[missionIndex].isDiscovered = true;
+
+            //Show Mission On Top Of Player's Head
+            //Replace Text with new mission name
+            playerMissionText.text = missions[missionIndex].missionName;
+            //Activate Text (intro animation)
+            playerMissionText.DOFade(1, 2).SetEase(Ease.OutQuad).OnComplete(() => FadeOut(missions[missionIndex].missionDesc));
+            //Play Effect On Top Of Player's Head
+            //Fade Out Top Of Player's Head
+            //Deactivate Text (animation)
+
+            
+        }
+
+        void PlayEffect()
+        {
+
+        }
+
+        void FadeOut(string _missionDesc)
+        {
+            playerMissionText.DOFade(0, 2).SetEase(Ease.InQuad).OnComplete(() => ShowNewMissionOnGUI(_missionDesc));
+        }
+    }
+    public void ShowNewMissionOnGUI(string _missionDesc)
+    {
+        //Replace Text with New Mission Name
+        GUIMissionText.text = _missionDesc;
+        GUIMissionText.color = Color.white;
+        GUIMissionText.gameObject.transform.DOLocalMoveX(-400, 2, false).SetEase(Ease.OutBack);
+        //Play Animation Of New Mission
+        //Display Marker Of New Mission Location (optional)
+    }
+
+    public void CompleteMission(string _missionName)
+    {
+        int missionIndex = Array.FindIndex(missions, mission => mission.missionName == _missionName);
+        //Mark Mission as Completed
+        missions[missionIndex].isCompleted = true;
+        RemoveMissionFromGUI();
+
+        //Trigger Dialogue of whatever?
+    }
+
+    public void RemoveMissionFromGUI()
+    {
+        //Strikethrough Text Animation
+        GUIMissionText.color = Color.green;
+        //Dissappear Animation
+        GUIMissionText.gameObject.transform.DOLocalMoveX(400, 2, false).SetEase(Ease.InBack);
+    }
+    #endregion
 
 }

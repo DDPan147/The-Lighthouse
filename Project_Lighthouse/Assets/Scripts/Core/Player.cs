@@ -107,6 +107,10 @@ public class Player : MonoBehaviour
         {
             CheckCurrentMinigameSwitch(other.GetComponent<MinigameSwitch>());
         }
+        if (other.gameObject.CompareTag("MissionTrigger_Core"))
+        {
+            other.gameObject.GetComponent<MissionTrigger>().TriggerMission();
+        }
     }
 
     void OnTriggerExit(Collider other)
@@ -192,7 +196,8 @@ public class Player : MonoBehaviour
     {
         //playerCanvas.transform.LookAt(Camera.main.transform);
 
-        playerCanvas.transform.rotation = Quaternion.LookRotation(playerCanvas.transform.position - Camera.main.transform.position);
+        //playerCanvas.transform.rotation = Quaternion.LookRotation(playerCanvas.transform.position - Camera.main.transform.position);
+        playerCanvas.transform.rotation = Camera.main.transform.rotation;
     }
 
 }

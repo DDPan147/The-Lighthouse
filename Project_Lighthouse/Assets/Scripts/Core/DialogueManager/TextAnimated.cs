@@ -22,14 +22,14 @@ public class TextAnimated : Text
 #pragma warning restore CS0114 // Unity will handle that since this is a Unity function.
     {
         this.material = Material.Instantiate(this.baseMaterial); // Make a copy so we don't modify the base material. Note that this means edits to the shader won't affect this while in Play mode.
-        this.SetText("Here's some text. `5WOW!!!` It's great!\nLook, it even crosses `1multiple\nlines!`"); // Just for demonstration.
+        this.SetTextAnimated("Here's some text. `3WOW!!!` It's great!\nLook, it even crosses `1multiple\nlines!`"); // Just for demonstration.
         //this.SetText("AB");
     }
 
     /// <summary>
     /// Be sure to call this instead of setting TextAnimated.text!
     /// </summary>
-    public void SetText(string newText)
+    public void SetTextAnimated(string newText)
     {
         // If the text uses the delimiter, we need to both calculate the correct vertex indices and remove the delimiter from the output text.
         if (newText.Contains(delimiter))
