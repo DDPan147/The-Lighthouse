@@ -6,6 +6,7 @@ using TMPro;
 using System.Linq;
 using DG.Tweening;
 using System.Xml.Linq;
+using EasyTextEffects;
 
 [RequireComponent(typeof(AudioSource))]
 public class DialogueManager : MonoBehaviour
@@ -41,6 +42,7 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private TMP_Text textDisplayLuna;
 
     private AudioSource sound;
+    private SoundManager sm;
 
     private void Awake()
     {
@@ -59,6 +61,7 @@ public class DialogueManager : MonoBehaviour
     void Start()
     {
         sound = GetComponent<AudioSource>();
+        sm = FindFirstObjectByType<SoundManager>();
     }
 
     private void Update()
@@ -177,8 +180,10 @@ public class DialogueManager : MonoBehaviour
         {
             target.text = currentSentence;
             target.transform.GetChild(1).GetComponent<TMP_Text>().text = "";
+            target.transform.GetChild(1).GetComponent<TextEffect>().enabled = false;
             target.transform.parent.transform.DOScale(1, popupScaleDuration).SetEase(Ease.OutBack).OnComplete(() =>
             {
+                sm.Play("Texto");
                 StartCoroutine(WaitForNextSentence(target));
                 StartCoroutine(TypeSentence(currentSentence, target.transform.GetChild(1).GetComponent<TMP_Text>()));
             });
@@ -202,21 +207,42 @@ public class DialogueManager : MonoBehaviour
             TMP_Text nextTarget = DecideNextSpeaker(currentSpeaker);
             DisplayNextSentence(nextTarget);
         });
+
+        //Play Talking Sound
     }
 
     IEnumerator TypeSentence(string _sentence, TMP_Text target)
     {
         
         target.text = "";
+        
+        bool isTag = false;
         foreach (char letter in _sentence.ToCharArray())
         {
             target.text += letter;
-            //Play Letter Sound
-            for (int i = 0; i < letterWaitFrames; i++)
+
+            if(letter == '<') //Si se está escribiendo un tag en el texto, se escribe directamente sin esperar por cada caracter
             {
-                yield return null;
+                isTag = true;
             }
+
+            if (!isTag)
+            {
+                //Play Letter Sound
+                for (int i = 0; i < letterWaitFrames; i++)
+                {
+                    yield return null;
+                }
+            }
+
+            if(letter == '>') //Cuando el tag acaba, sigue escribiendo de normal
+            {
+                isTag = false;
+            }
+            
         }
+        target.GetComponent<TextEffect>().enabled = true;
+        sm.Stop("Texto");
         yield return new WaitForSeconds(waitTime);
         sentenceTyped = true;
         
