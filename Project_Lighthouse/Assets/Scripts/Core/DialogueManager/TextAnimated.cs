@@ -111,4 +111,9 @@ public class TextAnimated : Text
         }
         Debug.Log(substring2);
     }
+
+    /*public override void CalculateLayoutInputVertical()
+    {
+
+    }*/
 }
