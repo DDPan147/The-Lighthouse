@@ -1,9 +1,12 @@
 using DG.Tweening;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -89,7 +92,8 @@ public class GameManager : MonoBehaviour
             //Replace Text with new mission name
             playerMissionText.text = missions[missionIndex].missionName;
             //Activate Text (intro animation)
-            playerMissionText.DOFade(1, 2).SetEase(Ease.OutQuad).OnComplete(() => FadeOut(missions[missionIndex].missionDesc));
+            playerMissionText.GetComponentInParent<Image>().DOFade(1, 0.5f).SetEase(Ease.OutQuad);
+            playerMissionText.DOFade(1, 0.5f).SetEase(Ease.OutQuad).OnComplete(() => StartCoroutine(FadeOut(missions[missionIndex].missionDesc)));
             //Play Effect On Top Of Player's Head
             //Fade Out Top Of Player's Head
             //Deactivate Text (animation)
@@ -102,18 +106,23 @@ public class GameManager : MonoBehaviour
 
         }
 
-        void FadeOut(string _missionDesc)
+        IEnumerator FadeOut(string _missionDesc)
         {
-            playerMissionText.DOFade(0, 2).SetEase(Ease.InQuad).OnComplete(() => ShowNewMissionOnGUI(_missionDesc));
+            yield return new WaitForSeconds(2);
+            playerMissionText.GetComponentInParent<Image>().DOFade(0, 1).SetEase(Ease.InQuad);
+            playerMissionText.DOFade(0, 1).SetEase(Ease.InQuad).OnComplete(() => ShowNewMissionOnGUI(_missionDesc));
         }
+
+     
     }
     public void ShowNewMissionOnGUI(string _missionDesc)
     {
         //Replace Text with New Mission Name
         GUIMissionText.text = _missionDesc;
         GUIMissionText.color = Color.white;
-        GUIMissionText.gameObject.transform.DOLocalMoveX(-400, 2, false).SetEase(Ease.OutBack);
         //Play Animation Of New Mission
+        GUIMissionText.gameObject.transform.DOMoveX(GUIMissionText.transform.parent.position.x, 2, false).SetEase(Ease.OutBack);
+
         //Display Marker Of New Mission Location (optional)
     }
 
@@ -130,6 +139,7 @@ public class GameManager : MonoBehaviour
     public void RemoveMissionFromGUI()
     {
         //Strikethrough Text Animation
+
         GUIMissionText.color = Color.green;
         //Dissappear Animation
         GUIMissionText.gameObject.transform.DOLocalMoveX(400, 2, false).SetEase(Ease.InBack);
