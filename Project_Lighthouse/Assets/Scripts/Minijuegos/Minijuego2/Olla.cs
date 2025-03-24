@@ -1,15 +1,21 @@
+using System.Collections;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Olla : MonoBehaviour
 {
     private GameObject gm;
     public bool isFilledWithFood;
     private int foodInPot;
+    public GameObject potProgressionBackground;
+    private Image potProgress;
+    public float timeToCook;
 
     private void Awake()
     {
         gm = GameObject.Find("GameManager");
+        potProgress = potProgressionBackground.transform.GetComponentInChildren<Image>();
     }
 
     private void Update()
@@ -37,11 +43,23 @@ public class Olla : MonoBehaviour
                     gm.GetComponent<Minijuego2_GameManager>().imGrabing = false;
                     if (foodInPot >= 2)
                     {
+                        StartCoroutine(FoodProgress());
                         isFilledWithFood = true;
                     }
                     
                 });
             }
+        }
+    }
+
+    IEnumerator FoodProgress()
+    {
+        for(int i = 0; i < 10; i++)
+        {
+            Debug.Log("Hola");
+            yield return new WaitForSeconds(timeToCook / 10);
+            Debug.Log("caracola");
+            potProgress.fillAmount += 1 / 10;
         }
     }
 

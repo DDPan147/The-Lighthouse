@@ -64,9 +64,13 @@ public class Comida_Cortada : MonoBehaviour
 
     public void OnCut(InputAction.CallbackContext context)
     {
-        if (context.performed && thereIsBread && isGrabbed)
+        if (context.performed && thereIsBread && isGrabbed && isCutted)
         {
             isRebozado = true;
+        }
+        else if (context.performed && !isCutted && isGrabbed)
+        {
+            //Feedback visual de que falta cortarlo/pelarlo
         }
     }
 
