@@ -69,7 +69,15 @@ public class Minijuego2_GameManager : MonoBehaviour
                 {
                     Cursor.lockState= CursorLockMode.Locked;
                     Cursor.visible = false;
-                    grabObject.GetComponent<Comida_Cortada>().isGrabbed = true;
+                    grabObject.GetComponent<Comida>().isGrabbed = true;
+                }
+
+                if (grabObject.tag == "Olla")
+                {
+                    if(grabObject.GetComponent<Olla>().isFilledWithFood == true)
+                    {
+                        grabObject.GetComponent<Olla>().takeOffFood = true;
+                    }
                 }
             }
             imGrabing = true;
@@ -87,10 +95,10 @@ public class Minijuego2_GameManager : MonoBehaviour
             }
             else if(grabObject.gameObject.tag == "Comida")
             {
-                grabObject.GetComponent<Comida_Cortada>().isGrabbed = false;
+                grabObject.GetComponent<Comida>().isGrabbed = false;
                 Cursor.lockState = CursorLockMode.None;
                 Cursor.visible = true;
-                grabObject.GetComponent<Comida_Cortada>().moveDirection = Vector2.zero;
+                grabObject.GetComponent<Comida>().moveDirection = Vector2.zero;
                 grabObject = null;
             }
             imGrabing = false;
@@ -98,7 +106,7 @@ public class Minijuego2_GameManager : MonoBehaviour
         
     }
 
-    public void PutFoodInPot(Comida_Cortada comida)
+    public void PutFoodInPot(Comida comida)
     {
         comida.isGrabbed = false;
         Cursor.lockState = CursorLockMode.None;

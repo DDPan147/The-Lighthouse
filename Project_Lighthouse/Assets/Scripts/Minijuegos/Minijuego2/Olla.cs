@@ -7,30 +7,56 @@ public class Olla : MonoBehaviour
 {
     private GameObject gm;
     public bool isFilledWithFood;
+    public GameObject foodCooked;
     private int foodInPot;
     public GameObject potProgressionBackground;
     private Image potProgress;
     public float timeToCook;
+    private bool _takeOffFood;
+    [HideInInspector] public bool takeOffFood
+    {
+        get
+        {
+            return _takeOffFood;
+        }
+        set
+        {
+            _takeOffFood = value;
+            if (_takeOffFood == true)
+            {
+                GameObject food = Instantiate(foodCooked, transform.position, Quaternion.identity);
+                Sequence TakeOffFood = DOTween.Sequence();
+                TakeOffFood.Append(food.transform.DOMoveY(transform.position.y + 0.5f, 0.5f));
+                TakeOffFood.Append(food.transform.DOMove(transform.position + new Vector3(0, 0.2f, -0.5f), 0.5f));
+                TakeOffFood.OnComplete(() =>
+                {
+                    food.GetComponent<Comida_Hecha>().isGrabbed = true;
+                    Debug.Log("Tecojo Fis an xip");
+                });
+            }
+            
+        }
+    }
 
     private void Awake()
     {
         gm = GameObject.Find("GameManager");
-        potProgress = potProgressionBackground.transform.GetComponentInChildren<Image>();
+        potProgress = potProgressionBackground.transform.GetChild(0).GetComponent<Image>();
     }
 
     private void Update()
     {
         if (isFilledWithFood)
         {
-            Debug.Log("La comida esta lista");
+            GetComponent<Renderer>().material.color = Color.red;
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.GetComponent<Comida_Cortada>() != null)
+        if (other.gameObject.GetComponent<Comida>() != null)
         {
-            Comida_Cortada comida = other.gameObject.GetComponent<Comida_Cortada>();
+            Comida comida = other.gameObject.GetComponent<Comida>();
             if (comida.isGrabbed && comida.isCutted && comida.isRebozado)
             {
                 Sequence PutFood = DOTween.Sequence();
@@ -44,7 +70,7 @@ public class Olla : MonoBehaviour
                     if (foodInPot >= 2)
                     {
                         StartCoroutine(FoodProgress());
-                        isFilledWithFood = true;
+                        
                     }
                     
                 });
@@ -56,11 +82,14 @@ public class Olla : MonoBehaviour
     {
         for(int i = 0; i < 10; i++)
         {
-            Debug.Log("Hola");
             yield return new WaitForSeconds(timeToCook / 10);
-            Debug.Log("caracola");
-            potProgress.fillAmount += 1 / 10;
+            potProgress.fillAmount += 0.1f;
+            if(potProgress.fillAmount >= 1)
+            {
+                isFilledWithFood = true;
+            }
         }
+
     }
 
 }
