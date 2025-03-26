@@ -4,13 +4,21 @@ using UnityEngine.InputSystem;
 
 public class Comida : MonoBehaviour
 {
-    //public bool isGrabbed;
+    public enum TipoComida
+    {
+        Patata,
+        Zanahoria,
+        Pescado,
+        RestosPescado
+    }
+    public TipoComida tipoComida;
     private Selectable_MG2 objData;
     [HideInInspector] public bool isCutted;
     [HideInInspector] public bool isRebozado;
-    //[HideInInspector] public Vector2 moveDirection;
+    [HideInInspector] public bool isPelado;
     [HideInInspector] public Material comidaMat;
     public GameObject comida_Cortada;
+    [Tooltip("Null if doesn't has")]public GameObject comida_Pelada;
     private float moveSpeed = 0.4f;
     private bool thereIsBread;
     
@@ -24,7 +32,6 @@ public class Comida : MonoBehaviour
 
     void Update()
     {
-        //transform.position += new Vector3(moveDirection.x, 0, moveDirection.y);
         if(isRebozado)
         {
             rebozadoObj.SetActive(true);
@@ -52,15 +59,6 @@ public class Comida : MonoBehaviour
             thereIsBread = false;
         }
     }
-
-    /*public void OnMove(InputAction.CallbackContext context)
-    {
-        if (isGrabbed)
-        {
-            moveDirection = context.ReadValue<Vector2>();
-            moveDirection = moveDirection * Time.deltaTime * moveSpeed;
-        }
-    }*/
 
     public void OnCut(InputAction.CallbackContext context)
     {
