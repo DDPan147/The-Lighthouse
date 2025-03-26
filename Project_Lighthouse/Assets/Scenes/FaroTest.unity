@@ -481,7 +481,7 @@ GameObject:
   - component: {fileID: 25301206}
   - component: {fileID: 25301205}
   - component: {fileID: 25301204}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: LunaTextBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -851,7 +851,7 @@ GameObject:
   - component: {fileID: 118253362}
   - component: {fileID: 118253364}
   - component: {fileID: 118253363}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: NewMissionPopup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -988,7 +988,7 @@ GameObject:
   - component: {fileID: 169692456}
   - component: {fileID: 169692455}
   - component: {fileID: 169692457}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1564,7 +1564,7 @@ GameObject:
   - component: {fileID: 305992105}
   - component: {fileID: 305992104}
   - component: {fileID: 305992106}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1802,10 +1802,11 @@ Transform:
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5.1699996, y: 1.9100003, z: -8.12}
+  m_LocalPosition: {x: -2.5829997, y: 1.9100003, z: -8.12}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 606273004}
   m_Father: {fileID: 410902532}
   m_LocalEulerAnglesHint: {x: -0.15, y: 0, z: 0}
 --- !u!114 &330585547
@@ -1824,7 +1825,8 @@ MonoBehaviour:
   m_RequiresDepthTextureOption: 2
   m_RequiresOpaqueTextureOption: 2
   m_CameraType: 0
-  m_Cameras: []
+  m_Cameras:
+  - {fileID: 606273001}
   m_RendererIndex: -1
   m_VolumeLayerMask:
     serializedVersion: 2
@@ -2287,7 +2289,7 @@ GameObject:
   - component: {fileID: 486457956}
   - component: {fileID: 486457958}
   - component: {fileID: 486457957}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2364,7 +2366,7 @@ GameObject:
   - component: {fileID: 502295091}
   - component: {fileID: 502295090}
   - component: {fileID: 502295092}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: Text (TMP) (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2537,7 +2539,7 @@ GameObject:
   - component: {fileID: 519284175}
   - component: {fileID: 519284177}
   - component: {fileID: 519284176}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: TriggerMinigamePopup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2766,7 +2768,7 @@ Transform:
   m_GameObject: {fileID: 529891550}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5.17, y: 1.91, z: -0.27}
+  m_LocalPosition: {x: -2.583, y: 1.91, z: 0.779}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2849,7 +2851,7 @@ GameObject:
   - component: {fileID: 590414141}
   - component: {fileID: 590414140}
   - component: {fileID: 590414142}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3005,6 +3007,143 @@ MonoBehaviour:
         m_Calls: []
     overrideTagEffects: 0
   updatesPerSecond: 30
+--- !u!1 &606273000
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 606273004}
+  - component: {fileID: 606273001}
+  - component: {fileID: 606273003}
+  - component: {fileID: 606273002}
+  m_Layer: 0
+  m_Name: Camera
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!20 &606273001
+Camera:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 606273000}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_ClearFlags: 4
+  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_projectionMatrixMode: 1
+  m_GateFitMode: 2
+  m_FOVAxisMode: 0
+  m_Iso: 200
+  m_ShutterSpeed: 0.005
+  m_Aperture: 16
+  m_FocusDistance: 10
+  m_FocalLength: 50
+  m_BladeCount: 5
+  m_Curvature: {x: 2, y: 11}
+  m_BarrelClipping: 0.25
+  m_Anamorphism: 0
+  m_SensorSize: {x: 36, y: 24}
+  m_LensShift: {x: 0, y: 0}
+  m_NormalizedViewPortRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  near clip plane: 0.3
+  far clip plane: 1000
+  field of view: 60
+  orthographic: 0
+  orthographic size: 5
+  m_Depth: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 1024
+  m_RenderingPath: -1
+  m_TargetTexture: {fileID: 0}
+  m_TargetDisplay: 0
+  m_TargetEye: 3
+  m_HDR: 1
+  m_AllowMSAA: 1
+  m_AllowDynamicResolution: 0
+  m_ForceIntoRT: 0
+  m_OcclusionCulling: 1
+  m_StereoConvergence: 10
+  m_StereoSeparation: 0.022
+--- !u!114 &606273002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 606273000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_RenderShadows: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_CameraType: 1
+  m_Cameras: []
+  m_RendererIndex: -1
+  m_VolumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  m_VolumeTrigger: {fileID: 0}
+  m_VolumeFrameworkUpdateModeOption: 2
+  m_RenderPostProcessing: 0
+  m_Antialiasing: 0
+  m_AntialiasingQuality: 2
+  m_StopNaN: 0
+  m_Dithering: 0
+  m_ClearDepth: 1
+  m_AllowXRRendering: 1
+  m_AllowHDROutput: 1
+  m_UseScreenCoordOverride: 0
+  m_ScreenSizeOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_ScreenCoordScaleBias: {x: 0, y: 0, z: 0, w: 0}
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_Version: 2
+  m_TaaSettings:
+    m_Quality: 3
+    m_FrameInfluence: 0.1
+    m_JitterScale: 1
+    m_MipBias: 0
+    m_VarianceClampScale: 0.9
+    m_ContrastAdaptiveSharpening: 0
+--- !u!81 &606273003
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 606273000}
+  m_Enabled: 1
+--- !u!4 &606273004
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 606273000}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 330585546}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &633935851
 GameObject:
   m_ObjectHideFlags: 0
@@ -3938,7 +4077,7 @@ GameObject:
   - component: {fileID: 1143210066}
   - component: {fileID: 1143210065}
   - component: {fileID: 1143210067}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: Text (TMP) (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4972,7 +5111,7 @@ Transform:
   m_GameObject: {fileID: 1436715193}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5.1699996, y: 1.9100002, z: -10.27}
+  m_LocalPosition: {x: -2.5829997, y: 1.9100002, z: -9.221}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5003,7 +5142,7 @@ GameObject:
   - component: {fileID: 1455691483}
   - component: {fileID: 1455691485}
   - component: {fileID: 1455691484}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5079,7 +5218,7 @@ GameObject:
   - component: {fileID: 1493456953}
   - component: {fileID: 1493456951}
   - component: {fileID: 1493456954}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: PlayerTextBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5316,7 +5455,7 @@ GameObject:
   - component: {fileID: 1632386491}
   - component: {fileID: 1632386490}
   - component: {fileID: 1632386489}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5696,7 +5835,7 @@ GameObject:
   - component: {fileID: 1773796567}
   - component: {fileID: 1773796566}
   - component: {fileID: 1773796565}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6499,8 +6638,16 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3635095700563994012, guid: f67fe68555023fa42b3fc39b081ac1f9, type: 3}
+      propertyPath: comment.sentences.Array.data[0].emotionSound
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3635095700563994012, guid: f67fe68555023fa42b3fc39b081ac1f9, type: 3}
       propertyPath: comment.sentences.Array.data[0].sentenceText
       value: "Hola puta ni\xF1a de los <link=shake> cojones</link>"
+      objectReference: {fileID: 0}
+    - target: {fileID: 3635095700563994012, guid: f67fe68555023fa42b3fc39b081ac1f9, type: 3}
+      propertyPath: comment.sentences.Array.data[1].emotionSound
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3635095700563994012, guid: f67fe68555023fa42b3fc39b081ac1f9, type: 3}
       propertyPath: comment.sentences.Array.data[1].sentenceText
@@ -6509,6 +6656,10 @@ PrefabInstance:
     - target: {fileID: 3635095700563994012, guid: f67fe68555023fa42b3fc39b081ac1f9, type: 3}
       propertyPath: comment.sentences.Array.data[2].sentenceText
       value: Te voy a <color=blue>violar</color>
+      objectReference: {fileID: 0}
+    - target: {fileID: 3635095700563994012, guid: f67fe68555023fa42b3fc39b081ac1f9, type: 3}
+      propertyPath: comment.sentences.Array.data[3].emotionSound
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3635095700563994012, guid: f67fe68555023fa42b3fc39b081ac1f9, type: 3}
       propertyPath: comment.sentences.Array.data[3].sentenceText
