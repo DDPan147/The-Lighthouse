@@ -74,7 +74,7 @@ public class Knife : MonoBehaviour
         }
         if (context.performed && thereIsFood)
         {
-            Comida_Cortada comida_Cortada = Comida.GetComponent<Comida_Cortada>();
+            Comida comida_Cortada = Comida.GetComponent<Comida>();
             Destroy(Comida.transform.Find("Forma").gameObject);
             Instantiate(comida_Cortada.comida_Cortada, Comida.transform);
             //Comida.transform.Find("ComidaCortada_Minijuego2").gameObject.SetActive(true);
