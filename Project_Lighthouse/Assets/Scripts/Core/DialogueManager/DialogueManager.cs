@@ -22,26 +22,40 @@ public class DialogueManager : MonoBehaviour
 
     [SerializeField]private float popupScaleDuration;
     private bool sentenceTyped;
+    private bool sentenceSkipped;
 
-    private Queue<string> sentences = new Queue<string>();
-    private Queue<Speaker> speakers = new Queue<Speaker>();
-    private Queue<DialogueEvent> events = new Queue<DialogueEvent>();
+    private Queue<Sentence> sentences = new Queue<Sentence>();
 
-    [SerializeField]private Speaker currentSpeakerTest;
     public enum Speaker
     {
         Abuelo,
         Luna
     }
+    public enum Emotion
+    {
+        Default,
+        Abuelo_Triste,
+        Abuelo_Molesto,
+        Abuelo_Enfadado,
+        Abuelo_Alegre,
+        Abuelo_Pregunta,
+        Abuelo_Asustado,
+        Abuelo_Preocupado,
+        Luna_Triste,
+        Luna_Asco,
+        Luna_Indignada,
+        Luna_Traviesa,
+        Luna_Alegre,
+        Luna_Emocionada,
+        Luna_Pregunta,
+        Luna_Preocupada,
 
-    private Speaker lastSpeaker;
-    public string[] sentencesTest = new string[] { };
+    }
 
     [SerializeField] private TMP_Text textDisplayGUI;
     [SerializeField] private TMP_Text textDisplayAbuelo;
     [SerializeField] private TMP_Text textDisplayLuna;
 
-    private AudioSource sound;
     private SoundManager sm;
 
     private void Awake()
@@ -60,51 +74,30 @@ public class DialogueManager : MonoBehaviour
     }
     void Start()
     {
-        sound = GetComponent<AudioSource>();
         sm = FindFirstObjectByType<SoundManager>();
     }
 
     private void Update()
     {
-        sentencesTest = sentences.ToArray();
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            CutComment();
-        }
+
     }
     public void StartComment(DialogueComment _comment)
     {
         sentences.Clear();
-        speakers.Clear();
-        events.Clear();
         StopAllCoroutines();
 
-        foreach (string sentence in _comment.sentences)
+        foreach (Sentence sentence in _comment.sentences)
         {
-            sentences.Enqueue(sentence);
-        }
-        foreach (Speaker speaker in _comment.speakers)
-        {
-            speakers.Enqueue(speaker);
-        }
-
-        //EVENTS
-
-        if (_comment.events.Length != 0)
-        {
-            foreach (DialogueEvent DialogueEvent in _comment.events)
+            if(sentence.sentenceEvent.eventName == "")
             {
-                if (DialogueEvent.eventName == "")
-                {
-                    DialogueEvent.active = false;
-                }
-                events.Enqueue(DialogueEvent);
+                sentence.sentenceEvent.active = false;
             }
+            sentences.Enqueue(sentence);
+
         }
 
         //SPEAKERS
-        Speaker currentSpeaker = speakers.Dequeue();
-        currentSpeakerTest = currentSpeaker;
+        Speaker currentSpeaker = sentences.Peek().speaker;
         TMP_Text nextTarget = DecideNextSpeaker(_comment.type, currentSpeaker);
         DisplayNextSentence(nextTarget);
     }
@@ -148,44 +141,50 @@ public class DialogueManager : MonoBehaviour
             return;
         }
 
-        string currentSentence = sentences.Dequeue();
+        Sentence currentSentence = sentences.Dequeue();
 
-
+        
 
         //EVENTS
-        if (events.Count > 0)
-        {
-            DialogueEvent nEvent = events.Dequeue();
+        DialogueEvent nEvent = currentSentence.sentenceEvent;
 
-            if (nEvent.active)
+        if (nEvent.active)
+        {
+            if (nEvent.eventReceiver == null)
             {
-                if (nEvent.eventReceiver == null)
-                {
-                    nEvent.eventReceiver = FindFirstObjectByType<Player>();
-                }
-                nEvent.eventReceiver.Invoke(nEvent.eventName, nEvent.timeOffset);
+                nEvent.eventReceiver = FindFirstObjectByType<Player>();
             }
+            nEvent.eventReceiver.Invoke(nEvent.eventName, nEvent.timeOffset);
         }
+
+        //EMOTIONS
+        string emotionSound = EmotionSoundSelector(currentSentence.emotionSound);
+        if(emotionSound != null)
+        {
+            sm.Play(emotionSound);
+        }
+
 
         //SPEAKERS
         if (target == textDisplayGUI)
         {
             StopAllCoroutines();
-            StartCoroutine(TypeSentence(currentSentence, target));
+            StartCoroutine(TypeSentence(currentSentence.sentenceText, target));
 
             //target.parent activates
             //target starts typing text
         }
         else
         {
-            target.text = currentSentence;
+            target.text = currentSentence.sentenceText;
+            Debug.Log("Nueva sentence: " + currentSentence.sentenceText);
             target.transform.GetChild(1).GetComponent<TMP_Text>().text = "";
             target.transform.GetChild(1).GetComponent<TextEffect>().enabled = false;
             target.transform.parent.transform.DOScale(1, popupScaleDuration).SetEase(Ease.OutBack).OnComplete(() =>
             {
                 sm.Play("Texto");
                 StartCoroutine(WaitForNextSentence(target));
-                StartCoroutine(TypeSentence(currentSentence, target.transform.GetChild(1).GetComponent<TMP_Text>()));
+                StartCoroutine(TypeSentence(currentSentence.sentenceText, target.transform.GetChild(1).GetComponent<TMP_Text>()));
             });
             
             
@@ -195,20 +194,37 @@ public class DialogueManager : MonoBehaviour
     IEnumerator WaitForNextSentence(TMP_Text target)
     {
         sentenceTyped = false;
-        do
+        while (true)
         {
+            if (Input.GetKeyDown(KeyCode.M))
+            {
+                if (sentenceTyped)
+                {
+                    CloseBubble(target.transform.parent);
+                    yield break;
+                }
+                else
+                {
+                    sentenceSkipped = true;
+                }
+            }
             yield return null;
-        } while (!sentenceTyped);
-        //Descale parent
-        target.transform.parent.transform.DOScale(0, popupScaleDuration).SetEase(Ease.InBack).OnComplete(() =>
-        {
-            Speaker currentSpeaker = speakers.Dequeue();
-            currentSpeakerTest = currentSpeaker;
-            TMP_Text nextTarget = DecideNextSpeaker(currentSpeaker);
-            DisplayNextSentence(nextTarget);
-        });
+        }
+
+        
 
         //Play Talking Sound
+    }
+
+    void CloseBubble(Transform target)
+    {
+        target.DOScale(0, popupScaleDuration).SetEase(Ease.InBack).OnComplete(() =>
+        {
+            Speaker currentSpeaker = sentences.Peek().speaker;
+            TMP_Text nextTarget = DecideNextSpeaker(currentSpeaker);
+            DisplayNextSentence(nextTarget);
+            Debug.Log("He cerrao ventana lol");
+        });
     }
 
     IEnumerator TypeSentence(string _sentence, TMP_Text target)
@@ -239,11 +255,16 @@ public class DialogueManager : MonoBehaviour
             {
                 isTag = false;
             }
+
+            if (sentenceSkipped)
+            {
+                target.text = _sentence;
+                break;
+            }
             
         }
         target.GetComponent<TextEffect>().enabled = true;
         sm.Stop("Texto");
-        yield return new WaitForSeconds(waitTime);
         sentenceTyped = true;
         
     }
@@ -252,24 +273,47 @@ public class DialogueManager : MonoBehaviour
     {
         target.text = "";
         target.transform.GetChild(1).GetComponent<TMP_Text>().text = "";
-        CloseBubble(lastSpeaker);
     }
 
-    public void CutComment()
+    string EmotionSoundSelector(Emotion emotion)
     {
-        sentences.Clear();
-        events.Clear();
-        StopAllCoroutines();
-        //textDisplay.text = "";
-    }
-
-    void OpenBubble(Speaker speaker)
-    {
-        //OpenBubble depending of speaker
-    }
-    void CloseBubble(Speaker speaker)
-    {
-        //CloseBubble depending of speaker
+        switch (emotion)
+        {
+            case Emotion.Default:
+                return null;
+            case Emotion.Abuelo_Triste:
+                return "AbueloPregunta";
+            case Emotion.Abuelo_Molesto:
+                return "AbueloHablar1";
+            case Emotion.Abuelo_Enfadado:
+                return "AbueloPreocupado";
+            /*case Emotion.Abuelo_Alegre:
+                break;
+            case Emotion.Abuelo_Pregunta:
+                break;
+            case Emotion.Abuelo_Asustado:
+                break;
+            case Emotion.Abuelo_Preocupado:
+                break;
+            case Emotion.Luna_Triste:
+                break;
+            case Emotion.Luna_Asco:
+                break;
+            case Emotion.Luna_Indignada:
+                break;
+            case Emotion.Luna_Traviesa:
+                break;
+            case Emotion.Luna_Alegre:
+                break;
+            case Emotion.Luna_Emocionada:
+                break;
+            case Emotion.Luna_Pregunta:
+                break;
+            case Emotion.Luna_Preocupada:
+                break;*/
+            default:
+                return null;
+        }
     }
 
 
@@ -277,6 +321,6 @@ public class DialogueManager : MonoBehaviour
 
     //David: Kike por que vas al dentista
     //Kike: []
-    
+    //Álvaro: *decepcionado consigo mismo*
 }
 
