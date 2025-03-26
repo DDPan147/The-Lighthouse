@@ -5,7 +5,9 @@ public class IngredienteList : MonoBehaviour
 {
     public string nombreComida;
     private TMP_Text nombre;
+    private string peladoText;
     private TMP_Text estadoPelado;
+    private string rebozadoText;
     private TMP_Text estadoRebozado;
     public Comida comida;
 
@@ -22,6 +24,8 @@ public class IngredienteList : MonoBehaviour
 
     private void Start()
     {
+        peladoText = estadoPelado.text;
+        rebozadoText = estadoRebozado.text;
         nombre.text = nombreComida;
     }
 
@@ -30,14 +34,17 @@ public class IngredienteList : MonoBehaviour
         if(comida.isCutted)
         {
             estadoPelado.color = Color.green;
+            estadoPelado.text = "<s>" + peladoText + "</s>";
         }
         if (comida.isRebozado)
         {
             estadoRebozado.color = Color.green;
+            estadoRebozado.text = "<s>" + rebozadoText + "</s>";
         }
         if(comida.isCutted && comida.isRebozado)
         {
             nombre.color = Color.green;
+            nombre.text = "<s>" + nombreComida + "</s>";
         }
     }
 

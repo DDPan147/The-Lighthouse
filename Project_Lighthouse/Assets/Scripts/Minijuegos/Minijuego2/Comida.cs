@@ -4,10 +4,11 @@ using UnityEngine.InputSystem;
 
 public class Comida : MonoBehaviour
 {
-    public bool isGrabbed;
+    //public bool isGrabbed;
+    private Selectable_MG2 objData;
     [HideInInspector] public bool isCutted;
     [HideInInspector] public bool isRebozado;
-    [HideInInspector] public Vector2 moveDirection;
+    //[HideInInspector] public Vector2 moveDirection;
     [HideInInspector] public Material comidaMat;
     public GameObject comida_Cortada;
     private float moveSpeed = 0.4f;
@@ -18,15 +19,14 @@ public class Comida : MonoBehaviour
     private void Awake()
     {
         rebozadoObj = transform.Find("Rebozado").gameObject;
+        objData = GetComponent<Selectable_MG2>();
     }
 
     void Update()
     {
-        transform.position += new Vector3(moveDirection.x, 0, moveDirection.y);
+        //transform.position += new Vector3(moveDirection.x, 0, moveDirection.y);
         if(isRebozado)
         {
-            //comidaMat = GetMaterial();
-            //comidaMat.color = Color.yellow;
             rebozadoObj.SetActive(true);
         }
         else
@@ -53,31 +53,25 @@ public class Comida : MonoBehaviour
         }
     }
 
-    public void OnMove(InputAction.CallbackContext context)
+    /*public void OnMove(InputAction.CallbackContext context)
     {
         if (isGrabbed)
         {
             moveDirection = context.ReadValue<Vector2>();
             moveDirection = moveDirection * Time.deltaTime * moveSpeed;
         }
-    }
+    }*/
 
     public void OnCut(InputAction.CallbackContext context)
     {
-        if (context.performed && thereIsBread && isGrabbed && isCutted)
+        if (context.performed && thereIsBread && objData.isGrabbed && isCutted)
         {
             isRebozado = true;
         }
-        else if (context.performed && !isCutted && isGrabbed)
+        else if (context.performed && !isCutted && objData.isGrabbed)
         {
             //Feedback visual de que falta cortarlo/pelarlo
         }
     }
 
-    /*public Material GetMaterial()
-    {
-        Material mat;
-        mat = GetComponentInChildren<Renderer>().material;
-        return mat;
-    }*/
 }

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1966269077580091996}
   - component: {fileID: 1799534905232757450}
   - component: {fileID: 1473959149527892777}
+  - component: {fileID: 5368508308748410776}
   m_Layer: 8
   m_Name: Pescado
   m_TagString: Comida
@@ -49,7 +50,7 @@ BoxCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
@@ -102,6 +103,20 @@ MonoBehaviour:
   moveDirection: {x: 0, y: 0}
   comidaMat: {fileID: 0}
   comida_Cortada: {fileID: 713118295505280308, guid: 2cb26865eb8fdf34e88f798a0aefac71, type: 3}
+--- !u!114 &5368508308748410776
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 520563380725038637}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30d853f3a835ca74a86d87a01a1cd003, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isGrabbed: 0
+  moveDirection: {x: 0, y: 0}
 --- !u!1 &9010793710520402150
 GameObject:
   m_ObjectHideFlags: 0
@@ -202,7 +217,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
     - target: {fileID: 3368865829637893953, guid: 8803c9cf758e61d4f90df8b4b9c73b13, type: 3}
       propertyPath: m_Name
-      value: Comida_Minijuego2
+      value: Forma
       objectReference: {fileID: 0}
     - target: {fileID: 3368865829637893953, guid: 8803c9cf758e61d4f90df8b4b9c73b13, type: 3}
       propertyPath: m_Layer

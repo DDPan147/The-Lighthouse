@@ -28,11 +28,6 @@ public class Olla : MonoBehaviour
                 Sequence TakeOffFood = DOTween.Sequence();
                 TakeOffFood.Append(food.transform.DOMoveY(transform.position.y + 0.5f, 0.5f));
                 TakeOffFood.Append(food.transform.DOMove(transform.position + new Vector3(0, 0.2f, -0.5f), 0.5f));
-                TakeOffFood.OnComplete(() =>
-                {
-                    food.GetComponent<Comida_Hecha>().isGrabbed = true;
-                    Debug.Log("Tecojo Fis an xip");
-                });
             }
             
         }
@@ -57,16 +52,16 @@ public class Olla : MonoBehaviour
         if (other.gameObject.GetComponent<Comida>() != null)
         {
             Comida comida = other.gameObject.GetComponent<Comida>();
-            if (comida.isGrabbed && comida.isCutted && comida.isRebozado)
+            if (comida.GetComponent<Selectable_MG2>().isGrabbed && comida.isCutted && comida.isRebozado)
             {
                 Sequence PutFood = DOTween.Sequence();
                 PutFood.Append(other.gameObject.transform.DOMove(transform.position + new Vector3(0, 0.5f, 0), 0.5f));
                 gm.GetComponent<Minijuego2_GameManager>().PutFoodInPot(comida);
+                gm.GetComponent<Minijuego2_GameManager>().imGrabing = false;
                 PutFood.Append(other.gameObject.transform.DOMove(transform.position, 0.5f));
                 PutFood.OnComplete(() =>
                 {
                     foodInPot++;
-                    gm.GetComponent<Minijuego2_GameManager>().imGrabing = false;
                     if (foodInPot >= 2)
                     {
                         StartCoroutine(FoodProgress());
