@@ -3,13 +3,15 @@ using UnityEngine;
 public class GameManager_Minijuego5 : MonoBehaviour
 {
     public bool[] cableConnections = new bool[6];
+    public bool[] cableCorrectConnections = new bool[6];
     public bool hasWon;
 
+    public DragAndDrop_Cable[] cables;
     public ParticleSystem ps;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        cables = FindObjectsByType<DragAndDrop_Cable>(FindObjectsSortMode.InstanceID);
     }
 
     // Update is called once per frame
@@ -34,18 +36,52 @@ public class GameManager_Minijuego5 : MonoBehaviour
 
         if (b)
         {
-            //YOU WIN
-            hasWon = true;
-            ps.Play();
-            GameManager gm = FindFirstObjectByType<GameManager>();
-            if(gm != null)
+            bool a = true;
+            foreach (bool cable in cableCorrectConnections)
             {
-                FindFirstObjectByType<GameManager>().MinigameCompleted(4);
+                if (!cable)
+                {
+                    a = false;
+                }
+            }
+            if (a)
+            {
+                //YOU WIN
+                hasWon = true;
+                ps.Play();
+                GameManager gm = FindFirstObjectByType<GameManager>();
+                if (gm != null)
+                {
+                    FindFirstObjectByType<GameManager>().MinigameCompleted(4);
+                }
+                else
+                {
+                    Debug.LogWarning("No se ha encontrado el Game Manager de la escena principal. No se va a volver al juego");
+                }
             }
             else
             {
-                Debug.LogWarning("No se ha encontrado el Game Manager de la escena principal. No se va a volver al juego");
+                foreach(DragAndDrop_Cable cable in cables)
+                {
+                    cable.ResetPosition();
+                }
+                cableConnections = new bool[6];
+                cableCorrectConnections = new bool[6];
             }
         }
+    }
+
+    public int CurrentCableConnections()
+    {
+        int output = 0;
+        foreach (bool cable in cableConnections)
+        {
+            if (cable)
+            {
+                output++;
+            }
+        }
+        Debug.Log(output);
+        return output;
     }
 }

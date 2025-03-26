@@ -12,6 +12,7 @@ public class DragAndDrop_Cable: MonoBehaviour
     [Header("Ajustes posicion")]
     public TypeDragDrop type;
     public int correctSlotPosition;
+    public int correctOrder;
     private Vector3 initialPosition;
     public float detectionRadius = 1f;
 
@@ -89,6 +90,15 @@ public class DragAndDrop_Cable: MonoBehaviour
                 transform.position = currentSlot.transform.position;
                 SetMeshVisibility(false); // Muestra el mesh
                 gm.cableConnections[correctSlotPosition] = true;
+
+                if(gm.CurrentCableConnections() == correctOrder)
+                {
+                    gm.cableCorrectConnections[correctSlotPosition] = true;
+                }
+                else
+                {
+                    gm.cableCorrectConnections[correctSlotPosition] = false;
+                }
             }
             else
             {
