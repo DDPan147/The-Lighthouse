@@ -1,5 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System;
+using System.Collections;
 
 public class MinigameSevenManager : MonoBehaviour
 {
@@ -29,11 +31,14 @@ public class MinigameSevenManager : MonoBehaviour
 
     [Header("Lighting")]
     [SerializeField] private Light mainLight;
+    [SerializeField] private float actualLightIntensity;
     [SerializeField] private float initialLightIntensity = 0.5f;
     [SerializeField] private float targetLightIntensity = 1f;
     [SerializeField] private float minLightIntensity;
     [SerializeField] private float maxLightIntensity;
     [SerializeField] private float updateLightValue;
+    [SerializeField] private float decreaseIntensity;
+    [SerializeField] private float increaseIntensity;
     
     [Header("Objects Control")]
     [SerializeField] private List<GameObject> sceneObjects = new List<GameObject>();
@@ -170,20 +175,15 @@ public class MinigameSevenManager : MonoBehaviour
     #region Lighting Control
     private void UpdateLighting()
     {
-        float currentIntensity = mainLight.intensity;
-        float newIntensity;
-
         if (isItemImportant && isItemSaved)
         {
             // Objeto importante guardado -> luz baja
-            newIntensity = Mathf.Lerp(currentIntensity, minLightIntensity, updateLightValue);
-            Debug.Log($"Bajando luz: {currentIntensity} -> {newIntensity}");
+            StartCoroutine(UpdateIntensityLight(decreaseIntensity, minLightIntensity, true));
         }
         else if (isItemImportant && !isItemSaved)
         {
             // Objeto importante tirado -> luz sube
-            newIntensity = Mathf.Lerp(currentIntensity, maxLightIntensity, updateLightValue);
-            Debug.Log($"Subiendo luz: {currentIntensity} -> {newIntensity}");
+            StartCoroutine(UpdateIntensityLight(increaseIntensity, maxLightIntensity, false));
         }
         else
         {
@@ -191,11 +191,33 @@ public class MinigameSevenManager : MonoBehaviour
             return;
         }
 
-        mainLight.intensity = newIntensity;
-    
         // Resetear las variables después de actualizar la luz
         isItemImportant = false;
         isItemSaved = false;
+    }
+
+    private IEnumerator UpdateIntensityLight(float updateIntensity, float objectiveIntensity, bool isDecreasing)
+    {
+        float startIntensity = mainLight.intensity;
+        float newIntensity = startIntensity + updateIntensity;
+
+        if (isDecreasing)
+            newIntensity = startIntensity - updateIntensity;
+
+        float elapsedTime = 0f;
+
+        while (elapsedTime < updateLightValue && Mathf.Abs(mainLight.intensity - objectiveIntensity) > 0.01f)
+        {
+            // Interpolación progresiva
+            mainLight.intensity = Mathf.Lerp(startIntensity, newIntensity, elapsedTime / updateLightValue);
+            elapsedTime += Time.deltaTime;
+
+            // Esperar al siguiente frame
+            yield return null;
+        }
+
+        // Asegurarse de que la intensidad final sea exactamente la deseada
+        mainLight.intensity = Mathf.Clamp(mainLight.intensity, Mathf.Min(startIntensity, objectiveIntensity), Mathf.Max(startIntensity, objectiveIntensity));;
     }
     #endregion
 
