@@ -10,9 +10,12 @@ GameObject:
   m_Component:
   - component: {fileID: 623569567634592187}
   - component: {fileID: 5478274153986709320}
-  m_Layer: 0
+  - component: {fileID: 9111130535689312504}
+  - component: {fileID: 5744401394869041341}
+  - component: {fileID: 529853384595559835}
+  m_Layer: 8
   m_Name: Fish&Chips
-  m_TagString: Untagged
+  m_TagString: Comida_Hecha
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -45,6 +48,68 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cbd25b7205c29d46b15bfbbf8b20b58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!65 &9111130535689312504
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3828729513241789711}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 256
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.6138909, y: 0.36615294, z: 0.2586035}
+  m_Center: {x: -0.1240152, y: -0.0032372773, z: 0.002627641}
+--- !u!54 &5744401394869041341
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3828729513241789711}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 0
+--- !u!114 &529853384595559835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3828729513241789711}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30d853f3a835ca74a86d87a01a1cd003, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isGrabbed: 0
+  moveDirection: {x: 0, y: 0}
 --- !u!1001 &43834274726592330
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -96,6 +161,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 16376b26a9e9a174e9bb390d0126919f, type: 3}
       propertyPath: m_Name
       value: pez (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 16376b26a9e9a174e9bb390d0126919f, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

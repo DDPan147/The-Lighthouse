@@ -11,19 +11,20 @@ public class Knife : MonoBehaviour
     private bool thereIsFood;
     public Transform minLimitX, minLimitZ, maxLimitX, maxLimitZ;
     private GameObject Comida;
-    public bool isGrabbed;
+    //public bool isGrabbed;
+    private Selectable_MG2 objData;
 
 
     private void Start()
     {
         origPosition = transform.position;
+        objData = GetComponent<Selectable_MG2>();
     }
 
     private void Update()
     {
-        transform.position += new Vector3(moveDirection.x, 0, moveDirection.y);
-        
-        
+        //transform.position += new Vector3(moveDirection.x, 0, moveDirection.y);
+        LimitarMovimiento();
     }
     void LimitarMovimiento()
     {
@@ -64,11 +65,11 @@ public class Knife : MonoBehaviour
 
     public void OnCut(InputAction.CallbackContext context)
     {
-        if (context.performed && isGrabbed)
+        if (context.performed && objData.isGrabbed)
         {
             isCutting = true;
         }
-        else if(context.canceled && isGrabbed)
+        else if(context.canceled && objData.isGrabbed)
         {
             isCutting = false;
         }
@@ -84,7 +85,7 @@ public class Knife : MonoBehaviour
         }
     }
 
-    public void OnMove(InputAction.CallbackContext context)
+    /*public void OnMove(InputAction.CallbackContext context)
     {
         if (isGrabbed)
         {
@@ -92,7 +93,7 @@ public class Knife : MonoBehaviour
             moveDirection = moveDirection * Time.deltaTime * moveSpeed;
             LimitarMovimiento();
         }
-    }
+    }*/
 
 
 }
