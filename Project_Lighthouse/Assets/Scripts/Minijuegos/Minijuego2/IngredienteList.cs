@@ -5,8 +5,8 @@ public class IngredienteList : MonoBehaviour
 {
     public string nombreComida;
     private TMP_Text nombre;
-    private string peladoText;
-    private TMP_Text estadoPelado;
+    private string cortadoText;
+    private TMP_Text estadoCortado;
     private string rebozadoText;
     private TMP_Text estadoRebozado;
     public Comida comida;
@@ -14,7 +14,7 @@ public class IngredienteList : MonoBehaviour
     private void Awake()
     {
         nombre = transform.GetChild(0).GetComponent<TMP_Text>();
-        estadoPelado = transform.GetChild(1).GetComponent<TMP_Text>();
+        estadoCortado = transform.GetChild(1).GetComponent<TMP_Text>();
         estadoRebozado = transform.GetChild(2).GetComponent<TMP_Text>();
         if (comida == null)
         {
@@ -24,7 +24,7 @@ public class IngredienteList : MonoBehaviour
 
     private void Start()
     {
-        peladoText = estadoPelado.text;
+        cortadoText = estadoCortado.text;
         rebozadoText = estadoRebozado.text;
         nombre.text = nombreComida;
     }
@@ -33,8 +33,8 @@ public class IngredienteList : MonoBehaviour
     {
         if(comida.isCutted)
         {
-            estadoPelado.color = Color.green;
-            estadoPelado.text = "<s>" + peladoText + "</s>";
+            estadoCortado.color = Color.green;
+            estadoCortado.text = "<s>" + cortadoText + "</s>";
         }
         if (comida.isRebozado)
         {
