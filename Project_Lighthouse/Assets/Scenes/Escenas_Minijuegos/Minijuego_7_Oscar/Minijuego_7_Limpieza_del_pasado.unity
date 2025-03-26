@@ -1364,11 +1364,14 @@ MonoBehaviour:
   savedImportantObjects: 0
   processedObjects: 0
   mainLight: {fileID: 1367523387}
+  actualLightIntensity: 0
   initialLightIntensity: 0.6
   targetLightIntensity: 2
   minLightIntensity: 0.1
   maxLightIntensity: 2
-  updateLightValue: 0.3
+  updateLightValue: 2
+  decreaseIntensity: 0.3
+  increaseIntensity: 0.3
   sceneObjects: []
   lastObject: {fileID: 0}
   gameUI: {fileID: 805892542}
