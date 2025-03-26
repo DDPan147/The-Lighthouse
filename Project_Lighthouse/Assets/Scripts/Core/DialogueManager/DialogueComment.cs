@@ -2,17 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+[System.Serializable]
+public class Sentence
+{
+    [TextArea(3, 10)]
+    public string sentenceText;
+    public DialogueManager.Speaker speaker;
+    public DialogueEvent sentenceEvent;
+    public DialogueManager.Emotion emotionSound;
+}
 [System.Serializable]
 public class DialogueComment
 {
-    public string name;
-
-    [TextArea(3, 10)]
-    public string[] sentences;
-    
-    public DialogueManager.Speaker[] speakers;
-    public DialogueEvent[] events;
-
+    public Sentence[] sentences;
     public enum DialogueTypes
     {
         Popup,

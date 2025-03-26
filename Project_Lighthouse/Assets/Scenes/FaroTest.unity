@@ -316,9 +316,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waitTime: 1
   letterWaitFrames: 6
-  popupScaleDuration: 1
-  currentSpeakerTest: 0
-  sentencesTest: []
+  popupScaleDuration: 0.6
   textDisplayGUI: {fileID: 0}
   textDisplayAbuelo: {fileID: 305992104}
   textDisplayLuna: {fileID: 590414140}
@@ -2514,8 +2512,19 @@ MonoBehaviour:
   text: {fileID: 502295090}
   usePreset: 0
   preset: {fileID: 0}
-  tagEffects: []
-  globalEffects: []
+  tagEffects:
+  - triggerWhen: 0
+    effect: {fileID: 11400000, guid: b35e91f2ba42c4508990bb116bf016ee, type: 2}
+    onEffectCompleted:
+      m_PersistentCalls:
+        m_Calls: []
+  globalEffects:
+  - triggerWhen: 0
+    effect: {fileID: 11400000, guid: 37db8e32c48cf4579b04b8dc436a7bb8, type: 2}
+    onEffectCompleted:
+      m_PersistentCalls:
+        m_Calls: []
+    overrideTagEffects: 0
   updatesPerSecond: 30
 --- !u!1 &519284174
 GameObject:
@@ -2982,8 +2991,19 @@ MonoBehaviour:
   text: {fileID: 590414140}
   usePreset: 0
   preset: {fileID: 0}
-  tagEffects: []
-  globalEffects: []
+  tagEffects:
+  - triggerWhen: 0
+    effect: {fileID: 0}
+    onEffectCompleted:
+      m_PersistentCalls:
+        m_Calls: []
+  globalEffects:
+  - triggerWhen: 0
+    effect: {fileID: 0}
+    onEffectCompleted:
+      m_PersistentCalls:
+        m_Calls: []
+    overrideTagEffects: 0
   updatesPerSecond: 30
 --- !u!1 &633935851
 GameObject:
@@ -4259,6 +4279,90 @@ MonoBehaviour:
     volume: 1
     loop: 1
     source: {fileID: 0}
+  - type: 1
+    name: Empanar
+    clip: {fileID: 8300000, guid: 40907ba0e1eb8f5479129dce0a8dcf30, type: 3}
+    volume: 1
+    loop: 0
+    source: {fileID: 0}
+  - type: 1
+    name: EstruendoGas
+    clip: {fileID: 8300000, guid: 6c4c736e50cbdd84c939c5f6372dfbb9, type: 3}
+    volume: 1
+    loop: 0
+    source: {fileID: 0}
+  - type: 1
+    name: GolpearMadera1
+    clip: {fileID: 8300000, guid: 273b7851569fd96428c53dfc96abd5b1, type: 3}
+    volume: 1
+    loop: 0
+    source: {fileID: 0}
+  - type: 1
+    name: GolpearMadera2
+    clip: {fileID: 8300000, guid: 96c4698e34f1f4d459cfc5da4bcfa8c0, type: 3}
+    volume: 1
+    loop: 0
+    source: {fileID: 0}
+  - type: 1
+    name: GrifoAgua
+    clip: {fileID: 8300000, guid: c0e86d7013185b747a9a6f8330c3c8c9, type: 3}
+    volume: 1
+    loop: 0
+    source: {fileID: 0}
+  - type: 1
+    name: Switch
+    clip: {fileID: 8300000, guid: dbf67d43e37d5d5439959456b797ab43, type: 3}
+    volume: 1
+    loop: 0
+    source: {fileID: 0}
+  - type: 1
+    name: Tuberia
+    clip: {fileID: 8300000, guid: 9bb6d5c4f7456ed4ebd807352a19055b, type: 3}
+    volume: 0.5
+    loop: 0
+    source: {fileID: 0}
+  - type: 1
+    name: Tuberia2
+    clip: {fileID: 8300000, guid: a5d91b2a59888b646be6fb11e3be37e1, type: 3}
+    volume: 0.5
+    loop: 0
+    source: {fileID: 0}
+  - type: 1
+    name: Vapor
+    clip: {fileID: 8300000, guid: 32d4aaa635026c44686211e39952359d, type: 3}
+    volume: 1
+    loop: 0
+    source: {fileID: 0}
+  - type: 1
+    name: AbueloAsustado
+    clip: {fileID: 8300000, guid: ad35bfc314c000d40865c8ace6e50282, type: 3}
+    volume: 1
+    loop: 0
+    source: {fileID: 0}
+  - type: 1
+    name: AbueloHablar1
+    clip: {fileID: 8300000, guid: f2d520333b77edb4e995ca532ead8aac, type: 3}
+    volume: 1
+    loop: 0
+    source: {fileID: 0}
+  - type: 1
+    name: AbueloHablar2
+    clip: {fileID: 8300000, guid: 1ad696884e174e54aa843de602e78b1f, type: 3}
+    volume: 1
+    loop: 0
+    source: {fileID: 0}
+  - type: 1
+    name: AbueloPregunta
+    clip: {fileID: 8300000, guid: 8762de1e286fe794a9064009d14e37c8, type: 3}
+    volume: 1
+    loop: 0
+    source: {fileID: 0}
+  - type: 1
+    name: AbueloPreocupado
+    clip: {fileID: 8300000, guid: 563db044216d1054a98818dff8568e52, type: 3}
+    volume: 1
+    loop: 0
+    source: {fileID: 0}
   currentTheme:
     type: 0
     name: 
@@ -4992,7 +5096,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 1
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 305992103}
   m_Father: {fileID: 1632386488}
@@ -6385,6 +6489,34 @@ PrefabInstance:
     - target: {fileID: 3635095700563994012, guid: f67fe68555023fa42b3fc39b081ac1f9, type: 3}
       propertyPath: 'comment.sentences.Array.data[4]'
       value: Oh si que rico
+      objectReference: {fileID: 0}
+    - target: {fileID: 3635095700563994012, guid: f67fe68555023fa42b3fc39b081ac1f9, type: 3}
+      propertyPath: comment.sentences.Array.data[1].speaker
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3635095700563994012, guid: f67fe68555023fa42b3fc39b081ac1f9, type: 3}
+      propertyPath: comment.sentences.Array.data[3].speaker
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3635095700563994012, guid: f67fe68555023fa42b3fc39b081ac1f9, type: 3}
+      propertyPath: comment.sentences.Array.data[0].sentenceText
+      value: "Hola puta ni\xF1a de los <link=shake> cojones</link>"
+      objectReference: {fileID: 0}
+    - target: {fileID: 3635095700563994012, guid: f67fe68555023fa42b3fc39b081ac1f9, type: 3}
+      propertyPath: comment.sentences.Array.data[1].sentenceText
+      value: AAAaa<link=shake>aaoaSJD</link>Sfoija
+      objectReference: {fileID: 0}
+    - target: {fileID: 3635095700563994012, guid: f67fe68555023fa42b3fc39b081ac1f9, type: 3}
+      propertyPath: comment.sentences.Array.data[2].sentenceText
+      value: Te voy a <color=blue>violar</color>
+      objectReference: {fileID: 0}
+    - target: {fileID: 3635095700563994012, guid: f67fe68555023fa42b3fc39b081ac1f9, type: 3}
+      propertyPath: comment.sentences.Array.data[3].sentenceText
+      value: <size=2em>TTTTfajr</size>wifa
+      objectReference: {fileID: 0}
+    - target: {fileID: 3635095700563994012, guid: f67fe68555023fa42b3fc39b081ac1f9, type: 3}
+      propertyPath: comment.sentences.Array.data[4].sentenceText
+      value: Omori es mierda xd
       objectReference: {fileID: 0}
     - target: {fileID: 7238250593369880972, guid: f67fe68555023fa42b3fc39b081ac1f9, type: 3}
       propertyPath: m_LocalPosition.x
