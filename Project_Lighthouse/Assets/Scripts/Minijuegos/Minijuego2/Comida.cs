@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
-public class Comida_Cortada : MonoBehaviour
+public class Comida : MonoBehaviour
 {
     public bool isGrabbed;
     [HideInInspector] public bool isCutted;

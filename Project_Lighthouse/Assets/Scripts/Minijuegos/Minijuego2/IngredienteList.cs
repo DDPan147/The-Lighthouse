@@ -7,7 +7,7 @@ public class IngredienteList : MonoBehaviour
     private TMP_Text nombre;
     private TMP_Text estadoPelado;
     private TMP_Text estadoRebozado;
-    public Comida_Cortada comida;
+    public Comida comida;
 
     private void Awake()
     {
@@ -16,7 +16,7 @@ public class IngredienteList : MonoBehaviour
         estadoRebozado = transform.GetChild(2).GetComponent<TMP_Text>();
         if (comida == null)
         {
-            comida = GameObject.Find(nombreComida).GetComponent<Comida_Cortada>();
+            comida = GameObject.Find(nombreComida).GetComponent<Comida>();
         }
     }
 
