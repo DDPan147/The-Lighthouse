@@ -14,8 +14,10 @@ public class Comida : MonoBehaviour
     public TipoComida tipoComida;
     private Selectable_MG2 objData;
     [HideInInspector] public bool isCutted;
+    [HideInInspector] public bool canBeCutted;
     [HideInInspector] public bool isRebozado;
     [HideInInspector] public bool isPelado;
+    [HideInInspector] public bool canBePelado;
     [HideInInspector] public Material comidaMat;
     public GameObject comida_Cortada;
     [Tooltip("Null if doesn't has")]public GameObject comida_Pelada;
@@ -39,6 +41,38 @@ public class Comida : MonoBehaviour
         else
         {
             rebozadoObj.SetActive(false);
+        }
+
+        switch(tipoComida)
+        {
+            case TipoComida.Patata:
+                if(isPelado)
+                {
+                    canBeCutted = true;
+                }
+                else
+                {
+                    canBePelado = true;
+                }
+                break;
+            case TipoComida.Zanahoria:
+                if (isPelado)
+                {
+                    canBeCutted = true;
+                }
+                else
+                {
+                    canBePelado = true;
+                }
+                break;
+            case TipoComida.Pescado:
+                canBeCutted = true;
+                canBePelado = false;
+                break;
+            case TipoComida.RestosPescado:
+                canBeCutted = false;
+                canBePelado = false;
+                break;
         }
     }
 

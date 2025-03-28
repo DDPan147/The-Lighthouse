@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -7,6 +8,7 @@ public class Peladora : MonoBehaviour
     public GameObject Comida_Pelada;
     [HideInInspector] public Vector3 origPosition;
     private bool thereIsFood;
+    private bool feedbackSupervisor = true;
     public Transform minLimitX, minLimitZ, maxLimitX, maxLimitZ;
     private GameObject Comida;
     //public bool isGrabbed;
@@ -21,7 +23,6 @@ public class Peladora : MonoBehaviour
 
     private void Update()
     {
-        //transform.position += new Vector3(moveDirection.x, 0, moveDirection.y);
         LimitarMovimiento();
     }
     void LimitarMovimiento()
@@ -71,27 +72,24 @@ public class Peladora : MonoBehaviour
         {
             isPelando = false;
         }
-        if (context.performed && thereIsFood)
+        if (context.performed && thereIsFood && feedbackSupervisor)
         {
             Comida comida_Cortada = Comida.GetComponent<Comida>();
-            Destroy(Comida.transform.Find("Forma").gameObject);
-            Instantiate(comida_Cortada.comida_Cortada, Comida.transform);
-            //Comida.transform.Find("ComidaCortada_Minijuego2").gameObject.SetActive(true);
-            //Comida.transform.Find("Comida_Minijuego2").gameObject.SetActive(false);
-            comida_Cortada.isCutted = true;
-            thereIsFood = false;
+            if (comida_Cortada.canBePelado)
+            {
+                Destroy(Comida.transform.Find("Forma").gameObject);
+                Instantiate(comida_Cortada.comida_Pelada, Comida.transform);
+                comida_Cortada.isPelado = true;
+                thereIsFood = false;
+            }
+            else
+            {
+                // Feedback de que la comida no se puede pelar
+                comida_Cortada.gameObject.transform.DOShakePosition(0.3f, 0.05f, 50, 90, false, true, ShakeRandomnessMode.Full).OnPlay(() => feedbackSupervisor = false).OnComplete(() => feedbackSupervisor = true);
+            }
+            
         }
     }
-
-    /*public void OnMove(InputAction.CallbackContext context)
-    {
-        if (isGrabbed)
-        {
-            moveDirection = context.ReadValue<Vector2>();
-            moveDirection = moveDirection * Time.deltaTime * moveSpeed;
-            LimitarMovimiento();
-        }
-    }*/
 
 
 }
