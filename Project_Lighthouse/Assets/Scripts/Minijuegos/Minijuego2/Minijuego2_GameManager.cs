@@ -69,6 +69,11 @@ public class Minijuego2_GameManager : MonoBehaviour
         }
     }
 
+    public void StartSecondReciepe()
+    {
+        //Hacer que se inicie la segunda receta
+    }
+
     public void OnGrab(InputAction.CallbackContext context)
     {
         if (!imGrabing && context.performed)
@@ -80,21 +85,6 @@ public class Minijuego2_GameManager : MonoBehaviour
             {
                 grabObject = hit.collider.gameObject;
 
-                /*if (grabObject.tag == "Cuchillo")
-                {
-                    Cursor.lockState = CursorLockMode.Locked;
-                    Cursor.visible = false;
-                    grabObject.GetComponent<Knife>().isGrabbed = true;
-                }
-
-                if(grabObject.tag == "Comida")
-                {
-                    Cursor.lockState= CursorLockMode.Locked;
-                    Cursor.visible = false;
-                    grabObject.GetComponent<Comida>().isGrabbed = true;
-                }
-                */
-
                 if(grabObject.GetComponent<Selectable_MG2>() != null)
                 {
                     grabObjectData = grabObject.GetComponent<Selectable_MG2>();
@@ -102,6 +92,7 @@ public class Minijuego2_GameManager : MonoBehaviour
                     Cursor.visible = false;
                     grabObjectData.isGrabbed = true;
                     imGrabing = true;
+                    grabObject.transform.DOMoveY(0.3f, 0.25f, false);
                 }
                 if (grabObject.tag == "Olla")
                 {
@@ -205,7 +196,7 @@ public class Minijuego2_GameManager : MonoBehaviour
                         Comida comida_Cortada = knife.Comida.GetComponent<Comida>();
                         if (comida_Cortada.canBeCutted)
                         {
-                            //Destroy(Comida.transform.Find("Forma").gameObject);
+                            knife.Comida.transform.Find("Forma").gameObject.SetActive(false);
                             Instantiate(comida_Cortada.comida_Cortada, grabObject.GetComponent<Knife>().Comida.transform);
                             comida_Cortada.isCutted = true;
                             knife.thereIsFood = false;
@@ -235,7 +226,7 @@ public class Minijuego2_GameManager : MonoBehaviour
                         Comida comida_Cortada = peladora.Comida.GetComponent<Comida>();
                         if (comida_Cortada.canBePelado)
                         {
-                            //Destroy(Comida.transform.Find("Forma").gameObject);
+                            peladora.Comida.transform.Find("Forma").gameObject.SetActive(false);
                             Instantiate(comida_Cortada.comida_Pelada, peladora.Comida.transform);
                             comida_Cortada.isPelado = true;
                             peladora.thereIsFood = false;

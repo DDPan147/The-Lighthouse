@@ -20,17 +20,19 @@ public class Comida : MonoBehaviour
     [HideInInspector] public bool canBePelado;
     [HideInInspector] public Material comidaMat;
     public GameObject comida_Cortada;
-    [Tooltip("Null if doesn't has")]public GameObject comida_Pelada;
+    [Tooltip("Null if it doesn't have")]public GameObject comida_Pelada;
     private float moveSpeed = 0.4f;
     [HideInInspector] public bool thereIsBread;
     [HideInInspector] public bool feedbackSupervisor = true;
 
     private GameObject rebozadoObj;
+    private Rigidbody rb;
 
     private void Awake()
     {
         rebozadoObj = transform.Find("Rebozado").gameObject;
         objData = GetComponent<Selectable_MG2>();
+        rb = GetComponent<Rigidbody>();
     }
 
     void Update()
@@ -75,6 +77,15 @@ public class Comida : MonoBehaviour
                 canBePelado = false;
                 break;
         }
+
+        if(objData.isGrabbed)
+        {
+            rb.useGravity = false;
+        }
+        else
+        {
+            rb.useGravity = true;
+        }
     }
 
     
@@ -95,16 +106,5 @@ public class Comida : MonoBehaviour
         }
     }
 
-    public void OnCut(InputAction.CallbackContext context)
-    {
-        if (context.performed && thereIsBread && objData.isGrabbed && isCutted)
-        {
-            isRebozado = true;
-        }
-        else if (context.performed && !isCutted && objData.isGrabbed)
-        {
-            //Feedback visual de que falta cortarlo/pelarlo
-        }
-    }
 
 }

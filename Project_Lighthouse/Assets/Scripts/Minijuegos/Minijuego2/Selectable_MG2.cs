@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 
 public class Selectable_MG2 : MonoBehaviour
@@ -7,6 +8,9 @@ public class Selectable_MG2 : MonoBehaviour
     private float moveSpeed = 0.4f;
     [HideInInspector] public Vector3 origPosition;
     private Transform minLimitX, minLimitZ, maxLimitX, maxLimitZ;
+    [HideInInspector] Vector3 downPosition;
+    private bool dropObject;
+    
     void Start()
     {
         GameObject limitColliders = GameObject.Find("LimitColliders");
@@ -43,4 +47,5 @@ public class Selectable_MG2 : MonoBehaviour
             transform.position = new Vector3(transform.position.x, transform.position.y, maxLimitZ.position.z);
         }
     }
+
 }
