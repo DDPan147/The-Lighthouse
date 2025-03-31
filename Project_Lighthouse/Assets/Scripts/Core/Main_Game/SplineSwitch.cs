@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Splines;
 
@@ -44,7 +45,7 @@ public class SplineSwitch : MonoBehaviour
 
             player.spline = splines[1];
             player.splineLength = splines[1].CalculateLength();
-            player.distancePercentage = percentageIn;
+            player.distancePercentage = GetTForKnot(splines[1].Spline, transitionKnotIndexIn);
             player.transitionSpline = BuildTransitionSpline(player.transform.position, splines[1], percentageIn, splines[1][0][transitionKnotIndexIn]);
             player.StartTransition();
 
@@ -65,7 +66,7 @@ public class SplineSwitch : MonoBehaviour
 
             player.spline = splines[0];
             player.splineLength = splines[0].CalculateLength();
-            player.distancePercentage = percentageOut;
+            player.distancePercentage = GetTForKnot(splines[0].Spline, transitionKnotIndexOut);
 
             player.transitionSpline = BuildTransitionSpline(player.transform.position, splines[0], percentageOut, splines[0][0][transitionKnotIndexOut]);
             player.StartTransition();
@@ -100,5 +101,24 @@ public class SplineSwitch : MonoBehaviour
         newSpline.Add(knot.Position);
 
         return newSpline;
+    }
+
+    public float GetTForKnot(Spline spline, int knotIndex)
+    {
+        if (knotIndex < 0 || knotIndex >= spline.Count)
+        {
+            throw new ArgumentOutOfRangeException(nameof(knotIndex), "Índice de nodo fuera de rango.");
+        }
+
+        float totalLength = spline.GetLength(); // Longitud total de la spline
+        float accumulatedLength = 0f;
+
+        // Sumar la longitud de los segmentos hasta llegar al nodo deseado
+        for (int i = 0; i < knotIndex; i++)
+        {
+            accumulatedLength += spline.GetCurveLength(i);
+        }
+
+        return accumulatedLength / totalLength; // Proporción de la spline recorrida hasta el nodo
     }
 }
