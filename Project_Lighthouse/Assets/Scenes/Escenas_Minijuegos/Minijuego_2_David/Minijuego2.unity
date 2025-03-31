@@ -1138,7 +1138,7 @@ Transform:
   m_GameObject: {fileID: 721803163}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.5}
+  m_LocalPosition: {x: 0, y: 0, z: -0.60000014}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1312,6 +1312,18 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1473959151072077960}
         m_TargetAssemblyTypeName: Comida_Cortada, Assembly-CSharp
+        m_MethodName: OnCut
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1268755796}
+        m_TargetAssemblyTypeName: Peladora, Assembly-CSharp
         m_MethodName: OnCut
         m_Mode: 0
         m_Arguments:
@@ -1707,7 +1719,7 @@ Transform:
   m_GameObject: {fileID: 993712016}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.253, y: 0, z: 0}
+  m_LocalPosition: {x: -2, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1760,7 +1772,7 @@ Transform:
   m_GameObject: {fileID: 999807034}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.082, y: 0, z: 0}
+  m_LocalPosition: {x: 2.7, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2243,6 +2255,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1149997039}
   m_CullTransparentMesh: 1
+--- !u!114 &1268755796 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7768196062595111266, guid: 446944554172a1647b6733acaa1db487, type: 3}
+  m_PrefabInstance: {fileID: 235301394693878021}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4917d4ed4a924e04895414c78134577f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1561918213
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2652,7 +2675,7 @@ Transform:
   m_GameObject: {fileID: 1766306082}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.88686657}
+  m_LocalPosition: {x: 0, y: 0, z: 1.5999999}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2709,6 +2732,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isGrabbed: 0
   moveDirection: {x: 0, y: 0}
+  origPosition: {x: 0, y: 0, z: 0}
+  minLimitX: {fileID: 993712017}
+  minLimitZ: {fileID: 721803164}
+  maxLimitX: {fileID: 999807035}
+  maxLimitZ: {fileID: 1766306083}
 --- !u!1 &1975058944
 GameObject:
   m_ObjectHideFlags: 0
@@ -3287,6 +3315,103 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
+--- !u!1001 &235301394693878021
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3955511459436264119, guid: 446944554172a1647b6733acaa1db487, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3955511459436264119, guid: 446944554172a1647b6733acaa1db487, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.474
+      objectReference: {fileID: 0}
+    - target: {fileID: 3955511459436264119, guid: 446944554172a1647b6733acaa1db487, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -3.45
+      objectReference: {fileID: 0}
+    - target: {fileID: 3955511459436264119, guid: 446944554172a1647b6733acaa1db487, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3955511459436264119, guid: 446944554172a1647b6733acaa1db487, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3955511459436264119, guid: 446944554172a1647b6733acaa1db487, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3955511459436264119, guid: 446944554172a1647b6733acaa1db487, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3955511459436264119, guid: 446944554172a1647b6733acaa1db487, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3955511459436264119, guid: 446944554172a1647b6733acaa1db487, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3955511459436264119, guid: 446944554172a1647b6733acaa1db487, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6341109726991193798, guid: 446944554172a1647b6733acaa1db487, type: 3}
+      propertyPath: maxLimitX
+      value: 
+      objectReference: {fileID: 999807035}
+    - target: {fileID: 6341109726991193798, guid: 446944554172a1647b6733acaa1db487, type: 3}
+      propertyPath: maxLimitZ
+      value: 
+      objectReference: {fileID: 1766306083}
+    - target: {fileID: 6341109726991193798, guid: 446944554172a1647b6733acaa1db487, type: 3}
+      propertyPath: minLimitX
+      value: 
+      objectReference: {fileID: 993712017}
+    - target: {fileID: 6341109726991193798, guid: 446944554172a1647b6733acaa1db487, type: 3}
+      propertyPath: minLimitZ
+      value: 
+      objectReference: {fileID: 721803164}
+    - target: {fileID: 6720579285055258039, guid: 446944554172a1647b6733acaa1db487, type: 3}
+      propertyPath: m_Name
+      value: Peladora_Minijuego2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6720579285055258039, guid: 446944554172a1647b6733acaa1db487, type: 3}
+      propertyPath: m_TagString
+      value: Cuchillo
+      objectReference: {fileID: 0}
+    - target: {fileID: 7768196062595111266, guid: 446944554172a1647b6733acaa1db487, type: 3}
+      propertyPath: maxLimitX
+      value: 
+      objectReference: {fileID: 999807035}
+    - target: {fileID: 7768196062595111266, guid: 446944554172a1647b6733acaa1db487, type: 3}
+      propertyPath: maxLimitZ
+      value: 
+      objectReference: {fileID: 1766306083}
+    - target: {fileID: 7768196062595111266, guid: 446944554172a1647b6733acaa1db487, type: 3}
+      propertyPath: minLimitX
+      value: 
+      objectReference: {fileID: 993712017}
+    - target: {fileID: 7768196062595111266, guid: 446944554172a1647b6733acaa1db487, type: 3}
+      propertyPath: minLimitZ
+      value: 
+      objectReference: {fileID: 721803164}
+    - target: {fileID: 7768196062595111266, guid: 446944554172a1647b6733acaa1db487, type: 3}
+      propertyPath: Comida_Pelada
+      value: 
+      objectReference: {fileID: 713118295505280308, guid: 7171254f5bf87e94285b47d9ab3b4873, type: 3}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 446944554172a1647b6733acaa1db487, type: 3}
 --- !u!1001 &1236825364641913011
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3426,6 +3551,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5368508308748410776, guid: 0b1cdd2aa782df54e8b96e6cd04ed1a6, type: 3}
+      propertyPath: maxLimitX
+      value: 
+      objectReference: {fileID: 999807035}
+    - target: {fileID: 5368508308748410776, guid: 0b1cdd2aa782df54e8b96e6cd04ed1a6, type: 3}
+      propertyPath: maxLimitZ
+      value: 
+      objectReference: {fileID: 1766306083}
+    - target: {fileID: 5368508308748410776, guid: 0b1cdd2aa782df54e8b96e6cd04ed1a6, type: 3}
+      propertyPath: minLimitX
+      value: 
+      objectReference: {fileID: 993712017}
+    - target: {fileID: 5368508308748410776, guid: 0b1cdd2aa782df54e8b96e6cd04ed1a6, type: 3}
+      propertyPath: minLimitZ
+      value: 
+      objectReference: {fileID: 721803164}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3500,6 +3641,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3868846065028642380, guid: 8aae0c1d281f87b4aa18d44d9656a9c4, type: 3}
+      propertyPath: comida_Pelada
+      value: 
+      objectReference: {fileID: 713118295505280308, guid: 7171254f5bf87e94285b47d9ab3b4873, type: 3}
     - target: {fileID: 5566488615307583813, guid: 8aae0c1d281f87b4aa18d44d9656a9c4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.49146688
@@ -3540,6 +3685,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7190042017706698020, guid: 8aae0c1d281f87b4aa18d44d9656a9c4, type: 3}
+      propertyPath: maxLimitX
+      value: 
+      objectReference: {fileID: 999807035}
+    - target: {fileID: 7190042017706698020, guid: 8aae0c1d281f87b4aa18d44d9656a9c4, type: 3}
+      propertyPath: maxLimitZ
+      value: 
+      objectReference: {fileID: 1766306083}
+    - target: {fileID: 7190042017706698020, guid: 8aae0c1d281f87b4aa18d44d9656a9c4, type: 3}
+      propertyPath: minLimitX
+      value: 
+      objectReference: {fileID: 993712017}
+    - target: {fileID: 7190042017706698020, guid: 8aae0c1d281f87b4aa18d44d9656a9c4, type: 3}
+      propertyPath: minLimitZ
+      value: 
+      objectReference: {fileID: 721803164}
     - target: {fileID: 8116780383454724976, guid: 8aae0c1d281f87b4aa18d44d9656a9c4, type: 3}
       propertyPath: m_Name
       value: Patata
@@ -3569,3 +3730,4 @@ SceneRoots:
   - {fileID: 2109300430}
   - {fileID: 1561918213}
   - {fileID: 3056391700330277803}
+  - {fileID: 235301394693878021}

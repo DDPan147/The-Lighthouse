@@ -7,6 +7,7 @@ public class Minijuego2_GameManager : MonoBehaviour
     public GameObject Comida_Cortada;
     private Camera cam;
     public bool imGrabing = false;
+    private bool imCutting;
     private GameObject grabObject;
     private Selectable_MG2 grabObjectData;
     private float ScreenWidth, ScreenHeight;
@@ -115,34 +116,36 @@ public class Minijuego2_GameManager : MonoBehaviour
         }
         else if(imGrabing && context.performed)
         {
-            if(grabObject.gameObject.tag == "Cuchillo")
+
+            switch (grabObject.gameObject.tag)
             {
-                grabObjectData.isGrabbed = false;
-                Cursor.visible = true;
-                Cursor.lockState = CursorLockMode.None;
-                grabObject.GetComponent<Selectable_MG2>().moveDirection = Vector2.zero;
-                grabObject.transform.DOMove(grabObject.GetComponent<Knife>().origPosition, 0.75f);
-                grabObject = null;
-                grabObjectData = null;
+                case "Cuchillo":
+                    grabObjectData.isGrabbed = false;
+                    Cursor.visible = true;
+                    Cursor.lockState = CursorLockMode.None;
+                    grabObject.GetComponent<Selectable_MG2>().moveDirection = Vector2.zero;
+                    grabObject.transform.DOMove(grabObject.GetComponent<Selectable_MG2>().origPosition, 0.75f);
+                    grabObject = null;
+                    grabObjectData = null;
+                    break;
+                case "Comida":
+                    grabObjectData.isGrabbed = false;
+                    Cursor.lockState = CursorLockMode.None;
+                    Cursor.visible = true;
+                    grabObject.GetComponent<Selectable_MG2>().moveDirection = Vector2.zero;
+                    grabObject = null;
+                    grabObjectData = null;
+                    break;
+                case "Comida_Hecha":
+                    grabObjectData.isGrabbed = false;
+                    Cursor.lockState = CursorLockMode.None;
+                    Cursor.visible = true;
+                    grabObject.GetComponent<Selectable_MG2>().moveDirection = Vector2.zero;
+                    grabObject = null;
+                    grabObjectData = null;
+                    break;
             }
-            else if(grabObject.gameObject.tag == "Comida")
-            {
-                grabObjectData.isGrabbed = false;
-                Cursor.lockState = CursorLockMode.None;
-                Cursor.visible = true;
-                grabObject.GetComponent<Selectable_MG2>().moveDirection = Vector2.zero;
-                grabObject = null;
-                grabObjectData = null;
-            }
-            else if (grabObject.gameObject.tag == "Comida_Hecha")
-            {
-                grabObjectData.isGrabbed = false;
-                Cursor.lockState = CursorLockMode.None;
-                Cursor.visible = true;
-                grabObject.GetComponent<Selectable_MG2>().moveDirection = Vector2.zero;
-                grabObject = null;
-                grabObjectData = null;
-            }
+            
             imGrabing = false;
         }
         
@@ -165,5 +168,47 @@ public class Minijuego2_GameManager : MonoBehaviour
         Cursor.visible = true;
         comida.GetComponent<Selectable_MG2>().moveDirection = Vector2.zero;
         grabObject = null;
+    }
+
+    public void OnCut(InputAction.CallbackContext context)
+    {
+        if (imGrabing)
+        {
+            switch (grabObject.gameObject.tag)
+            {
+                case "Untagged":
+                    Debug.LogWarning("The grabbed object hasn't any tag");
+                    break;
+                case "Cuchillo":
+                    Selectable_MG2 knifeObjData = grabObject.GetComponent<Selectable_MG2>();
+                    Knife knife = grabObject.GetComponent<Knife>();
+                    if (context.performed && knifeObjData.isGrabbed)
+                    {
+                        imCutting = true;
+                    }
+                    else if (context.canceled && knifeObjData.isGrabbed)
+                    {
+                        imCutting = false;
+                    }
+                    if (context.performed && knife.thereIsFood && knife.feedbackSupervisor)
+                    {
+                        Comida comida_Cortada = grabObject.GetComponent<Knife>().Comida.GetComponent<Comida>();
+                        if (comida_Cortada.canBeCutted)
+                        {
+                            //Destroy(Comida.transform.Find("Forma").gameObject);
+                            Instantiate(comida_Cortada.comida_Cortada, grabObject.GetComponent<Knife>().Comida.transform);
+                            comida_Cortada.isCutted = true;
+                            knife.thereIsFood = false;
+                        }
+                        else
+                        {
+                            // Feedback de que la comida hace falta pelarla o que aun no se puede cortar
+                            comida_Cortada.gameObject.transform.DOShakePosition(0.3f, 0.05f, 50, 90, false, true, ShakeRandomnessMode.Full).OnPlay(() => knife.feedbackSupervisor = false).OnComplete(() => knife.feedbackSupervisor = true);
+                        }
+
+                    }
+                    break;
+            } //REcuerda hacer lo mismo con todos los componentes que tengan un script con la funcion de input OnCut, para generalizarlos todos en el game manager y que sea mas versátil a la hora de trabajar
+        }
     }
 }
