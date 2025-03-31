@@ -19,6 +19,7 @@ public class PlayerGrabObjects : MonoBehaviour
     [Header("Papelera")]
     [SerializeField] private GameObject keyPromptUI;
     private bool isNearTrashbin = false;
+    [SerializeField] private PlayEffectsTrashbin trashBinScript;
     
     [Header("Input Control")]
     private bool canSave = true; // Para evitar múltiples guardados
@@ -78,6 +79,7 @@ public class PlayerGrabObjects : MonoBehaviour
         if (context.performed && objectToGrab != null && isNearTrashbin)
         {
             ThrowObject();
+            trashBinScript.PlayEffects();
         }
     }
     #endregion
@@ -144,6 +146,7 @@ public class PlayerGrabObjects : MonoBehaviour
         {
             UpdatePromptText("Press Q to throw object");
             isNearTrashbin = true;
+            trashBinScript = other.gameObject.GetComponent<PlayEffectsTrashbin>();
             // Mostrar el popup
             if (keyPromptUI != null)
                 keyPromptUI.SetActive(true);
