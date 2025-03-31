@@ -22,8 +22,9 @@ public class Comida : MonoBehaviour
     public GameObject comida_Cortada;
     [Tooltip("Null if doesn't has")]public GameObject comida_Pelada;
     private float moveSpeed = 0.4f;
-    private bool thereIsBread;
-    
+    [HideInInspector] public bool thereIsBread;
+    [HideInInspector] public bool feedbackSupervisor = true;
+
     private GameObject rebozadoObj;
 
     private void Awake()

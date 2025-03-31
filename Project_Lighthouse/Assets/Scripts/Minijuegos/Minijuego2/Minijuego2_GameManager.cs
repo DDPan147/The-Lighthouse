@@ -8,6 +8,7 @@ public class Minijuego2_GameManager : MonoBehaviour
     private Camera cam;
     public bool imGrabing = false;
     private bool imCutting;
+    private bool imPelando;
     private GameObject grabObject;
     private Selectable_MG2 grabObjectData;
     private float ScreenWidth, ScreenHeight;
@@ -128,6 +129,15 @@ public class Minijuego2_GameManager : MonoBehaviour
                     grabObject = null;
                     grabObjectData = null;
                     break;
+                case "Peladora":
+                    grabObjectData.isGrabbed = false;
+                    Cursor.visible = true;
+                    Cursor.lockState = CursorLockMode.None;
+                    grabObject.GetComponent<Selectable_MG2>().moveDirection = Vector2.zero;
+                    grabObject.transform.DOMove(grabObject.GetComponent<Selectable_MG2>().origPosition, 0.75f);
+                    grabObject = null;
+                    grabObjectData = null;
+                    break;
                 case "Comida":
                     grabObjectData.isGrabbed = false;
                     Cursor.lockState = CursorLockMode.None;
@@ -177,7 +187,7 @@ public class Minijuego2_GameManager : MonoBehaviour
             switch (grabObject.gameObject.tag)
             {
                 case "Untagged":
-                    Debug.LogWarning("The grabbed object hasn't any tag");
+                    Debug.LogWarning("The grabbed object doesn't have any tag");
                     break;
                 case "Cuchillo":
                     Selectable_MG2 knifeObjData = grabObject.GetComponent<Selectable_MG2>();
@@ -192,7 +202,7 @@ public class Minijuego2_GameManager : MonoBehaviour
                     }
                     if (context.performed && knife.thereIsFood && knife.feedbackSupervisor)
                     {
-                        Comida comida_Cortada = grabObject.GetComponent<Knife>().Comida.GetComponent<Comida>();
+                        Comida comida_Cortada = knife.Comida.GetComponent<Comida>();
                         if (comida_Cortada.canBeCutted)
                         {
                             //Destroy(Comida.transform.Find("Forma").gameObject);
@@ -202,13 +212,64 @@ public class Minijuego2_GameManager : MonoBehaviour
                         }
                         else
                         {
-                            // Feedback de que la comida hace falta pelarla o que aun no se puede cortar
+                            // Feedback de que la comida hace falta pelarla o que no se puede cortar
+                            Debug.Log("No se puede cortar");
                             comida_Cortada.gameObject.transform.DOShakePosition(0.3f, 0.05f, 50, 90, false, true, ShakeRandomnessMode.Full).OnPlay(() => knife.feedbackSupervisor = false).OnComplete(() => knife.feedbackSupervisor = true);
                         }
 
                     }
                     break;
-            } //REcuerda hacer lo mismo con todos los componentes que tengan un script con la funcion de input OnCut, para generalizarlos todos en el game manager y que sea mas versátil a la hora de trabajar
+                case "Peladora":
+                    Selectable_MG2 peladoraObjData = grabObject.GetComponent<Selectable_MG2>();
+                    Peladora peladora = grabObject.GetComponent<Peladora>();
+                    if (context.performed && peladoraObjData.isGrabbed)
+                    {
+                        imPelando = true;
+                    }
+                    else if (context.canceled && peladoraObjData.isGrabbed)
+                    {
+                        imPelando = false;
+                    }
+                    if (context.performed && peladora.thereIsFood && peladora.feedbackSupervisor)
+                    {
+                        Comida comida_Cortada = peladora.Comida.GetComponent<Comida>();
+                        if (comida_Cortada.canBePelado)
+                        {
+                            //Destroy(Comida.transform.Find("Forma").gameObject);
+                            Instantiate(comida_Cortada.comida_Pelada, peladora.Comida.transform);
+                            comida_Cortada.isPelado = true;
+                            peladora.thereIsFood = false;
+                        }
+                        else
+                        {
+                            // Feedback de que la comida no se puede pelar
+                            Debug.Log("No se puede pelar");
+                            comida_Cortada.gameObject.transform.DOShakePosition(0.3f, 0.05f, 50, 90, false, true, ShakeRandomnessMode.Full).OnPlay(() => peladora.feedbackSupervisor = false).OnComplete(() => peladora.feedbackSupervisor = true);
+                        }
+
+                    }
+                    break;
+                case "Comida":
+                    Selectable_MG2 comidaObjData = grabObject.GetComponent<Selectable_MG2>();
+                    Comida comida = grabObject.GetComponent<Comida>();
+                    if (context.performed && comida.thereIsBread && comidaObjData.isGrabbed && comida.isCutted)
+                    {
+                        comida.isRebozado = true;
+                    }
+                    else if (context.performed && !comida.isCutted && comidaObjData.isGrabbed)
+                    {
+                        //Feedback visual de que falta cortarlode
+                        Debug.Log("Falta cortar");
+                        comida.transform.DOShakePosition(0.3f, 0.05f, 50, 90, false, true, ShakeRandomnessMode.Full).OnPlay(() => comida.feedbackSupervisor = false).OnComplete(() => comida.feedbackSupervisor = true);
+                    }
+                    else if(context.performed && !comida.isPelado && comidaObjData.isGrabbed)
+                    {
+                        //Feedback visual de que falta pelarlo
+                        Debug.Log("Falta pelar  ");
+                        comida.transform.DOShakePosition(0.3f, 0.05f, 50, 90, false, true, ShakeRandomnessMode.Full).OnPlay(() => comida.feedbackSupervisor = false).OnComplete(() => comida.feedbackSupervisor = true);
+                    }
+                    break;
+            } 
         }
     }
 }

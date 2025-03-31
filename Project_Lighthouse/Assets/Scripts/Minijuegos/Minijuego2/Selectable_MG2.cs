@@ -6,9 +6,14 @@ public class Selectable_MG2 : MonoBehaviour
     [HideInInspector] public Vector2 moveDirection;
     private float moveSpeed = 0.4f;
     [HideInInspector] public Vector3 origPosition;
-    public Transform minLimitX, minLimitZ, maxLimitX, maxLimitZ;
+    private Transform minLimitX, minLimitZ, maxLimitX, maxLimitZ;
     void Start()
     {
+        GameObject limitColliders = GameObject.Find("LimitColliders");
+        minLimitX = limitColliders.transform.GetChild(3);
+        minLimitZ = limitColliders.transform.GetChild(1);
+        maxLimitX = limitColliders.transform.GetChild(2);
+        maxLimitZ = limitColliders.transform.GetChild(0);
         origPosition = transform.position;
     }
 

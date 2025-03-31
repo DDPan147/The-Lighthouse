@@ -7,10 +7,10 @@ public class Peladora : MonoBehaviour
     public bool isPelando;
     //public GameObject Comida_Pelada;
     //[HideInInspector] public Vector3 origPosition;
-    private bool thereIsFood;
-    private bool feedbackSupervisor = true;
+    [HideInInspector] public bool thereIsFood;
+    [HideInInspector] public bool feedbackSupervisor = true;
     //public Transform minLimitX, minLimitZ, maxLimitX, maxLimitZ;
-    private GameObject Comida;
+    [HideInInspector] public GameObject Comida;
     //public bool isGrabbed;
     private Selectable_MG2 objData;
 
