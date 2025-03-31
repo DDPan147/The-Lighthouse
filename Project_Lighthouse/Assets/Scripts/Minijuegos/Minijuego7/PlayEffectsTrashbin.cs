@@ -6,6 +6,7 @@ public class PlayEffectsTrashbin : MonoBehaviour
     [SerializeField] private float intensidadVibracion = 0.1f;
     [SerializeField] private float durationVibration = 0.5f;
     [SerializeField] private int vibracionFuerza = 2;
+    [SerializeField] private int vibraciones = 10;
     //[SerializeField] private ParticleSystem dustParticles; // Opcional para partículas
 
     private Vector3 originalPosition;
@@ -27,16 +28,16 @@ public class PlayEffectsTrashbin : MonoBehaviour
         // Asegurar posición inicial correcta
         transform.position = originalPosition;
 
-        // Crear vibración con DOTween
-        vibracionTween = transform.DOShakePosition(
-            durationVibration,    // Duración
-            intensidadVibracion,  // Fuerza
-            vibracionFuerza,      // Vibrato (número de vibraciones)
-            90,                   // Aleatoriedad
-            false,                // Snapping
-            true                  // FadeOut
+        // Establecemos uan direccion de vibracion para poder realizar la animacion
+        Vector3 direccionVibracion = new Vector3(intensidadVibracion, 0, 0);
+
+        // DOPunchPosition para crear un efecto de "vibracion"
+        vibracionTween = transform.DOPunchPosition(
+            direccionVibracion,   // Direccion de la vibracion (izquierda a derecha)
+            durationVibration,    // Duracion de la animacon
+            vibraciones,          // Numero de vibraciones
+            0.5f                  // Elasticidad (0-1)
         ).OnComplete(() => {
-            // Restaurar posición original al terminar
             transform.position = originalPosition;
         });
 
