@@ -3,6 +3,7 @@ using DG.Tweening;
 
 public class RoomPart : MonoBehaviour
 {
+    public GameObject target;
     Material mat;
     float initialAlpha;
     public float fadeTime;
@@ -13,7 +14,7 @@ public class RoomPart : MonoBehaviour
 
     void Start()
     {
-        mat = GetComponent<Renderer>().material;
+        mat = target.GetComponent<Renderer>().material;
         initialAlpha = mat.color.a;
     }
 

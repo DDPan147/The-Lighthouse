@@ -45,7 +45,7 @@ public class SplineSwitch : MonoBehaviour
             player.spline = splines[1];
             player.splineLength = splines[1].CalculateLength();
             player.distancePercentage = percentageIn;
-            player.transitionSpline = BuildTransitionSpline(player.transform.position, splines[1], percentageIn);
+            player.transitionSpline = BuildTransitionSpline(player.transform.position, splines[1], percentageIn, splines[1][0][transitionKnotIndexIn]);
             player.StartTransition();
 
             if (!isButtonOut)
@@ -67,7 +67,7 @@ public class SplineSwitch : MonoBehaviour
             player.splineLength = splines[0].CalculateLength();
             player.distancePercentage = percentageOut;
 
-            player.transitionSpline = BuildTransitionSpline(player.transform.position, splines[0], percentageOut);
+            player.transitionSpline = BuildTransitionSpline(player.transform.position, splines[0], percentageOut, splines[0][0][transitionKnotIndexOut]);
             player.StartTransition();
 
             if (!isButtonIn)
@@ -90,11 +90,14 @@ public class SplineSwitch : MonoBehaviour
     //Pasar la spline resultado al player**
     //El player designa un estado de transición
     //El player se mueve a través de la spline de transición automáticamente
-    public Spline BuildTransitionSpline(Vector3 currentPosition, SplineContainer targetSpline, float percentage)
+    public Spline BuildTransitionSpline(Vector3 currentPosition, SplineContainer targetSpline, float percentage, BezierKnot knot)
     {
         Spline newSpline = new Spline(0);
+        //Vector3 direction = currentPosition - knot.Position;
+        Quaternion direction01 = Quaternion.LookRotation(Vector3.up);
         newSpline.Add(currentPosition);
-        newSpline.Add(targetSpline.EvaluatePosition(percentage));
+        //newSpline.Add(targetSpline.EvaluatePosition(percentage));
+        newSpline.Add(knot.Position);
 
         return newSpline;
     }
