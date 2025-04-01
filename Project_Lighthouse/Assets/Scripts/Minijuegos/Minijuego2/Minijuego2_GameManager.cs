@@ -1,10 +1,13 @@
 using DG.Tweening;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class Minijuego2_GameManager : MonoBehaviour
 {
     public GameObject Comida_Cortada;
+    //public GameObject PlatoPrefab;
+    public TMP_Text nombrePlato;
     private Camera cam;
     public bool imGrabing = false;
     private bool imCutting;
@@ -32,6 +35,7 @@ public class Minijuego2_GameManager : MonoBehaviour
             {
                 //Terminada la receta
                 Debug.Log("Terminado");
+                //NextReciepe();
             }
         }
     }
@@ -41,6 +45,7 @@ public class Minijuego2_GameManager : MonoBehaviour
         cam = Camera.main;
         ScreenHeight = Screen.height;
         ScreenWidth = Screen.width;
+        nombrePlato.text = "Fish&Chips" + ":";
     }
 
 
@@ -69,9 +74,10 @@ public class Minijuego2_GameManager : MonoBehaviour
         }
     }
 
-    public void StartSecondReciepe()
+    public void NextReciepe()
     {
         //Hacer que se inicie la segunda receta
+        nombrePlato.text = "Caldo Pescado" + ":";
     }
 
     public void OnGrab(InputAction.CallbackContext context)
