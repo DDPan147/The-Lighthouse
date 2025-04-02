@@ -345,6 +345,25 @@ MonoBehaviour:
   - sceneName: Minijuego9_Nuevo
     isAvailable: 1
     isCompleted: 0
+  OnMinigameEnded:
+  - m_PersistentCalls:
+      m_Calls: []
+  - m_PersistentCalls:
+      m_Calls: []
+  - m_PersistentCalls:
+      m_Calls: []
+  - m_PersistentCalls:
+      m_Calls: []
+  - m_PersistentCalls:
+      m_Calls: []
+  - m_PersistentCalls:
+      m_Calls: []
+  - m_PersistentCalls:
+      m_Calls: []
+  - m_PersistentCalls:
+      m_Calls: []
+  - m_PersistentCalls:
+      m_Calls: []
   mainCamera: {fileID: 0}
   eventSystem: {fileID: 0}
   audioListener: {fileID: 0}
@@ -5905,6 +5924,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1130099396}
     m_Modifications:
+    - target: {fileID: 1755595211292361918, guid: 8d03efde186590e4e9280261b651bc12, type: 3}
+      propertyPath: minigameIndex
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1755595211292361918, guid: 8d03efde186590e4e9280261b651bc12, type: 3}
+      propertyPath: usesStartPosition
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5274426732076911649, guid: 8d03efde186590e4e9280261b651bc12, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4.7792616
@@ -5948,6 +5975,14 @@ PrefabInstance:
     - target: {fileID: 8094544847822749177, guid: 8d03efde186590e4e9280261b651bc12, type: 3}
       propertyPath: m_Name
       value: MinigameSwitch1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8205457346757412018, guid: 8d03efde186590e4e9280261b651bc12, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.45
+      objectReference: {fileID: 0}
+    - target: {fileID: 8205457346757412018, guid: 8d03efde186590e4e9280261b651bc12, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

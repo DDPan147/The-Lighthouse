@@ -1,6 +1,6 @@
+using System;
 using DG.Tweening;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Splines;
 
@@ -92,7 +92,20 @@ public class Player : MonoBehaviour
 
         if(activeMinigameSwitch != null && Input.GetKeyDown(KeyCode.Z))
         {
-            activeMinigameSwitch.TriggerMinigame();
+            if (activeMinigameSwitch.usesStartPosition)
+            {
+                transitionSpline = BuildTransitionSpline(transform.position, activeMinigameSwitch.startPosition.position);
+
+                Action triggerMinigame = new Action(activeMinigameSwitch.TriggerMinigame);
+
+                StartTransition(triggerMinigame);
+
+                
+            }
+            else
+            {
+                activeMinigameSwitch.TriggerMinigame();
+            }
         }
     }
 
@@ -176,6 +189,14 @@ public class Player : MonoBehaviour
         //Play Transition Anim
     }
 
+    public void StartTransition(Action triggerMinigame)
+    {
+        moveState = MoveStates.Transition;
+        float duration = transitionSpline.GetLength() * transitionSpeed;
+        DOTween.To(() => transitionPercentage, x => transitionPercentage = x, 1, duration).OnComplete(() => triggerMinigame());
+        //Play Transition Anim
+    }
+
     void EndTransition()
     {
         moveState = MoveStates.Control;
@@ -200,4 +221,12 @@ public class Player : MonoBehaviour
     }
     #endregion
 
+    public Spline BuildTransitionSpline(Vector3 currentPosition, Vector3 targetPosition)
+    {
+        Spline newSpline = new Spline(0);
+        newSpline.Add(currentPosition);
+        newSpline.Add(targetPosition);
+
+        return newSpline;
+    }
 }

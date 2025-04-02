@@ -88,6 +88,15 @@ public class WindowRestorationUIManager : MonoBehaviour
     public void ShowCompletionScreen()
     {
         completionPanel.SetActive(true);
+        GameManager gm = FindFirstObjectByType<GameManager>();
+        if (gm != null)
+        {
+            FindFirstObjectByType<GameManager>().MinigameCompleted(0);
+        }
+        else
+        {
+            Debug.LogWarning("No se ha encontrado el Game Manager de la escena principal. No se va a volver al juego");
+        }
     }
     private void OnDestroy()
     {
