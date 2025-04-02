@@ -16,8 +16,10 @@ public class Comida : MonoBehaviour
     [HideInInspector] public bool isCutted;
     [HideInInspector] public bool canBeCutted;
     [HideInInspector] public bool isRebozado;
+    [HideInInspector] public bool canBeRebozado;
     [HideInInspector] public bool isPelado;
     [HideInInspector] public bool canBePelado;
+    [HideInInspector] public bool isReady;
     [HideInInspector] public Material comidaMat;
     public GameObject comida_Cortada;
     [Tooltip("Null if it doesn't have")]public GameObject comida_Pelada;
@@ -57,6 +59,12 @@ public class Comida : MonoBehaviour
                 {
                     canBePelado = true;
                 }
+                canBeRebozado = false;
+
+                if(isPelado && isCutted)
+                {
+                    isReady = true;
+                }
                 break;
             case TipoComida.Zanahoria:
                 if (isPelado)
@@ -67,14 +75,28 @@ public class Comida : MonoBehaviour
                 {
                     canBePelado = true;
                 }
+                canBeRebozado = false;
+
+                if (isPelado && isCutted)
+                {
+                    isReady = true;
+                }
                 break;
             case TipoComida.Pescado:
                 canBeCutted = true;
                 canBePelado = false;
+                canBeRebozado = true;
+
+                if(isCutted && isRebozado)
+                {
+                    isReady = true;
+                }
                 break;
             case TipoComida.RestosPescado:
                 canBeCutted = false;
                 canBePelado = false;
+                canBeRebozado = false;
+                isReady = true;
                 break;
         }
 

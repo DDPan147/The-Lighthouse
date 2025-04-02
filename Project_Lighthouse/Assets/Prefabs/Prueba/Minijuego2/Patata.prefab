@@ -252,7 +252,7 @@ Rigidbody:
     m_Bits: 256
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 0
+  m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 112
@@ -269,12 +269,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3a7ec354b2ffbd4c9ddbb8482e92980, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isGrabbed: 0
+  tipoComida: 0
   isCutted: 0
+  canBeCutted: 0
   isRebozado: 0
-  moveDirection: {x: 0, y: 0}
+  canBeRebozado: 0
+  isPelado: 0
+  canBePelado: 0
+  isReady: 0
   comidaMat: {fileID: 0}
   comida_Cortada: {fileID: 713118295505280308, guid: 2cb26865eb8fdf34e88f798a0aefac71, type: 3}
+  comida_Pelada: {fileID: 713118295505280308, guid: 7171254f5bf87e94285b47d9ab3b4873, type: 3}
+  thereIsBread: 0
+  feedbackSupervisor: 1
 --- !u!114 &7190042017706698020
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -289,3 +296,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isGrabbed: 0
   moveDirection: {x: 0, y: 0}
+  origPosition: {x: 0, y: 0, z: 0}

@@ -5,7 +5,16 @@ using UnityEngine.InputSystem;
 
 public class Minijuego2_GameManager : MonoBehaviour
 {
+    [Header("Scene Objects")]
+
+    public GameObject olla;
+    public GameObject sarten;
+    public GameObject platoFishChips, plato2;
+    public GameObject recetaFishChips, receta2;
+    public GameObject ingredientesReceta;
+    [Space(20)]
     public GameObject Comida_Cortada;
+    public GameObject huesosPescado;
     //public GameObject PlatoPrefab;
     public TMP_Text nombrePlato;
     private Camera cam;
@@ -35,7 +44,7 @@ public class Minijuego2_GameManager : MonoBehaviour
             {
                 //Terminada la receta
                 Debug.Log("Terminado");
-                //NextReciepe();
+                NextReciepe();
             }
         }
     }
@@ -77,9 +86,36 @@ public class Minijuego2_GameManager : MonoBehaviour
     public void NextReciepe()
     {
         //Hacer que se inicie la segunda receta
-        nombrePlato.text = "Caldo Pescado" + ":";
+        //nombrePlato.text = "Caldo Pescado" + ":";
+        ingredientesReceta.SetActive(true);
+        recetaFishChips.SetActive(false);
+        receta2.SetActive(true);
+        MoveDishesSequence();
     }
 
+    void MoveDishesSequence()
+    {
+        Vector3 plato1Position = platoFishChips.transform.position;
+        Vector3 ollaPosition = olla.transform.position;
+        Vector3 sartenPosition = sarten.transform.position;
+        Sequence MoveObjects = DOTween.Sequence();
+        MoveObjects.Append(platoFishChips.transform.DOMoveZ(-1.5f, 1.75f, false));  //Mueve el plato ya preparado hacia adelante
+        MoveObjects.Append(plato2.transform.DOMove(plato1Position, 1f, false));     //Mueve el plato vacio cerca de la zona de trabajo/cocina
+        MoveObjects.Append(olla.transform.DOMoveY(0.5f, 0.5f, false));              //Levanta la olla
+        MoveObjects.Append(olla.transform.DOMoveX(sartenPosition.x, 1.25f, false)); //Mueve la olla hacia donde estaba la sarten
+        MoveObjects.Append(sarten.transform.DOMoveX(ollaPosition.x, 1.25f, false)); //Mueve la sarten hacia donde estaba la olla
+        MoveObjects.Append(olla.transform.DOMoveY(sartenPosition.y, 0.5f, false));  //Deja la olla donde estaba anteriormente la sarten
+
+    }
+    public void PutFoodInPot(Comida comida)
+    {
+        comida.GetComponent<Selectable_MG2>().isGrabbed = false;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        comida.GetComponent<Selectable_MG2>().moveDirection = Vector2.zero;
+        grabObject = null;
+    }
+    #region InputEvents
     public void OnGrab(InputAction.CallbackContext context)
     {
         if (!imGrabing && context.performed)
@@ -168,14 +204,6 @@ public class Minijuego2_GameManager : MonoBehaviour
         }
     }
 
-    public void PutFoodInPot(Comida comida)
-    {
-        comida.GetComponent<Selectable_MG2>().isGrabbed = false;
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
-        comida.GetComponent<Selectable_MG2>().moveDirection = Vector2.zero;
-        grabObject = null;
-    }
 
     public void OnCut(InputAction.CallbackContext context)
     {
@@ -204,6 +232,10 @@ public class Minijuego2_GameManager : MonoBehaviour
                         {
                             knife.Comida.transform.Find("Forma").gameObject.SetActive(false);
                             Instantiate(comida_Cortada.comida_Cortada, grabObject.GetComponent<Knife>().Comida.transform);
+                            if(comida_Cortada.tipoComida == Comida.TipoComida.Pescado)
+                            {
+                                Instantiate(huesosPescado, new Vector3(comida_Cortada.transform.position.x, comida_Cortada.transform.position.y, comida_Cortada.transform.position.z + 0.25f), Quaternion.identity, ingredientesReceta.transform.parent.transform);
+                            }
                             comida_Cortada.isCutted = true;
                             knife.thereIsFood = false;
                         }
@@ -249,13 +281,19 @@ public class Minijuego2_GameManager : MonoBehaviour
                 case "Comida":
                     Selectable_MG2 comidaObjData = grabObject.GetComponent<Selectable_MG2>();
                     Comida comida = grabObject.GetComponent<Comida>();
-                    if (context.performed && comida.thereIsBread && comidaObjData.isGrabbed && comida.isCutted)
+                    if (context.performed && comida.thereIsBread && comidaObjData.isGrabbed && comida.isCutted && comida.canBeRebozado)
                     {
                         comida.isRebozado = true;
                     }
+                    else if (!comida.canBeRebozado)
+                    {
+                        //Feedback visual de que no se puede rebozar
+                        Debug.Log("No se puede rebozar");
+                        comida.transform.DOShakePosition(0.3f, 0.05f, 50, 90, false, true, ShakeRandomnessMode.Full).OnPlay(() => comida.feedbackSupervisor = false).OnComplete(() => comida.feedbackSupervisor = true);
+                    }
                     else if (context.performed && !comida.isCutted && comidaObjData.isGrabbed)
                     {
-                        //Feedback visual de que falta cortarlode
+                        //Feedback visual de que falta cortarlo
                         Debug.Log("Falta cortar");
                         comida.transform.DOShakePosition(0.3f, 0.05f, 50, 90, false, true, ShakeRandomnessMode.Full).OnPlay(() => comida.feedbackSupervisor = false).OnComplete(() => comida.feedbackSupervisor = true);
                     }
@@ -269,4 +307,5 @@ public class Minijuego2_GameManager : MonoBehaviour
             } 
         }
     }
+    #endregion
 }

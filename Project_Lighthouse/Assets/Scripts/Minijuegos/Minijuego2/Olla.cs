@@ -12,6 +12,7 @@ public class Olla : MonoBehaviour
     public GameObject potProgressionBackground;
     private Image potProgress;
     public float timeToCook;
+    public int foodNeeded;
     private bool _takeOffFood;
     [HideInInspector] public bool takeOffFood
     {
@@ -52,7 +53,7 @@ public class Olla : MonoBehaviour
         if (other.gameObject.GetComponent<Comida>() != null)
         {
             Comida comida = other.gameObject.GetComponent<Comida>();
-            if (comida.GetComponent<Selectable_MG2>().isGrabbed && comida.isCutted && comida.isRebozado)
+            if (comida.GetComponent<Selectable_MG2>().isGrabbed && comida.isReady)
             {
                 Sequence PutFood = DOTween.Sequence();
                 PutFood.Append(other.gameObject.transform.DOMove(transform.position + new Vector3(0, 0.5f, 0), 0.5f));
@@ -62,13 +63,18 @@ public class Olla : MonoBehaviour
                 PutFood.OnComplete(() =>
                 {
                     foodInPot++;
-                    if (foodInPot >= 2)
+                    other.gameObject.SetActive(false);
+                    if (foodInPot >= foodNeeded)
                     {
                         StartCoroutine(FoodProgress());
                         
                     }
                     
                 });
+            }
+            else
+            {
+                comida.transform.DOShakePosition(0.3f, 0.05f, 50, 90, false, true, ShakeRandomnessMode.Full).OnPlay(() => comida.feedbackSupervisor = false).OnComplete(() => comida.feedbackSupervisor = true);
             }
         }
     }
