@@ -6,6 +6,8 @@ using UnityEngine.Splines;
 
 public class Player : MonoBehaviour
 {
+    public bool canMove;
+
     public float speed;
     public float transitionSpeed;
 
@@ -23,7 +25,6 @@ public class Player : MonoBehaviour
 
     public MinigameSwitch activeMinigameSwitch;
     public TMP_Text triggerMinigameText;
-    public GameObject playerCanvas;
 
     public enum MoveStates
     {
@@ -36,6 +37,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         splineLength = spline.CalculateLength();
+        canMove = true;
     }
 
     void Update()
@@ -50,7 +52,6 @@ public class Player : MonoBehaviour
             {
                 TransitionState();
             }
-            CanvasLookToScreen();
         }
     }
 
@@ -65,7 +66,9 @@ public class Player : MonoBehaviour
 
     private void ControlState()
     {
+        
         moveVector = Input.GetAxis("Horizontal");
+        if (!canMove) moveVector = 0;
 
         distancePercentage -= moveVector * speed * Time.deltaTime / splineLength;
         distancePercentage = Mathf.Clamp01(distancePercentage);
@@ -99,10 +102,6 @@ public class Player : MonoBehaviour
         {
             CheckIsButtonSpline(other.gameObject.GetComponent<SplineSwitch>());
         }
-        if (other.gameObject.CompareTag("DialogueTrigger_Core"))
-        {
-            other.gameObject.GetComponent<DialogueTrigger>().TriggerComment();
-        }
         if (other.gameObject.CompareTag("MinigameSwitch_Core"))
         {
             CheckCurrentMinigameSwitch(other.GetComponent<MinigameSwitch>());
@@ -110,6 +109,14 @@ public class Player : MonoBehaviour
         if (other.gameObject.CompareTag("MissionTrigger_Core"))
         {
             other.gameObject.GetComponent<MissionTrigger>().TriggerMission();
+        }
+    }
+
+    void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.CompareTag("DialogueTrigger_Core"))
+        {
+            other.gameObject.GetComponent<DialogueTrigger>().TriggerComment();
         }
     }
 
@@ -192,12 +199,5 @@ public class Player : MonoBehaviour
         activeMinigameSwitch = null;
     }
     #endregion
-    void CanvasLookToScreen()
-    {
-        //playerCanvas.transform.LookAt(Camera.main.transform);
-
-        //playerCanvas.transform.rotation = Quaternion.LookRotation(playerCanvas.transform.position - Camera.main.transform.position);
-        playerCanvas.transform.rotation = Camera.main.transform.rotation;
-    }
 
 }
