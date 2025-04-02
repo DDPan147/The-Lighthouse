@@ -2,6 +2,7 @@ using System;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Splines;
 
 public class Player : MonoBehaviour
@@ -26,6 +27,8 @@ public class Player : MonoBehaviour
     public MinigameSwitch activeMinigameSwitch;
     public TMP_Text triggerMinigameText;
 
+    private GameManager gm;
+
     public enum MoveStates
     {
         Control,
@@ -38,6 +41,12 @@ public class Player : MonoBehaviour
     {
         splineLength = spline.CalculateLength();
         canMove = true;
+        gm = FindAnyObjectByType<GameManager>();
+
+        foreach(UnityEvent uEvent in gm.OnMinigameEnded)
+        {
+            uEvent.AddListener(RevertTransition);
+        }
     }
 
     void Update()
@@ -194,6 +203,14 @@ public class Player : MonoBehaviour
         moveState = MoveStates.Transition;
         float duration = transitionSpline.GetLength() * transitionSpeed;
         DOTween.To(() => transitionPercentage, x => transitionPercentage = x, 1, duration).OnComplete(() => triggerMinigame());
+        //Play Transition Anim
+    }
+
+    void RevertTransition()
+    {
+        moveState = MoveStates.Transition;
+        float duration = transitionSpline.GetLength() * transitionSpeed;
+        DOTween.To(() => transitionPercentage, x => transitionPercentage = x, 0, duration).OnComplete(() => EndTransition());//OnComplete(() => completeAction());
         //Play Transition Anim
     }
 
