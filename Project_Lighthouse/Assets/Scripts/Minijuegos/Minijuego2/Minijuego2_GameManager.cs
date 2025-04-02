@@ -19,6 +19,7 @@ public class Minijuego2_GameManager : MonoBehaviour
     public TMP_Text nombrePlato;
     private Camera cam;
     public bool imGrabing = false;
+    private bool canGrab = true;
     private bool imCutting;
     private bool imPelando;
     private GameObject grabObject;
@@ -105,7 +106,8 @@ public class Minijuego2_GameManager : MonoBehaviour
         MoveObjects.Append(olla.transform.DOMoveX(sartenPosition.x, 1.25f, false)); //Mueve la olla hacia donde estaba la sarten
         MoveObjects.Append(sarten.transform.DOMoveX(ollaPosition.x, 1.25f, false)); //Mueve la sarten hacia donde estaba la olla
         MoveObjects.Append(olla.transform.DOMoveY(sartenPosition.y, 0.5f, false));  //Deja la olla donde estaba anteriormente la sarten
-
+        MoveObjects.OnPlay(() => canGrab = false);
+        MoveObjects.OnComplete(() => canGrab = true);
     }
     public void PutFoodInPot(Comida comida)
     {
@@ -118,7 +120,7 @@ public class Minijuego2_GameManager : MonoBehaviour
     #region InputEvents
     public void OnGrab(InputAction.CallbackContext context)
     {
-        if (!imGrabing && context.performed)
+        if (!imGrabing && context.performed && canGrab)
         {
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;

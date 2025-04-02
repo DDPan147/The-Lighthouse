@@ -9,6 +9,7 @@ public class Comida_Hecha : MonoBehaviour
     private Selectable_MG2 objData;
     private bool thereIsDish;
     private Transform dropPoint;
+    public bool isFirstFood;
     void Start()
     {
         gameManager = GameObject.FindAnyObjectByType<Minijuego2_GameManager>();
@@ -18,7 +19,7 @@ public class Comida_Hecha : MonoBehaviour
 
     void Update()
     {
-        if (objData.isGrabbed && thereIsDish)
+        if (objData.isGrabbed && thereIsDish && isFirstFood)
         {
             transform.DOMove(dropPoint.position, 0.5f).OnComplete(() => gameManager.finishRecipe = true);
             //gameManager.finishRecipe = true;
@@ -31,6 +32,10 @@ public class Comida_Hecha : MonoBehaviour
             DishFinished.Append(transform.DOMove(dropPoint.position, 0.5f));
             DishFinished.Append(dropPoint.parent.transform.DOMoveZ(-1.5f, 2f, false));*/
             objData.isGrabbed = false;
+        }
+        else if(objData.isGrabbed && thereIsDish && !isFirstFood)
+        {
+
         }
     }
 

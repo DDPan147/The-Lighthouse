@@ -23,7 +23,7 @@ public class IngredienteList : MonoBehaviour
     {
         if (comida == null)
         {
-            //comida = GameObject.Find().GetComponent<Comida>();
+            comida = GameObject.Find(nombreComida).GetComponent<Comida>();
         }
         nombre = transform.GetChild(0).GetComponent<TMP_Text>();
         switch (comida.tipoComida)
@@ -54,6 +54,9 @@ public class IngredienteList : MonoBehaviour
                 estadosText[2] = estadoComida[2].text;
                 break;
             case Comida.TipoComida.Zanahoria:
+                estadosText[0] = estadoComida[0].text;
+                //estadosText[1] = estadoComida[1].text;
+                estadosText[2] = estadoComida[2].text;
                 break;
             case Comida.TipoComida.Pescado:
                 estadosText[0] = estadoComida[0].text;
@@ -64,7 +67,7 @@ public class IngredienteList : MonoBehaviour
         }
         
         //estadosText[3] = estadoComida[3].text;
-        nombre.text = nombreComida;
+        //nombre.text = nombreComida;
     }
 
     private void Update()
@@ -76,6 +79,7 @@ public class IngredienteList : MonoBehaviour
                 PelarYCortar();
                 break;
             case Comida.TipoComida.Zanahoria:
+                PelarYCortar();
                 break;
             case Comida.TipoComida.Pescado:
                 CortarYRebozar();
