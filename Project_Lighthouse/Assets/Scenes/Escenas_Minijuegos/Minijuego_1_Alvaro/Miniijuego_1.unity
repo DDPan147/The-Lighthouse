@@ -246,6 +246,9 @@ MonoBehaviour:
   correctSlotPosition: 0
   detectionRadius: 1
   outlineMaterial: {fileID: 0}
+  glowMaterial: {fileID: 0}
+  correctPlacementIntensity: 3
+  transitionDuration: 1.5
   zDepth: 0
   isOnMouse: 0
   hoverHeight: 0.2
@@ -545,7 +548,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -725,6 +728,9 @@ MonoBehaviour:
   correctSlotPosition: 0
   detectionRadius: 1
   outlineMaterial: {fileID: 0}
+  glowMaterial: {fileID: 0}
+  correctPlacementIntensity: 3
+  transitionDuration: 1.5
   zDepth: 0
   isOnMouse: 0
   hoverHeight: 0.2
@@ -952,6 +958,7 @@ RectTransform:
   m_Children:
   - {fileID: 329431597}
   - {fileID: 1490317793}
+  - {fileID: 1431312936}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1527,6 +1534,9 @@ MonoBehaviour:
   correctSlotPosition: 0
   detectionRadius: 1
   outlineMaterial: {fileID: 0}
+  glowMaterial: {fileID: 0}
+  correctPlacementIntensity: 3
+  transitionDuration: 1.5
   zDepth: 0
   isOnMouse: 0
   hoverHeight: 0.2
@@ -1919,6 +1929,9 @@ MonoBehaviour:
   correctSlotPosition: 0
   detectionRadius: 1
   outlineMaterial: {fileID: 0}
+  glowMaterial: {fileID: 0}
+  correctPlacementIntensity: 3
+  transitionDuration: 1.5
   zDepth: 0
   isOnMouse: 0
   hoverHeight: 0.2
@@ -2224,6 +2237,9 @@ MonoBehaviour:
   correctSlotPosition: 0
   detectionRadius: 1
   outlineMaterial: {fileID: 0}
+  glowMaterial: {fileID: 0}
+  correctPlacementIntensity: 3
+  transitionDuration: 1.5
   zDepth: 0
   isOnMouse: 0
   hoverHeight: 0.2
@@ -2480,6 +2496,9 @@ MonoBehaviour:
   correctSlotPosition: 10
   detectionRadius: 1
   outlineMaterial: {fileID: 0}
+  glowMaterial: {fileID: 0}
+  correctPlacementIntensity: 3
+  transitionDuration: 1.5
   zDepth: 0
   isOnMouse: 0
   hoverHeight: 0.2
@@ -2543,7 +2562,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: be0e6af7474034b4c8ed437f264934d8, type: 2}
   - {fileID: 2100000, guid: e009a0035686e874ab9c0a218a87e111, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -2681,7 +2700,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: be0e6af7474034b4c8ed437f264934d8, type: 2}
   - {fileID: 2100000, guid: e009a0035686e874ab9c0a218a87e111, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -2743,6 +2762,9 @@ MonoBehaviour:
   correctSlotPosition: 1
   detectionRadius: 1
   outlineMaterial: {fileID: 0}
+  glowMaterial: {fileID: 0}
+  correctPlacementIntensity: 3
+  transitionDuration: 1.5
   zDepth: 0
   isOnMouse: 0
   hoverHeight: 0.2
@@ -2796,6 +2818,180 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!1001 &1080885757
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 295556191}
+    m_Modifications:
+    - target: {fileID: 4340539383612703542, guid: ef9bab49b1e42aa4eba41b12071319e4, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4340539383612703542, guid: ef9bab49b1e42aa4eba41b12071319e4, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4340539383612703542, guid: ef9bab49b1e42aa4eba41b12071319e4, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4340539383612703542, guid: ef9bab49b1e42aa4eba41b12071319e4, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4340539383612703542, guid: ef9bab49b1e42aa4eba41b12071319e4, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4340539383612703542, guid: ef9bab49b1e42aa4eba41b12071319e4, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4340539383612703542, guid: ef9bab49b1e42aa4eba41b12071319e4, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4340539383612703542, guid: ef9bab49b1e42aa4eba41b12071319e4, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4340539383612703542, guid: ef9bab49b1e42aa4eba41b12071319e4, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4340539383612703542, guid: ef9bab49b1e42aa4eba41b12071319e4, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4340539383612703542, guid: ef9bab49b1e42aa4eba41b12071319e4, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4340539383612703542, guid: ef9bab49b1e42aa4eba41b12071319e4, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4340539383612703542, guid: ef9bab49b1e42aa4eba41b12071319e4, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4340539383612703542, guid: ef9bab49b1e42aa4eba41b12071319e4, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4340539383612703542, guid: ef9bab49b1e42aa4eba41b12071319e4, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4340539383612703542, guid: ef9bab49b1e42aa4eba41b12071319e4, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4340539383612703542, guid: ef9bab49b1e42aa4eba41b12071319e4, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4340539383612703542, guid: ef9bab49b1e42aa4eba41b12071319e4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4340539383612703542, guid: ef9bab49b1e42aa4eba41b12071319e4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4340539383612703542, guid: ef9bab49b1e42aa4eba41b12071319e4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4340539383612703543, guid: ef9bab49b1e42aa4eba41b12071319e4, type: 3}
+      propertyPath: m_Name
+      value: GDT-Canvas-Fade-Object
+      objectReference: {fileID: 0}
+    - target: {fileID: 4340539383612703543, guid: ef9bab49b1e42aa4eba41b12071319e4, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4340539383612703545, guid: ef9bab49b1e42aa4eba41b12071319e4, type: 3}
+      propertyPath: pingPong
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4340539383612703545, guid: ef9bab49b1e42aa4eba41b12071319e4, type: 3}
+      propertyPath: timeEffect
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4340539383612703545, guid: ef9bab49b1e42aa4eba41b12071319e4, type: 3}
+      propertyPath: firstToLast
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4340539383612703545, guid: ef9bab49b1e42aa4eba41b12071319e4, type: 3}
+      propertyPath: initialDelay
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4340539383612703545, guid: ef9bab49b1e42aa4eba41b12071319e4, type: 3}
+      propertyPath: pingPongDelay
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4340539383612703545, guid: ef9bab49b1e42aa4eba41b12071319e4, type: 3}
+      propertyPath: disableWhenFinish
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: ef9bab49b1e42aa4eba41b12071319e4, type: 3}
+--- !u!1 &1225913588
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1225913590}
+  - component: {fileID: 1225913589}
+  m_Layer: 0
+  m_Name: PostProcessing
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1225913589
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1225913588}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IsGlobal: 1
+  priority: 0
+  blendDistance: 0
+  weight: 1
+  sharedProfile: {fileID: 11400000, guid: 5151d6b1854d8ed4591f918d1ff32c16, type: 2}
+--- !u!4 &1225913590
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1225913588}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1227520343
 GameObject:
   m_ObjectHideFlags: 0
@@ -3095,6 +3291,9 @@ MonoBehaviour:
   correctSlotPosition: 0
   detectionRadius: 1
   outlineMaterial: {fileID: 0}
+  glowMaterial: {fileID: 0}
+  correctPlacementIntensity: 3
+  transitionDuration: 1.5
   zDepth: 0
   isOnMouse: 0
   hoverHeight: 0.2
@@ -3224,6 +3423,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1427134967}
   - component: {fileID: 1427134966}
+  - component: {fileID: 1427134968}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -3249,6 +3449,7 @@ MonoBehaviour:
   windowSlots:
   - {fileID: 2121906066}
   - {fileID: 309499186}
+  fadeOutEffect: {fileID: 1431312935}
   correctPlacements: 0
   onMinigameStart:
     m_PersistentCalls:
@@ -3274,6 +3475,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1427134968
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1427134965}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93ea344cc46f06b4091b9d6914f3ca53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainLight: {fileID: 507378460}
+  actualLightIntensity: 0
+  initialLightIntensity: 0.5
+  targetLightIntensity: 2
+  minLightIntensity: 0.1
+  maxLightIntensity: 2
+  updateLightValue: 2
+  decreaseIntensity: 0.3
+  increaseIntensity: 0.3
+--- !u!1 &1431312935 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4340539383612703543, guid: ef9bab49b1e42aa4eba41b12071319e4, type: 3}
+  m_PrefabInstance: {fileID: 1080885757}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &1431312936 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 4340539383612703542, guid: ef9bab49b1e42aa4eba41b12071319e4, type: 3}
+  m_PrefabInstance: {fileID: 1080885757}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1436006983
 GameObject:
   m_ObjectHideFlags: 0
@@ -3745,6 +3977,9 @@ MonoBehaviour:
   correctSlotPosition: 0
   detectionRadius: 1
   outlineMaterial: {fileID: 0}
+  glowMaterial: {fileID: 0}
+  correctPlacementIntensity: 3
+  transitionDuration: 1.5
   zDepth: 0
   isOnMouse: 0
   hoverHeight: 0.2
@@ -3916,6 +4151,9 @@ MonoBehaviour:
   correctSlotPosition: 5
   detectionRadius: 1
   outlineMaterial: {fileID: 0}
+  glowMaterial: {fileID: 0}
+  correctPlacementIntensity: 3
+  transitionDuration: 1.5
   zDepth: 0
   isOnMouse: 0
   hoverHeight: 0.2
@@ -4087,6 +4325,9 @@ MonoBehaviour:
   correctSlotPosition: 0
   detectionRadius: 1
   outlineMaterial: {fileID: 0}
+  glowMaterial: {fileID: 0}
+  correctPlacementIntensity: 3
+  transitionDuration: 1.5
   zDepth: 0
   isOnMouse: 0
   hoverHeight: 0.2
@@ -4723,3 +4964,4 @@ SceneRoots:
   - {fileID: 1496194871}
   - {fileID: 362836302}
   - {fileID: 1452026684}
+  - {fileID: 1225913590}
