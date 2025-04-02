@@ -10,6 +10,7 @@ public class WindowRestorationManager : MonoBehaviour
     [Header("Referencias de la Escena")]
     [SerializeField] private DragDrop_Item[] glassFragments;
     [SerializeField] private DragDrop_Slot[] windowSlots;
+    public GameObject fadeOutEffect;
     
     [Header("Estado del Juego")]
     [SerializeField] private int correctPlacements = 0;
@@ -72,6 +73,7 @@ public class WindowRestorationManager : MonoBehaviour
         if (isMinigameComplete) return;
         slotCompletionStatus[slotPosition] = true;
         correctPlacements = slotCompletionStatus.Count(kvp => kvp.Value);
+        LightManager.Instance.UpdateLighting();
         onFragmentPlaced?.Invoke(slotPosition);
         CheckMinigameCompletion();
     }

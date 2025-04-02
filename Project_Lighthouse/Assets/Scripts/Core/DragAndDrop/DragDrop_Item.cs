@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using DG.Tweening;
 using UnityEngine;
 
@@ -16,11 +17,18 @@ public class DragDrop_Item : MonoBehaviour
     private Vector3 initialPosition;
     public float detectionRadius = 1f;
     private bool isDragging = false;
-    
-    [Header("Material detection")]
+
+    [Header("Material Outline detection")]
     public Material outlineMaterial;
-    private MeshRenderer meshRenderer;
-    
+
+    [Header("Material Glow detection")]
+    public Material glowMaterial;
+    [SerializeField] private float correctPlacementIntensity = 3.0f;
+    [SerializeField] private float transitionDuration = 1.5f; // Duración de la transición
+    private Color originalEmissionColor;
+    private float originalEmissionIntensity;
+    private Coroutine emissionCoroutine;
+
     [Space]
     private Vector3 mousePos;
     [SerializeField] private float zDepth; // Profundidad del objeto en la camara
@@ -48,7 +56,10 @@ public class DragDrop_Item : MonoBehaviour
 
     private void Awake()
     {
+        glowMaterial = GetComponent<MeshRenderer>().materials[0];
         outlineMaterial = GetComponent<MeshRenderer>().materials[1];
+        originalEmissionColor = glowMaterial.GetColor("_EmissionColor");
+        originalEmissionIntensity = CalculateColorIntensity(originalEmissionColor);
         initialPosition = transform.position;
         originalScale = transform.localScale;
         SetOutlineVisibility(false);
@@ -122,11 +133,13 @@ public class DragDrop_Item : MonoBehaviour
                 AnimateToPosition(slotPos.position);
                 outlineMaterial.SetColor("_Color", Color.green);
                 WindowRestorationManager.Instance.OnFragmentCorrectlyPlaced(currentSlot.slotPosition);
+                IncreaseEmissionIntensity();
             }
             else
             {
                 AnimateToPosition(initialPosition);
                 SetOutlineVisibility(false);
+                WindowRestorationManager.Instance.fadeOutEffect.SetActive(true);
             }
         }
         else
@@ -138,6 +151,11 @@ public class DragDrop_Item : MonoBehaviour
                 {
                     outlineMaterial.SetColor("_Color", Color.green);
                     WindowRestorationManager.Instance.OnFragmentCorrectlyPlaced(currentSlot.slotPosition);
+                    IncreaseEmissionIntensity();
+                }
+                else
+                {
+                    WindowRestorationManager.Instance.fadeOutEffect.SetActive(true);
                 }
             }
             else
@@ -156,7 +174,7 @@ public class DragDrop_Item : MonoBehaviour
             .SetEase(snapEase)
             .OnComplete(() => {
                 // Opcional: Añade un pequeño efecto de rebote al final
-                transform.DOPunchScale(Vector3.one * 0.1f, 0.2f, 1, 0.5f);
+                transform.DOPunchScale(Vector3.one * 0.1f, 0.2f, 1, 0.2f);
             });
     }
 
@@ -196,4 +214,61 @@ public class DragDrop_Item : MonoBehaviour
     {
         transform.position = initialPosition; // Vuelve a la posicion inicial si no es correcta
     }
+    #region GlowEffect
+    private void IncreaseEmissionIntensity()
+    {
+        // Habilitar emisión
+        glowMaterial.EnableKeyword("_EMISSION");
+
+        // Cancelar cualquier animación previa de emisión
+        if (emissionCoroutine != null)
+            StopCoroutine(emissionCoroutine);
+
+        // Iniciar la nueva transición
+        emissionCoroutine = StartCoroutine(TransitionEmissionIntensity());
+    }
+
+    private IEnumerator TransitionEmissionIntensity()
+    {
+        float startTime = Time.time;
+        float endTime = startTime + transitionDuration;
+
+        while (Time.time < endTime)
+        {
+            // Calcular el progreso de la transición (0 a 1)
+            float progress = (Time.time - startTime) / transitionDuration;
+
+            // Aplicar una curva de suavizado (opcional)
+            float smoothProgress = Mathf.SmoothStep(0, 1, progress);
+
+            // Interpolar entre la intensidad original y la intensidad objetivo
+            float currentIntensity = Mathf.Lerp(originalEmissionIntensity, correctPlacementIntensity, smoothProgress);
+
+            // Calcular el color con la nueva intensidad manteniendo el mismo tono
+            Color currentColor = new Color(
+                originalEmissionColor.r * currentIntensity / originalEmissionIntensity,
+                originalEmissionColor.g * currentIntensity / originalEmissionIntensity,
+                originalEmissionColor.b * currentIntensity / originalEmissionIntensity
+            );
+
+            // Aplicar el color
+            glowMaterial.SetColor("_EmissionColor", currentColor);
+
+            yield return null;
+        }
+
+        // Asegurar que terminamos con el valor exacto deseado
+        Color finalColor = new Color(
+            originalEmissionColor.r * correctPlacementIntensity / originalEmissionIntensity,
+            originalEmissionColor.g * correctPlacementIntensity / originalEmissionIntensity,
+            originalEmissionColor.b * correctPlacementIntensity / originalEmissionIntensity
+        );
+        glowMaterial.SetColor("_EmissionColor", finalColor);
+    }
+
+    private float CalculateColorIntensity(Color color)
+    {
+        return (color.r + color.g + color.b) / 3f;
+    }
+    #endregion
 }
