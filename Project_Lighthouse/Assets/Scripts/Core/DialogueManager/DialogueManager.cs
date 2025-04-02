@@ -26,6 +26,7 @@ public class DialogueManager : MonoBehaviour
 
     private Queue<Sentence> sentences = new Queue<Sentence>();
 
+
     public enum Speaker
     {
         Abuelo,
@@ -57,7 +58,7 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private TMP_Text textDisplayLuna;
 
     private SoundManager sm;
-
+    private Player player;
     private void Awake()
     {
         //Singleton
@@ -75,15 +76,17 @@ public class DialogueManager : MonoBehaviour
     void Start()
     {
         sm = FindFirstObjectByType<SoundManager>();
+        player = FindFirstObjectByType<Player>();
     }
 
     private void Update()
     {
-
+        CanvasLookToScreen();
     }
     public void StartComment(DialogueComment _comment)
     {
         sentences.Clear();
+        player.canMove = false;
         StopAllCoroutines();
 
         foreach (Sentence sentence in _comment.sentences)
@@ -137,7 +140,7 @@ public class DialogueManager : MonoBehaviour
     {
         if (sentences.Count == 0)
         {
-            EndComment(target);
+            EndComment();
             return;
         }
 
@@ -220,8 +223,12 @@ public class DialogueManager : MonoBehaviour
     {
         target.DOScale(0, popupScaleDuration).SetEase(Ease.InBack).OnComplete(() =>
         {
-            Speaker currentSpeaker = sentences.Peek().speaker;
-            TMP_Text nextTarget = DecideNextSpeaker(currentSpeaker);
+            TMP_Text nextTarget = null;
+            if (sentences.Count > 0)
+            {
+                Speaker currentSpeaker = sentences.Peek().speaker;
+                nextTarget = DecideNextSpeaker(currentSpeaker);
+            }
             DisplayNextSentence(nextTarget);
             Debug.Log("He cerrao ventana lol");
         });
@@ -269,10 +276,9 @@ public class DialogueManager : MonoBehaviour
         
     }
 
-    void EndComment(TMP_Text target)
+    void EndComment()
     {
-        target.text = "";
-        target.transform.GetChild(1).GetComponent<TMP_Text>().text = "";
+        player.canMove = true;
     }
 
     string EmotionSoundSelector(Emotion emotion)
@@ -315,7 +321,14 @@ public class DialogueManager : MonoBehaviour
                 return null;
         }
     }
+    void CanvasLookToScreen()
+    {
+        //playerCanvas.transform.LookAt(Camera.main.transform);
 
+        //playerCanvas.transform.rotation = Quaternion.LookRotation(playerCanvas.transform.position - Camera.main.transform.position);
+        textDisplayAbuelo.transform.parent.transform.rotation = Camera.main.transform.rotation;
+        textDisplayLuna.transform.parent.transform.rotation = Camera.main.transform.rotation;
+    }
 
 
 

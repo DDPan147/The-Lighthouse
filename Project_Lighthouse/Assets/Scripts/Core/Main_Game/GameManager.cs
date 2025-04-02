@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -12,6 +13,8 @@ public class GameManager : MonoBehaviour
 {
     [Header("MinigameManager")]
     public MinigameData[] minigames;
+
+    public UnityEvent[] OnMinigameEnded = new UnityEvent[9];
     public Camera mainCamera;
     public GameObject eventSystem;
     public AudioListener audioListener;
@@ -78,6 +81,9 @@ public class GameManager : MonoBehaviour
         mainCamera.enabled = true;
         eventSystem.SetActive(true);
         audioListener.enabled = true;
+
+        //Activar evento de minijuego completado
+        OnMinigameEnded[index]?.Invoke();
     }
     #endregion
     #region MissionManager
@@ -145,5 +151,7 @@ public class GameManager : MonoBehaviour
         GUIMissionText.gameObject.transform.DOLocalMoveX(400, 2, false).SetEase(Ease.InBack);
     }
     #endregion
+
+    
 
 }
