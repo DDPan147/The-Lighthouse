@@ -2,11 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 using TMPro;
 using System.Linq;
 using DG.Tweening;
 using System.Xml.Linq;
 using EasyTextEffects;
+using System;
+using Unity.VisualScripting;
 
 [RequireComponent(typeof(AudioSource))]
 public class DialogueManager : MonoBehaviour
@@ -91,12 +94,7 @@ public class DialogueManager : MonoBehaviour
 
         foreach (Sentence sentence in _comment.sentences)
         {
-            if(sentence.sentenceEvent.eventName == "")
-            {
-                sentence.sentenceEvent.active = false;
-            }
             sentences.Enqueue(sentence);
-
         }
 
         //SPEAKERS
@@ -149,15 +147,11 @@ public class DialogueManager : MonoBehaviour
         
 
         //EVENTS
-        DialogueEvent nEvent = currentSentence.sentenceEvent;
+        DialogueEvent newEvent = currentSentence.sentenceEvent;
 
-        if (nEvent.active)
+        if (newEvent.WhenToPlay == DialogueEvent.PlayWhen.PlayAtStart)
         {
-            if (nEvent.eventReceiver == null)
-            {
-                nEvent.eventReceiver = FindFirstObjectByType<Player>();
-            }
-            nEvent.eventReceiver.Invoke(nEvent.eventName, nEvent.timeOffset);
+            StartCoroutine(DelayEvent(newEvent.timeOffset, newEvent.uEvent));
         }
 
         //EMOTIONS
@@ -172,7 +166,7 @@ public class DialogueManager : MonoBehaviour
         if (target == textDisplayGUI)
         {
             StopAllCoroutines();
-            StartCoroutine(TypeSentence(currentSentence.sentenceText, target));
+            StartCoroutine(TypeSentence(currentSentence, target));
 
             //target.parent activates
             //target starts typing text
@@ -186,15 +180,15 @@ public class DialogueManager : MonoBehaviour
             target.transform.parent.transform.DOScale(1, popupScaleDuration).SetEase(Ease.OutBack).OnComplete(() =>
             {
                 sm.Play("Texto");
-                StartCoroutine(WaitForNextSentence(target));
-                StartCoroutine(TypeSentence(currentSentence.sentenceText, target.transform.GetChild(1).GetComponent<TMP_Text>()));
+                StartCoroutine(WaitForNextSentence(target, currentSentence));
+                StartCoroutine(TypeSentence(currentSentence, target.transform.GetChild(1).GetComponent<TMP_Text>()));
             });
             
             
         }
 
     }
-    IEnumerator WaitForNextSentence(TMP_Text target)
+    IEnumerator WaitForNextSentence(TMP_Text target, Sentence sentence)
     {
         sentenceTyped = false;
         while (true)
@@ -204,6 +198,10 @@ public class DialogueManager : MonoBehaviour
                 if (sentenceTyped)
                 {
                     CloseBubble(target.transform.parent);
+                    if (sentence.sentenceEvent.WhenToPlay == DialogueEvent.PlayWhen.PlayAfterInput)
+                    {
+                        StartCoroutine(DelayEvent(sentence.sentenceEvent.timeOffset, sentence.sentenceEvent.uEvent));
+                    }
                     yield break;
                 }
                 else
@@ -234,13 +232,13 @@ public class DialogueManager : MonoBehaviour
         });
     }
 
-    IEnumerator TypeSentence(string _sentence, TMP_Text target)
+    IEnumerator TypeSentence(Sentence _sentence, TMP_Text target)
     {
         
         target.text = "";
         
         bool isTag = false;
-        foreach (char letter in _sentence.ToCharArray())
+        foreach (char letter in _sentence.sentenceText.ToCharArray())
         {
             target.text += letter;
 
@@ -265,10 +263,14 @@ public class DialogueManager : MonoBehaviour
 
             if (sentenceSkipped)
             {
-                target.text = _sentence;
+                target.text = _sentence.sentenceText;
                 break;
             }
-            
+        }
+
+        if (_sentence.sentenceEvent.WhenToPlay == DialogueEvent.PlayWhen.PlayAtEnd)
+        {
+            StartCoroutine(DelayEvent(_sentence.sentenceEvent.timeOffset, _sentence.sentenceEvent.uEvent));
         }
         target.GetComponent<TextEffect>().enabled = true;
         sm.Stop("Texto");
@@ -330,7 +332,11 @@ public class DialogueManager : MonoBehaviour
         textDisplayLuna.transform.parent.transform.rotation = Camera.main.transform.rotation;
     }
 
-
+    IEnumerator DelayEvent(float delay, UnityEvent uEvent)
+    {
+        yield return new WaitForSeconds(delay);
+        uEvent?.Invoke();
+    }
 
     //David: Kike por que vas al dentista
     //Kike: []

@@ -43,10 +43,10 @@ public class Player : MonoBehaviour
         canMove = true;
         gm = FindAnyObjectByType<GameManager>();
 
-        foreach(UnityEvent uEvent in gm.OnMinigameEnded)
+        /*foreach(UnityEvent uEvent in gm.OnMinigameEnded)
         {
             uEvent.AddListener(RevertTransition);
-        }
+        }*/
     }
 
     void Update()
@@ -206,7 +206,7 @@ public class Player : MonoBehaviour
         //Play Transition Anim
     }
 
-    void RevertTransition()
+    public void RevertTransition()
     {
         moveState = MoveStates.Transition;
         float duration = transitionSpline.GetLength() * transitionSpeed;

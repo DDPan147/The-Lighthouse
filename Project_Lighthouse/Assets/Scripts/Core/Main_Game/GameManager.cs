@@ -152,6 +152,9 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
-    
+    public void EventDebugger()
+    {
+        Debug.Log("Hola");
+    }
 
 }

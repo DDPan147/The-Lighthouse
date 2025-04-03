@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 
 [System.Serializable]
@@ -10,6 +12,7 @@ public class Sentence
     public string sentenceText;
     public DialogueManager.Speaker speaker;
     public DialogueEvent sentenceEvent;
+    //public UnityEvent sentenceUEvent;
     public DialogueManager.Emotion emotionSound;
 }
 [System.Serializable]
