@@ -7,7 +7,7 @@ using TMPro;
 using System.Linq;
 using DG.Tweening;
 using System.Xml.Linq;
-using EasyTextEffects;
+//using EasyTextEffects;
 using System;
 using Unity.VisualScripting;
 
@@ -88,6 +88,7 @@ public class DialogueManager : MonoBehaviour
     }
     public void StartComment(DialogueComment _comment)
     {
+        Debug.Log("Comment");
         sentences.Clear();
         player.canMove = false;
         StopAllCoroutines();
@@ -176,7 +177,7 @@ public class DialogueManager : MonoBehaviour
             target.text = currentSentence.sentenceText;
             Debug.Log("Nueva sentence: " + currentSentence.sentenceText);
             target.transform.GetChild(1).GetComponent<TMP_Text>().text = "";
-            target.transform.GetChild(1).GetComponent<TextEffect>().enabled = false;
+            //target.transform.GetChild(1).GetComponent<TextEffect>().enabled = false;
             target.transform.parent.transform.DOScale(1, popupScaleDuration).SetEase(Ease.OutBack).OnComplete(() =>
             {
                 sm.Play("Texto");
@@ -272,7 +273,7 @@ public class DialogueManager : MonoBehaviour
         {
             StartCoroutine(DelayEvent(_sentence.sentenceEvent.timeOffset, _sentence.sentenceEvent.uEvent));
         }
-        target.GetComponent<TextEffect>().enabled = true;
+        //target.GetComponent<TextEffect>().enabled = true;
         sm.Stop("Texto");
         sentenceTyped = true;
         
@@ -328,8 +329,15 @@ public class DialogueManager : MonoBehaviour
         //playerCanvas.transform.LookAt(Camera.main.transform);
 
         //playerCanvas.transform.rotation = Quaternion.LookRotation(playerCanvas.transform.position - Camera.main.transform.position);
-        textDisplayAbuelo.transform.parent.transform.rotation = Camera.main.transform.rotation;
-        textDisplayLuna.transform.parent.transform.rotation = Camera.main.transform.rotation;
+        if(textDisplayAbuelo.transform.parent != null)
+        {
+            textDisplayAbuelo.transform.parent.rotation = Camera.main.transform.rotation;
+        }
+        if(textDisplayLuna.transform.parent != null)
+        {
+            textDisplayLuna.transform.parent.rotation = Camera.main.transform.rotation;
+        }
+        
     }
 
     IEnumerator DelayEvent(float delay, UnityEvent uEvent)

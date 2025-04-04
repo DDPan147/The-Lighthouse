@@ -20,8 +20,11 @@ public class Player : MonoBehaviour
     public float moveVector;
 
     public Spline transitionSpline;
+    //public Spline activePath;
     public SplineContainer spline;
     public SplineSwitch activeSplineSwitch;
+
+    //public SplineContainer[] paths;
 
 
     public MinigameSwitch activeMinigameSwitch;
@@ -32,7 +35,8 @@ public class Player : MonoBehaviour
     public enum MoveStates
     {
         Control,
-        Transition
+        Transition,
+        Cutscene
     }
 
     public MoveStates moveState;
@@ -198,11 +202,11 @@ public class Player : MonoBehaviour
         //Play Transition Anim
     }
 
-    public void StartTransition(Action triggerMinigame)
+    public void StartTransition(Action onCompleteAction)
     {
         moveState = MoveStates.Transition;
         float duration = transitionSpline.GetLength() * transitionSpeed;
-        DOTween.To(() => transitionPercentage, x => transitionPercentage = x, 1, duration).OnComplete(() => triggerMinigame());
+        DOTween.To(() => transitionPercentage, x => transitionPercentage = x, 1, duration).OnComplete(() => onCompleteAction());
         //Play Transition Anim
     }
 
@@ -218,6 +222,22 @@ public class Player : MonoBehaviour
     {
         moveState = MoveStates.Control;
         transitionPercentage = 0;
+    }
+
+    void TakePath(Spline path, Action onCompleteAction)
+    {
+        //activePath = path;
+        moveState = MoveStates.Cutscene;
+        float duration = transitionSpline.GetLength() * transitionSpeed;
+        DOTween.To(() => transitionPercentage, x => transitionPercentage = x, 1, duration).OnComplete(() => onCompleteAction());
+    }
+    public Spline BuildTransitionSpline(Vector3 currentPosition, Vector3 targetPosition)
+    {
+        Spline newSpline = new Spline(0);
+        newSpline.Add(currentPosition);
+        newSpline.Add(targetPosition);
+
+        return newSpline;
     }
     #endregion
     #region MinigameSystem
@@ -237,13 +257,11 @@ public class Player : MonoBehaviour
         activeMinigameSwitch = null;
     }
     #endregion
-
-    public Spline BuildTransitionSpline(Vector3 currentPosition, Vector3 targetPosition)
+    #region EventFunctions
+    public void PathToTable()
     {
-        Spline newSpline = new Spline(0);
-        newSpline.Add(currentPosition);
-        newSpline.Add(targetPosition);
-
-        return newSpline;
+        transitionSpline = BuildTransitionSpline(transform.position, new Vector3(2.9f, 0, 1.75f));
+        StartTransition(gm.CameraFadeOut);
     }
+    #endregion
 }

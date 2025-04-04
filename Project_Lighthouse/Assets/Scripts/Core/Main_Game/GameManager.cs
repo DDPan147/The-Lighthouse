@@ -27,6 +27,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TMP_Text playerMissionText;
     [SerializeField] private GameObject GUIMissionHolder;
     [SerializeField] private TMP_Text GUIMissionText;
+    [SerializeField] private Image curtain;
 
 
     
@@ -142,6 +143,10 @@ public class GameManager : MonoBehaviour
         //Trigger Dialogue of whatever?
     }
 
+    public Mission GetMission(string _missionName)
+    {
+        return Array.Find(missions, mission => mission.missionName == _missionName);
+    }
     public void RemoveMissionFromGUI()
     {
         //Strikethrough Text Animation
@@ -155,6 +160,11 @@ public class GameManager : MonoBehaviour
     public void EventDebugger()
     {
         Debug.Log("Hola");
+    }
+
+    public void CameraFadeOut()
+    {
+        curtain.DOFade(1, 3);
     }
 
 }

@@ -6,15 +6,20 @@ public class MissionTrigger : MonoBehaviour
     public enum TriggerType {Discover, Complete};
     public TriggerType type;
 
+    private GameManager gm;
+    public void Start()
+    {
+        gm = FindAnyObjectByType<GameManager>();
+    }
     public void TriggerMission()
     {
         if (type == TriggerType.Discover)
         {
-            FindFirstObjectByType<GameManager>().UnlockNewMission(missionName);
+            gm.UnlockNewMission(missionName);
         }
-        else if (type == TriggerType.Complete)
+        else if (type == TriggerType.Complete && gm.GetMission(missionName).isDiscovered)
         {
-            FindFirstObjectByType<GameManager>().CompleteMission(missionName);
+            gm.CompleteMission(missionName);
         }
     }
 }
