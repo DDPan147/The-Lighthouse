@@ -163,9 +163,9 @@ public class Minijuego2_GameManager : MonoBehaviour
                     if (grabObject.GetComponent<Olla>().isFilledWithFood == true)
                     {
                         grabObject.GetComponent<Olla>().takeOffFood = true;
-                        grabObject = grabObject.GetComponent<Olla>().foodCooked;
-                        grabObjectData = grabObject.GetComponent<Selectable_MG2>();
                         grabObject.GetComponent<Olla>().isFilledWithFood = false;
+                        //grabObject = grabObject.GetComponent<Olla>().foodCooked;
+                        //grabObjectData = grabObject.GetComponent<Selectable_MG2>();
                     }
                 }
             }
