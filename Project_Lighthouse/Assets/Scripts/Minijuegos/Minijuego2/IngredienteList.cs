@@ -34,6 +34,9 @@ public class IngredienteList : MonoBehaviour
                 estadoComida[2] = transform.GetChild(3).GetComponent<TMP_Text>();
                 break;
             case Comida.TipoComida.Zanahoria:
+                estadoComida[0] = transform.GetChild(1).GetComponent<TMP_Text>();
+                //estadoComida[1] = transform.GetChild(2).GetComponent<TMP_Text>();
+                estadoComida[2] = transform.GetChild(3).GetComponent<TMP_Text>();
                 break;
             case Comida.TipoComida.Pescado:
                 estadoComida[0] = transform.GetChild(1).GetComponent<TMP_Text>();

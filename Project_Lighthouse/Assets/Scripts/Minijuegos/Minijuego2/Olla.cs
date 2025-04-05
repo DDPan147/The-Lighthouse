@@ -66,13 +66,14 @@ public class Olla : MonoBehaviour
                     other.gameObject.SetActive(false);
                     if (foodInPot >= foodNeeded)
                     {
-                        StartCoroutine(FoodProgress());
+                        //StartCoroutine(FoodProgress());
+                        potProgress.DOFillAmount(1, timeToCook).OnComplete(() => isFilledWithFood = true);
                         
                     }
                     
                 });
             }
-            else
+            else if (!comida.isReady)
             {
                 comida.transform.DOShakePosition(0.3f, 0.05f, 50, 90, false, true, ShakeRandomnessMode.Full).OnPlay(() => comida.feedbackSupervisor = false).OnComplete(() => comida.feedbackSupervisor = true);
             }

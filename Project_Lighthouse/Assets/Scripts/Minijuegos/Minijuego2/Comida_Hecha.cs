@@ -21,7 +21,7 @@ public class Comida_Hecha : MonoBehaviour
     {
         if (objData.isGrabbed && thereIsDish && isFirstFood)
         {
-            transform.DOMove(dropPoint.position, 0.5f).OnComplete(() => gameManager.finishRecipe = true);
+            transform.DOMove(dropPoint.position, 0.5f).OnComplete(() => gameManager.finishRecipe1 = true);
             //gameManager.finishRecipe = true;
             objData.moveDirection = Vector2.zero;
             Cursor.lockState = CursorLockMode.None;
@@ -35,7 +35,17 @@ public class Comida_Hecha : MonoBehaviour
         }
         else if(objData.isGrabbed && thereIsDish && !isFirstFood)
         {
-
+            transform.DOMove(dropPoint.position, 0.5f).OnComplete(() => gameManager.finishRecipe2 = true);
+            //gameManager.finishRecipe = true;
+            objData.moveDirection = Vector2.zero;
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            gameManager.imGrabing = false;
+            transform.parent = dropPoint;
+            /*Sequence DishFinished = DOTween.Sequence();
+            DishFinished.Append(transform.DOMove(dropPoint.position, 0.5f));
+            DishFinished.Append(dropPoint.parent.transform.DOMoveZ(-1.5f, 2f, false));*/
+            objData.isGrabbed = false;
         }
     }
 
