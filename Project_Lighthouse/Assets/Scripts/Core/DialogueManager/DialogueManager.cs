@@ -331,11 +331,11 @@ public class DialogueManager : MonoBehaviour
         //playerCanvas.transform.rotation = Quaternion.LookRotation(playerCanvas.transform.position - Camera.main.transform.position);
         if(textDisplayAbuelo.transform.parent != null)
         {
-            textDisplayAbuelo.transform.parent.rotation = Camera.main.transform.rotation;
+            textDisplayAbuelo.transform.parent.parent.rotation = Camera.main.transform.rotation;
         }
         if(textDisplayLuna.transform.parent != null)
         {
-            textDisplayLuna.transform.parent.rotation = Camera.main.transform.rotation;
+            textDisplayLuna.transform.parent.parent.rotation = Camera.main.transform.rotation;
         }
         
     }
