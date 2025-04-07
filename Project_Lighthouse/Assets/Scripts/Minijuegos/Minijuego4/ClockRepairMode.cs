@@ -11,7 +11,7 @@ public class ClockRepairMode : MonoBehaviour
     [Header("Referencias del Manager")]
     public ClockManager clockManager;
     
-    [Header("Referencias de Cámara")]
+    [Header("Referencias de Camara")]
     public Camera repairCamera;
     private bool isRepairing = false;
 

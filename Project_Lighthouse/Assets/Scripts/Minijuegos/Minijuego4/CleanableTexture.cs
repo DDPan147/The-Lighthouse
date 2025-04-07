@@ -1,3 +1,4 @@
+using DG.Tweening.Core.Easing;
 using UnityEngine;
 
 public class CleanableTexture : MonoBehaviour
@@ -6,6 +7,12 @@ public class CleanableTexture : MonoBehaviour
     [SerializeField] private Texture2D dirtMaskTexture;
     [SerializeField] private int textureSize = 512;
     [SerializeField] private float brushSize = 32f;
+
+    [Header("Cleaning Progress")]
+    [SerializeField] private float cleanThreshold = 0.95f; // Consider clean when 75% is cleaned
+    [SerializeField] private bool isCleaningComplete = false;
+    private int totalPixels;
+    private int cleanedPixels = 0;
 
     [Header("References")]
     [SerializeField] private Material material;
@@ -23,6 +30,7 @@ public class CleanableTexture : MonoBehaviour
             material = GetComponent<Renderer>().material;
         }
 
+        totalPixels = textureSize * textureSize;
         InitializeTexture();
     }
 
@@ -101,6 +109,7 @@ public class CleanableTexture : MonoBehaviour
 
     private void PaintCircle(Vector2Int center, int radius)
     {
+        int newCleanedPixels = 0;
         for (int x = -radius; x < radius; x++)
         {
             for (int y = -radius; y < radius; y++)
@@ -113,6 +122,11 @@ public class CleanableTexture : MonoBehaviour
                     if (pixelX >= 0 && pixelX < dirtMaskTexture.width &&
                         pixelY >= 0 && pixelY < dirtMaskTexture.height)
                     {
+                        // Check if pixel was previously dirty
+                        Color currentColor = dirtMaskTexture.GetPixel(pixelX, pixelY);
+                        if (currentColor.r < 0.5f) // If it's dark/dirty
+                            newCleanedPixels++;
+
                         dirtMaskTexture.SetPixel(pixelX, pixelY, Color.white);
                     }
                 }
@@ -120,5 +134,27 @@ public class CleanableTexture : MonoBehaviour
         }
 
         dirtMaskTexture.Apply();
+
+        // Update cleaning progress
+        cleanedPixels += newCleanedPixels;
+        CheckCleaningProgress();
+    }
+
+    private void CheckCleaningProgress()
+    {
+        float cleanedPercentage = (float)cleanedPixels / totalPixels;
+
+        if (!isCleaningComplete && cleanedPercentage >= cleanThreshold)
+        {
+            isCleaningComplete = true;
+            OnCleaningComplete();
+        }
+    }
+
+    private void OnCleaningComplete()
+    {
+        Debug.Log("Cleaning complete!");
+
+        MinigameFourManager.Instance.OnCleaningComplete();
     }
 }

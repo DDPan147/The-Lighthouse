@@ -57,6 +57,7 @@ public class MesaReparacion : MonoBehaviour
         if (actualLeg >= legs.Length && !repairingObject)
         {
             ChangeToPlayerCamera();
+            MinigameFourManager.Instance.OnTableFixed();
         }
 
     }

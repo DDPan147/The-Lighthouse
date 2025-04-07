@@ -52,5 +52,6 @@ public class ClockManager : MonoBehaviour
         {
             repairMode.OnClockFixed();
         }
+        MinigameFourManager.Instance.OnClockFixed();
     }
 }
