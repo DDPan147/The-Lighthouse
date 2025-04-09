@@ -269,5 +269,9 @@ public class Player : MonoBehaviour
     {
         spline = _spline;
     }
+    public void SetPercentage(float value)
+    {
+        distancePercentage = value;
+    }
     #endregion
 }
