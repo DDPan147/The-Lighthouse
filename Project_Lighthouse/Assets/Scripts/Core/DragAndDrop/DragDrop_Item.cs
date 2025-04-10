@@ -5,11 +5,23 @@ using UnityEngine;
 
 public class DragDrop_Item : MonoBehaviour
 {
+    #region Enums
     public enum TypeDragDrop
     {
         NoResetPos, // Se puede poner en cualquier slot disponible del minijuego
         ResetPos // Si no accede al slot correcto, este volvera a la posicion de origen
     }
+    
+    public enum Minigame // Minijuego para poder realizar la instancia del minijuego
+    {
+        Minigame1,
+        Minigame6 
+    }
+
+    #endregion
+    
+    [Header("Identificación de Minijuego")]
+    [SerializeField] private Minigame currentMinigame;
 
     [Header("Ajustes posicion")]
     public TypeDragDrop type;
@@ -132,14 +144,28 @@ public class DragDrop_Item : MonoBehaviour
             {
                 AnimateToPosition(slotPos.position);
                 outlineMaterial.SetColor("_Color", Color.green);
-                WindowRestorationManager.Instance.OnFragmentCorrectlyPlaced(currentSlot.slotPosition);
+                if (currentMinigame == Minigame.Minigame1)
+                {
+                    LevelGameManagerMinigame1.Instance.OnFragmentCorrectlyPlaced(currentSlot.slotPosition);
+                }
+                else
+                {
+                    WindowRestorationManager.Instance.OnFragmentCorrectlyPlaced(currentSlot.slotPosition);
+                }
                 IncreaseEmissionIntensity();
             }
             else
             {
                 AnimateToPosition(initialPosition);
                 SetOutlineVisibility(false);
-                WindowRestorationManager.Instance.fadeOutEffect.SetActive(true);
+                if (currentMinigame == Minigame.Minigame1)
+                {
+                    LevelGameManagerMinigame1.Instance.fadeOutEffect.SetActive(true);
+                }
+                else
+                {
+                    WindowRestorationManager.Instance.fadeOutEffect.SetActive(true);;
+                }
             }
         }
         else
@@ -150,12 +176,26 @@ public class DragDrop_Item : MonoBehaviour
                 if (currentSlot.slotPosition == correctSlotPosition)
                 {
                     outlineMaterial.SetColor("_Color", Color.green);
-                    WindowRestorationManager.Instance.OnFragmentCorrectlyPlaced(currentSlot.slotPosition);
+                    if (currentMinigame == Minigame.Minigame1)
+                    {
+                        LevelGameManagerMinigame1.Instance.OnFragmentCorrectlyPlaced(currentSlot.slotPosition);
+                    }
+                    else
+                    {
+                        WindowRestorationManager.Instance.OnFragmentCorrectlyPlaced(currentSlot.slotPosition);
+                    }
                     IncreaseEmissionIntensity();
                 }
                 else
                 {
-                    WindowRestorationManager.Instance.fadeOutEffect.SetActive(true);
+                    if (currentMinigame == Minigame.Minigame1)
+                    {
+                        LevelGameManagerMinigame1.Instance.fadeOutEffect.SetActive(true);
+                    }
+                    else
+                    {
+                        WindowRestorationManager.Instance.fadeOutEffect.SetActive(true);;
+                    }
                 }
             }
             else
