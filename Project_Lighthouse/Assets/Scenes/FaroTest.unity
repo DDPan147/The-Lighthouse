@@ -319,14 +319,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minigames:
-  - sceneName: Minijuego_5
+  - sceneName: Minijuego_1
     isAvailable: 1
     isCompleted: 0
   - sceneName: Minijuego_2
     isAvailable: 1
     isCompleted: 0
   - sceneName: Minijuego_3
-    isAvailable: 0
+    isAvailable: 1
     isCompleted: 0
   - sceneName: Minijuego_4
     isAvailable: 1
@@ -871,11 +871,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3635095700563994012, guid: f67fe68555023fa42b3fc39b081ac1f9, type: 3}
       propertyPath: comment.sentences.Array.data[0].speaker
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3635095700563994012, guid: f67fe68555023fa42b3fc39b081ac1f9, type: 3}
       propertyPath: comment.sentences.Array.data[1].speaker
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3635095700563994012, guid: f67fe68555023fa42b3fc39b081ac1f9, type: 3}
       propertyPath: comment.sentences.Array.data[2].speaker
@@ -2496,7 +2496,6 @@ GameObject:
   - component: {fileID: 305992103}
   - component: {fileID: 305992105}
   - component: {fileID: 305992104}
-  - component: {fileID: 305992106}
   m_Layer: 10
   m_Name: ContentSizeText
   m_TagString: Untagged
@@ -2624,24 +2623,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 305992102}
   m_CullTransparentMesh: 1
---- !u!114 &305992106
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 305992102}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9840f87219df84505803024c796e739d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  text: {fileID: 0}
-  usePreset: 0
-  preset: {fileID: 0}
-  tagEffects: []
-  globalEffects: []
-  updatesPerSecond: 30
 --- !u!1001 &320716013
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3469,7 +3450,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1755595211292361918, guid: 8d03efde186590e4e9280261b651bc12, type: 3}
       propertyPath: minigameIndex
-      value: 2
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1755595211292361918, guid: 8d03efde186590e4e9280261b651bc12, type: 3}
       propertyPath: usesStartPosition
@@ -4496,11 +4477,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9840f87219df84505803024c796e739d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  text: {fileID: 0}
+  text: {fileID: 502295090}
   usePreset: 0
   preset: {fileID: 0}
-  tagEffects: []
-  globalEffects: []
+  tagEffects:
+  - triggerWhen: 0
+    effect: {fileID: 11400000, guid: 37db8e32c48cf4579b04b8dc436a7bb8, type: 2}
+    onEffectCompleted:
+      m_PersistentCalls:
+        m_Calls: []
+  - triggerWhen: 0
+    effect: {fileID: 11400000, guid: b35e91f2ba42c4508990bb116bf016ee, type: 2}
+    onEffectCompleted:
+      m_PersistentCalls:
+        m_Calls: []
+  globalEffects:
+  - triggerWhen: 0
+    effect: {fileID: 11400000, guid: 37db8e32c48cf4579b04b8dc436a7bb8, type: 2}
+    onEffectCompleted:
+      m_PersistentCalls:
+        m_Calls: []
+    overrideTagEffects: 0
   updatesPerSecond: 30
 --- !u!1 &519284174
 GameObject:
@@ -4845,7 +4842,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 529891550}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d46635886761b194586130899f6026a1, type: 3}
   m_Name: 
@@ -4855,7 +4852,7 @@ MonoBehaviour:
   transitionSpeed: 1
   distancePercentage: 0
   transitionPercentage: 0
-  splineLength: 14.72106
+  splineLength: 6.0873957
   moveVector: 0
   transitionSpline:
     m_EditModeType: 1
@@ -5089,7 +5086,6 @@ GameObject:
   - component: {fileID: 590414139}
   - component: {fileID: 590414141}
   - component: {fileID: 590414140}
-  - component: {fileID: 590414142}
   m_Layer: 10
   m_Name: ContentSizeText
   m_TagString: Untagged
@@ -5217,24 +5213,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 590414138}
   m_CullTransparentMesh: 1
---- !u!114 &590414142
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 590414138}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9840f87219df84505803024c796e739d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  text: {fileID: 0}
-  usePreset: 0
-  preset: {fileID: 0}
-  tagEffects: []
-  globalEffects: []
-  updatesPerSecond: 30
 --- !u!1 &606273000
 GameObject:
   m_ObjectHideFlags: 0
@@ -8704,11 +8682,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9840f87219df84505803024c796e739d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  text: {fileID: 0}
+  text: {fileID: 1143210065}
   usePreset: 0
   preset: {fileID: 0}
-  tagEffects: []
-  globalEffects: []
+  tagEffects:
+  - triggerWhen: 0
+    effect: {fileID: 11400000, guid: 37db8e32c48cf4579b04b8dc436a7bb8, type: 2}
+    onEffectCompleted:
+      m_PersistentCalls:
+        m_Calls: []
+  - triggerWhen: 0
+    effect: {fileID: 11400000, guid: b35e91f2ba42c4508990bb116bf016ee, type: 2}
+    onEffectCompleted:
+      m_PersistentCalls:
+        m_Calls: []
+  globalEffects:
+  - triggerWhen: 0
+    effect: {fileID: 11400000, guid: 37db8e32c48cf4579b04b8dc436a7bb8, type: 2}
+    onEffectCompleted:
+      m_PersistentCalls:
+        m_Calls: []
+    overrideTagEffects: 0
   updatesPerSecond: 30
 --- !u!1 &1204172026
 GameObject:

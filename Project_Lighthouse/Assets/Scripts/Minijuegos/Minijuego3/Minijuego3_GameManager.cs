@@ -67,7 +67,7 @@ public class Minijuego3_GameManager : MonoBehaviour
             GameManager gm = FindFirstObjectByType<GameManager>();
             if (gm != null)
             {
-                FindFirstObjectByType<GameManager>().MinigameCompleted(2);
+                gm.MinigameCompleted(2);
             }
             else
             {

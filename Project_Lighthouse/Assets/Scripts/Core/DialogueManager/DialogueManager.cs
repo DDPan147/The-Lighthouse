@@ -7,7 +7,7 @@ using TMPro;
 using System.Linq;
 using DG.Tweening;
 using System.Xml.Linq;
-//using EasyTextEffects;
+using EasyTextEffects;
 using System;
 using Unity.VisualScripting;
 
@@ -177,7 +177,7 @@ public class DialogueManager : MonoBehaviour
             target.text = currentSentence.sentenceText;
             Debug.Log("Nueva sentence: " + currentSentence.sentenceText);
             target.transform.GetChild(1).GetComponent<TMP_Text>().text = "";
-            //target.transform.GetChild(1).GetComponent<TextEffect>().enabled = false;
+            target.transform.GetChild(1).GetComponent<TextEffect>().enabled = false;
             target.transform.parent.transform.DOScale(1, popupScaleDuration).SetEase(Ease.OutBack).OnComplete(() =>
             {
                 sm.Play("Texto");
@@ -192,6 +192,7 @@ public class DialogueManager : MonoBehaviour
     IEnumerator WaitForNextSentence(TMP_Text target, Sentence sentence)
     {
         sentenceTyped = false;
+        sentenceSkipped = false;
         while (true)
         {
             if (Input.GetKeyDown(KeyCode.M))
@@ -273,7 +274,7 @@ public class DialogueManager : MonoBehaviour
         {
             StartCoroutine(DelayEvent(_sentence.sentenceEvent.timeOffset, _sentence.sentenceEvent.uEvent));
         }
-        //target.GetComponent<TextEffect>().enabled = true;
+       target.GetComponent<TextEffect>().enabled = true;
         sm.Stop("Texto");
         sentenceTyped = true;
         

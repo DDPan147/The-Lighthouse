@@ -20,7 +20,16 @@ public class Minijuego9_GameManager : MonoBehaviour
         {
             Debug.Log("Has Ganado");
             jeje.transform.DOMove(new Vector3(0, 1.6f, -9.5f), 5f);
-            //
+            /*Alvaro*/ //Function to complete minigame and return to lobby
+            GameManager gm = FindAnyObjectByType<GameManager>();
+            if (gm != null)
+            {
+                gm.MinigameCompleted(2);
+            }
+            else
+            {
+                Debug.LogWarning("No se ha encontrado el Game Manager de la escena principal. No se va a volver al juego");
+            }
         }
     }
 
