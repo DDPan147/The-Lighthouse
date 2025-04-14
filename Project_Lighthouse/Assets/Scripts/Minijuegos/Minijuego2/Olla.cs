@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class Olla : MonoBehaviour
 {
-    private GameObject gm;
+    private Minijuego2_GameManager gm;
     public bool isFilledWithFood;
     public GameObject foodCooked;
     private int foodInPot;
@@ -36,7 +36,7 @@ public class Olla : MonoBehaviour
 
     private void Awake()
     {
-        gm = GameObject.Find("GameManager");
+        gm = GameObject.FindAnyObjectByType<Minijuego2_GameManager>();
         potProgress = potProgressionBackground.transform.GetChild(0).GetComponent<Image>();
     }
 
@@ -57,8 +57,8 @@ public class Olla : MonoBehaviour
             {
                 Sequence PutFood = DOTween.Sequence();
                 PutFood.Append(other.gameObject.transform.DOMove(transform.position + new Vector3(0, 0.5f, 0), 0.5f));
-                gm.GetComponent<Minijuego2_GameManager>().PutFoodInPot(comida);
-                gm.GetComponent<Minijuego2_GameManager>().imGrabing = false;
+                gm.PutFoodInPot(comida);
+                gm.imGrabing = false;
                 PutFood.Append(other.gameObject.transform.DOMove(transform.position, 0.5f));
                 PutFood.OnComplete(() =>
                 {
