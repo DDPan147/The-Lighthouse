@@ -7,7 +7,6 @@ using UnityEngine.InputSystem;
 public class LightControler : MonoBehaviour
 {
     private Vector2 moveDirection;
-    public float moveSpeed;
     private bool start;
     private Camera cam;
     private Vector3 rayDirection;
@@ -74,20 +73,5 @@ public class LightControler : MonoBehaviour
     }
     */
 
-    /*private IEnumerator KillCloud(GameObject cloud)
-    {
-        if(cloud.GetComponent<Cloud>().isDying == false)
-        {
-            cloud.GetComponent<Cloud>().isDying = true;
-            gm.GetComponent<Minijuego9_GameManager>().totalCloudsKilled ++;
-            Material cloudMaterial = cloud.GetComponent<Renderer>().material;
-            cloudMaterial.DOColor(Color.black, 0.5f);
-            yield return new WaitForSecondsRealtime(0.5f);
-            cloudMaterial.DOColor(new Color(cloudMaterial.color.r, cloudMaterial.color.g, cloudMaterial.color.b, 0), 1f).OnComplete(() =>
-            {
-                Destroy(cloud);
-            });
-        }
-        
-    }*/
+    
 }
