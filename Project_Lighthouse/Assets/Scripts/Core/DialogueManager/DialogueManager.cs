@@ -26,6 +26,7 @@ public class DialogueManager : MonoBehaviour
     [SerializeField]private float popupScaleDuration;
     private bool sentenceTyped;
     private bool sentenceSkipped;
+    [SerializeField]private bool sentencePass;
 
     private Queue<Sentence> sentences = new Queue<Sentence>();
 
@@ -195,7 +196,7 @@ public class DialogueManager : MonoBehaviour
         sentenceSkipped = false;
         while (true)
         {
-            if (Input.GetKeyDown(KeyCode.M))
+            if (GetPassTextCondition())
             {
                 if (sentenceTyped)
                 {
@@ -219,6 +220,19 @@ public class DialogueManager : MonoBehaviour
         //Play Talking Sound
     }
 
+    bool GetPassTextCondition()
+    {
+        if (GameManager.cutsceneActive) 
+        {
+            bool b = sentencePass;
+            sentencePass = false;
+            return b;
+        }
+        else
+        {
+            return Input.GetKeyDown(KeyCode.M);
+        }  
+    }
     void CloseBubble(Transform target)
     {
         target.DOScale(0, popupScaleDuration).SetEase(Ease.InBack).OnComplete(() =>
@@ -345,6 +359,11 @@ public class DialogueManager : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
         uEvent?.Invoke();
+    }
+
+    public void DialogueSentencePass()
+    {
+        sentencePass = true;
     }
 
     //David: Kike por que vas al dentista

@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour
     public AudioListener audioListener;
 
     public static bool minigameActive;
+    public static bool cutsceneActive;
 
     [Header("MissionManager")]
     public Mission[] missions;
@@ -171,37 +172,13 @@ public class GameManager : MonoBehaviour
     {
         minigames[index].isAvailable = true;
     }
+    public void CutsceneStart()
+    {
+        cutsceneActive = true;
+    }
     public void CutsceneEnd(int index)
     {
-        /*switch (index)
-        {
-            case 1:
-                //Minigame 3 available
-                minigames[2].isAvailable = true;
-                //Player Change Spline to Boiler Room
-                player.ChangeSpline(spline_boilerRoom);
-                player.SetPercentage(0);
-                //Luna Changes to New Position
-                break;
-            case 2:
-                break;
-            case 3:
-                break;
-            case 4:
-                break;
-            case 5:
-                break;
-            case 6:
-                break;
-            case 7:
-                break;
-            case 8:
-                break;
-            case 9:
-                break;
-            default:
-                break;
-        }*/
+        cutsceneActive = false;
         OnCutsceneEnded[index]?.Invoke();
     }
     #endregion

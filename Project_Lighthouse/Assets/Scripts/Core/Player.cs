@@ -35,8 +35,7 @@ public class Player : MonoBehaviour
     public enum MoveStates
     {
         Control,
-        Transition,
-        Cutscene
+        Transition
     }
 
     public MoveStates moveState;
@@ -55,7 +54,7 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        if (!GameManager.minigameActive)
+        if (!GameManager.minigameActive && !GameManager.cutsceneActive)
         {
             if (moveState == MoveStates.Control)
             {
@@ -66,8 +65,25 @@ public class Player : MonoBehaviour
                 TransitionState();
             }
         }
+        else if (GameManager.cutsceneActive)
+        {
+            CutsceneState();
+        }
     }
 
+    private void CutsceneState()
+    {
+        Vector3 currentPosition = spline.EvaluatePosition(distancePercentage);
+        transform.position = currentPosition;
+
+        Vector3 nextPosition = spline.EvaluatePosition(distancePercentage + 0.05f);
+        Vector3 direction = nextPosition - currentPosition;
+        Vector3 newDirection = new Vector3(direction.x, 0, direction.z);
+        if (newDirection.magnitude > 0)
+        {
+            transform.rotation = Quaternion.LookRotation(newDirection, transform.up);
+        }
+    }
     private void TransitionState()
     {
         //transitionPercentage += speed * Time.deltaTime / splineLength;
@@ -227,7 +243,7 @@ public class Player : MonoBehaviour
     void TakePath(Spline path, Action onCompleteAction)
     {
         //activePath = path;
-        moveState = MoveStates.Cutscene;
+        //moveState = MoveStates.Cutscene;
         float duration = transitionSpline.GetLength() * transitionSpeed;
         DOTween.To(() => transitionPercentage, x => transitionPercentage = x, 1, duration).OnComplete(() => onCompleteAction());
     }
@@ -272,6 +288,8 @@ public class Player : MonoBehaviour
     public void SetPercentage(float value)
     {
         distancePercentage = value;
+
+        transform.position = spline.EvaluatePosition(distancePercentage);
     }
     #endregion
 }
