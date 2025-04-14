@@ -49,10 +49,10 @@ public class GameManager_Minijuego5 : MonoBehaviour
                 //YOU WIN
                 hasWon = true;
                 ps.Play();
-                GameManager gm = FindFirstObjectByType<GameManager>();
+                GameManager gm = FindAnyObjectByType<GameManager>();
                 if (gm != null)
                 {
-                    FindFirstObjectByType<GameManager>().MinigameCompleted(4);
+                    gm.MinigameCompleted(4);
                 }
                 else
                 {

@@ -142,7 +142,7 @@ public class WindowProgressionManager : MonoBehaviour
         GameManager gm = FindAnyObjectByType<GameManager>();
         if (gm != null)
         {
-            gm.MinigameCompleted(2);
+            gm.MinigameCompleted(5);
         }
         else
         {

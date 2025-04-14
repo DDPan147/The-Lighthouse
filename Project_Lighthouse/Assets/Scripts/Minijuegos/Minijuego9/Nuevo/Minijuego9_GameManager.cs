@@ -24,7 +24,7 @@ public class Minijuego9_GameManager : MonoBehaviour
             GameManager gm = FindAnyObjectByType<GameManager>();
             if (gm != null)
             {
-                gm.MinigameCompleted(2);
+                gm.MinigameCompleted(8);
             }
             else
             {

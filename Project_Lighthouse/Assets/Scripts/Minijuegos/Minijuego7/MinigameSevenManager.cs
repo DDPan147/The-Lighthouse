@@ -174,7 +174,7 @@ public class MinigameSevenManager : MonoBehaviour
         GameManager gm = FindAnyObjectByType<GameManager>();
         if (gm != null)
         {
-            gm.MinigameCompleted(2);
+            gm.MinigameCompleted(6);
         }
         else
         {

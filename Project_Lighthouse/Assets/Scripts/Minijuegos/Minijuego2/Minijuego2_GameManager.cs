@@ -63,6 +63,7 @@ public class Minijuego2_GameManager : MonoBehaviour
             {
                 //Minijuego Terminado
                 Debug.Log("Terminado");
+                CompleteMinigame();
             }
         }
     }
@@ -136,6 +137,20 @@ public class Minijuego2_GameManager : MonoBehaviour
         Cursor.visible = true;
         comida.GetComponent<Selectable_MG2>().moveDirection = Vector2.zero;
         grabObject = null;
+    }
+
+    public void CompleteMinigame()
+    {
+        /*Alvaro*/ //Function to complete minigame and return to lobby
+        GameManager gm = FindAnyObjectByType<GameManager>();
+        if (gm != null)
+        {
+            gm.MinigameCompleted(1);
+        }
+        else
+        {
+            Debug.LogWarning("No se ha encontrado el Game Manager de la escena principal. No se va a volver al juego");
+        }
     }
     #region InputEvents
     public void OnGrab(InputAction.CallbackContext context)
