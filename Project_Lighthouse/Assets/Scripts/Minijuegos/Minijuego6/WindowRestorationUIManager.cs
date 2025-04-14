@@ -91,7 +91,7 @@ public class WindowRestorationUIManager : MonoBehaviour
         GameManager gm = FindFirstObjectByType<GameManager>();
         if (gm != null)
         {
-            FindFirstObjectByType<GameManager>().MinigameCompleted(0);
+            FindFirstObjectByType<GameManager>().MinigameCompleted(5);
         }
         else
         {
