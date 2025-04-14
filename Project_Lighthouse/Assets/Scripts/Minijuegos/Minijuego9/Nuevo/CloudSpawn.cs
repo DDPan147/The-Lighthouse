@@ -39,13 +39,18 @@ public class CloudSpawn : MonoBehaviour
     void SpawnCloud()
     {
         int random = Random.Range(1, 7);
+        GameObject cloud;
         if(random == 4)
         {
-            Instantiate(badCloudObj, GetRandomPointInCollider(), Quaternion.identity, transform);
+            cloud = Instantiate(badCloudObj, transform);
+            cloud.transform.position = GetRandomPointInCollider();
+            cloud.transform.eulerAngles = new Vector3(0, 0, 0);
         }
         else
         {
-            Instantiate(cloudObj, GetRandomPointInCollider(), Quaternion.identity, transform);
+            cloud = Instantiate(cloudObj, transform);
+            cloud.transform.position = GetRandomPointInCollider();
+            cloud.transform.eulerAngles = new Vector3(0, 0, 0);
         }
         
     }

@@ -32,9 +32,9 @@ public class Cloud : MonoBehaviour
     private Rigidbody rb;
     private void Awake()
     {
-        mainRenderer = GetComponent<Renderer>();
+        mainRenderer = GetComponentInChildren<Renderer>();
         mainMat = mainRenderer.material;
-        rb = GetComponent<Rigidbody>();
+        rb = GetComponentInChildren<Rigidbody>();
     }
 
     void Start()
@@ -72,10 +72,9 @@ public class Cloud : MonoBehaviour
 
     void InitialMovement()
     {
-        Vector2 randomDirection = new Vector2(UnityEngine.Random.Range(-1.0f,1.0f), UnityEngine.Random.Range(-1.0f,1.0f));
-        //Linear velocity
-        rb.linearVelocity = new Vector3(randomDirection.x, randomDirection.y, 0);
-        //Add Force
+        Vector2 randomDirection = new Vector2(UnityEngine.Random.Range(-1.0f,1.0f), UnityEngine.Random.Range(-0.5f,0.5f));
 
+        rb.linearVelocity = new Vector3(randomDirection.x, randomDirection.y, 0).normalized;
+        Debug.Log(rb.linearVelocity);
     }
 }

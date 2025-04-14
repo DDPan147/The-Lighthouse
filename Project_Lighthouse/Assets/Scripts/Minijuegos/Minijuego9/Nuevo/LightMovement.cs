@@ -6,18 +6,17 @@ public class LightMovement : MonoBehaviour
 {
     #region Private Variables
     private Camera cam;
-    private List<Vector3> movePoints = new List<Vector3>();
+    //private List<Vector3> movePoints = new List<Vector3>();
     private Rigidbody rb;
-
     private Vector3 targetPosition;
-    [SerializeField]private float speed;
-    [SerializeField][Range(0, 1)]private float umbralDistance;
+    #endregion
+    #region Inspector Variables
+    [SerializeField] private float speed;
+    [SerializeField][Range(0, 1)] private float umbralDistance;
+    public LayerMask lightFloor;
+    //[Tooltip("Delay entre el raton y el movimiento del objeto")]public float mouseDelay;
     #endregion
 
-    public LayerMask lightFloor;
-    [Tooltip("Delay entre el raton y el movimiento del objeto")]public float mouseDelay;
-
-    
     private void Awake()
     {
         cam = Camera.main;
@@ -57,13 +56,11 @@ public class LightMovement : MonoBehaviour
         }
         
     }
-    public IEnumerator MoveToPoints()
+    /*public IEnumerator MoveToPoints()
     {
         yield return new WaitForSecondsRealtime(0.5f);
 
         rb.MovePosition(movePoints[0]);
-        /*Vector3 direction = movePoints[0] - transform.position;
-        rb.linearVelocity += direction;*/
         movePoints.RemoveAt(0);
-    }
+    }*/
 }
