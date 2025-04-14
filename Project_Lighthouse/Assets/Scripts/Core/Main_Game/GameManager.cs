@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using UnityEngine.Splines;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
@@ -15,6 +16,7 @@ public class GameManager : MonoBehaviour
     public MinigameData[] minigames;
 
     public UnityEvent[] OnMinigameEnded = new UnityEvent[9];
+    public UnityEvent[] OnCutsceneEnded = new UnityEvent[9];
     public Camera mainCamera;
     public GameObject eventSystem;
     public AudioListener audioListener;
@@ -29,6 +31,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TMP_Text GUIMissionText;
     [SerializeField] private Image curtain;
 
+    [Header("Cutscenes")]
+    private Player player;
+    [SerializeField] private SplineContainer spline_boilerRoom;
 
     
     
@@ -37,6 +42,7 @@ public class GameManager : MonoBehaviour
         mainCamera = Camera.main;
         eventSystem = FindFirstObjectByType<EventSystem>().gameObject;
         audioListener = FindFirstObjectByType<AudioListener>();
+        player = FindAnyObjectByType<Player>();
     }
 
     void Update()
@@ -156,15 +162,48 @@ public class GameManager : MonoBehaviour
         GUIMissionText.gameObject.transform.DOLocalMoveX(400, 2, false).SetEase(Ease.InBack);
     }
     #endregion
-
-    public void EventDebugger()
-    {
-        Debug.Log("Hola");
-    }
-
+    #region Cutscenes
     public void CameraFadeOut()
     {
         curtain.DOFade(1, 3);
     }
+    public void SetMinigameAvailable(int index)
+    {
+        minigames[index].isAvailable = true;
+    }
+    public void CutsceneEnd(int index)
+    {
+        /*switch (index)
+        {
+            case 1:
+                //Minigame 3 available
+                minigames[2].isAvailable = true;
+                //Player Change Spline to Boiler Room
+                player.ChangeSpline(spline_boilerRoom);
+                player.SetPercentage(0);
+                //Luna Changes to New Position
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+            case 5:
+                break;
+            case 6:
+                break;
+            case 7:
+                break;
+            case 8:
+                break;
+            case 9:
+                break;
+            default:
+                break;
+        }*/
+        OnCutsceneEnded[index]?.Invoke();
+    }
+    #endregion
 
 }

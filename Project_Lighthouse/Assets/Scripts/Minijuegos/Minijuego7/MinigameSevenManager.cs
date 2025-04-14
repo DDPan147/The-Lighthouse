@@ -169,6 +169,17 @@ public class MinigameSevenManager : MonoBehaviour
             // Final negativo - El anciano sigue aferrado al pasado
             Debug.Log("Final negativo: El anciano aún no puede superar la pérdida");
         }
+
+        /*Alvaro*/ //Function to complete minigame and return to lobby
+        GameManager gm = FindAnyObjectByType<GameManager>();
+        if (gm != null)
+        {
+            gm.MinigameCompleted(2);
+        }
+        else
+        {
+            Debug.LogWarning("No se ha encontrado el Game Manager de la escena principal. No se va a volver al juego");
+        }
     }
     #endregion
 

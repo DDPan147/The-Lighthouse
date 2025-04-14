@@ -54,10 +54,10 @@ public class RotarCandado : MonoBehaviour
         Debug.Log("Has Ganado");
         candado.transform.DORotate(new Vector3(0, 90, 0), 1.5f, RotateMode.Fast);
 
-        GameManager gm = FindFirstObjectByType<GameManager>();
+        GameManager gm = FindAnyObjectByType<GameManager>();
         if (gm != null)
         {
-            FindFirstObjectByType<GameManager>().MinigameCompleted(7);
+            FindAnyObjectByType<GameManager>().MinigameCompleted(7);
         }
         else
         {

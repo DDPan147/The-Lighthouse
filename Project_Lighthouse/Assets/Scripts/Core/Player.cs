@@ -264,4 +264,14 @@ public class Player : MonoBehaviour
         StartTransition(gm.CameraFadeOut);
     }
     #endregion
+    #region SignalFunctions
+    public void ChangeSpline(SplineContainer _spline)
+    {
+        spline = _spline;
+    }
+    public void SetPercentage(float value)
+    {
+        distancePercentage = value;
+    }
+    #endregion
 }

@@ -69,10 +69,18 @@ public class CleaningTool : MonoBehaviour
     {
         if (canGrab && objectToGrab != null)
         {
-            Debug.Log("Objeto capturado");
-            canGrab = false;
-            Destroy(objectToGrab);
-            objectToGrab = null;
+            CleanableObject cleanable = objectToGrab.GetComponent<CleanableObject>();
+            if (cleanable != null)
+            {
+                Debug.Log($"Recogido: {cleanable.itemName}");
+                cleanable.OnCollected();
+                canGrab = false;
+                objectToGrab = null;
+            }
+            else
+            {
+                Debug.Log("No es un objeto recolectable válido");
+            }
         }
         else
         {
