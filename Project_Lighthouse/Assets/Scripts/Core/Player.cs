@@ -20,11 +20,8 @@ public class Player : MonoBehaviour
     public float moveVector;
 
     public Spline transitionSpline;
-    //public Spline activePath;
     public SplineContainer spline;
     public SplineSwitch activeSplineSwitch;
-
-    //public SplineContainer[] paths;
 
 
     public MinigameSwitch activeMinigameSwitch;
@@ -271,13 +268,6 @@ public class Player : MonoBehaviour
     {
         triggerMinigameText.enabled = false;
         activeMinigameSwitch = null;
-    }
-    #endregion
-    #region EventFunctions
-    public void PathToTable()
-    {
-        transitionSpline = BuildTransitionSpline(transform.position, new Vector3(2.9f, 0, 1.75f));
-        StartTransition(gm.CameraFadeOut);
     }
     #endregion
     #region SignalFunctions

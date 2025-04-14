@@ -16,13 +16,11 @@ public class GameManager : MonoBehaviour
     public MinigameData[] minigames;
 
     public UnityEvent[] OnMinigameEnded = new UnityEvent[9];
-    public UnityEvent[] OnCutsceneEnded = new UnityEvent[9];
     public Camera mainCamera;
     public GameObject eventSystem;
     public AudioListener audioListener;
 
     public static bool minigameActive;
-    public static bool cutsceneActive;
 
     [Header("MissionManager")]
     public Mission[] missions;
@@ -35,9 +33,15 @@ public class GameManager : MonoBehaviour
     [Header("Cutscenes")]
     private Player player;
     [SerializeField] private SplineContainer spline_boilerRoom;
+    public UnityEvent[] OnCutsceneEnded = new UnityEvent[9];
+    public static bool cutsceneActive;
 
-    
-    
+    [Header("DaySystem")]
+    public static int dayCount;
+    public UnityEvent[] OnDayStart = new UnityEvent[4];
+
+
+
     void Start()
     {
         mainCamera = Camera.main;
@@ -164,9 +168,13 @@ public class GameManager : MonoBehaviour
     }
     #endregion
     #region Cutscenes
-    public void CameraFadeOut()
+    public void CurtainFadeOut(int time)
     {
-        curtain.DOFade(1, 3);
+        curtain.DOFade(1, time);
+    }
+    public void CurtainFadeIn(int time)
+    {
+        curtain.DOFade(0, time);
     }
     public void SetMinigameAvailable(int index)
     {
@@ -180,6 +188,12 @@ public class GameManager : MonoBehaviour
     {
         cutsceneActive = false;
         OnCutsceneEnded[index]?.Invoke();
+    }
+    #endregion
+    #region Day System
+    public void DelayedCurtainFadeIn()
+    {
+        Invoke("CurtainFadeIn", 2);
     }
     #endregion
 
