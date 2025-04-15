@@ -30,50 +30,150 @@ public class MesaReparacion : MonoBehaviour
     [Header("Requisitos de Reparación")]
     [SerializeField] private int requiredTableLegs = 4;
     [SerializeField] private TextMeshProUGUI feedbackText;
+    [SerializeField] private GameObject interactionPromptObject;
     
     [Header("Estados")]
     [SerializeField] private bool repairingObject = false;
     private bool fixingPart = false;
-    [SerializeField] private bool hasCheckedInventory = false;
+    [SerializeField] public bool hasCheckedInventory = false;
+    
+    [Header("Interacción")]
+    [SerializeField] private float interactionDistance = 3f;
+    [SerializeField] private bool playerInRange = false;
+    [SerializeField] private KeyCode interactionKey = KeyCode.Q;
+    
+    private Transform playerTransform;
 
     private void Start()
     {
-        playerMovement = GameObject.Find("Player_Grand").GetComponent<PlayerMovementFP>();
-        playerCameraScript = GameObject.Find("Player_Grand").GetComponent<CameraController>();
+        // Buscar referencias si no están asignadas
+        if (playerMovement == null)
+            playerMovement = GameObject.Find("Player_Grand").GetComponent<PlayerMovementFP>();
+            
+        if (playerCameraScript == null)
+            playerCameraScript = GameObject.Find("Player_Grand").GetComponent<CameraController>();
+            
+        if (playerCamera == null)
+        {
+            GameObject cameraObj = GameObject.FindWithTag("MainCamera");
+            if (cameraObj != null)
+                playerCamera = cameraObj.GetComponent<Camera>();
+        }
+        
         if (playerCamera != null)
         {
             playerCameraParent = playerCamera.transform.parent;
             originalCameraPosition = playerCamera.transform.localPosition;
             originalCameraRotation = playerCamera.transform.localRotation;
+            playerTransform = playerCamera.transform;
+        }
+        
+        // Ocultar prompt de interacción al inicio
+        if (interactionPromptObject != null)
+            interactionPromptObject.gameObject.SetActive(false);
+            
+        // Asegurar que hay un collider para la detección
+        Collider col = GetComponent<Collider>();
+        if (col == null)
+        {
+            Debug.LogWarning("La mesa no tiene collider. Añadiendo BoxCollider.");
+            gameObject.AddComponent<BoxCollider>();
         }
     }
-
-    void OnMouseDown()
+    
+    private void Update()
     {
-        Debug.Log("Mesa clickeada");
+        // Comprobar si el jugador está en rango para interactuar
+        CheckPlayerDistance();
         
-        // Verificar si tenemos suficientes piezas antes de entrar en modo reparación
-        if (!hasCheckedInventory)
+        // Detectar pulsación de tecla E cuando el jugador está en rango
+        if (playerInRange && Input.GetKeyDown(interactionKey) && !hasCheckedInventory && !repairingObject)
         {
-            if (MinigameFourManager.Instance.HasEnoughParts(ItemType.TableLeg, requiredTableLegs))
-            {
-                hasCheckedInventory = true;
-                playerCameraScript.UnlockCursor();
-                ChangeToFixObjectCamera();
-            }
-            else
-            {
-                ShowInsufficientPartsMessage();
-                return;
-            }
+            Debug.Log("Tecla E presionada cerca de la mesa");
+            AttemptToEnterRepairMode();
         }
-        else if (isCamerainPosition && !repairingObject && actualLeg < legs.Length)
+        
+        // Si ya estamos en modo reparación y el usuario hace clic, avanzar en la reparación
+        if (isCamerainPosition && !repairingObject && hasCheckedInventory && Input.GetMouseButtonDown(0) && actualLeg < legs.Length)
         {
             Debug.Log("Moviendo pata " + actualLeg);
             StartCoroutine(MoveLeg(legs[actualLeg], finalPositions[actualLeg]));
             actualLeg++;
         }
-        else if (actualLeg >= legs.Length && !repairingObject)
+        else if (actualLeg >= legs.Length && !repairingObject && hasCheckedInventory && Input.GetMouseButtonDown(0))
+        {
+            // La mesa está completamente reparada
+            ChangeToPlayerCamera();
+            MinigameFourManager.Instance.OnTableFixed();
+        }
+    }
+    
+    private void CheckPlayerDistance()
+    {
+        if (playerTransform == null) return;
+        
+        bool wasInRange = playerInRange;
+        playerInRange = Vector3.Distance(transform.position, playerTransform.position) <= interactionDistance;
+        
+        // Si el estado cambió, actualizar UI
+        if (wasInRange != playerInRange)
+        {
+            if (playerInRange)
+            {
+                ShowInteractionPrompt(true);
+            }
+            else
+            {
+                ShowInteractionPrompt(false);
+            }
+        }
+    }
+    
+    private void ShowInteractionPrompt(bool show)
+    {
+        if (interactionPromptObject != null)
+        {
+            interactionPromptObject.SetActive(show);
+        }
+    }
+    
+    public void AttemptToEnterRepairMode()
+    {
+        Debug.Log("Intentando entrar en modo reparación");
+        
+        // Verificar si el jugador tiene suficientes piezas
+        bool tieneSuficientes = MinigameFourManager.Instance.HasEnoughParts(ItemType.TableLeg, requiredTableLegs);
+        Debug.Log($"¿Tiene suficientes patas? {tieneSuficientes} (Necesita: {requiredTableLegs})");
+        
+        if (tieneSuficientes)
+        {
+            Debug.Log("Inventario verificado, cambiando a cámara de reparación");
+            hasCheckedInventory = true;
+            playerCameraScript.UnlockCursor();
+            ChangeToFixObjectCamera();
+            
+            // Ocultar prompt de interacción durante la reparación
+            ShowInteractionPrompt(false);
+        }
+        else
+        {
+            ShowInsufficientPartsMessage();
+        }
+    }
+
+    // El método OnMouseDown puede mantenerse como alternativa
+    void OnMouseDown()
+    {
+        Debug.Log("Mesa clickeada");
+        
+        // Si ya estamos en modo reparación y hacemos clic, avanzar en la reparación
+        if (isCamerainPosition && !repairingObject && hasCheckedInventory && actualLeg < legs.Length)
+        {
+            Debug.Log("Moviendo pata " + actualLeg);
+            StartCoroutine(MoveLeg(legs[actualLeg], finalPositions[actualLeg]));
+            actualLeg++;
+        }
+        else if (actualLeg >= legs.Length && !repairingObject && hasCheckedInventory)
         {
             ChangeToPlayerCamera();
             MinigameFourManager.Instance.OnTableFixed();
@@ -127,7 +227,7 @@ public class MesaReparacion : MonoBehaviour
         // Actualizar feedback cuando se completa una pata
         if (feedbackText != null && actualLeg >= legs.Length)
         {
-            feedbackText.text = "¡Mesa reparada!";
+            feedbackText.text = "¡Mesa reparada! Haz clic para continuar.";
         }
     }
 
@@ -138,7 +238,7 @@ public class MesaReparacion : MonoBehaviour
 
         // Primero desactivamos el movimiento del jugador
         playerMovement.canMove = false;
-    
+        
         // Aseguramos que las camaras cambien correctamente
         playerCamera.gameObject.SetActive(false);
         cameraObject.gameObject.SetActive(true);
@@ -175,5 +275,24 @@ public class MesaReparacion : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
         isCamerainPosition = true;
+    }
+    
+    // Para visualizar el rango de interacción en el editor
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, interactionDistance);
+    }
+    
+    // Método público para resetear el estado (útil para el MinigameFourManager)
+    public void ResetState()
+    {
+        hasCheckedInventory = false;
+        repairingObject = false;
+        isCamerainPosition = false;
+        actualLeg = 0;
+        
+        if (feedbackText != null)
+            feedbackText.text = "";
     }
 }

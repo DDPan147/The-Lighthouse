@@ -30,6 +30,7 @@ public class CleanableObject : MonoBehaviour
         {
             outlineMaterial = meshRenderer.materials[1];
         }
+        SetOutlineVisibility(false);
     }
     
     public void SetOutlineVisibility(bool isVisible)
@@ -46,16 +47,21 @@ public class CleanableObject : MonoBehaviour
     // Método que se llamará cuando el objeto sea recogido
     public void OnCollected()
     {
-        // Reproducir efectos
-        //PlayPickupEffects();
-        
-        // Añadir el ítem al inventario
-        if (PlayerInventory.Instance != null)
+        Debug.Log($"[CleanableObject] Objeto recogido: {itemType}");
+    
+        // Llamar al manager para añadir al inventario
+        MinigameFourManager manager = MinigameFourManager.Instance;
+        if (manager != null)
         {
-            PlayerInventory.Instance.AddItem(itemType);
+            Debug.Log($"[CleanableObject] Llamando a AddItemToInventory: {itemType}");
+            manager.AddItemToInventory(itemType);
         }
-        
-        // Desactivar el objeto en lugar de destruirlo
+        else
+        {
+            Debug.LogError("[CleanableObject] No se encontró MinigameFourManager.Instance");
+        }
+    
+        // Desactivar este objeto
         gameObject.SetActive(false);
     }
     

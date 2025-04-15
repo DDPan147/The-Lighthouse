@@ -25,6 +25,9 @@ public class MinigameFourManager : MonoBehaviour
     public int tableLegsCollected = 0;
     public int clockGearsCollected = 0;
     public int dollPartsCollected = 0;
+    public GameObject[] tableLegVisuals;
+    public GameObject[] clockGearVisuals;
+    public GameObject[] dollPartVisuals;
     
     [Header("Required Items")]
     public int requiredTableLegs = 4;
@@ -71,6 +74,7 @@ public class MinigameFourManager : MonoBehaviour
         
         if (playerInventory == null)
             playerInventory = FindObjectOfType<PlayerInventory>();
+        DisableAllVisualObjects();
         
         UpdateInventoryUI();
         InitializeGame();
@@ -112,16 +116,24 @@ public class MinigameFourManager : MonoBehaviour
         switch(type) {
             case ItemType.TableLeg:
                 tableLegsCollected++;
+                Debug.Log($"[MinigameFourManager] Pata de mesa recogida. Total: {tableLegsCollected}");
+                if (tableLegsCollected-1 < tableLegVisuals.Length)
+                    tableLegVisuals[tableLegsCollected-1].SetActive(true);
                 break;
             case ItemType.ClockGear:
                 clockGearsCollected++;
+                Debug.Log($"[MinigameFourManager] Engranaje recogido. Total: {clockGearsCollected}");
+                if (clockGearsCollected-1 < clockGearVisuals.Length)
+                    clockGearVisuals[clockGearsCollected-1].SetActive(true);
                 break;
             case ItemType.DollPart:
                 dollPartsCollected++;
+                Debug.Log($"[MinigameFourManager] Pieza de muñeco recogida. Total: {dollPartsCollected}");
+                if (dollPartsCollected-1 < dollPartVisuals.Length)
+                    dollPartVisuals[dollPartsCollected-1].SetActive(true);
                 break;
         }
-        
-        UpdateInventoryUI();
+    
         CheckCollectionProgress();
     }
     
@@ -267,6 +279,45 @@ public class MinigameFourManager : MonoBehaviour
         else
         {
             Debug.LogWarning("No se ha encontrado el Game Manager de la escena principal. No se va a volver al juego");
+        }
+    }
+    
+    private void DisableAllVisualObjects()
+    {
+        // Desactivar visuales de patas de mesa
+        if (tableLegVisuals != null)
+        {
+            foreach (GameObject visual in tableLegVisuals)
+            {
+                if (visual != null)
+                {
+                    visual.SetActive(false);
+                }
+            }
+        }
+    
+        // Desactivar visuales de engranajes
+        if (clockGearVisuals != null)
+        {
+            foreach (GameObject visual in clockGearVisuals)
+            {
+                if (visual != null)
+                {
+                    visual.SetActive(false);
+                }
+            }
+        }
+    
+        // Desactivar visuales de piezas de muñeco
+        if (dollPartVisuals != null)
+        {
+            foreach (GameObject visual in dollPartVisuals)
+            {
+                if (visual != null)
+                {
+                    visual.SetActive(false);
+                }
+            }
         }
     }
 
