@@ -12,7 +12,6 @@ public class Sentence
     public string sentenceText;
     public DialogueManager.Speaker speaker;
     public DialogueEvent sentenceEvent;
-    //public UnityEvent sentenceUEvent;
     public DialogueManager.Emotion emotionSound;
 }
 [System.Serializable]

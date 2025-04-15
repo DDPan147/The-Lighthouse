@@ -16,9 +16,6 @@ public class DialogueTrigger : MonoBehaviour
     {
         if (comentado == false)
         {
-            //if (player.moveState != Player.MoveStates.Control) return;
-
-            
             FindAnyObjectByType<DialogueManager>().StartComment(comment);
             comentado = true;
         }

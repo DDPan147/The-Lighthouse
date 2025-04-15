@@ -25,7 +25,7 @@ public class SplineSwitch : MonoBehaviour
 
     void Start()
     {
-        player = FindFirstObjectByType<Player>();
+        player = FindAnyObjectByType<Player>();
     }
 
     void Update()
@@ -83,14 +83,14 @@ public class SplineSwitch : MonoBehaviour
         return player.spline == splines[0];
     }
 
-    //Construir una spline que transicione desde la posición actual del jugador hasta la posición de la spline que tenga el porcentaje que designamos
-        //Crear una spline de 2 nudos **
-        //Acceder a los knots de la spline y cambiarles la posición **
-        //Knot numero 1: Posición del jugador **
-        //Knot número 2: Accede a la spline deseada en el porcentaje deseado **
-    //Pasar la spline resultado al player**
-    //El player designa un estado de transición
-    //El player se mueve a través de la spline de transición automáticamente
+                //Construir una spline que transicione desde la posición actual del jugador hasta la posición de la spline que tenga el porcentaje que designamos
+                    //Crear una spline de 2 nudos
+                    //Acceder a los knots de la spline y cambiarles la posición
+                    //Knot numero 1: Posición del jugador
+                    //Knot número 2: Accede a la spline deseada en el porcentaje deseado
+                //Pasar la spline resultado al player
+                //El player designa un estado de transición
+                //El player se mueve a través de la spline de transición automáticamente
     public Spline BuildTransitionSpline(Vector3 currentPosition, SplineContainer targetSpline, BezierKnot knot)
     {
         Spline newSpline = new Spline(0);

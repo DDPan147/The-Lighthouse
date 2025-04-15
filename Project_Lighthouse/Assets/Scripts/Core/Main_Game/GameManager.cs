@@ -1,13 +1,13 @@
 using DG.Tweening;
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using UnityEngine.Playables;
 using UnityEngine.SceneManagement;
-using UnityEngine.Splines;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
@@ -16,26 +16,44 @@ public class GameManager : MonoBehaviour
     public MinigameData[] minigames;
 
     public UnityEvent[] OnMinigameEnded = new UnityEvent[9];
-    public Camera mainCamera;
-    public GameObject eventSystem;
-    public AudioListener audioListener;
+    private Camera mainCamera;
+    private GameObject eventSystem;
+    private AudioListener audioListener;
 
     public static bool minigameActive;
 
+    [Space(30)]
     [Header("MissionManager")]
     public Mission[] missions;
     [SerializeField] private GameObject playerMissionPopup;
     [SerializeField] private TMP_Text playerMissionText;
     [SerializeField] private GameObject GUIMissionHolder;
     [SerializeField] private TMP_Text GUIMissionText;
-    [SerializeField] private Image curtain;
 
+    [Space(30)]
     [Header("Cutscenes")]
+
+    [SerializeField] private CinemachineCamera cutsceneCamera;
+    [SerializeField] private PlayableDirector timelineDirector;
+    [SerializeField] private Image curtain;
     private Player player;
-    [SerializeField] private SplineContainer spline_boilerRoom;
-    public UnityEvent[] OnCutsceneEnded = new UnityEvent[9];
+
+    //public UnityEvent[] OnCutsceneStarted;
+    public UnityEvent[] OnCutsceneEnded;
+    [SerializeField] private PlayableAsset[] cutscenes;
+
     public static bool cutsceneActive;
 
+    /*[System.Serializable]
+    public struct CutsceneSetup
+    {
+        public int cutsceneIndex;
+        public SplineContainer playerSpline;
+        public SplineContainer lunaSpline;
+        public SplineContainer cameraSpline;
+    }*/
+
+    [Space(30)]
     [Header("DaySystem")]
     public static int dayCount;
     public UnityEvent[] OnDayStart = new UnityEvent[4];
@@ -45,8 +63,8 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         mainCamera = Camera.main;
-        eventSystem = FindFirstObjectByType<EventSystem>().gameObject;
-        audioListener = FindFirstObjectByType<AudioListener>();
+        eventSystem = FindAnyObjectByType<EventSystem>().gameObject;
+        audioListener = FindAnyObjectByType<AudioListener>();
         player = FindAnyObjectByType<Player>();
     }
 
@@ -65,7 +83,7 @@ public class GameManager : MonoBehaviour
             //Efectos de particulas
             //etc... (posiblemente con una variable global en el game manager a la que todos accedan para poder moverse
         minigameActive = true;
-        FindFirstObjectByType<Player>().UnassignActiveMinigameSwitch();
+        FindAnyObjectByType<Player>().UnassignActiveMinigameSwitch();
 
         //Desactivar camara principal
         mainCamera.enabled = false;
@@ -83,8 +101,6 @@ public class GameManager : MonoBehaviour
 
         //Marcar minijuego como completado
         minigames[index].isCompleted = true;
-
-        //Lanzar diálogo
 
         //Activar todo en la escena principal de nuevo
         minigameActive = false;
@@ -119,11 +135,6 @@ public class GameManager : MonoBehaviour
             
         }
 
-        void PlayEffect()
-        {
-
-        }
-
         IEnumerator FadeOut(string _missionDesc)
         {
             yield return new WaitForSeconds(2);
@@ -150,8 +161,6 @@ public class GameManager : MonoBehaviour
         //Mark Mission as Completed
         missions[missionIndex].isCompleted = true;
         RemoveMissionFromGUI();
-
-        //Trigger Dialogue of whatever?
     }
 
     public Mission GetMission(string _missionName)
@@ -168,32 +177,45 @@ public class GameManager : MonoBehaviour
     }
     #endregion
     #region Cutscenes
-    public void CurtainFadeOut(int time)
+    /*public void CurtainFadeOut(float time)
     {
         curtain.DOFade(1, time);
     }
-    public void CurtainFadeIn(int time)
+    public void CurtainFadeIn(float time)
     {
         curtain.DOFade(0, time);
-    }
+    }*/
     public void SetMinigameAvailable(int index)
     {
         minigames[index].isAvailable = true;
     }
-    public void CutsceneStart()
+    public void CutsceneStart(int index)
     {
         cutsceneActive = true;
+        cutsceneCamera.Priority = 5;
+        timelineDirector.Play(cutscenes[index]);
+        player.ToggleAnimator();
+        curtain.gameObject.GetComponent<Animator>().enabled = true;
+
+
     }
     public void CutsceneEnd(int index)
     {
         cutsceneActive = false;
+        cutsceneCamera.Priority = 0;
+        player.UntoggleAnimator();
+        curtain.gameObject.GetComponent<Animator>().enabled = false;
         OnCutsceneEnded[index]?.Invoke();
     }
     #endregion
     #region Day System
-    public void DelayedCurtainFadeIn()
+    public void DelayedCurtainFadeIn(float delay)
     {
-        Invoke("CurtainFadeIn", 2);
+        curtain.DOFade(0, 2).SetDelay(delay);
+    }
+    public void StartDay(int index)
+    {
+        OnDayStart[index]?.Invoke();
     }
     #endregion
 

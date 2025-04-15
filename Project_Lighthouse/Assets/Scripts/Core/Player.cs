@@ -7,24 +7,26 @@ using UnityEngine.Splines;
 
 public class Player : MonoBehaviour
 {
+    [Header("Movement")]
     public bool canMove;
-
+    [Space(10)]
     public float speed;
-    public float transitionSpeed;
-
     public float distancePercentage;
+
+    [Space(10)]
+    public float transitionSpeed;
     public float transitionPercentage;
 
-    public float splineLength;
+    [HideInInspector]public float splineLength;
 
-    public float moveVector;
+    [HideInInspector]public float moveVector;
 
-    public Spline transitionSpline;
+    [HideInInspector]public Spline transitionSpline;
     public SplineContainer spline;
-    public SplineSwitch activeSplineSwitch;
+    private SplineSwitch activeSplineSwitch;
 
 
-    public MinigameSwitch activeMinigameSwitch;
+    private MinigameSwitch activeMinigameSwitch;
     public TMP_Text triggerMinigameText;
 
     private GameManager gm;
@@ -35,18 +37,14 @@ public class Player : MonoBehaviour
         Transition
     }
 
-    public MoveStates moveState;
+    [HideInInspector]public MoveStates moveState;
 
+    #region Unity Functions and State Machine
     void Start()
     {
         splineLength = spline.CalculateLength();
         canMove = true;
         gm = FindAnyObjectByType<GameManager>();
-
-        /*foreach(UnityEvent uEvent in gm.OnMinigameEnded)
-        {
-            uEvent.AddListener(RevertTransition);
-        }*/
     }
 
     void Update()
@@ -70,9 +68,11 @@ public class Player : MonoBehaviour
 
     private void CutsceneState()
     {
+        //Player Movement Across Spline
         Vector3 currentPosition = spline.EvaluatePosition(distancePercentage);
         transform.position = currentPosition;
 
+        //Player Rotation Across Spline
         Vector3 nextPosition = spline.EvaluatePosition(distancePercentage + 0.05f);
         Vector3 direction = nextPosition - currentPosition;
         Vector3 newDirection = new Vector3(direction.x, 0, direction.z);
@@ -83,26 +83,23 @@ public class Player : MonoBehaviour
     }
     private void TransitionState()
     {
-        //transitionPercentage += speed * Time.deltaTime / splineLength;
-        //transitionPercentage = Mathf.Clamp01(transitionPercentage);
-
         Vector3 currentPosition = transitionSpline.EvaluatePosition(transitionPercentage);
         transform.position = currentPosition;
     }
 
     private void ControlState()
     {
-        
+        //Transform Input Data into Movement
         moveVector = Input.GetAxis("Horizontal");
         if (!canMove) moveVector = 0;
-
         distancePercentage -= moveVector * speed * Time.deltaTime / splineLength;
         distancePercentage = Mathf.Clamp01(distancePercentage);
 
+        //Player Movement Across Spline
         Vector3 currentPosition = spline.EvaluatePosition(distancePercentage);
         transform.position = currentPosition;
 
-
+        //Player Rotation Across Spline
         Vector3 nextPosition = spline.EvaluatePosition(distancePercentage + 0.05f);
         Vector3 direction = nextPosition - currentPosition;
         Vector3 newDirection = new Vector3(direction.x, 0, direction.z);
@@ -111,12 +108,13 @@ public class Player : MonoBehaviour
             transform.rotation = Quaternion.LookRotation(newDirection, transform.up);
         }
 
-        if (activeSplineSwitch != null)
+
+        if (activeSplineSwitch != null && canMove)
         {
             activeSplineSwitch.SwitchSpline();
         }
 
-        if(activeMinigameSwitch != null && Input.GetKeyDown(KeyCode.Z))
+        if(activeMinigameSwitch != null && canMove && Input.GetKeyDown(KeyCode.Z))
         {
             if (activeMinigameSwitch.usesStartPosition)
             {
@@ -155,6 +153,8 @@ public class Player : MonoBehaviour
     {
         if (other.gameObject.CompareTag("DialogueTrigger_Core"))
         {
+            if (moveState != MoveStates.Control) return;
+
             other.gameObject.GetComponent<DialogueTrigger>().TriggerComment();
         }
     }
@@ -173,6 +173,7 @@ public class Player : MonoBehaviour
             UnassignActiveMinigameSwitch();
         }
     }
+    #endregion
     #region SplineSystem
     void CheckIsButtonSpline(SplineSwitch _switch)
     {
@@ -223,27 +224,27 @@ public class Player : MonoBehaviour
         //Play Transition Anim
     }
 
-    public void RevertTransition()
+    /*public void RevertTransition()
     {
         moveState = MoveStates.Transition;
         float duration = transitionSpline.GetLength() * transitionSpeed;
         DOTween.To(() => transitionPercentage, x => transitionPercentage = x, 0, duration).OnComplete(() => EndTransition());//OnComplete(() => completeAction());
         //Play Transition Anim
-    }
+    }*/
 
-    void EndTransition()
+    public void EndTransition()
     {
         moveState = MoveStates.Control;
         transitionPercentage = 0;
     }
 
-    void TakePath(Spline path, Action onCompleteAction)
+    /*void TakePath(Spline path, Action onCompleteAction)
     {
         //activePath = path;
         //moveState = MoveStates.Cutscene;
         float duration = transitionSpline.GetLength() * transitionSpeed;
         DOTween.To(() => transitionPercentage, x => transitionPercentage = x, 1, duration).OnComplete(() => onCompleteAction());
-    }
+    }*/
     public Spline BuildTransitionSpline(Vector3 currentPosition, Vector3 targetPosition)
     {
         Spline newSpline = new Spline(0);
@@ -256,7 +257,7 @@ public class Player : MonoBehaviour
     #region MinigameSystem
     void CheckCurrentMinigameSwitch(MinigameSwitch _switch)
     {
-        MinigameData minigame = FindFirstObjectByType<GameManager>().minigames[_switch.minigameIndex];
+        MinigameData minigame = FindAnyObjectByType<GameManager>().minigames[_switch.minigameIndex];
 
          if(minigame.isAvailable && !minigame.isCompleted)
         {
@@ -270,10 +271,21 @@ public class Player : MonoBehaviour
         activeMinigameSwitch = null;
     }
     #endregion
+    #region EventFunctions
+    public void ToggleAnimator()
+    {
+        GetComponent<Animator>().enabled = true;
+    }
+    public void UntoggleAnimator()
+    {
+        GetComponent<Animator>().enabled = false;
+    }
+    #endregion
     #region SignalFunctions
     public void ChangeSpline(SplineContainer _spline)
     {
         spline = _spline;
+        Debug.Log("My spline is: " + _spline.name);
     }
     public void SetPercentage(float value)
     {

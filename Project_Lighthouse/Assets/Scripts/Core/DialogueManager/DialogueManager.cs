@@ -1,24 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.Events;
 using TMPro;
-using System.Linq;
 using DG.Tweening;
-using System.Xml.Linq;
 using EasyTextEffects;
-using System;
-using Unity.VisualScripting;
 
 [RequireComponent(typeof(AudioSource))]
 public class DialogueManager : MonoBehaviour
 {
     public static DialogueManager Instance { get; private set; }
 
-    [Tooltip("The amount of time the Dialogue waits between phrases")]
-    [SerializeField]
-    private float waitTime = 1.0f;
     [Tooltip("The amount of frames the Dialogue waits between characters")]
     [SerializeField]
     private int letterWaitFrames;
@@ -26,7 +18,7 @@ public class DialogueManager : MonoBehaviour
     [SerializeField]private float popupScaleDuration;
     private bool sentenceTyped;
     private bool sentenceSkipped;
-    [SerializeField]private bool sentencePass;
+    private bool sentencePass;
 
     private Queue<Sentence> sentences = new Queue<Sentence>();
 
@@ -79,8 +71,8 @@ public class DialogueManager : MonoBehaviour
     }
     void Start()
     {
-        sm = FindFirstObjectByType<SoundManager>();
-        player = FindFirstObjectByType<Player>();
+        sm = FindAnyObjectByType<SoundManager>();
+        player = FindAnyObjectByType<Player>();
     }
 
     private void Update()
@@ -89,7 +81,6 @@ public class DialogueManager : MonoBehaviour
     }
     public void StartComment(DialogueComment _comment)
     {
-        Debug.Log("Comment");
         sentences.Clear();
         player.canMove = false;
         StopAllCoroutines();
@@ -244,7 +235,6 @@ public class DialogueManager : MonoBehaviour
                 nextTarget = DecideNextSpeaker(currentSpeaker);
             }
             DisplayNextSentence(nextTarget);
-            Debug.Log("He cerrao ventana lol");
         });
     }
 
@@ -289,8 +279,8 @@ public class DialogueManager : MonoBehaviour
             StartCoroutine(DelayEvent(_sentence.sentenceEvent.timeOffset, _sentence.sentenceEvent.uEvent));
         }
        target.GetComponent<TextEffect>().enabled = true;
-        sm.Stop("Texto");
-        sentenceTyped = true;
+       sm.Stop("Texto");
+       sentenceTyped = true;
         
     }
 
@@ -341,9 +331,6 @@ public class DialogueManager : MonoBehaviour
     }
     void CanvasLookToScreen()
     {
-        //playerCanvas.transform.LookAt(Camera.main.transform);
-
-        //playerCanvas.transform.rotation = Quaternion.LookRotation(playerCanvas.transform.position - Camera.main.transform.position);
         if(textDisplayAbuelo.transform.parent != null)
         {
             textDisplayAbuelo.transform.parent.parent.rotation = Camera.main.transform.rotation;
