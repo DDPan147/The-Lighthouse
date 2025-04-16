@@ -1,8 +1,10 @@
 using UnityEngine;
 using DG.Tweening;
+using Unity.Cinemachine;
 
 public class RoomPart : MonoBehaviour
 {
+    /*Fade Rooms*/
     public GameObject target;
     Material mat;
     float initialAlpha;
@@ -27,7 +29,6 @@ public class RoomPart : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            Debug.Log("B");
             fadeOutTween.Pause();
             fadeInTween = DOTween.ToAlpha(() => mat.color, x => mat.color = x, 0, fadeTime).SetEase(Ease.OutCubic);
         }
