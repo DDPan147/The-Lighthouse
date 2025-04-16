@@ -25,6 +25,9 @@ public class MinigameFourManager : MonoBehaviour
     public int tableLegsCollected = 0;
     public int clockGearsCollected = 0;
     public int dollPartsCollected = 0;
+    public GameObject[] tableLegVisuals;
+    public GameObject[] clockGearVisuals;
+    public GameObject[] dollPartVisuals;
     
     [Header("Required Items")]
     public int requiredTableLegs = 4;
@@ -71,6 +74,7 @@ public class MinigameFourManager : MonoBehaviour
         
         if (playerInventory == null)
             playerInventory = FindObjectOfType<PlayerInventory>();
+        DisableAllVisualObjects();
         
         UpdateInventoryUI();
         InitializeGame();
@@ -112,16 +116,24 @@ public class MinigameFourManager : MonoBehaviour
         switch(type) {
             case ItemType.TableLeg:
                 tableLegsCollected++;
+                Debug.Log($"[MinigameFourManager] Pata de mesa recogida. Total: {tableLegsCollected}");
+                if (tableLegsCollected-1 < tableLegVisuals.Length)
+                    tableLegVisuals[tableLegsCollected-1].SetActive(true);
                 break;
             case ItemType.ClockGear:
                 clockGearsCollected++;
+                Debug.Log($"[MinigameFourManager] Engranaje recogido. Total: {clockGearsCollected}");
+                if (clockGearsCollected-1 < clockGearVisuals.Length)
+                    clockGearVisuals[clockGearsCollected-1].SetActive(true);
                 break;
             case ItemType.DollPart:
                 dollPartsCollected++;
+                Debug.Log($"[MinigameFourManager] Pieza de muñeco recogida. Total: {dollPartsCollected}");
+                if (dollPartsCollected-1 < dollPartVisuals.Length)
+                    dollPartVisuals[dollPartsCollected-1].SetActive(true);
                 break;
         }
-        
-        UpdateInventoryUI();
+    
         CheckCollectionProgress();
     }
     
@@ -197,6 +209,34 @@ public class MinigameFourManager : MonoBehaviour
         Debug.Log("Mesa reparada completamente");
         RegisterTaskCompletion("Table");
         AdvanceToNextStage();
+    
+        // Añadir un delay corto y luego activar automáticamente el modo reparación del reloj
+        StartCoroutine(ActivateClockRepairAfterDelay(.1f));
+    }
+    private IEnumerator ActivateClockRepairAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+    
+        // Buscar el componente ClockRepairMode y activarlo
+        ClockRepairMode clockRepair = null;
+        if (clockRepairStation != null)
+        {
+            clockRepair = clockRepairStation.GetComponent<ClockRepairMode>();
+        }
+    
+        if (clockRepair == null)
+        {
+            clockRepair = FindObjectOfType<ClockRepairMode>();
+        }
+    
+        if (clockRepair != null)
+        {
+            clockRepair.AutoEnterRepairMode();
+        }
+        else
+        {
+            Debug.LogError("No se encontró el componente ClockRepairMode");
+        }
     }
     
     public void OnClockFixed()
@@ -230,27 +270,27 @@ public class MinigameFourManager : MonoBehaviour
     // Método para comprobar si tenemos suficientes piezas para una reparación específica
     public bool HasEnoughParts(ItemType type, int requiredAmount)
     {
-        if (playerInventory != null)
-        {
-            return playerInventory.HasEnoughItems(type, requiredAmount);
-        }
-        return false;
-        
-        // switch(type) {
-        //     case ItemType.TableLeg:
-        //         return tableLegsCollected >= requiredAmount;
-        //     case ItemType.ClockGear:
-        //         return clockGearsCollected >= requiredAmount;
-        //     case ItemType.DollPart:
-        //         return dollPartsCollected >= requiredAmount;
-        //     default:
-        //         return false;
+        // if (playerInventory != null)
+        // {
+        //     return playerInventory.HasEnoughItems(type, requiredAmount);
         // }
+        // return false;
+        
+        switch(type) {
+            case ItemType.TableLeg:
+                return tableLegsCollected >= requiredAmount;
+            case ItemType.ClockGear:
+                return clockGearsCollected >= requiredAmount;
+            case ItemType.DollPart:
+                return dollPartsCollected >= requiredAmount;
+            default:
+                return false;
+        }
     }
 
     private IEnumerator CompleteLevel()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(.3f);
 
         playerMovement.canMove = false;
 
@@ -267,6 +307,63 @@ public class MinigameFourManager : MonoBehaviour
         else
         {
             Debug.LogWarning("No se ha encontrado el Game Manager de la escena principal. No se va a volver al juego");
+        }
+    }
+
+    public void DebugCompleteLevel()
+    {
+        // Show completion UI
+        if (completionPanel != null)
+            completionPanel.SetActive(true);
+
+        /*Alvaro*/ //Function to complete minigame and return to lobby
+        GameManager gm = FindAnyObjectByType<GameManager>();
+        if (gm != null)
+        {
+            gm.MinigameCompleted(3);
+        }
+        else
+        {
+            Debug.LogWarning("No se ha encontrado el Game Manager de la escena principal. No se va a volver al juego");
+        }
+    }
+    
+    private void DisableAllVisualObjects()
+    {
+        // Desactivar visuales de patas de mesa
+        if (tableLegVisuals != null)
+        {
+            foreach (GameObject visual in tableLegVisuals)
+            {
+                if (visual != null)
+                {
+                    visual.SetActive(false);
+                }
+            }
+        }
+    
+        // Desactivar visuales de engranajes
+        if (clockGearVisuals != null)
+        {
+            foreach (GameObject visual in clockGearVisuals)
+            {
+                if (visual != null)
+                {
+                    visual.SetActive(false);
+                }
+            }
+        }
+    
+        // Desactivar visuales de piezas de muñeco
+        if (dollPartVisuals != null)
+        {
+            foreach (GameObject visual in dollPartVisuals)
+            {
+                if (visual != null)
+                {
+                    visual.SetActive(false);
+                }
+            }
         }
     }
 

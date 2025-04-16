@@ -69,18 +69,21 @@ public class CleaningTool : MonoBehaviour
     {
         if (canGrab && objectToGrab != null)
         {
-            CleanableObject cleanable = objectToGrab.GetComponent<CleanableObject>();
-            if (cleanable != null)
+            Debug.Log("Objeto capturado");
+            canGrab = false;
+        
+            // Obtener el componente CleanableObject
+            CleanableObject cleanableObject = objectToGrab.GetComponent<CleanableObject>();
+            if (cleanableObject != null)
             {
-                Debug.Log($"Recogido: {cleanable.itemName}");
-                cleanable.OnCollected();
-                canGrab = false;
-                objectToGrab = null;
+                // Notificar al MinigameFourManager
+                MinigameFourManager.Instance.AddItemToInventory(cleanableObject.itemType);
+            
+                // Desactivar el objeto en lugar de destruirlo
+                objectToGrab.SetActive(false);
             }
-            else
-            {
-                Debug.Log("No es un objeto recolectable válido");
-            }
+        
+            objectToGrab = null;
         }
         else
         {
