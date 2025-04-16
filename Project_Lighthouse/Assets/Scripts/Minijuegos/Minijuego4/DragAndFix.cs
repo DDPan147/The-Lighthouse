@@ -47,8 +47,8 @@ public class MesaReparacion : MonoBehaviour
     private void Start()
     {
         // Buscar referencias si no están asignadas
-        if (playerMovement == null)
-            playerMovement = GameObject.Find("Player_Grand").GetComponent<PlayerMovementFP>();
+        if (playerMovement != null)
+            playerTransform = playerMovement.transform;
             
         if (playerCameraScript == null)
             playerCameraScript = GameObject.Find("Player_Grand").GetComponent<CameraController>();
@@ -83,13 +83,20 @@ public class MesaReparacion : MonoBehaviour
     
     private void Update()
     {
+        // Detectar pulsación de tecla E cuando el jugador está en rango
         // Comprobar si el jugador está en rango para interactuar
         CheckPlayerDistance();
+    
+        // Debug para comprobar distancia y estado
+        if (Input.GetKeyDown(interactionKey))
+        {
+            Debug.Log($"Tecla {interactionKey} presionada. PlayerInRange: {playerInRange}, hasCheckedInventory: {hasCheckedInventory}, repairingObject: {repairingObject}");
+        }
         
-        // Detectar pulsación de tecla E cuando el jugador está en rango
+        // Detectar pulsación de tecla cuando el jugador está en rango
         if (playerInRange && Input.GetKeyDown(interactionKey) && !hasCheckedInventory && !repairingObject)
         {
-            Debug.Log("Tecla E presionada cerca de la mesa");
+            Debug.Log("Activando modo reparación con tecla");
             AttemptToEnterRepairMode();
         }
         
@@ -110,22 +117,22 @@ public class MesaReparacion : MonoBehaviour
     
     private void CheckPlayerDistance()
     {
-        if (playerTransform == null) return;
-        
+        if (playerTransform == null) 
+        {
+            Debug.LogWarning("playerTransform es null en CheckPlayerDistance");
+            return;
+        }
+    
+        float distance = Vector3.Distance(transform.position, playerTransform.position);
         bool wasInRange = playerInRange;
-        playerInRange = Vector3.Distance(transform.position, playerTransform.position) <= interactionDistance;
-        
+        playerInRange = distance <= interactionDistance;
+    
+        Debug.Log($"Distancia al jugador: {distance}, En rango: {playerInRange}");
+    
         // Si el estado cambió, actualizar UI
         if (wasInRange != playerInRange)
         {
-            if (playerInRange)
-            {
-                ShowInteractionPrompt(true);
-            }
-            else
-            {
-                ShowInteractionPrompt(false);
-            }
+            ShowInteractionPrompt(playerInRange);
         }
     }
     
@@ -164,19 +171,20 @@ public class MesaReparacion : MonoBehaviour
     // El método OnMouseDown puede mantenerse como alternativa
     void OnMouseDown()
     {
-        Debug.Log("Mesa clickeada");
-        
-        // Si ya estamos en modo reparación y hacemos clic, avanzar en la reparación
-        if (isCamerainPosition && !repairingObject && hasCheckedInventory && actualLeg < legs.Length)
+        // Solo procesar clics si estamos en modo reparación
+        if (hasCheckedInventory && isCamerainPosition)
         {
-            Debug.Log("Moviendo pata " + actualLeg);
-            StartCoroutine(MoveLeg(legs[actualLeg], finalPositions[actualLeg]));
-            actualLeg++;
-        }
-        else if (actualLeg >= legs.Length && !repairingObject && hasCheckedInventory)
-        {
-            ChangeToPlayerCamera();
-            MinigameFourManager.Instance.OnTableFixed();
+            if (!repairingObject && actualLeg < legs.Length)
+            {
+                Debug.Log("Moviendo pata " + actualLeg);
+                StartCoroutine(MoveLeg(legs[actualLeg], finalPositions[actualLeg]));
+                actualLeg++;
+            }
+            else if (actualLeg >= legs.Length && !repairingObject)
+            {
+                ChangeToPlayerCamera();
+                MinigameFourManager.Instance.OnTableFixed();
+            }
         }
     }
 

@@ -31,13 +31,12 @@ public class ClockRepairMode : MonoBehaviour
         if (clockManager == null)
             clockManager = GetComponentInChildren<ClockManager>();
     }
-
-    private void Update()
+    
+    public void AutoEnterRepairMode()
     {
-        // Salir del modo reparación con Escape
-        if (isRepairing && Input.GetKeyDown(KeyCode.Escape))
+        if (!isRepairing)
         {
-            ExitRepairMode();
+            EnterRepairMode();
         }
     }
 

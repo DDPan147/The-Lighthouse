@@ -209,6 +209,34 @@ public class MinigameFourManager : MonoBehaviour
         Debug.Log("Mesa reparada completamente");
         RegisterTaskCompletion("Table");
         AdvanceToNextStage();
+    
+        // Añadir un delay corto y luego activar automáticamente el modo reparación del reloj
+        StartCoroutine(ActivateClockRepairAfterDelay(.1f));
+    }
+    private IEnumerator ActivateClockRepairAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+    
+        // Buscar el componente ClockRepairMode y activarlo
+        ClockRepairMode clockRepair = null;
+        if (clockRepairStation != null)
+        {
+            clockRepair = clockRepairStation.GetComponent<ClockRepairMode>();
+        }
+    
+        if (clockRepair == null)
+        {
+            clockRepair = FindObjectOfType<ClockRepairMode>();
+        }
+    
+        if (clockRepair != null)
+        {
+            clockRepair.AutoEnterRepairMode();
+        }
+        else
+        {
+            Debug.LogError("No se encontró el componente ClockRepairMode");
+        }
     }
     
     public void OnClockFixed()
@@ -242,30 +270,48 @@ public class MinigameFourManager : MonoBehaviour
     // Método para comprobar si tenemos suficientes piezas para una reparación específica
     public bool HasEnoughParts(ItemType type, int requiredAmount)
     {
-        if (playerInventory != null)
-        {
-            return playerInventory.HasEnoughItems(type, requiredAmount);
-        }
-        return false;
-        
-        // switch(type) {
-        //     case ItemType.TableLeg:
-        //         return tableLegsCollected >= requiredAmount;
-        //     case ItemType.ClockGear:
-        //         return clockGearsCollected >= requiredAmount;
-        //     case ItemType.DollPart:
-        //         return dollPartsCollected >= requiredAmount;
-        //     default:
-        //         return false;
+        // if (playerInventory != null)
+        // {
+        //     return playerInventory.HasEnoughItems(type, requiredAmount);
         // }
+        // return false;
+        
+        switch(type) {
+            case ItemType.TableLeg:
+                return tableLegsCollected >= requiredAmount;
+            case ItemType.ClockGear:
+                return clockGearsCollected >= requiredAmount;
+            case ItemType.DollPart:
+                return dollPartsCollected >= requiredAmount;
+            default:
+                return false;
+        }
     }
 
     private IEnumerator CompleteLevel()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(.3f);
 
         playerMovement.canMove = false;
 
+        // Show completion UI
+        if (completionPanel != null)
+            completionPanel.SetActive(true);
+
+        /*Alvaro*/ //Function to complete minigame and return to lobby
+        GameManager gm = FindAnyObjectByType<GameManager>();
+        if (gm != null)
+        {
+            gm.MinigameCompleted(3);
+        }
+        else
+        {
+            Debug.LogWarning("No se ha encontrado el Game Manager de la escena principal. No se va a volver al juego");
+        }
+    }
+
+    public void DebugCompleteLevel()
+    {
         // Show completion UI
         if (completionPanel != null)
             completionPanel.SetActive(true);
