@@ -55,13 +55,14 @@ public class GameManager : MonoBehaviour
 
     [Space(30)]
     [Header("DaySystem")]
-    public static int dayCount;
     public UnityEvent[] OnDayStart = new UnityEvent[4];
+    public static int dayCount;
 
 
 
     void Start()
     {
+        dayCount = 1;
         mainCamera = Camera.main;
         eventSystem = FindAnyObjectByType<EventSystem>().gameObject;
         audioListener = FindAnyObjectByType<AudioListener>();
@@ -112,6 +113,22 @@ public class GameManager : MonoBehaviour
 
         //Activar evento de minijuego completado
         OnMinigameEnded[index]?.Invoke();
+    }
+
+    public void CloseMinigame(int index)
+    {
+        //Activar Evento Final en escena (feedback visual de que el minijuego se ha completado
+
+        //Descargar (Unload) escena de minijuego
+        SceneManager.UnloadSceneAsync(minigames[index].sceneName);
+
+        //Activar todo en la escena principal de nuevo
+        minigameActive = false;
+
+        //Cambiar a la camara del juego
+        mainCamera.enabled = true;
+        eventSystem.SetActive(true);
+        audioListener.enabled = true;
     }
     #endregion
     #region MissionManager
@@ -206,6 +223,8 @@ public class GameManager : MonoBehaviour
         player.UntoggleAnimator();
         curtain.gameObject.GetComponent<Animator>().enabled = false;
         OnCutsceneEnded[index]?.Invoke();
+
+        Debug.Log("Ha acabado la cinemática " + index);
     }
     #endregion
     #region Day System
@@ -215,8 +234,21 @@ public class GameManager : MonoBehaviour
     }
     public void StartDay(int index)
     {
-        OnDayStart[index]?.Invoke();
+        Debug.Log("Voy a empezar el día " + (index - 1));
+        OnDayStart[index-1]?.Invoke();
+    }
+
+    public void EndDay()
+    {
+        //Launch DAY 2 Screen
+        //Make It Dissappear
+        dayCount++;
+        StartDay(dayCount);
     }
     #endregion
+    public void CreditsRoll()
+    {
+        //Your code here
+    }
 
 }
