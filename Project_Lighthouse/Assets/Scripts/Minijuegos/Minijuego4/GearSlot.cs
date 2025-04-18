@@ -13,6 +13,12 @@ public class GearSlot : MonoBehaviour
     {
         objectSlot = transform.GetChild(0).gameObject;
         posSlot = objectSlot.GetComponent<Transform>();
+        // Buscar el ClockManager en la jerarquía
+        clockManager = GetComponentInParent<ClockManager>();
+        if (clockManager == null)
+        {
+            clockManager = FindObjectOfType<ClockManager>();
+        }
     }
     
     private void OnTriggerEnter(Collider other)

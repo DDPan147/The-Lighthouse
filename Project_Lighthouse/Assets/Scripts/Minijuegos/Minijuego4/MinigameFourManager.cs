@@ -90,9 +90,10 @@ public class MinigameFourManager : MonoBehaviour
             playerCamera = FindObjectOfType<CameraController>();
 
         // Initialize repair status tracking
-        repairStatus.Add("Clock", false);
         repairStatus.Add("Table", false);
-        repairStatus.Add("Cleaning", false);
+        repairStatus.Add("Clock", false);
+        repairStatus.Add("Doll", false);
+        totalRepairTasks = 3; // Table, Clock, Doll
 
         // Setup UI
         UpdateUI();
@@ -207,9 +208,13 @@ public class MinigameFourManager : MonoBehaviour
     public void OnTableFixed()
     {
         Debug.Log("Mesa reparada completamente");
+        
         RegisterTaskCompletion("Table");
         AdvanceToNextStage();
-    
+        for (int i = 0; i < tableLegVisuals.Length; i++)
+        {
+            tableLegVisuals[i].SetActive(false);
+        }
         // Añadir un delay corto y luego activar automáticamente el modo reparación del reloj
         StartCoroutine(ActivateClockRepairAfterDelay(.1f));
     }
@@ -244,25 +249,99 @@ public class MinigameFourManager : MonoBehaviour
         
         RegisterTaskCompletion("Clock");
         Debug.Log("Reloj reparado completamente");
+        for (int i = 0; i < clockGearVisuals.Length; i++)
+        {
+            clockGearVisuals[i].SetActive(false);
+        }
         AdvanceToNextStage();
+        StartCoroutine(ActivateDollRepairAfterDelay(.1f));
+    }
+    
+    private IEnumerator ActivateDollRepairAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+    
+        // Buscar el componente DollRepair y activarlo
+        DollRepair dollRepair = null;
+        if (dollRepairStation != null)
+        {
+            dollRepair = dollRepairStation.GetComponent<DollRepair>();
+        }
+    
+        if (dollRepair == null)
+        {
+            dollRepair = FindObjectOfType<DollRepair>();
+        }
+    
+        if (dollRepair != null)
+        {
+            dollRepair.AutoEnterRepairMode();
+        }
+        else
+        {
+            Debug.LogError("No se encontró el componente DollRepair");
+        }
     }
     
     public void OnDollFixed()
     {
         Debug.Log("Muñeco reparado completamente");
+        RegisterTaskCompletion("Doll"); // Añadir esta línea para registrar la tarea
+    
+        // Ocultar visuales de piezas de muñeco
+        for (int i = 0; i < dollPartVisuals.Length; i++)
+        {
+            dollPartVisuals[i].SetActive(false);
+        }
+    
         AdvanceToNextStage();
+    
+        // Verificar explícitamente si se han completado todas las tareas
+        CheckLevelCompletion();
     }
 
     private void UpdateUI()
     {
         if (progressText != null)
             progressText.text = $"Progress: {completedTasks}/{totalRepairTasks}";
+    
+        // Actualizar el texto de objetivo según la etapa actual
+        if (objectiveText != null)
+        {
+            switch(currentStage)
+            {
+                case RepairStage.CollectingItems:
+                    objectiveText.text = "Recolecta todas las piezas necesarias";
+                    break;
+                case RepairStage.RepairingTable:
+                    objectiveText.text = "Repara la mesa";
+                    break;
+                case RepairStage.RepairingClock:
+                    objectiveText.text = "Repara el reloj";
+                    break;
+                case RepairStage.RepairingDoll:
+                    objectiveText.text = "Repara la muñeca";
+                    break;
+                case RepairStage.Completed:
+                    objectiveText.text = "¡Minijuego completado!";
+                    break;
+            }
+        }
     }
 
     private void CheckLevelCompletion()
     {
-        if (completedTasks >= totalRepairTasks)
+        Debug.Log($"Verificando completado del nivel: {completedTasks}/{totalRepairTasks} tareas completadas");
+    
+        // Imprimir el estado de cada tarea para depuración
+        foreach (var task in repairStatus)
         {
+            Debug.Log($"Tarea '{task.Key}': {(task.Value ? "Completada" : "Pendiente")}");
+        }
+    
+        if (completedTasks >= totalRepairTasks || currentStage == RepairStage.Completed)
+        {
+            Debug.Log("¡Nivel completado! Iniciando secuencia de finalización...");
             StartCoroutine(CompleteLevel());
         }
     }
