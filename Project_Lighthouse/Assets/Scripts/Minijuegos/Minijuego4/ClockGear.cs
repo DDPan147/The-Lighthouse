@@ -29,6 +29,7 @@ public class ClockGear : MonoBehaviour
     [SerializeField] private float dragSpeed = 10f;
     [SerializeField] private float pickupScale = 1.1f;
     private Vector3 originalScale;
+    [SerializeField] private ParticleSystem sparkEffect;
     
     [Header("Animación")]
     [SerializeField] private float snapDuration = 0.3f;
@@ -115,6 +116,7 @@ public class ClockGear : MonoBehaviour
             outlineMaterial.SetColor("_Color", Color.green);
             ClockManager.Instance.CheckCompletion();
             StartGearRotation();
+            PlaySparkEffect(slotPos.position);
         }
         else
         {
@@ -125,11 +127,18 @@ public class ClockGear : MonoBehaviour
 
     private void StartGearRotation()
     {
-        // Determinar la dirección de rotación basada en la posición del engranaje
-        float rotationSpeed = (correctSlotPosition % 2 == 0) ? 90f : -90f;
-        transform.DORotate(new Vector3(0, 0, 360f), 3f, RotateMode.FastBeyond360)
+        float rotationDirection = (correctSlotPosition % 2 == 0) ? 1f : -1f;
+    
+        // Cancelar cualquier rotación anterior
+        transform.DOKill();
+    
+        // Rotar 360 grados en la dirección determinada durante 2 segundos
+        transform.DORotate(new Vector3(0, 0, 360f * rotationDirection), 2f, RotateMode.LocalAxisAdd)
             .SetEase(Ease.Linear)
-            .SetLoops(-1);
+            .OnComplete(() => {
+                // Opcional: Hacer algo cuando termine la rotación
+                Debug.Log($"Engranaje {gearID} completó su rotación");
+            });
     }
 
     private void AnimateToPosition(Vector3 targetPosition)
@@ -161,6 +170,24 @@ public class ClockGear : MonoBehaviour
             SetOutlineVisibility(false);
             currentSlot = null;
             slotPos = null;
+        }
+    }
+    
+    private void PlaySparkEffect(Vector3 position)
+    {
+        if (sparkEffect != null)
+        {
+            // Instanciar el efecto en la posición correcta
+            ParticleSystem sparkInstance = Instantiate(sparkEffect, position, Quaternion.identity);
+            
+            // Orientar las partículas hacia arriba o en la dirección deseada
+            sparkInstance.transform.rotation = Quaternion.Euler(-90, 0, 0); // Ajusta según la orientación necesaria
+            
+            // Reproducir el efecto
+            sparkInstance.Play();
+            
+            // Destruir el sistema de partículas después de que termine
+            Destroy(sparkInstance.gameObject, sparkInstance.main.duration + 0.5f);
         }
     }
 }
