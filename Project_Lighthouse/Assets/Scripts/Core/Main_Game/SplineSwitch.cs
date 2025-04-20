@@ -6,6 +6,7 @@ public class SplineSwitch : MonoBehaviour
 {
     public SplineContainer[] splines = new SplineContainer[2];
 
+    public bool isOpen = true;
     [Tooltip("Does this spline switch work automatically, or a button has to be pressed? (In is always 0 to 1)")]
     public bool isButtonIn;
     [Tooltip("Does this spline switch work automatically, or a button has to be pressed? (Out is always 1 to 0)")]
@@ -36,6 +37,12 @@ public class SplineSwitch : MonoBehaviour
     public void SwitchSpline()
     {
         //IN
+        if (!isOpen)
+        {
+            //Some effect for not opened door
+            return;
+        }
+
         if (CheckInOut())
         {
             if (isButtonIn && !Input.GetKeyDown(KeyCode.Z))
@@ -117,5 +124,10 @@ public class SplineSwitch : MonoBehaviour
         }
 
         return accumulatedLength / totalLength; // Proporción de la spline recorrida hasta el nodo
+    }
+
+    public void UnlockSplineSwitch(bool value)
+    {
+        isOpen = value;
     }
 }
