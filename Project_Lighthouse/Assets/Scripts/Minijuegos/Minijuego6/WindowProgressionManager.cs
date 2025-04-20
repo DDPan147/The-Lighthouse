@@ -9,8 +9,10 @@ public class WindowProgressionManager : MonoBehaviour
     {
         public GameObject windowContainer;
         public DragDrop_Slot[] slots;
+        public DragDrop_Item[] glassFragments;
         public CanvasGroup fadeGroup;
         public bool isCompleted = false;
+        public WindowCompletionEffect completionEffect;
     }
 
     [Header("Configuración de Ventanas")]
@@ -97,10 +99,27 @@ public class WindowProgressionManager : MonoBehaviour
             currentWindow.fadeGroup.interactable = false;
             currentWindow.fadeGroup.blocksRaycasts = false;
         }
+        if (currentWindow.completionEffect != null)
+        {
+            currentWindow.completionEffect.PlayCompletionEffect();
+            // Esperar a que termine el efecto antes de continuar
+            yield return new WaitForSeconds(currentWindow.completionEffect.sweepDuration);
+        }
 
         yield return new WaitForSeconds(delayBetweenWindows);
 
         currentWindowIndex++;
+        if (currentWindow.glassFragments != null && currentWindow.glassFragments.Length > 0)
+        {
+            foreach (var fragment in currentWindow.glassFragments)
+            {
+                if (fragment != null)
+                {
+                    fragment.gameObject.SetActive(false);
+                }
+            }
+        }
+        currentWindow.windowContainer.SetActive(false);
 
         if (currentWindowIndex < windowSections.Length)
         {
