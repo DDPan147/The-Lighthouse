@@ -47,6 +47,7 @@ public class MinigameSevenManager : MonoBehaviour
     [Header("UI References")]
     [SerializeField] private GameObject gameUI;
     [SerializeField] private GameObject endGameUI;
+    [SerializeField] private MinigameSevenUI _minigameSevenUIgameUI;
 
     #endregion
 
@@ -54,6 +55,9 @@ public class MinigameSevenManager : MonoBehaviour
     private void Start()
     {
         SetupInitialState();
+        
+        if (gameUI == null)
+            _minigameSevenUIgameUI = FindObjectOfType<MinigameSevenUI>();
     }
     
     public void StartMinigame()
@@ -69,6 +73,20 @@ public class MinigameSevenManager : MonoBehaviour
         isGameActive = false;
         gameUI.SetActive(false);
         endGameUI.SetActive(true);
+        if (gameUI != null) 
+            gameUI.SetActive(false);
+        if (endGameUI != null) 
+            endGameUI.SetActive(true);
+    
+        bool isPositiveEnding = discardedImportantObjects > savedImportantObjects;
+        if (_minigameSevenUIgameUI != null)
+        {
+            _minigameSevenUIgameUI.ShowEndGameUI();
+        }
+        else
+        {
+            Debug.LogWarning("minigameSevenUI no está asignado en MinigameSevenManager");
+        }
         CheckEndingCondition();
     }
 
@@ -170,16 +188,16 @@ public class MinigameSevenManager : MonoBehaviour
             Debug.Log("Final negativo: El anciano aún no puede superar la pérdida");
         }
 
-        /*Alvaro*/ //Function to complete minigame and return to lobby
-        GameManager gm = FindAnyObjectByType<GameManager>();
-        if (gm != null)
-        {
-            gm.MinigameCompleted(6);
-        }
-        else
-        {
-            Debug.LogWarning("No se ha encontrado el Game Manager de la escena principal. No se va a volver al juego");
-        }
+        // /*Alvaro*/ //Function to complete minigame and return to lobby
+        // GameManager gm = FindAnyObjectByType<GameManager>();
+        // if (gm != null)
+        // {
+        //     gm.MinigameCompleted(6);
+        // }
+        // else
+        // {
+        //     Debug.LogWarning("No se ha encontrado el Game Manager de la escena principal. No se va a volver al juego");
+        // }
     }
     #endregion
 
@@ -238,5 +256,8 @@ public class MinigameSevenManager : MonoBehaviour
     public int GetProcessedObjects() => processedObjects;
     public int GetRemainingObjects() => totalObjects - processedObjects;
     public GameObject GetLastObject() => lastObject;
+    
+    public int GetSavedImportantObjects() => savedImportantObjects;
+    public int GetDiscardedImportantObjects() => discardedImportantObjects;
     #endregion
 }

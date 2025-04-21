@@ -23,12 +23,18 @@ public class PlayerGrabObjects : MonoBehaviour
     
     [Header("Input Control")]
     private bool canSave = true; // Para evitar múltiples guardados
+    
+    [Header("UI")]
+    [SerializeField] private MinigameSevenUI gameUI;
     private void Start()
     {
         playerMovement = GetComponent<Player_Movement_Minigame_7>();
         OnTriggerEnter(detectionCollider);
         if (keyPromptUI != null)
             keyPromptUI.SetActive(false);
+        
+        if (gameUI == null)
+            gameUI = FindObjectOfType<MinigameSevenUI>();
         
         UpdatePromptText("");
     }
@@ -38,6 +44,12 @@ public class PlayerGrabObjects : MonoBehaviour
         if (_playerText != null)
         {
             _playerText.text = message;
+        }
+        
+        // Actualizar también en la UI
+        if (gameUI != null)
+        {
+            gameUI.UpdateActionPrompt(message);
         }
     }
     //Rotamos el collider en caso de que el jugador este moviendose por el mapa
@@ -92,6 +104,11 @@ public class PlayerGrabObjects : MonoBehaviour
         if (typeOb != null)
         {
             _objectType = typeOb;
+            
+            if (gameUI != null)
+            {
+                gameUI.ShowObjectInfo(typeOb);
+            }
         }
         CheckTag(other);
     }
@@ -101,6 +118,10 @@ public class PlayerGrabObjects : MonoBehaviour
     {
         if (other.CompareTag("Objeto"))
         {
+            if (gameUI != null)
+            {
+                gameUI.HideObjectInfo();
+            }
             canGrab = false;
             objectToGrab = null;
             canSave = true;
@@ -159,7 +180,28 @@ public class PlayerGrabObjects : MonoBehaviour
         if (objectToGrab != null && _objectType != null)
         {
             bool isImportant = _objectType.isImportantObject;
-            MinigameSevenManager.Instance.TrackObjectProcessed(isImportant, false);
+        
+            if (MinigameSevenManager.Instance != null)
+            {
+                MinigameSevenManager.Instance.TrackObjectProcessed(isImportant, false);
+            }
+            else
+            {
+                Debug.LogError("MinigameSevenManager.Instance es null en ThrowObject()");
+            }
+        
+            if (trashBinScript != null)
+            {
+                trashBinScript.PlayEffects();
+            }
+        
+            if (gameUI != null)
+            {
+                gameUI.UpdateObjectCounters();
+                gameUI.UpdateEmotionalState();
+                gameUI.HideObjectInfo();
+            }
+        
             objectGrabbed = false;
             Destroy(objectToGrab);
             objectToGrab = null;
@@ -174,6 +216,14 @@ public class PlayerGrabObjects : MonoBehaviour
         {
             bool isImportant = _objectType.isImportantObject;
             MinigameSevenManager.Instance.TrackObjectProcessed(isImportant, true);
+            
+            // Actualizar contadores en la UI
+            if (gameUI != null)
+            {
+                gameUI.UpdateObjectCounters();
+                gameUI.UpdateEmotionalState();
+                gameUI.HideObjectInfo();
+            }
             objectGrabbed = false;
             
             Destroy(objectToGrab);

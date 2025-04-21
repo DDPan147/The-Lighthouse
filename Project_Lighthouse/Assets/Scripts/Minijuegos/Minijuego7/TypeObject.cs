@@ -10,4 +10,6 @@ public class TypeObject : MonoBehaviour
 
     [SerializeField] private string objectDescription;
     [SerializeField] private float emotionalWeight;
+    
+    public string GetObjectDescription() => objectDescription;
 }
