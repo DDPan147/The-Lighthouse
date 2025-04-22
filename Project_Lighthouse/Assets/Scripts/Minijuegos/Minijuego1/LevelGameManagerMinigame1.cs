@@ -15,6 +15,7 @@ public class LevelGameManagerMinigame1 : MonoBehaviour
     [SerializeField] private int[] itemTaskIndices; // Índice de tarea para cada item
     [SerializeField] private int[] slotTaskIndices; // Índice de tarea para cada slot
     public GameObject fadeOutEffect;
+    public GameObject fadeOutEffectChangeCamera;
     public Button checkButton;
     
     [Header("Configuración de Cámaras")]
@@ -175,12 +176,12 @@ public class LevelGameManagerMinigame1 : MonoBehaviour
                 Debug.Log("Iniciando transición a la siguiente tarea");
                 
                 // Activar el efecto de fade out
-                if (fadeOutEffect != null)
+                if (fadeOutEffectChangeCamera != null)
                 {
-                    fadeOutEffect.SetActive(true);
+                    fadeOutEffectChangeCamera.SetActive(true);
                     
                     // Asegurarse de que el efecto de fade se inicie
-                    GDTFadeEffect fadeEffect = fadeOutEffect.GetComponent<GDTFadeEffect>();
+                    GDTFadeEffect fadeEffect = fadeOutEffectChangeCamera.GetComponent<GDTFadeEffect>();
                     if (fadeEffect != null)
                     {
                         fadeEffect.StartEffect();
@@ -215,9 +216,9 @@ public class LevelGameManagerMinigame1 : MonoBehaviour
         UpdateActiveItemsAndSlots();
         
         // Desactivar el efecto de fade out
-        if (fadeOutEffect != null)
+        if (fadeOutEffectChangeCamera != null)
         {
-            fadeOutEffect.SetActive(false);
+            fadeOutEffectChangeCamera.SetActive(false);
             Debug.Log("Efecto de fade desactivado");
         }
     }
@@ -233,11 +234,22 @@ public class LevelGameManagerMinigame1 : MonoBehaviour
         }
     }
 
-    private void CompleteMinigame()
+    public void CompleteMinigame()
     {
         if (isMinigameComplete) return;
         isMinigameComplete = true;
         onMinigameComplete?.Invoke();
+        
+        // /*Alvaro*/ //Function to complete minigame and return to lobby
+        GameManager gm = FindAnyObjectByType<GameManager>();
+        if (gm != null)
+        {
+            gm.MinigameCompleted(1);
+        }
+        else
+        {
+            Debug.LogWarning("No se ha encontrado el Game Manager de la escena principal. No se va a volver al juego");
+        }
     }
 
     public void ResetMinigame()
