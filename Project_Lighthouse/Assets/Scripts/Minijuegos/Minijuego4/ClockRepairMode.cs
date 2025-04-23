@@ -98,4 +98,5 @@ public class ClockRepairMode : MonoBehaviour
         yield return new WaitForSeconds(1f); // Espera para ver la animación
         ExitRepairMode();
     }
+    
 }

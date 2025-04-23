@@ -40,7 +40,8 @@ public class MinigameFourManager : MonoBehaviour
     public GameObject dollRepairStation;
     
     [Header("UI References")]
-    public TextMeshProUGUI inventoryText; // Para mostrar el inventario actual
+    public TextMeshProUGUI inventoryText; 
+    public GameObject progressTextContainer;// Para mostrar el inventario actual
 
     [Header("Game State")]
     [SerializeField] private bool gameActive = false;
@@ -68,6 +69,9 @@ public class MinigameFourManager : MonoBehaviour
     
     private void Start()
     {
+        completedTasks = 0;
+        gameActive = true;
+        
         if (tableRepairStation) tableRepairStation.SetActive(false);
         if (clockRepairStation) clockRepairStation.SetActive(false);
         if (dollRepairStation) dollRepairStation.SetActive(false);
@@ -88,7 +92,11 @@ public class MinigameFourManager : MonoBehaviour
 
         if (playerCamera == null)
             playerCamera = FindObjectOfType<CameraController>();
-
+        
+        if (progressTextContainer != null)
+        {
+            progressTextContainer.SetActive(false);
+        }
         // Initialize repair status tracking
         repairStatus.Add("Table", false);
         repairStatus.Add("Clock", false);
@@ -97,9 +105,6 @@ public class MinigameFourManager : MonoBehaviour
 
         // Setup UI
         UpdateUI();
-
-        // Start game
-        gameActive = true;
     }
 
     public void RegisterTaskCompletion(string taskName)
@@ -167,20 +172,35 @@ public class MinigameFourManager : MonoBehaviour
             case RepairStage.CollectingItems:
                 currentStage = RepairStage.RepairingTable;
                 EnableTableRepair();
+                // Mostrar el texto de progreso al entrar en modo reparación
+                if (progressTextContainer != null)
+                    progressTextContainer.SetActive(true);
                 break;
             case RepairStage.RepairingTable:
                 currentStage = RepairStage.RepairingClock;
                 EnableClockRepair();
+                // Asegurar que sigue visible
+                if (progressTextContainer != null)
+                    progressTextContainer.SetActive(true);
                 break;
             case RepairStage.RepairingClock:
                 currentStage = RepairStage.RepairingDoll;
                 EnableDollRepair();
+                // Asegurar que sigue visible
+                if (progressTextContainer != null)
+                    progressTextContainer.SetActive(true);
                 break;
             case RepairStage.RepairingDoll:
                 currentStage = RepairStage.Completed;
+                // Ocultar el texto de progreso al completar
+                if (progressTextContainer != null)
+                    progressTextContainer.SetActive(false);
                 CheckLevelCompletion();
                 break;
         }
+    
+        // Actualizar UI después de cambiar el estado
+        UpdateUI();
     }
     
     // Métodos para activar cada estación de reparación
@@ -373,6 +393,10 @@ public class MinigameFourManager : MonoBehaviour
 
         playerMovement.canMove = false;
 
+        // Ocultar texto de progreso
+        if (progressTextContainer != null)
+            progressTextContainer.SetActive(false);
+
         // Show completion UI
         if (completionPanel != null)
             completionPanel.SetActive(true);
@@ -391,6 +415,10 @@ public class MinigameFourManager : MonoBehaviour
 
     public void DebugCompleteLevel()
     {
+        // Ocultar texto de progreso
+        if (progressTextContainer != null)
+            progressTextContainer.SetActive(false);
+
         // Show completion UI
         if (completionPanel != null)
             completionPanel.SetActive(true);
