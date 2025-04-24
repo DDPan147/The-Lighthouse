@@ -12,6 +12,14 @@ public class CutsceneTest : MonoBehaviour
     {
         if(cutscene != null)
         {
+            if(Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                cutscene.cutsceneIndex--;
+            }
+            if(Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                cutscene.cutsceneIndex++;
+            }
             if(Input.GetKeyDown(KeyCode.C))
             {
                 cutscene.TriggerCutscene();
