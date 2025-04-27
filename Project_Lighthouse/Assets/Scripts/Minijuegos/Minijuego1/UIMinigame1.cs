@@ -16,6 +16,10 @@ public class UIMinigame1 : MonoBehaviour
     [SerializeField] private Slider progressBar;
     [SerializeField] private TextMeshProUGUI taskHeader;
     
+    [Header("Configuración de Finalización")]
+    [SerializeField] private int totalItemsToComplete = 12; // Número total de items para completar el minijuego
+    [SerializeField] private bool enableAutoCompletion = true;
+    
     [Header("Instrucciones")]
     [SerializeField] private TextMeshProUGUI instructionsText;
     [SerializeField] private string[] taskInstructions; // Instrucciones para cada tarea
@@ -58,6 +62,27 @@ public class UIMinigame1 : MonoBehaviour
         
         // Para pruebas - mostrar panel de instrucciones al inicio
         ShowInitialPanels();
+    }
+    private void Update()
+    {
+        // Verificar si se ha alcanzado el número total de items colocados
+        if (enableAutoCompletion && gameManager != null && !gameManager.IsMinigameComplete())
+        {
+            int correctPlacements = gameManager.GetCorrectPlacements();
+        
+            // Mostrar información de depuración
+            if (correctPlacements > 0)
+            {
+                Debug.Log($"[UI] Items colocados correctamente: {correctPlacements}/{totalItemsToComplete}");
+            }
+        
+            // Si se alcanza el límite, forzar la finalización
+            if (correctPlacements >= totalItemsToComplete)
+            {
+                Debug.Log($"[UI] ¡Se alcanzó el límite de {totalItemsToComplete} items! Forzando finalización del minijuego.");
+                ForceCompleteMinigame();
+            }
+        }
     }
     
     // Nueva función para mostrar paneles iniciales
@@ -288,6 +313,39 @@ public class UIMinigame1 : MonoBehaviour
                 taskIndex++;
             }
         }
+    }
+    
+    public void ForceCompleteMinigame()
+    {
+        if (gameManager != null && !gameManager.IsMinigameComplete())
+        {
+            Debug.Log("[UI] Forzando finalización del minijuego desde la UI");
+        
+            // Mostrar panel de finalización
+            if (completionPanel != null)
+            {
+                completionPanel.SetActive(true);
+            
+                if (completionTitle != null)
+                    completionTitle.text = "¡Minijuego Completado!";
+                
+                if (completionMessage != null)
+                    completionMessage.text = $"Has completado todas las tareas con éxito.\n" +
+                                             $"Objetos colocados: {gameManager.GetCorrectPlacements()} / {gameManager.GetTotalFragments()}";
+            }
+        
+            // Llamar al método de finalización en el manager
+            StartCoroutine(DelayedForceComplete());
+        }
+    }
+
+    private IEnumerator DelayedForceComplete()
+    {
+        // Esperar un momento para que el jugador vea el panel de finalización
+        yield return new WaitForSeconds(1.5f);
+    
+        // Llamar al método de finalización en el manager
+        gameManager.CompleteMinigame();
     }
     
     public void ShowHelpPanel()

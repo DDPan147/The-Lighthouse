@@ -140,64 +140,92 @@ public class LevelGameManagerMinigame1 : MonoBehaviour
     }
 
     private void CheckTaskCompletion()
+{
+    Debug.Log($"Verificando tarea {currentTaskIndex}...");
+    
+    // Verificar si todos los slots de la tarea actual están completos
+    bool taskComplete = true;
+    
+    // Recorrer todos los slots
+    for (int i = 0; i < itemSlots.Length; i++)
     {
-        Debug.Log($"Verificando tarea {currentTaskIndex}...");
-        
-        // Verificar si todos los slots de la tarea actual están completos
-        bool taskComplete = true;
-        
-        // Recorrer todos los slots
-        for (int i = 0; i < itemSlots.Length; i++)
+        // Verificar solo los slots de la tarea actual
+        if (slotTaskIndices[i] == currentTaskIndex)
         {
-            // Verificar solo los slots de la tarea actual
-            if (slotTaskIndices[i] == currentTaskIndex)
-            {
-                int slotPosition = itemSlots[i].slotPosition;
-                bool slotComplete = slotCompletionStatus.ContainsKey(slotPosition) && slotCompletionStatus[slotPosition];
-                Debug.Log($"Slot {slotPosition} (tarea {currentTaskIndex}), completado: {slotComplete}");
-                
-                if (!slotComplete)
-                {
-                    taskComplete = false;
-                    break;
-                }
-            }
-        }
-        
-        Debug.Log($"Tarea {currentTaskIndex} completa: {taskComplete}");
-        
-        if (taskComplete)
-        {
-            Debug.Log($"¡Tarea {currentTaskIndex} completada!");
-            onTaskComplete?.Invoke();
+            int slotPosition = itemSlots[i].slotPosition;
+            bool slotComplete = slotCompletionStatus.ContainsKey(slotPosition) && slotCompletionStatus[slotPosition];
+            Debug.Log($"Slot {slotPosition} (tarea {currentTaskIndex}), completado: {slotComplete}");
             
-            if (currentTaskIndex < taskCameras.Length - 1)
+            if (!slotComplete)
             {
-                Debug.Log("Iniciando transición a la siguiente tarea");
-                
-                // Activar el efecto de fade out
-                if (fadeOutEffectChangeCamera != null)
-                {
-                    fadeOutEffectChangeCamera.SetActive(true);
-                    
-                    // Asegurarse de que el efecto de fade se inicie
-                    GDTFadeEffect fadeEffect = fadeOutEffectChangeCamera.GetComponent<GDTFadeEffect>();
-                    if (fadeEffect != null)
-                    {
-                        fadeEffect.StartEffect();
-                        Debug.Log("Efecto de fade iniciado manualmente");
-                    }
-                    
-                    StartCoroutine(TransitionToNextTask());
-                }
-            }
-            else
-            {
-                Debug.Log("Todas las tareas completadas, finalizando minijuego");
-                CompleteMinigame();
+                taskComplete = false;
+                break;
             }
         }
     }
+    
+    Debug.Log($"Tarea {currentTaskIndex} completa: {taskComplete}");
+    
+    if (taskComplete)
+    {
+        Debug.Log($"¡Tarea {currentTaskIndex} completada!");
+        onTaskComplete?.Invoke();
+        
+        // Verificar si es la última tarea
+        if (currentTaskIndex >= taskCameras.Length - 1)
+        {
+            Debug.Log("Todas las tareas completadas, finalizando minijuego");
+            // Añadir un pequeño retraso antes de completar el minijuego
+            StartCoroutine(DelayedCompleteMinigame());
+        }
+        else
+        {
+            Debug.Log("Iniciando transición a la siguiente tarea");
+            
+            // Activar el efecto de fade out
+            if (fadeOutEffectChangeCamera != null)
+            {
+                fadeOutEffectChangeCamera.SetActive(true);
+                
+                // Asegurarse de que el efecto de fade se inicie
+                GDTFadeEffect fadeEffect = fadeOutEffectChangeCamera.GetComponent<GDTFadeEffect>();
+                if (fadeEffect != null)
+                {
+                    fadeEffect.StartEffect();
+                    Debug.Log("Efecto de fade iniciado manualmente");
+                }
+                
+                StartCoroutine(TransitionToNextTask());
+            }
+        }
+    }
+}
+
+// Añadir este nuevo método para retrasar ligeramente la finalización
+private IEnumerator DelayedCompleteMinigame()
+{
+    // Esperar un momento para que el jugador vea que colocó correctamente el último objeto
+    yield return new WaitForSeconds(1.5f);
+    
+    // Activar efecto de fade out final si existe
+    if (fadeOutEffect != null)
+    {
+        fadeOutEffect.SetActive(true);
+        
+        // Asegurarse de que el efecto de fade se inicie
+        GDTFadeEffect fadeEffect = fadeOutEffect.GetComponent<GDTFadeEffect>();
+        if (fadeEffect != null)
+        {
+            fadeEffect.StartEffect();
+        }
+        
+        // Esperar a que termine el fade
+        yield return new WaitForSeconds(1f);
+    }
+    
+    // Completar el minijuego
+    CompleteMinigame();
+}
 
     private IEnumerator TransitionToNextTask()
     {
@@ -236,14 +264,28 @@ public class LevelGameManagerMinigame1 : MonoBehaviour
 
     public void CompleteMinigame()
     {
-        if (isMinigameComplete) return;
+        Debug.Log("Ejecutando CompleteMinigame()");
+    
+        // Evitar llamadas múltiples
+        if (isMinigameComplete)
+        {
+            Debug.Log("El minijuego ya está marcado como completado. Ignorando llamada.");
+            return;
+        }
+    
+        // Marcar como completado
         isMinigameComplete = true;
+        Debug.Log("Minijuego marcado como completado");
+    
+        // Invocar evento de finalización
         onMinigameComplete?.Invoke();
-        
-        // /*Alvaro*/ //Function to complete minigame and return to lobby
+        Debug.Log("Evento onMinigameComplete invocado");
+    
+        // Llamar al GameManager para volver al lobby
         GameManager gm = FindAnyObjectByType<GameManager>();
         if (gm != null)
         {
+            Debug.Log("Llamando a GameManager.MinigameCompleted(1)");
             gm.MinigameCompleted(1);
         }
         else

@@ -476,7 +476,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentMinigame: 0
   type: 0
-  correctSlotPosition: 13
+  correctSlotPosition: 24
   detectionRadius: 1
   outlineMaterial: {fileID: 0}
   glowMaterial: {fileID: 0}
@@ -1841,6 +1841,8 @@ MonoBehaviour:
   progressText: {fileID: 1227520346}
   progressBar: {fileID: 1436006984}
   taskHeader: {fileID: 1390297837}
+  totalItemsToComplete: 12
+  enableAutoCompletion: 1
   instructionsText: {fileID: 1340368479}
   taskInstructions:
   - Ordena los cubiertos
@@ -2192,7 +2194,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c338f39ed367bc14dae3ed558d665c81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slotPosition: 13
+  slotPosition: 25
   posSlot: {fileID: 0}
   taskIndex: 2
 --- !u!65 &375889039
@@ -2225,7 +2227,7 @@ Transform:
   m_GameObject: {fileID: 375889037}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.1384, y: 0.0742, z: -0.1583}
+  m_LocalPosition: {x: 0.1384, y: 0.0742, z: -0.1259}
   m_LocalScale: {x: 0.043504633, y: 0.017976101, z: 0.1364454}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2384,7 +2386,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentMinigame: 0
   type: 0
-  correctSlotPosition: 8
+  correctSlotPosition: 21
   detectionRadius: 1
   outlineMaterial: {fileID: 0}
   glowMaterial: {fileID: 0}
@@ -2462,7 +2464,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c338f39ed367bc14dae3ed558d665c81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slotPosition: 6
+  slotPosition: 22
   posSlot: {fileID: 0}
   taskIndex: 2
 --- !u!65 &398897041
@@ -2688,7 +2690,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c338f39ed367bc14dae3ed558d665c81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slotPosition: 7
+  slotPosition: 23
   posSlot: {fileID: 0}
   taskIndex: 2
 --- !u!65 &412298609
@@ -4311,7 +4313,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c338f39ed367bc14dae3ed558d665c81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slotPosition: 5
+  slotPosition: 21
   posSlot: {fileID: 0}
   taskIndex: 2
 --- !u!65 &879084520
@@ -4557,7 +4559,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentMinigame: 0
   type: 0
-  correctSlotPosition: 5
+  correctSlotPosition: 18
   detectionRadius: 1
   outlineMaterial: {fileID: 0}
   glowMaterial: {fileID: 0}
@@ -4689,7 +4691,7 @@ Transform:
   m_GameObject: {fileID: 899028768}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 30.6, y: -21.3, z: 75.7}
+  m_LocalPosition: {x: 30.6, y: -21.3, z: 42.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4980,7 +4982,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentMinigame: 0
   type: 0
-  correctSlotPosition: 1
+  correctSlotPosition: 19
   detectionRadius: 1
   outlineMaterial: {fileID: 0}
   glowMaterial: {fileID: 0}
@@ -5133,7 +5135,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c338f39ed367bc14dae3ed558d665c81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slotPosition: 3
+  slotPosition: 19
   posSlot: {fileID: 0}
   taskIndex: 2
 --- !u!65 &970142785
@@ -5345,7 +5347,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentMinigame: 0
   type: 0
-  correctSlotPosition: 6
+  correctSlotPosition: 20
   detectionRadius: 1
   outlineMaterial: {fileID: 0}
   glowMaterial: {fileID: 0}
@@ -5909,7 +5911,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c338f39ed367bc14dae3ed558d665c81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slotPosition: 8
+  slotPosition: 24
   posSlot: {fileID: 0}
   taskIndex: 2
 --- !u!65 &1089930012
@@ -6049,7 +6051,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c338f39ed367bc14dae3ed558d665c81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slotPosition: 1
+  slotPosition: 17
   posSlot: {fileID: 0}
   taskIndex: 2
 --- !u!65 &1182979869
@@ -6268,7 +6270,7 @@ Transform:
   m_GameObject: {fileID: 1214597489}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.39}
+  m_LocalPosition: {x: -0.243, y: 0.56, z: 0.598}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7038,7 +7040,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1390297836
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7600,7 +7602,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentMinigame: 0
   type: 0
-  correctSlotPosition: 2
+  correctSlotPosition: 22
   detectionRadius: 1
   outlineMaterial: {fileID: 0}
   glowMaterial: {fileID: 0}
@@ -7830,7 +7832,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c338f39ed367bc14dae3ed558d665c81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slotPosition: 2
+  slotPosition: 18
   posSlot: {fileID: 0}
   taskIndex: 2
 --- !u!65 &1490542186
@@ -9016,7 +9018,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentMinigame: 0
   type: 0
-  correctSlotPosition: 4
+  correctSlotPosition: 23
   detectionRadius: 1
   outlineMaterial: {fileID: 0}
   glowMaterial: {fileID: 0}
@@ -10266,7 +10268,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c338f39ed367bc14dae3ed558d665c81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slotPosition: 4
+  slotPosition: 20
   posSlot: {fileID: 0}
   taskIndex: 2
 --- !u!65 &1970989255
