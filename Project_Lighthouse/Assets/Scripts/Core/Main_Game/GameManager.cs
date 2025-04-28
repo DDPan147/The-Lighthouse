@@ -12,6 +12,9 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+    public bool minigameActiveTest;
+    public bool cutsceneActiveTest;
+
     [Header("MinigameManager")]
     public MinigameData[] minigames;
 
@@ -21,6 +24,7 @@ public class GameManager : MonoBehaviour
     private AudioListener audioListener;
 
     public static bool minigameActive;
+    
 
     [Space(30)]
     [Header("MissionManager")]
@@ -43,6 +47,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private PlayableAsset[] cutscenes;
 
     public static bool cutsceneActive;
+    
 
     /*[System.Serializable]
     public struct CutsceneSetup
@@ -71,7 +76,8 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        
+        minigameActiveTest = minigameActive;
+        cutsceneActiveTest = cutsceneActive;
     }
     #region MinigameManager
     public void LoadMinigame(int index)

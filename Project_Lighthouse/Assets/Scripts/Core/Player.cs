@@ -224,13 +224,13 @@ public class Player : MonoBehaviour
         //Play Transition Anim
     }
 
-    /*public void RevertTransition()
+    public void RevertTransition()
     {
         moveState = MoveStates.Transition;
         float duration = transitionSpline.GetLength() * transitionSpeed;
         DOTween.To(() => transitionPercentage, x => transitionPercentage = x, 0, duration).OnComplete(() => EndTransition());//OnComplete(() => completeAction());
         //Play Transition Anim
-    }*/
+    }
 
     public void EndTransition()
     {
