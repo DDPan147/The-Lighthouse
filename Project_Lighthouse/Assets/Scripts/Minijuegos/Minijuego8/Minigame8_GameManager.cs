@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
 using DG.Tweening;
 using System.Collections;
 
-public class RotarCandado : MonoBehaviour
+public class Minigame8_GameManager : MonoBehaviour
 {
     private Camera cam;
     public GameObject canica, candado;
@@ -14,6 +14,13 @@ public class RotarCandado : MonoBehaviour
         cam = Camera.main;
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            Win();
+        }
+    }
 
     public void OnClick(InputAction.CallbackContext context)
     {

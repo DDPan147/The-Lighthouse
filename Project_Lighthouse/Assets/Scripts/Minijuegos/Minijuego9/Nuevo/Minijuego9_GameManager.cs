@@ -14,19 +14,27 @@ public class Minijuego9_GameManager : MonoBehaviour
     {
         if(totalCloudsKilled >= cloudNumberToKill)
         {
-            Debug.Log("Has Ganado");
-            /*Alvaro*/ //Function to complete minigame and return to lobby
-            GameManager gm = FindAnyObjectByType<GameManager>();
-            if (gm != null)
-            {
-                gm.MinigameCompleted(8);
-            }
-            else
-            {
-                Debug.LogWarning("No se ha encontrado el Game Manager de la escena principal. No se va a volver al juego");
-            }
+            CompleteMinigame();
+        }
+        if(Input.GetKeyDown(KeyCode.Tab))
+        {
+            CompleteMinigame();
         }
     }
 
+    public void CompleteMinigame()
+    {
+        Debug.Log("Has Ganado");
+        /*Alvaro*/ //Function to complete minigame and return to lobby
+        GameManager gm = FindAnyObjectByType<GameManager>();
+        if (gm != null)
+        {
+            gm.MinigameCompleted(8);
+        }
+        else
+        {
+            Debug.LogWarning("No se ha encontrado el Game Manager de la escena principal. No se va a volver al juego");
+        }
+    }
 
 }
