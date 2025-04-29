@@ -22,7 +22,7 @@ public class CameraCollider : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            cam.Priority = 3;
+            cam.Priority += 3;
         }
     }
 
@@ -30,7 +30,7 @@ public class CameraCollider : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            cam.Priority = 0;
+            cam.Priority -= 3;
         }
     }
 }

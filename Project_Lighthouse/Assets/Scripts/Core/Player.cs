@@ -154,6 +154,10 @@ public class Player : MonoBehaviour
         {
             other.gameObject.GetComponent<MissionTrigger>().TriggerMission();
         }
+        if (other.gameObject.CompareTag("CutsceneTrigger_Core"))
+        {
+            other.gameObject.GetComponent<CutsceneTrigger>().TriggerCutscene();
+        }
     }
 
     void OnTriggerStay(Collider other)
@@ -293,6 +297,7 @@ public class Player : MonoBehaviour
     {
         spline = _spline;
         Debug.Log("My spline is: " + _spline.name);
+        splineLength = _spline.CalculateLength();
     }
     public void SetPercentage(float value)
     {

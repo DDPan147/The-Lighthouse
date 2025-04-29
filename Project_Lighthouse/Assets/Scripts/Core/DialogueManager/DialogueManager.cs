@@ -258,7 +258,7 @@ public class DialogueManager : MonoBehaviour
                 //Play Letter Sound
                 for (int i = 0; i < letterWaitFrames; i++)
                 {
-                    yield return null;
+                    yield return new WaitForFixedUpdate();
                 }
             }
 
