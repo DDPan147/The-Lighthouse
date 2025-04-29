@@ -5,12 +5,12 @@ public class Pelota_Colisiones : MonoBehaviour
     private Rigidbody rb;
     [HideInInspector] public bool haGanado;
     private GameObject candado;
-    private RotarCandado candadoScript;
+    private Minigame8_GameManager candadoScript;
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
         candado = GetComponentInParent<Pelota>().candado;
-        candadoScript = candado.GetComponent<RotarCandado>();
+        candadoScript = candado.GetComponent<Minigame8_GameManager>();
     }
 
     private void OnCollisionEnter(Collision collision)

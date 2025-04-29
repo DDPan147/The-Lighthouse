@@ -3,6 +3,7 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
+using DG.Tweening;
 
 public class PruebaGlobalVolume : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class PruebaGlobalVolume : MonoBehaviour
     {
         volumeProfile.TryGet<ColorAdjustments>(out colorAdjustments);
         colorAdjustments.active = true;
+        
     }
 
     // Update is called once per frame
@@ -31,6 +33,7 @@ public class PruebaGlobalVolume : MonoBehaviour
     {
         StopAllCoroutines();
         StartCoroutine(Saturacion(time, hueValue));
+        //colorAdjustments.saturation.value.
     }
 
     public void SetValue(int value)
