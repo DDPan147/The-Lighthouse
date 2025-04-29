@@ -49,6 +49,8 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        Debug.Log("MinigameActive " + GameManager.minigameActive);
+        Debug.Log("CutsceneActive " + GameManager.cutsceneActive);
         if (!GameManager.minigameActive && !GameManager.cutsceneActive)
         {
             if (moveState == MoveStates.Control)
@@ -80,15 +82,20 @@ public class Player : MonoBehaviour
         {
             transform.rotation = Quaternion.LookRotation(newDirection, transform.up);
         }
+
+        Debug.Log("Im on cutscene");
     }
     private void TransitionState()
     {
         Vector3 currentPosition = transitionSpline.EvaluatePosition(transitionPercentage);
         transform.position = currentPosition;
+        Debug.Log("Im on transition");
     }
 
     private void ControlState()
     {
+        Debug.Log("Im on control");
+
         //Transform Input Data into Movement
         moveVector = Input.GetAxis("Horizontal");
         if (!canMove) moveVector = 0;
