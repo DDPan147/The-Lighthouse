@@ -24,6 +24,21 @@ public class EntradaTuberia : MonoBehaviour
         }
     }
 
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.CompareTag("Tuberia_Entrada"))
+        {
+            if (whichPart == PipeParts.Part1)
+            {
+                GetComponentInParent<Tuberia>().isPart1Connected = true;
+            }
+            else if (whichPart == PipeParts.Part2)
+            {
+                GetComponentInParent<Tuberia>().isPart2Connected = true;
+            }
+        }
+    }
+
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.CompareTag("Tuberia_Entrada"))
