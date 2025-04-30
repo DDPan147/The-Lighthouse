@@ -9,9 +9,10 @@ public class Minijuego3_GameManager : MonoBehaviour
     private Camera cam;
     private Tuberia[] tuberias;
     public GameObject QueEsEsto;
-    private bool canRotate = true;
+    public float rotatePipeSpeed;
     private VisualEffect steamVFX;
     public float steamTimeRate;
+
 
     private void Awake()
     {
@@ -42,20 +43,24 @@ public class Minijuego3_GameManager : MonoBehaviour
 
         if(Physics.Raycast(ray.origin, ray.direction * 10, out hit) && context.performed)
         {
-            if (hit.collider.gameObject.CompareTag("Tuberia") && canRotate)
+            if (hit.collider.gameObject.CompareTag("Tuberia") && hit.collider.gameObject.GetComponent<Tuberia>() != null)
             {
-                canRotate = false;
-                float rotation = hit.collider.gameObject.transform.eulerAngles.z;
-                rotation += 90;
-                //hit.collider.gameObject.transform.eulerAngles += new Vector3(0, 0, 90);
-                hit.collider.gameObject.transform.DORotate(new Vector3(0, 0, rotation), 1.25f, RotateMode.Fast).OnComplete(() => CheckPipes());
+                if(hit.collider.gameObject.GetComponent<Tuberia>().canRotate)
+                {
+                    hit.collider.gameObject.GetComponent<Tuberia>().canRotate = false;
+                    float rotation = hit.collider.gameObject.transform.eulerAngles.z;
+                    rotation += 90;
+                    //hit.collider.gameObject.transform.eulerAngles += new Vector3(0, 0, 90);
+                    hit.collider.gameObject.transform.DORotate(new Vector3(0, 0, rotation), rotatePipeSpeed, RotateMode.Fast).OnComplete(() => { hit.collider.gameObject.GetComponent<Tuberia>().canRotate = true; CheckPipes(); });
+                }
+                
+                
             }
         }
     }
 
     public void CheckPipes()
     {
-        canRotate = true;
         int correctPipes = 0;
         for (int i = 0; i < tuberias.Length; i++)
         {
