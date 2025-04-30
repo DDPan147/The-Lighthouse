@@ -107,7 +107,7 @@ public class SplineSwitch : MonoBehaviour
         return newSpline;
     }
 
-    public float GetTForKnot(Spline spline, int knotIndex)
+    public static float GetTForKnot(Spline spline, int knotIndex)
     {
         if (knotIndex < 0 || knotIndex >= spline.Count)
         {

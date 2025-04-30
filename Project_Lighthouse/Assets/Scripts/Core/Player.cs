@@ -235,6 +235,19 @@ public class Player : MonoBehaviour
         //Play Transition Anim
     }
 
+    public void CreateNewTransition(SplineContainer _spline, int knotIndex)
+    {
+        Spline newSpline = new Spline(0);
+        newSpline.Add(transform.position);
+        newSpline.Add(_spline[0][knotIndex].Position);
+
+        
+        transitionSpline = newSpline;
+        StartTransition();
+        ChangeSpline(_spline);
+        distancePercentage = SplineSwitch.GetTForKnot(spline[0], knotIndex);
+    }
+
     public void RevertTransition()
     {
         moveState = MoveStates.Transition;
