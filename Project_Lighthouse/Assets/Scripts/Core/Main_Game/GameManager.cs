@@ -255,6 +255,7 @@ public class GameManager : MonoBehaviour
     public void CreditsRoll()
     {
         //Your code here
+        SceneManager.LoadScene("ProvEnding");
     }
 
 }

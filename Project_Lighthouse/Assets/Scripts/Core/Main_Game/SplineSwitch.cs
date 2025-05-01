@@ -20,6 +20,12 @@ public class SplineSwitch : MonoBehaviour
     [Tooltip("For transitions, the knot index to redirect the player. (Out is always 1 to 0)")]
     public int transitionKnotIndexOut;
 
+    public GameObject highlightIn;
+    public GameObject highlightOut;
+    private Material highlightMatIn;
+    private Material highlightMatOut;
+    public float highlightWidth;
+
 
 
     Player player;
@@ -27,6 +33,9 @@ public class SplineSwitch : MonoBehaviour
     void Start()
     {
         player = FindAnyObjectByType<Player>();
+
+        if (highlightIn != null) highlightMatIn = highlightIn.GetComponent<Renderer>().materials[1];
+        if (highlightOut != null) highlightMatOut = highlightOut.GetComponent<Renderer>().materials[1];
     }
 
     void Update()
@@ -36,13 +45,14 @@ public class SplineSwitch : MonoBehaviour
 
     public void SwitchSpline()
     {
-        //IN
+        
         if (!isOpen)
         {
             //Some effect for not opened door
             return;
         }
 
+        //IN
         if (CheckInOut())
         {
             if (isButtonIn && !Input.GetKeyDown(KeyCode.Z))
@@ -81,6 +91,38 @@ public class SplineSwitch : MonoBehaviour
             if (!isButtonIn)
             {
                 player.UnassignActiveSplineSwitch();
+            }
+        }
+    }
+
+    public void SetHighlight(bool b)
+    {
+        
+        //IN
+        if (CheckInOut())
+        {
+            if (highlightIn == null) return;
+            if (b)
+            {
+                highlightMatIn.SetFloat("_Scale", highlightWidth);
+            }
+            else
+            {
+                highlightMatIn.SetFloat("_Scale", 1);
+            }
+        }
+
+        //OUT
+        else
+        {
+            if (highlightOut == null) return;
+            if (b)
+            {
+                highlightMatOut.SetFloat("_Scale", highlightWidth);
+            }
+            else
+            {
+                highlightMatOut.SetFloat("_Scale", 1);
             }
         }
     }

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using Unity.Cinemachine;
@@ -5,19 +6,36 @@ using Unity.Cinemachine;
 public class RoomPart : MonoBehaviour
 {
     /*Fade Rooms*/
-    public GameObject target;
-    Material mat;
-    float initialAlpha;
+    [System.Serializable]
+    public struct FadeTarget
+    {
+        public FadeTarget(GameObject _target, float _amount)
+        {
+            target = _target;
+            amount = _amount;
+            mat = null;
+            initialAlpha = 1f;
+        }
+        public GameObject target;
+        public Material mat;
+        public float amount;
+        public float initialAlpha;
+    }
+
+    public FadeTarget[] targets;
     public float fadeTime;
 
     //DOTween
-    Tween fadeInTween;
-    Tween fadeOutTween;
+    List<Tween> fadeInTweens = new List<Tween>();
+    List<Tween> fadeOutTweens = new List<Tween>();
 
     void Start()
     {
-        mat = target.GetComponent<Renderer>().material;
-        initialAlpha = mat.color.a;
+        for(int i = 0; i < targets.Length; i++)
+        {
+            targets[i].mat = targets[i].target.GetComponent<Renderer>().material;
+            targets[i].initialAlpha = targets[i].mat.color.a;
+        }
     }
 
     void Update()
@@ -29,17 +47,43 @@ public class RoomPart : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            fadeOutTween.Pause();
-            fadeInTween = DOTween.ToAlpha(() => mat.color, x => mat.color = x, 0, fadeTime).SetEase(Ease.OutCubic);
+            
+            if(fadeOutTweens.Count > 0)
+            {
+                foreach (Tween fadeOutTween in fadeOutTweens)
+                {
+                    fadeOutTween.Pause();
+                }
+            }
+
+            foreach(FadeTarget target in targets)
+            {
+                Tween fadeInTween = DOTween.ToAlpha(() => target.mat.color, x => target.mat.color = x, target.amount, fadeTime).SetEase(Ease.OutCubic);
+                fadeInTweens.Add(fadeInTween);
+            }
         }
     }
 
     void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.CompareTag("Player"))
+        /*if (other.gameObject.CompareTag("Player"))
         {
             fadeInTween.Pause();
             fadeOutTween = DOTween.ToAlpha(() => mat.color, x => mat.color = x, initialAlpha, fadeTime).SetEase(Ease.InCubic);
+        }*/
+
+        if (fadeInTweens.Count > 0)
+        {
+            foreach (Tween fadeInTween in fadeInTweens)
+            {
+                fadeInTween.Pause();
+            }
+        }
+
+        foreach (FadeTarget target in targets)
+        {
+            Tween fadeOutTween = DOTween.ToAlpha(() => target.mat.color, x => target.mat.color = x, target.initialAlpha, fadeTime).SetEase(Ease.OutCubic);
+            fadeOutTweens.Add(fadeOutTween);
         }
     }
 }

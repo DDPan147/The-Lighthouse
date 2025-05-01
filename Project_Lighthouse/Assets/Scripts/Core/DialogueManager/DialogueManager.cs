@@ -221,7 +221,7 @@ public class DialogueManager : MonoBehaviour
         }
         else
         {
-            return Input.GetKeyDown(KeyCode.M);
+            return Input.GetKeyDown(KeyCode.Z);
         }  
     }
     void CloseBubble(Transform target)

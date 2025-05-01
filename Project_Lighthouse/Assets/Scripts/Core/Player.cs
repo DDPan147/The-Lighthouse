@@ -24,10 +24,12 @@ public class Player : MonoBehaviour
     [HideInInspector]public Spline transitionSpline;
     public SplineContainer spline;
     private SplineSwitch activeSplineSwitch;
+    public TMP_Text triggerSwitchText;
 
 
     private MinigameSwitch activeMinigameSwitch;
     public TMP_Text triggerMinigameText;
+
 
     private GameManager gm;
 
@@ -82,7 +84,7 @@ public class Player : MonoBehaviour
         {
             transform.rotation = Quaternion.LookRotation(newDirection, transform.up);
         }
-
+        triggerSwitchText.enabled = false;
         Debug.Log("Im on cutscene");
     }
     private void TransitionState()
@@ -90,6 +92,7 @@ public class Player : MonoBehaviour
         Vector3 currentPosition = transitionSpline.EvaluatePosition(transitionPercentage);
         transform.position = currentPosition;
         Debug.Log("Im on transition");
+        triggerSwitchText.enabled = false;
     }
 
     private void ControlState()
@@ -119,6 +122,11 @@ public class Player : MonoBehaviour
         if (activeSplineSwitch != null && canMove)
         {
             activeSplineSwitch.SwitchSpline();
+            triggerSwitchText.enabled = true;
+        }
+        else
+        {
+            triggerSwitchText.enabled = false;
         }
 
         if(activeMinigameSwitch != null && canMove && Input.GetKeyDown(KeyCode.Z))
@@ -206,7 +214,10 @@ public class Player : MonoBehaviour
 
         if (condition)
         {
+            //if(activeSplineSwitch != null) activeSplineSwitch.SetHighlight(false);
+            
             activeSplineSwitch = _switch;
+            //activeSplineSwitch.SetHighlight(true);
         }
         else
         {
@@ -216,6 +227,7 @@ public class Player : MonoBehaviour
 
     public void UnassignActiveSplineSwitch()
     {
+        //activeSplineSwitch.SetHighlight(false);
         activeSplineSwitch = null;
     }
 
