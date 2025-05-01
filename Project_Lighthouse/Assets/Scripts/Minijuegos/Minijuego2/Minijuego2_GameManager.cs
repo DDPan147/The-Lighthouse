@@ -1,5 +1,6 @@
 using DG.Tweening;
 using TMPro;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -140,6 +141,7 @@ public class Minijuego2_GameManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         comida.GetComponent<Selectable_MG2>().moveDirection = Vector2.zero;
+        comida.isInPot = true;
         grabObject = null;
     }
 
@@ -171,11 +173,15 @@ public class Minijuego2_GameManager : MonoBehaviour
                 if(grabObject.GetComponent<Selectable_MG2>() != null)
                 {
                     grabObjectData = grabObject.GetComponent<Selectable_MG2>();
-                    Cursor.lockState = CursorLockMode.Locked;
-                    Cursor.visible = false;
-                    grabObjectData.isGrabbed = true;
-                    imGrabing = true;
-                    grabObject.transform.DOMoveY(0.3f, 0.25f, false);
+                    if (grabObjectData.canBeGrabbed)
+                    {
+                        Cursor.lockState = CursorLockMode.Locked;
+                        Cursor.visible = false;
+                        grabObjectData.isGrabbed = true;
+                        imGrabing = true;
+                        grabObject.transform.DOMoveY(0.3f, 0.25f, false);
+                    }
+                    
                 }
                 if (grabObject.tag == "Olla")
                 {
@@ -270,7 +276,7 @@ public class Minijuego2_GameManager : MonoBehaviour
                     if (context.performed && knife.thereIsFood && knife.feedbackSupervisor)
                     {
                         Comida comida_Cortada = knife.Comida.GetComponent<Comida>();
-                        if (comida_Cortada.canBeCutted)
+                        if (comida_Cortada.canBeCutted && !comida_Cortada.isPelado)
                         {
                             knife.Comida.transform.Find("Forma").gameObject.SetActive(false);
                             Instantiate(comida_Cortada.comida_Cortada, grabObject.GetComponent<Knife>().Comida.transform);
@@ -281,12 +287,20 @@ public class Minijuego2_GameManager : MonoBehaviour
                             comida_Cortada.isCutted = true;
                             knife.thereIsFood = false;
                         }
+                        else if(comida_Cortada.canBeCutted && comida_Cortada.isPelado)
+                        {
+                            knife.Comida.transform.GetChild(1).gameObject.SetActive(false);
+                            Instantiate(comida_Cortada.comida_Cortada, grabObject.GetComponent<Knife>().Comida.transform);
+                            comida_Cortada.isCutted = true;
+                            knife.thereIsFood = false;
+                        }
                         else
                         {
                             // Feedback de que la comida hace falta pelarla o que no se puede cortar
                             Debug.Log("No se puede cortar");
                             comida_Cortada.gameObject.transform.DOShakePosition(0.3f, 0.05f, 50, 90, false, true, ShakeRandomnessMode.Full).OnPlay(() => knife.feedbackSupervisor = false).OnComplete(() => knife.feedbackSupervisor = true);
                         }
+
 
                     }
                     break;

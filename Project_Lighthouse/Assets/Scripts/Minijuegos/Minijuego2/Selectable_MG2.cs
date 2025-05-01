@@ -4,6 +4,7 @@ using UnityEngine;
 public class Selectable_MG2 : MonoBehaviour
 {
     [HideInInspector] public bool isGrabbed;
+    [HideInInspector] public bool canBeGrabbed;
     [HideInInspector] public Vector2 moveDirection;
     private float moveSpeed = 0.4f;
     [HideInInspector] public Vector3 origPosition;
@@ -13,6 +14,7 @@ public class Selectable_MG2 : MonoBehaviour
     
     void Start()
     {
+        canBeGrabbed = true;
         GameObject limitColliders = GameObject.Find("LimitColliders");
         minLimitX = limitColliders.transform.GetChild(3);
         minLimitZ = limitColliders.transform.GetChild(1);

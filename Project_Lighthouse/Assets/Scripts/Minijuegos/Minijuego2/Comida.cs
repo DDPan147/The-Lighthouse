@@ -20,6 +20,7 @@ public class Comida : MonoBehaviour
     [HideInInspector] public bool isPelado;
     [HideInInspector] public bool canBePelado;
     [HideInInspector] public bool isReady;
+    [HideInInspector] public bool isInPot;
     [HideInInspector] public Material comidaMat;
     public GameObject comida_Cortada;
     [Tooltip("Null if it doesn't have")]public GameObject comida_Pelada;
@@ -32,21 +33,17 @@ public class Comida : MonoBehaviour
 
     private void Awake()
     {
-        rebozadoObj = transform.Find("Rebozado").gameObject;
+        if(tipoComida == TipoComida.Pescado)
+        {
+            rebozadoObj = transform.Find("Rebozado").gameObject;
+        }
         objData = GetComponent<Selectable_MG2>();
         rb = GetComponent<Rigidbody>();
     }
 
     void Update()
     {
-        if(isRebozado)
-        {
-            rebozadoObj.SetActive(true);
-        }
-        else
-        {
-            rebozadoObj.SetActive(false);
-        }
+        
 
         switch(tipoComida)
         {
@@ -86,8 +83,15 @@ public class Comida : MonoBehaviour
                 canBeCutted = true;
                 canBePelado = false;
                 canBeRebozado = true;
-
-                if(isCutted && isRebozado)
+                if (isRebozado)
+                {
+                    rebozadoObj.SetActive(true);
+                }
+                else
+                {
+                    rebozadoObj.SetActive(false);
+                }
+                if (isCutted && isRebozado)
                 {
                     isReady = true;
                 }

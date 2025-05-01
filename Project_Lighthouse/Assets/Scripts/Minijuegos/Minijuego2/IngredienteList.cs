@@ -88,6 +88,7 @@ public class IngredienteList : MonoBehaviour
                 CortarYRebozar();
                 break;
             case Comida.TipoComida.RestosPescado:
+                Nada();
                 break;
             default:
                 Debug.LogError("Pero que cojones mi manin");
@@ -107,7 +108,7 @@ public class IngredienteList : MonoBehaviour
             estadoComida[1].color = Color.green;
             estadoComida[1].text = "<s>" + estadosText[1] + "</s>";
         }
-        if (comida.isCutted && comida.isRebozado)
+        if (comida.isInPot)
         {
             nombre.color = Color.green;
             nombre.text = "<s>" + nombreComida + "</s>";
@@ -130,7 +131,7 @@ public class IngredienteList : MonoBehaviour
             estadoComida[2].color = Color.green;
             estadoComida[2].text = "<s>" + estadosText[2] + "</s>";
         }
-        if (comida.isCutted && comida.isRebozado && comida.isPelado)
+        if (comida.isInPot)
         {
             nombre.color = Color.green;
             nombre.text = "<s>" + nombreComida + "</s>";
@@ -149,10 +150,19 @@ public class IngredienteList : MonoBehaviour
             estadoComida[2].color = Color.green;
             estadoComida[2].text = "<s>" + estadosText[2] + "</s>";
         }
-        if(comida.isPelado && comida.isCutted)
+        if(comida.isInPot)
         {
             nombre.color = Color.green;
             nombre.text = "<s>" + nombreComida + "</s>";
+        }
+    }
+
+    private void Nada()
+    {
+        if (comida.isInPot)
+        {
+            nombre.color = Color.green;
+            nombre.text = "<s>" + "Pescado" + "</s>";
         }
     }
 }

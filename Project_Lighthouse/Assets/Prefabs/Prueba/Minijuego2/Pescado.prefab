@@ -105,6 +105,7 @@ MonoBehaviour:
   isPelado: 0
   canBePelado: 0
   isReady: 0
+  isInPot: 0
   comidaMat: {fileID: 0}
   comida_Cortada: {fileID: 713118295505280308, guid: 2cb26865eb8fdf34e88f798a0aefac71, type: 3}
   comida_Pelada: {fileID: 0}
@@ -123,6 +124,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isGrabbed: 0
+  canBeGrabbed: 0
   moveDirection: {x: 0, y: 0}
   origPosition: {x: 0, y: 0, z: 0}
 --- !u!1 &9010793710520402150
@@ -222,7 +224,7 @@ PrefabInstance:
     - target: {fileID: 1259892715509341547, guid: 8803c9cf758e61d4f90df8b4b9c73b13, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+      objectReference: {fileID: 2100000, guid: f86b613f62ccff348b40e0cee7980288, type: 2}
     - target: {fileID: 3368865829637893953, guid: 8803c9cf758e61d4f90df8b4b9c73b13, type: 3}
       propertyPath: m_Name
       value: Forma

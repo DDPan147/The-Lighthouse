@@ -32,6 +32,7 @@ public class Comida_Hecha : MonoBehaviour
             DishFinished.Append(transform.DOMove(dropPoint.position, 0.5f));
             DishFinished.Append(dropPoint.parent.transform.DOMoveZ(-1.5f, 2f, false));*/
             objData.isGrabbed = false;
+            objData.canBeGrabbed = false;
         }
         else if(objData.isGrabbed && thereIsDish && !isFirstFood)
         {
@@ -46,6 +47,7 @@ public class Comida_Hecha : MonoBehaviour
             DishFinished.Append(transform.DOMove(dropPoint.position, 0.5f));
             DishFinished.Append(dropPoint.parent.transform.DOMoveZ(-1.5f, 2f, false));*/
             objData.isGrabbed = false;
+            objData.canBeGrabbed = false;
         }
     }
 
