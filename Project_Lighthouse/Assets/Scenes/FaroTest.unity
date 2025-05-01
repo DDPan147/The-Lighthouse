@@ -1778,6 +1778,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 8ff4a6f224476fa41b7ea6377802b081, type: 2}
     - {fileID: 11400000, guid: 5214119c50f913547abf3a936509a706, type: 2}
     - {fileID: 11400000, guid: 8c4f154ac2900e740b062a6d3cd2b0fb, type: 2}
+    - {fileID: 11400000, guid: 382699df9cb52bd43b5f0fc4fabf4599, type: 2}
     m_Events:
     - m_PersistentCalls:
         m_Calls:
@@ -1915,6 +1916,20 @@ MonoBehaviour:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
             m_IntArgument: 8
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 25131391}
+          m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+          m_MethodName: CutsceneEnd
+          m_Mode: 3
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 9
             m_FloatArgument: 0
             m_StringArgument: 
             m_BoolArgument: 0
@@ -13235,7 +13250,7 @@ PlayableDirector:
   m_GameObject: {fileID: 496440892}
   m_Enabled: 1
   serializedVersion: 3
-  m_PlayableAsset: {fileID: 11400000, guid: ece07503d564a6f4ab056ffd1d036aa1, type: 2}
+  m_PlayableAsset: {fileID: 11400000, guid: 362f21826472e5641bc25a35e1e73963, type: 2}
   m_InitialState: 0
   m_WrapMode: 2
   m_DirectorUpdateMode: 1
