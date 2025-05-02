@@ -46,6 +46,9 @@ public class GameManager : MonoBehaviour
     public UnityEvent[] OnCutsceneEnded;
     [SerializeField] private PlayableAsset[] cutscenes;
 
+    public GameObject UpperBand;
+    public GameObject LowerBand;
+
     public static bool cutsceneActive;
     
 
@@ -219,6 +222,7 @@ public class GameManager : MonoBehaviour
         timelineDirector.Play(cutscenes[index]);
         player.ToggleAnimator();
         curtain.gameObject.GetComponent<Animator>().enabled = true;
+        SetBlackBands();
 
 
     }
@@ -229,8 +233,19 @@ public class GameManager : MonoBehaviour
         player.UntoggleAnimator();
         curtain.gameObject.GetComponent<Animator>().enabled = false;
         OnCutsceneEnded[index]?.Invoke();
-
+        UnsetBlackBands();
         Debug.Log("Ha acabado la cinemática " + index);
+    }
+
+    void SetBlackBands()
+    {
+        UpperBand.transform.DOLocalMoveY(210, 2, false).SetEase(Ease.InOutQuart);
+        LowerBand.transform.DOLocalMoveY(-210, 2, false).SetEase(Ease.InOutQuart);
+    }
+    void UnsetBlackBands()
+    {
+        UpperBand.transform.DOLocalMoveY(275, 2, false).SetEase(Ease.InOutQuart);
+        LowerBand.transform.DOLocalMoveY(-275, 2, false).SetEase(Ease.InOutQuart);
     }
     #endregion
     #region Day System
