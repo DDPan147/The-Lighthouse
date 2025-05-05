@@ -8,10 +8,14 @@ public class GameManager_Minijuego5 : MonoBehaviour
 
     public DragAndDrop_Cable[] cables;
     public ParticleSystem ps;
+
+    private MinigameComments mc;
+    [SerializeField]private MinigameComment[] comments;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         cables = FindObjectsByType<DragAndDrop_Cable>(FindObjectsSortMode.InstanceID);
+        mc = GetComponent<MinigameComments>();
     }
 
     // Update is called once per frame
@@ -20,6 +24,12 @@ public class GameManager_Minijuego5 : MonoBehaviour
         if (!hasWon)
         {
             CheckVictory();
+        }
+
+        if (cableConnections[3] == true)
+        {
+            //mc.DisplayComment(0);
+            
         }
     }
 
@@ -84,4 +94,6 @@ public class GameManager_Minijuego5 : MonoBehaviour
         Debug.Log(output);
         return output;
     }
+
+    
 }

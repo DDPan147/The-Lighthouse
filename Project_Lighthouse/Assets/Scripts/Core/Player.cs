@@ -16,6 +16,7 @@ public class Player : MonoBehaviour
     [Space(10)]
     public float transitionSpeed;
     public float transitionPercentage;
+    private Vector3 lastPosition;
 
     [HideInInspector]public float splineLength;
 
@@ -77,8 +78,18 @@ public class Player : MonoBehaviour
         transform.position = currentPosition;
 
         //Player Rotation Across Spline
-        Vector3 nextPosition = spline.EvaluatePosition(distancePercentage + 0.05f);
-        Vector3 direction = nextPosition - currentPosition;
+        Vector3 direction;
+        if (lastPosition == Vector3.zero)
+        {
+            Vector3 nextPosition = spline.EvaluatePosition(distancePercentage + 0.05f);
+            direction = nextPosition - currentPosition;
+        }
+        else
+        {
+            direction = currentPosition - lastPosition;
+        }
+
+        lastPosition = currentPosition;
         Vector3 newDirection = new Vector3(direction.x, 0, direction.z);
         if (newDirection.magnitude > 0)
         {
@@ -110,8 +121,20 @@ public class Player : MonoBehaviour
         transform.position = currentPosition;
 
         //Player Rotation Across Spline
-        Vector3 nextPosition = spline.EvaluatePosition(distancePercentage + 0.05f);
-        Vector3 direction = nextPosition - currentPosition;
+
+        Vector3 direction;
+        if (lastPosition == Vector3.zero)
+        {
+            Vector3 nextPosition = spline.EvaluatePosition(distancePercentage + 0.05f);
+            direction = nextPosition - currentPosition;
+        }
+        else
+        {
+            direction = currentPosition - lastPosition;
+        }
+
+        lastPosition = currentPosition;
+            
         Vector3 newDirection = new Vector3(direction.x, 0, direction.z);
         if (newDirection.magnitude > 0)
         {
@@ -311,10 +334,12 @@ public class Player : MonoBehaviour
     public void ToggleAnimator()
     {
         GetComponent<Animator>().enabled = true;
+        lastPosition = Vector3.zero;
     }
     public void UntoggleAnimator()
     {
         GetComponent<Animator>().enabled = false;
+        lastPosition = Vector3.zero;
     }
     #endregion
     #region SignalFunctions

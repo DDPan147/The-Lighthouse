@@ -50,8 +50,9 @@ public class GameManager : MonoBehaviour
     public GameObject LowerBand;
 
     public static bool cutsceneActive;
-    
 
+    [HideInInspector]public UnityEvent OnEveryCutsceneStart;
+    [HideInInspector]public UnityEvent OnEveryCutsceneEnd;
     /*[System.Serializable]
     public struct CutsceneSetup
     {

@@ -6,6 +6,16 @@ using TMPro;
 using DG.Tweening;
 using EasyTextEffects;
 
+[System.Serializable]
+public class MinigameComment
+{
+    [TextArea(3, 10)]
+    public string comment;
+    public float time = 5;
+    public DialogueManager.Speaker speaker;
+    public bool commented;
+}
+
 [RequireComponent(typeof(AudioSource))]
 public class DialogueManager : MonoBehaviour
 {
@@ -49,9 +59,13 @@ public class DialogueManager : MonoBehaviour
 
     }
 
+    [SerializeField] private GameObject GUICommentHolder;
     [SerializeField] private TMP_Text textDisplayGUI;
     [SerializeField] private TMP_Text textDisplayAbuelo;
     [SerializeField] private TMP_Text textDisplayLuna;
+
+    [SerializeField]private Color colorAbuelo;
+    [SerializeField]private Color colorLuna;
 
     private SoundManager sm;
     private Player player;
@@ -92,26 +106,27 @@ public class DialogueManager : MonoBehaviour
 
         //SPEAKERS
         Speaker currentSpeaker = sentences.Peek().speaker;
-        TMP_Text nextTarget = DecideNextSpeaker(_comment.type, currentSpeaker);
-        DisplayNextSentence(nextTarget);
+        DecideFirstSpeaker(_comment.type, currentSpeaker);
+        
     }
 
-    private TMP_Text DecideNextSpeaker(DialogueComment.DialogueTypes commentType, Speaker currentSpeaker)
+    private void DecideFirstSpeaker(DialogueComment.DialogueTypes commentType, Speaker currentSpeaker)
     {
         if (commentType == DialogueComment.DialogueTypes.Popup)
         {
             if (currentSpeaker == Speaker.Abuelo)
             {
-                return textDisplayAbuelo;
+                DisplayNextSentence(textDisplayAbuelo);
             }
             else
             {
-                return textDisplayLuna;
+                DisplayNextSentence(textDisplayLuna);
             }
         }
         else
         {
-            return textDisplayGUI;
+            //DisplayGUIComment();
+            //return textDisplayGUI;
         }
     }
 
@@ -126,7 +141,28 @@ public class DialogueManager : MonoBehaviour
             return textDisplayLuna;
         }
     }
+    public void DisplayGUIComment(MinigameComment mg)
+    {
+        StartCoroutine(StartGUIComment(mg.comment, mg.time, mg.speaker));
+    }
 
+    public IEnumerator StartGUIComment(string comment, float time, Speaker speaker)
+    {
+        GUICommentHolder.SetActive(true);
+        textDisplayGUI.text = comment;
+        textDisplayGUI.transform.parent.GetComponent<TMP_Text>().text = comment;
+        if(speaker == Speaker.Abuelo)
+        {
+            textDisplayGUI.color = colorAbuelo;
+        }
+        else
+        {
+            textDisplayGUI.color = colorLuna;
+        }
+        yield return new WaitForSeconds(time);
+        GUICommentHolder.SetActive(false);
+
+    }
     void DisplayNextSentence(TMP_Text target)
     {
         if (sentences.Count == 0)
