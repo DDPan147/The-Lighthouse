@@ -4,6 +4,7 @@ using TMPro;
 using Unity.Mathematics;
 using UnityEngine;
 using System.Collections;
+using UnityEngine.VFX;
 
 public class Cloud : MonoBehaviour
 {
@@ -30,11 +31,13 @@ public class Cloud : MonoBehaviour
     public TMP_Text pointsText;
     public float timeFadeIn;
     private Rigidbody rb;
+    private VisualEffect explodeEffect;
     private void Awake()
     {
-        mainRenderer = GetComponentInChildren<Renderer>();
+        mainRenderer = GetComponent<Renderer>();
         mainMat = mainRenderer.material;
-        rb = GetComponentInChildren<Rigidbody>();
+        rb = GetComponent<Rigidbody>();
+        explodeEffect = GetComponent<VisualEffect>();
     }
 
     void Start()
@@ -45,10 +48,12 @@ public class Cloud : MonoBehaviour
         InitialMovement();
     }
 
+
     void TextFadeOut()
     {
-        pointsText.DOFade(0f, 0.4f).OnComplete(() =>
+        pointsText.DOFade(0f, 0.7f).OnComplete(() =>
         {
+            
             gameObject.SetActive(false);
         });
     }
@@ -59,6 +64,7 @@ public class Cloud : MonoBehaviour
         {
             pointsText.enabled = true;
             mainRenderer.enabled = false;
+            explodeEffect.Play();
             TextFadeOut();
         });
 
