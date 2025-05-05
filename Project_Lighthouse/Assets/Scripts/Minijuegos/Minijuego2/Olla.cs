@@ -2,18 +2,25 @@ using System.Collections;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.VFX;
 
 public class Olla : MonoBehaviour
 {
-    private Minijuego2_GameManager gm;
+    [Header("Test Variables")]
     public bool isFilledWithFood;
+    [Header("Asset Variables")]
     public GameObject foodCooked;
-    private int foodInPot;
     public GameObject potProgressionBackground;
-    private Image potProgress;
+    [Header("Value Variables")]
     public float timeToCook;
     public int foodNeeded;
+    #region Private Variables
+    private int foodInPot;
+    private Image potProgress;
+    private VisualEffect cookingVFX;
+    private Minijuego2_GameManager gm;
     private bool _takeOffFood;
+    #endregion
     [HideInInspector] public bool takeOffFood
     {
         get
@@ -38,6 +45,12 @@ public class Olla : MonoBehaviour
     {
         gm = GameObject.FindAnyObjectByType<Minijuego2_GameManager>();
         potProgress = potProgressionBackground.transform.GetChild(0).GetComponent<Image>();
+        cookingVFX = GetComponentInChildren<VisualEffect>();
+    }
+
+    private void Start()
+    {
+        potProgress.enabled = false;
     }
 
     private void Update()
@@ -66,8 +79,9 @@ public class Olla : MonoBehaviour
                     other.gameObject.SetActive(false);
                     if (foodInPot >= foodNeeded)
                     {
+                        potProgress.enabled = true;
                         //StartCoroutine(FoodProgress());
-                        potProgress.DOFillAmount(1, timeToCook).OnComplete(() => isFilledWithFood = true);
+                        potProgress.DOFillAmount(1, timeToCook).OnPlay(() => cookingVFX.Play()).OnComplete(() => { isFilledWithFood = true; cookingVFX.Stop(); } );
                         
                     }
                     

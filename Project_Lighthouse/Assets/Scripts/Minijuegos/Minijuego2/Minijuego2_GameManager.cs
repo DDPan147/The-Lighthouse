@@ -127,10 +127,10 @@ public class Minijuego2_GameManager : MonoBehaviour
         Sequence MoveObjects = DOTween.Sequence();
         MoveObjects.Append(platoFishChips.transform.DOMoveZ(-1.5f, 1.75f, false));  //Mueve el plato ya preparado hacia adelante
         MoveObjects.Append(plato2.transform.DOMove(plato1Position, 1f, false));     //Mueve el plato vacio cerca de la zona de trabajo/cocina
-        MoveObjects.Append(olla.transform.DOMoveY(0.5f, 0.5f, false));              //Levanta la olla
-        MoveObjects.Append(olla.transform.DOMoveX(sartenPosition.x, 1.25f, false)); //Mueve la olla hacia donde estaba la sarten
+        MoveObjects.Append(sarten.transform.DOMoveY(0.5f, 0.5f, false));              //Levanta la sarten
         MoveObjects.Append(sarten.transform.DOMoveX(ollaPosition.x, 1.25f, false)); //Mueve la sarten hacia donde estaba la olla
-        MoveObjects.Append(olla.transform.DOMoveY(sartenPosition.y, 0.5f, false));  //Deja la olla donde estaba anteriormente la sarten
+        MoveObjects.Append(olla.transform.DOMoveX(sartenPosition.x, 1.25f, false)); //Mueve la olla hacia donde estaba la sarten
+        MoveObjects.Append(sarten.transform.DOMoveY(ollaPosition.y, 0.5f, false));  //Deja la sarten donde estaba anteriormente la olla
         MoveObjects.OnPlay(() => canGrab = false);
         MoveObjects.OnComplete(() => canGrab = true);
     }
