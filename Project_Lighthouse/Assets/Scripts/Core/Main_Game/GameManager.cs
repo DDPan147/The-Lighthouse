@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
 {
     public bool minigameActiveTest;
     public bool cutsceneActiveTest;
+    public GameObject luna;
 
     [Header("MinigameManager")]
     public MinigameData[] minigames;
@@ -247,6 +248,12 @@ public class GameManager : MonoBehaviour
     {
         UpperBand.transform.DOLocalMoveY(275, 2, false).SetEase(Ease.InOutQuart);
         LowerBand.transform.DOLocalMoveY(-275, 2, false).SetEase(Ease.InOutQuart);
+    }
+    public void LunaMoverGrito()
+    {
+        //Voy a tener que desactivar todo lol
+        luna.transform.position = new Vector3(1.45f, 3.47f, -4.86f);
+        luna.GetComponent<MeshRenderer>().enabled = false;
     }
     #endregion
     #region Day System
