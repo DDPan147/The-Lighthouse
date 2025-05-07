@@ -19,6 +19,7 @@ public class GameManager_Minijuego5 : MonoBehaviour
     {
         cables = FindObjectsByType<DragAndDrop_Cable>(FindObjectsSortMode.InstanceID);
         mc = GetComponent<MinigameComments>();
+        
     }
 
     // Update is called once per frame
@@ -29,11 +30,11 @@ public class GameManager_Minijuego5 : MonoBehaviour
             CheckVictory();
         }
 
-        if (cableConnections[3] == true)
+        if (cableConnections[3])
         {
-            //mc.DisplayComment(0);
-            
+            mc.DisplayComment(0);
         }
+
     }
 
     private void CheckVictory()

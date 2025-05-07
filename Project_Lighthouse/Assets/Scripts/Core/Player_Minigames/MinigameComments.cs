@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class MinigameComments : MonoBehaviour
 {
-    public TMP_Text target;
     private DialogueManager dm;
     [SerializeField] private MinigameComment[] comments;
     // Start is called once before the first execution of Update after the MonoBehaviour is created

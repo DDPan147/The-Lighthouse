@@ -4965,6 +4965,7 @@ GameObject:
   - component: {fileID: 70539878}
   - component: {fileID: 70539877}
   - component: {fileID: 70539881}
+  - component: {fileID: 70539882}
   m_Layer: 0
   m_Name: Plane
   m_TagString: Untagged
@@ -5095,6 +5096,24 @@ MonoBehaviour:
   - comment: Aa me cago
     time: 2
     speaker: 0
+    commented: 0
+--- !u!114 &70539882
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 70539876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03ea2e1a159507841bad01052bfbfaba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  comments:
+  - comment: 
+    time: 0
+    speaker: 0
+    commented: 0
 --- !u!1001 &131616293
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6992,7 +7011,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 19.85
+  m_fontSize: 21
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1

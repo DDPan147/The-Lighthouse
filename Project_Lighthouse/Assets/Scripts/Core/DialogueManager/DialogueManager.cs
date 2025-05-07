@@ -143,6 +143,7 @@ public class DialogueManager : MonoBehaviour
     }
     public void DisplayGUIComment(MinigameComment mg)
     {
+        Debug.Log("hola");
         StartCoroutine(StartGUIComment(mg.comment, mg.time, mg.speaker));
     }
 
