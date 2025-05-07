@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 public class GameManager_Minijuego5 : MonoBehaviour
@@ -11,6 +12,8 @@ public class GameManager_Minijuego5 : MonoBehaviour
 
     private MinigameComments mc;
     [SerializeField]private MinigameComment[] comments;
+    private GameObject GUICommentHolder;
+    private TMP_Text textDisplayGUI;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
