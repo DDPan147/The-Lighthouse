@@ -8,7 +8,6 @@ public class SkyboxChange : MonoBehaviour
     public Material daySkybox; 
     public Material nightSkybox; 
     private Material mat;
-    private Shader waterShader;
     private void Awake()
     {
         mat = GetComponent<Renderer>().material;
