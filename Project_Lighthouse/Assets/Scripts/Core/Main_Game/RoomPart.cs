@@ -17,8 +17,11 @@ public class RoomPart : MonoBehaviour
             initialAlpha = 1f;
         }
         public GameObject target;
+        [HideInInspector]
         public Material mat;
+        [Range(0,1)]
         public float amount;
+        [HideInInspector]
         public float initialAlpha;
     }
 
