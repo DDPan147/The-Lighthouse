@@ -3250,7 +3250,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &52825100
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4135,7 +4135,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 433347558122979752, guid: f67fe68555023fa42b3fc39b081ac1f9, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1112931853532824728, guid: f67fe68555023fa42b3fc39b081ac1f9, type: 3}
       propertyPath: m_Size.x
@@ -30536,6 +30536,30 @@ MonoBehaviour:
     volume: 1
     loop: 0
     source: {fileID: 0}
+  - type: 0
+    name: MainTheme
+    clip: {fileID: 8300000, guid: d3028614f6f39d84aa736885b710dc08, type: 3}
+    volume: 1
+    loop: 1
+    source: {fileID: 0}
+  - type: 0
+    name: Menu
+    clip: {fileID: 8300000, guid: 717de3ac076cdac4f91ae31701238765, type: 3}
+    volume: 1
+    loop: 1
+    source: {fileID: 0}
+  - type: 0
+    name: NieblaTurbio
+    clip: {fileID: 8300000, guid: 62a3f0a69cc8f9846a06c3edde82abd7, type: 3}
+    volume: 1
+    loop: 1
+    source: {fileID: 0}
+  - type: 0
+    name: Final
+    clip: {fileID: 8300000, guid: ebfbaddc559b900469c64bec1dbd458a, type: 3}
+    volume: 1
+    loop: 1
+    source: {fileID: 0}
   currentTheme:
     type: 0
     name: 
@@ -37002,7 +37026,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2559111362270586057, guid: d08b1b60c68d80e4681171e3b943c91c, type: 3}
       propertyPath: cutsceneIndex
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 6641302287427514006, guid: d08b1b60c68d80e4681171e3b943c91c, type: 3}
       propertyPath: m_Name
@@ -37091,7 +37115,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1844910103
 Transform:
   m_ObjectHideFlags: 0
@@ -40953,7 +40977,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 433347558122979752, guid: f67fe68555023fa42b3fc39b081ac1f9, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3635095700563994012, guid: f67fe68555023fa42b3fc39b081ac1f9, type: 3}
       propertyPath: comment.name
@@ -41095,6 +41119,10 @@ PrefabInstance:
     - target: {fileID: 6641302287427514006, guid: 00ea2ba55e1f9bf4c8c68a26269822bc, type: 3}
       propertyPath: m_Name
       value: MissionTriggerTEST
+      objectReference: {fileID: 0}
+    - target: {fileID: 6641302287427514006, guid: 00ea2ba55e1f9bf4c8c68a26269822bc, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8085982232419195007, guid: 00ea2ba55e1f9bf4c8c68a26269822bc, type: 3}
       propertyPath: m_LocalPosition.x
@@ -41617,6 +41645,10 @@ PrefabInstance:
     - target: {fileID: 8094544847822749177, guid: 8d03efde186590e4e9280261b651bc12, type: 3}
       propertyPath: m_Name
       value: MinigameSwitchTEST
+      objectReference: {fileID: 0}
+    - target: {fileID: 8094544847822749177, guid: 8d03efde186590e4e9280261b651bc12, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
