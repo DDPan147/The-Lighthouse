@@ -5,6 +5,7 @@ using UnityEngine.Events;
 using TMPro;
 using DG.Tweening;
 using EasyTextEffects;
+using UnityEngine.InputSystem;
 
 [System.Serializable]
 public class MinigameComment
@@ -31,7 +32,6 @@ public class DialogueManager : MonoBehaviour
     private bool sentencePass;
 
     private Queue<Sentence> sentences = new Queue<Sentence>();
-
 
     public enum Speaker
     {
@@ -263,7 +263,7 @@ public class DialogueManager : MonoBehaviour
         }
         else
         {
-            return Input.GetKeyDown(KeyCode.Z);
+            return /*Input.GetKeyDown(KeyCode.Z)*/ Player.interact;
         }  
     }
     void CloseBubble(Transform target)

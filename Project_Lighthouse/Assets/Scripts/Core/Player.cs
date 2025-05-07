@@ -3,6 +3,7 @@ using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
 using UnityEngine.Splines;
 
 public class Player : MonoBehaviour
@@ -31,6 +32,7 @@ public class Player : MonoBehaviour
     private MinigameSwitch activeMinigameSwitch;
     public TMP_Text triggerMinigameText;
 
+    [HideInInspector] public static bool interact;
 
     private GameManager gm;
 
@@ -111,7 +113,7 @@ public class Player : MonoBehaviour
         Debug.Log("Im on control");
 
         //Transform Input Data into Movement
-        moveVector = Input.GetAxis("Horizontal");
+        //moveVector = Input.GetAxis("Horizontal");
         if (!canMove) moveVector = 0;
         distancePercentage -= moveVector * speed * Time.deltaTime / splineLength;
         distancePercentage = Mathf.Clamp01(distancePercentage);
@@ -152,7 +154,7 @@ public class Player : MonoBehaviour
             triggerSwitchText.enabled = false;
         }
 
-        if(activeMinigameSwitch != null && canMove && Input.GetKeyDown(KeyCode.Z))
+        if(activeMinigameSwitch != null && canMove && /*Input.GetKeyDown(KeyCode.Z)*/ interact)
         {
             if (activeMinigameSwitch.usesStartPosition)
             {
@@ -213,6 +215,24 @@ public class Player : MonoBehaviour
         if (other.gameObject.CompareTag("MinigameSwitch_Core"))
         {
             UnassignActiveMinigameSwitch();
+        }
+    }
+    #endregion
+    #region Input Events
+    public void OnMove(InputAction.CallbackContext context)
+    {
+        moveVector = context.ReadValue<Vector2>().x;
+    }
+
+    public void OnInteract(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            interact = true;
+        }
+        else if (context.canceled)
+        {
+            interact = false;
         }
     }
     #endregion

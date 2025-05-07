@@ -55,7 +55,7 @@ public class SplineSwitch : MonoBehaviour
         //IN
         if (CheckInOut())
         {
-            if (isButtonIn && !Input.GetKeyDown(KeyCode.Z))
+            if (isButtonIn && !/*Input.GetKeyDown(KeyCode.Z)*/ Player.interact)
             {
                 return;
             }
@@ -76,7 +76,7 @@ public class SplineSwitch : MonoBehaviour
         //OUT
         else
         {
-            if (isButtonOut && !Input.GetKeyDown(KeyCode.Z))
+            if (isButtonOut && !/*Input.GetKeyDown(KeyCode.Z)*/ Player.interact)
             {
                 return;
             }
