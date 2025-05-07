@@ -2828,6 +2828,7 @@ GameObject:
   - component: {fileID: 1557921312}
   - component: {fileID: 1557921314}
   - component: {fileID: 1557921315}
+  - component: {fileID: 1557921316}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -3023,6 +3024,27 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   outlineMat: {fileID: 2100000, guid: c9d5a3581cf6c2d41891a3c4e152a752, type: 2}
+--- !u!114 &1557921316
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1557921311}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03ea2e1a159507841bad01052bfbfaba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  comments:
+  - comment: "<size=2em><link=shake>\xA1AGH!</size></link>"
+    time: 2
+    speaker: 0
+    commented: 0
+  - comment: "\xA1Dichosa tuber\xEDa!"
+    time: 2
+    speaker: 0
+    commented: 0
 --- !u!1001 &1574295759
 PrefabInstance:
   m_ObjectHideFlags: 0

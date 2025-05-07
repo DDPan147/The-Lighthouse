@@ -2747,6 +2747,7 @@ GameObject:
   - component: {fileID: 979924829}
   - component: {fileID: 979924831}
   - component: {fileID: 979924832}
+  - component: {fileID: 979924833}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -2898,6 +2899,35 @@ MonoBehaviour:
   updateLightValue: 2
   decreaseIntensity: 0.3
   increaseIntensity: 0.3
+--- !u!114 &979924833
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 979924828}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03ea2e1a159507841bad01052bfbfaba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  comments:
+  - comment: Abu...
+    time: 2
+    speaker: 1
+    commented: 0
+  - comment: "Hace fr\xEDo\u2026\r"
+    time: 2
+    speaker: 1
+    commented: 0
+  - comment: "\xBFD\xF3nde est\xE1s?\r"
+    time: 2
+    speaker: 1
+    commented: 0
+  - comment: "Te echo de menos\u2026"
+    time: 2
+    speaker: 1
+    commented: 0
 --- !u!1 &996288632
 GameObject:
   m_ObjectHideFlags: 0

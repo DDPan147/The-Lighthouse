@@ -1643,6 +1643,7 @@ GameObject:
   - component: {fileID: 375009864}
   - component: {fileID: 375009865}
   - component: {fileID: 375009866}
+  - component: {fileID: 375009867}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1757,6 +1758,27 @@ MonoBehaviour:
   - itemType: 0
     visualObjects: []
   minigameManager: {fileID: 0}
+--- !u!114 &375009867
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 375009861}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03ea2e1a159507841bad01052bfbfaba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  comments:
+  - comment: "No puedo dejar que esto me afecte m\xE1s.\r"
+    time: 3.5
+    speaker: 0
+    commented: 0
+  - comment: "Estoy cansado de esto\u2026\r\n"
+    time: 2
+    speaker: 0
+    commented: 0
 --- !u!1 &379690057
 GameObject:
   m_ObjectHideFlags: 0

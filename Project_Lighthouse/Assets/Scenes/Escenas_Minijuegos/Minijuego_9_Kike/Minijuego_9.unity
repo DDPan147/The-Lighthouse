@@ -655,6 +655,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1765725578}
   - component: {fileID: 1765725579}
+  - component: {fileID: 1765725580}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -691,6 +692,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   totalCloudsKilled: 0
   cloudNumberToKill: 10
+--- !u!114 &1765725580
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1765725577}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03ea2e1a159507841bad01052bfbfaba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  comments: []
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
