@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 
@@ -19,9 +20,20 @@ public class GameManager_Minijuego5 : MonoBehaviour
     {
         cables = FindObjectsByType<DragAndDrop_Cable>(FindObjectsSortMode.InstanceID);
         mc = GetComponent<MinigameComments>();
+
+        Invoke("FirstComment", 1);
+        Invoke("SecondComment", 4);
         
     }
 
+    void FirstComment()
+    {
+        mc.DisplayComment(0);
+    }
+    void SecondComment()
+    {
+        mc.DisplayComment(1);
+    }
     // Update is called once per frame
     void Update()
     {
@@ -30,9 +42,9 @@ public class GameManager_Minijuego5 : MonoBehaviour
             CheckVictory();
         }
 
-        if (cableConnections[3])
+        if(CurrentCableConnections() == 3)
         {
-            mc.DisplayComment(0);
+            mc.DisplayComment(2);
         }
 
     }
@@ -60,18 +72,8 @@ public class GameManager_Minijuego5 : MonoBehaviour
             }
             if (a)
             {
-                //YOU WIN
-                hasWon = true;
-                ps.Play();
-                GameManager gm = FindAnyObjectByType<GameManager>();
-                if (gm != null)
-                {
-                    gm.MinigameCompleted(4);
-                }
-                else
-                {
-                    Debug.LogWarning("No se ha encontrado el Game Manager de la escena principal. No se va a volver al juego");
-                }
+                StartCoroutine(Victory());
+                
             }
             else
             {
@@ -85,6 +87,24 @@ public class GameManager_Minijuego5 : MonoBehaviour
         }
     }
 
+    IEnumerator Victory()
+    {
+        mc.DisplayComment(3);
+        yield return new WaitForSeconds(2);
+        mc.DisplayComment(4);
+        yield return new WaitForSeconds(3);
+        hasWon = true;
+        ps.Play();
+        GameManager gm = FindAnyObjectByType<GameManager>();
+        if (gm != null)
+        {
+            gm.MinigameCompleted(4);
+        }
+        else
+        {
+            Debug.LogWarning("No se ha encontrado el Game Manager de la escena principal. No se va a volver al juego");
+        }
+    }
     public int CurrentCableConnections()
     {
         int output = 0;

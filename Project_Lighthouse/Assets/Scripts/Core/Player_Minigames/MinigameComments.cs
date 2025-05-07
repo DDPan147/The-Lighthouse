@@ -19,7 +19,7 @@ public class MinigameComments : MonoBehaviour
 
     public void DisplayComment(int index)
     {
-        if (dm != null)
+        if (dm != null && !comments[index].commented)
         {
             dm.DisplayGUIComment(comments[index]);
             comments[index].commented = true;

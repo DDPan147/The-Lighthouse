@@ -69,6 +69,8 @@ public class DialogueManager : MonoBehaviour
 
     private SoundManager sm;
     private Player player;
+
+    private IEnumerator activeCoroutine;
     private void Awake()
     {
         //Singleton
@@ -143,8 +145,11 @@ public class DialogueManager : MonoBehaviour
     }
     public void DisplayGUIComment(MinigameComment mg)
     {
-        Debug.Log("hola");
-        StartCoroutine(StartGUIComment(mg.comment, mg.time, mg.speaker));
+        if(activeCoroutine != null){
+            StopCoroutine(activeCoroutine);
+        }
+        activeCoroutine = StartGUIComment(mg.comment, mg.time, mg.speaker);
+        StartCoroutine(activeCoroutine);
     }
 
     public IEnumerator StartGUIComment(string comment, float time, Speaker speaker)

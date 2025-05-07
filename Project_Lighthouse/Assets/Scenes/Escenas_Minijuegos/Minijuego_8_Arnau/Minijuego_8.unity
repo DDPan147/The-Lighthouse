@@ -360,6 +360,7 @@ GameObject:
   - component: {fileID: 120460647}
   - component: {fileID: 120460648}
   - component: {fileID: 120460649}
+  - component: {fileID: 120460650}
   m_Layer: 0
   m_Name: Caja
   m_TagString: Untagged
@@ -563,6 +564,23 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 0.24236205}
   m_Center: {x: 0, y: 0.00000043208053, z: -0.27886003}
+--- !u!114 &120460650
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 120460645}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03ea2e1a159507841bad01052bfbfaba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  comments:
+  - comment: "Por qu\xE9 lo compliqu\xE9 tanto\u2026"
+    time: 3
+    speaker: 0
+    commented: 0
 --- !u!1 &303385244
 GameObject:
   m_ObjectHideFlags: 0
