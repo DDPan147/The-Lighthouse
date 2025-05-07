@@ -196,7 +196,7 @@ public class Player : MonoBehaviour
         if (other.gameObject.CompareTag("DialogueTrigger_Core"))
         {
             if (moveState != MoveStates.Control) return;
-
+            if (GameManager.cutsceneActive) return;
             other.gameObject.GetComponent<DialogueTrigger>().TriggerComment();
         }
     }
