@@ -392,5 +392,7 @@ public class DialogueManager : MonoBehaviour
     //David: Kike por que vas al dentista
     //Kike: []
     //Álvaro: *decepcionado consigo mismo*
+    //Victor: Hola
+    //Gurt: yo
 }
 
