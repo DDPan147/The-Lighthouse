@@ -16,6 +16,8 @@ public class GameManager : MonoBehaviour
     public bool cutsceneActiveTest;
     public GameObject luna;
 
+
+    public Material highlightMat;
     [Header("MinigameManager")]
     public MinigameData[] minigames;
 

@@ -36,6 +36,8 @@ public class Player : MonoBehaviour
 
     private GameManager gm;
 
+    [SerializeField]private Animator meshAnimator;
+
     public enum MoveStates
     {
         Control,
@@ -257,10 +259,9 @@ public class Player : MonoBehaviour
 
         if (condition)
         {
-            //if(activeSplineSwitch != null) activeSplineSwitch.SetHighlight(false);
-            
+            if(activeSplineSwitch != null) activeSplineSwitch.SetHighlight(false);
             activeSplineSwitch = _switch;
-            //activeSplineSwitch.SetHighlight(true);
+            activeSplineSwitch.SetHighlight(true);
         }
         else
         {
@@ -270,15 +271,16 @@ public class Player : MonoBehaviour
 
     public void UnassignActiveSplineSwitch()
     {
-        //activeSplineSwitch.SetHighlight(false);
+        activeSplineSwitch.SetHighlight(false);
         activeSplineSwitch = null;
     }
 
     public void StartTransition()
     {
-        moveState = MoveStates.Transition;
+        meshAnimator.Play("Test_Puertas");
+        /*moveState = MoveStates.Transition;
         float duration = transitionSpline.GetLength() * transitionSpeed;
-        DOTween.To(() => transitionPercentage, x => transitionPercentage = x, 1, duration).OnComplete(() => EndTransition());
+        DOTween.To(() => transitionPercentage, x => transitionPercentage = x, 1, duration).OnComplete(() => EndTransition());*/
         //Play Transition Anim
     }
 
@@ -315,6 +317,10 @@ public class Player : MonoBehaviour
     {
         moveState = MoveStates.Control;
         transitionPercentage = 0;
+        if(activeSplineSwitch != null)
+        {
+            activeSplineSwitch.SetHighlight(true);
+        }
     }
 
     /*void TakePath(Spline path, Action onCompleteAction)

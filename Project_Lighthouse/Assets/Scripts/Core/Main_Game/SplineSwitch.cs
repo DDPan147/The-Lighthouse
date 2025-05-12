@@ -20,11 +20,14 @@ public class SplineSwitch : MonoBehaviour
     [Tooltip("For transitions, the knot index to redirect the player. (Out is always 1 to 0)")]
     public int transitionKnotIndexOut;
 
+    private Renderer rendIn;
+    private Renderer rendOut;
     public GameObject highlightIn;
     public GameObject highlightOut;
-    private Material highlightMatIn;
-    private Material highlightMatOut;
-    public float highlightWidth;
+    private Material normalMatIn;
+    private Material normalMatOut;
+    private Material highlightMat;
+    //public float highlightWidth;
 
 
 
@@ -33,9 +36,13 @@ public class SplineSwitch : MonoBehaviour
     void Start()
     {
         player = FindAnyObjectByType<Player>();
-
-        if (highlightIn != null) highlightMatIn = highlightIn.GetComponent<Renderer>().materials[1];
-        if (highlightOut != null) highlightMatOut = highlightOut.GetComponent<Renderer>().materials[1];
+        highlightMat = FindAnyObjectByType<GameManager>().highlightMat;
+        rendIn = highlightIn.GetComponent<Renderer>();
+        rendOut = highlightOut.GetComponent<Renderer>();
+        normalMatIn = rendIn.material;
+        normalMatOut = rendOut.material;
+        /*if (highlightIn != null) highlightMatIn = highlightIn.GetComponent<Renderer>().materials[1];
+        if (highlightOut != null) highlightMatOut = highlightOut.GetComponent<Renderer>().materials[1];*/
     }
 
     void Update()
@@ -44,6 +51,10 @@ public class SplineSwitch : MonoBehaviour
     }
 
     public void SwitchSpline()
+    {
+        player.StartTransition();
+    }
+    public void SwitchSpline(int xz)
     {
         
         if (!isOpen)
@@ -60,6 +71,7 @@ public class SplineSwitch : MonoBehaviour
                 return;
             }
 
+            SetHighlight(false);
             player.spline = splines[1];
             player.splineLength = splines[1].CalculateLength();
             player.distancePercentage = GetTForKnot(splines[1].Spline, transitionKnotIndexIn);
@@ -81,6 +93,7 @@ public class SplineSwitch : MonoBehaviour
                 return;
             }
 
+            SetHighlight(false);
             player.spline = splines[0];
             player.splineLength = splines[0].CalculateLength();
             player.distancePercentage = GetTForKnot(splines[0].Spline, transitionKnotIndexOut);
@@ -101,28 +114,32 @@ public class SplineSwitch : MonoBehaviour
         //IN
         if (CheckInOut())
         {
-            if (highlightIn == null) return;
+            if (highlightIn == null || rendIn == null) return;
             if (b)
             {
-                highlightMatIn.SetFloat("_Scale", highlightWidth);
+                //highlightMatIn.SetFloat("_Scale", highlightWidth);
+                rendIn.material = highlightMat;
             }
             else
             {
-                highlightMatIn.SetFloat("_Scale", 1);
+                //highlightMatIn.SetFloat("_Scale", 1);
+                rendIn.material = normalMatIn;
             }
         }
 
         //OUT
         else
         {
-            if (highlightOut == null) return;
+            if (highlightOut == null || rendOut == null) return;
             if (b)
             {
-                highlightMatOut.SetFloat("_Scale", highlightWidth);
+                //highlightMatIn.SetFloat("_Scale", highlightWidth);
+                rendOut.material = highlightMat;
             }
             else
             {
-                highlightMatOut.SetFloat("_Scale", 1);
+                //highlightMatIn.SetFloat("_Scale", 1);
+                rendOut.material = normalMatOut;
             }
         }
     }
