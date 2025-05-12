@@ -12,22 +12,23 @@ public class Minijuego2_GameManager : MonoBehaviour
     public GameObject platoFishChips, plato2;
     public GameObject recetaFishChips, receta2;
     public GameObject ingredientesReceta;
-    [Space(20)]
-    public GameObject Comida_Cortada;
     public GameObject huesosPescado;
-    //public GameObject PlatoPrefab;
     public TMP_Text nombrePlato;
+    [Header("Variables")]
+    [Range(50, 150)] public float camaraUmbral;
+    public float limitRotationCamera;
+    public float speedRotation;
+    public float timeBetweenComments;
+    [Space(20)]
     private Camera cam;
-    public bool imGrabing = false;
+    [HideInInspector]public bool imGrabing = false;
+    [HideInInspector]public bool isReciepe2;
     private bool canGrab = true;
     private bool imCutting;
     private bool imPelando;
     private GameObject grabObject;
     private Selectable_MG2 grabObjectData;
     private float ScreenWidth, ScreenHeight;
-    [Range(50,150)]public float camaraUmbral;
-    public float limitRotationCamera;
-    public float speedRotation;
     private float cameraRotation;
     private Vector2 moveDirection;
     private float moveSpeed = 0.4f;
@@ -63,19 +64,30 @@ public class Minijuego2_GameManager : MonoBehaviour
             {
                 //Minijuego Terminado
                 Debug.Log("Terminado");
-                CompleteMinigame();
+                //Dialogo
+                mc.DisplayComment(18);
+                Invoke(nameof(CompleteMinigame), 4);
             }
         }
     }
     #endregion
-    void Start()
+
+    private MinigameComments mc;
+
+    private void Awake()
     {
+        mc = FindAnyObjectByType<MinigameComments>();
         cam = Camera.main;
         ScreenHeight = Screen.height;
         ScreenWidth = Screen.width;
         nombrePlato.text = "Fish&Chips" + ":";
         plato2.GetComponent<BoxCollider>().enabled = false;
         platoFishChips.GetComponent<BoxCollider>().enabled = true;
+    }
+
+    void Start()
+    {
+        InvokeRepeating(nameof(TimeComments), timeBetweenComments, timeBetweenComments);
     }
 
 
@@ -117,6 +129,8 @@ public class Minijuego2_GameManager : MonoBehaviour
         MoveDishesSequence();
         platoFishChips.GetComponent<BoxCollider>().enabled = false;
         plato2.GetComponent<BoxCollider>().enabled = true;
+        isReciepe2 = true;
+        mc.DisplayComment(17);
     }
 
     void MoveDishesSequence()
@@ -157,6 +171,19 @@ public class Minijuego2_GameManager : MonoBehaviour
             Debug.LogWarning("No se ha encontrado el Game Manager de la escena principal. No se va a volver al juego");
         }
     }
+
+    #region CommentsEvents
+    public void TimeComments()
+    {
+        int random = Random.Range(0, 4);
+        mc.DisplayErrorComment(random);
+    }
+    public void ErrorComments(int i, int j)
+    {
+        mc.DisplayErrorComment(Random.Range(i, j + 1));
+    }
+    #endregion
+
     #region InputEvents
     public void OnGrab(InputAction.CallbackContext context)
     {
@@ -168,7 +195,7 @@ public class Minijuego2_GameManager : MonoBehaviour
             if (Physics.Raycast(ray, out hit))
             {
                 grabObject = hit.collider.gameObject;
-
+                Debug.Log(grabObject.name);
                 if(grabObject.GetComponent<Selectable_MG2>() != null)
                 {
                     grabObjectData = grabObject.GetComponent<Selectable_MG2>();
@@ -297,6 +324,7 @@ public class Minijuego2_GameManager : MonoBehaviour
                         {
                             // Feedback de que la comida hace falta pelarla o que no se puede cortar
                             Debug.Log("No se puede cortar");
+                            ErrorComments(10, 11);
                             comida_Cortada.gameObject.transform.DOShakePosition(0.3f, 0.05f, 50, 90, false, true, ShakeRandomnessMode.Full).OnPlay(() => knife.feedbackSupervisor = false).OnComplete(() => knife.feedbackSupervisor = true);
                         }
 
@@ -328,6 +356,7 @@ public class Minijuego2_GameManager : MonoBehaviour
                         {
                             // Feedback de que la comida no se puede pelar
                             Debug.Log("No se puede pelar");
+                            ErrorComments(6, 7);
                             comida_Cortada.gameObject.transform.DOShakePosition(0.3f, 0.05f, 50, 90, false, true, ShakeRandomnessMode.Full).OnPlay(() => peladora.feedbackSupervisor = false).OnComplete(() => peladora.feedbackSupervisor = true);
                         }
 
@@ -344,18 +373,21 @@ public class Minijuego2_GameManager : MonoBehaviour
                     {
                         //Feedback visual de que no se puede rebozar
                         Debug.Log("No se puede rebozar");
+                        ErrorComments(14, 15);
                         comida.transform.DOShakePosition(0.3f, 0.05f, 50, 90, false, true, ShakeRandomnessMode.Full).OnPlay(() => comida.feedbackSupervisor = false).OnComplete(() => comida.feedbackSupervisor = true);
                     }
                     else if (context.performed && !comida.isCutted && comida.canBeCutted && comidaObjData.isGrabbed && comida.thereIsBread)
                     {
                         //Feedback visual de que falta cortarlo
                         Debug.Log("Falta cortar");
+                        ErrorComments(8, 9);
                         comida.transform.DOShakePosition(0.3f, 0.05f, 50, 90, false, true, ShakeRandomnessMode.Full).OnPlay(() => comida.feedbackSupervisor = false).OnComplete(() => comida.feedbackSupervisor = true);
                     }
                     else if(context.performed && !comida.isPelado && comida.canBePelado && comidaObjData.isGrabbed && comida.thereIsBread)
                     {
                         //Feedback visual de que falta pelarlo
                         Debug.Log("Falta pelar ");
+                        ErrorComments(4, 5);
                         comida.transform.DOShakePosition(0.3f, 0.05f, 50, 90, false, true, ShakeRandomnessMode.Full).OnPlay(() => comida.feedbackSupervisor = false).OnComplete(() => comida.feedbackSupervisor = true);
                     }
                     break;

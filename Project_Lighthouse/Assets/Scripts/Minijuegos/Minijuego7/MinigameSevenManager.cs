@@ -43,6 +43,7 @@ public class MinigameSevenManager : MonoBehaviour
     [Header("Objects Control")]
     [SerializeField] private List<GameObject> sceneObjects = new List<GameObject>();
     [SerializeField] private GameObject lastObject; // La caja que no se puede tirar
+    [SerializeField] private MinigameComments mc;
     
     [Header("UI References")]
     [SerializeField] private GameObject gameUI;
@@ -58,6 +59,8 @@ public class MinigameSevenManager : MonoBehaviour
         
         if (gameUI == null)
             _minigameSevenUIgameUI = FindObjectOfType<MinigameSevenUI>();
+
+        mc = FindObjectOfType<MinigameComments>();
     }
     
     public void StartMinigame()
@@ -66,6 +69,7 @@ public class MinigameSevenManager : MonoBehaviour
         SetupInitialState();
         gameUI.SetActive(true);
         endGameUI.SetActive(false);
+        mc.DisplayComment(0);
     }
 
     public void EndMinigame()
@@ -88,6 +92,7 @@ public class MinigameSevenManager : MonoBehaviour
             Debug.LogWarning("minigameSevenUI no está asignado en MinigameSevenManager");
         }
         CheckEndingCondition();
+        mc.DisplayComment(1);
     }
 
     private void SetupInitialState()
@@ -158,6 +163,7 @@ public class MinigameSevenManager : MonoBehaviour
 
     private void UpdateGameProgress()
     {
+        mc.DisplayComment(2);
         // Actualizar iluminación basada en objetos importantes descartados
         UpdateLighting();
         

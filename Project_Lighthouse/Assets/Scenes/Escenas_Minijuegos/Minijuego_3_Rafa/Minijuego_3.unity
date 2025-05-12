@@ -2851,6 +2851,8 @@ MonoBehaviour:
   QueEsEsto: {fileID: 171481251}
   rotatePipeSpeed: 1
   steamTimeRate: 2
+  minCommentRate: 5
+  maxCommentRate: 10
 --- !u!4 &1557921313
 Transform:
   m_ObjectHideFlags: 0
@@ -3003,9 +3005,17 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 2ff00e48-7531-405d-8324-46186aed7a75
     m_ActionName: 'Player/Save[/Keyboard/r]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 0618295b-0bfc-46c6-a11c-15fc105a44f9
+    m_ActionName: 'Player/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d,/Keyboard/upArrow,/Keyboard/downArrow,/Keyboard/leftArrow,/Keyboard/rightArrow]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: b3075445-19e8-47a2-bfa0-4167d74eb501
+    m_ActionName: 'Player/Interact[/Keyboard/z]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: Player
+  m_DefaultActionMap: Minijuego3Y8
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!114 &1557921315
@@ -3037,11 +3047,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   comments:
+  - comment: Comentario1
+    time: 2
+    speaker: 0
+    commented: 0
+  - comment: Comentario2
+    time: 2
+    speaker: 0
+    commented: 0
+  - comment: Comentario3
+    time: 2
+    speaker: 0
+    commented: 0
   - comment: "<size=2em><link=shake>\xA1AGH!</size></link>"
     time: 2
     speaker: 0
     commented: 0
   - comment: "\xA1Dichosa tuber\xEDa!"
+    time: 2
+    speaker: 0
+    commented: 0
+  - comment: Vapor3
+    time: 2
+    speaker: 0
+    commented: 0
+  - comment: Ganar
     time: 2
     speaker: 0
     commented: 0
@@ -3447,6 +3477,8 @@ MonoBehaviour:
   QueEsEsto: {fileID: 171481251}
   rotatePipeSpeed: 0
   steamTimeRate: 0
+  minCommentRate: 0
+  maxCommentRate: 0
 --- !u!1001 &1873878780
 PrefabInstance:
   m_ObjectHideFlags: 0

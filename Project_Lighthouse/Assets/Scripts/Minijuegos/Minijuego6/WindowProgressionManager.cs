@@ -20,6 +20,8 @@ public class WindowProgressionManager : MonoBehaviour
     [SerializeField] private float fadeOutDuration = 1f;
     [SerializeField] private float delayBetweenWindows = 1f;
     [SerializeField] private GameObject completionPanel;
+    [SerializeField] private MinigameComments mc;
+    private int commentPosition;
 
     [Header("Referencias")]
     [SerializeField] private WindowRestorationManager restorationManager;
@@ -29,6 +31,7 @@ public class WindowProgressionManager : MonoBehaviour
 
     private void Start()
     {
+        mc = GetComponent<MinigameComments>();
         InitializeWindows();
         restorationManager.onFragmentPlaced.AddListener(OnFragmentPlaced);
     }
@@ -80,6 +83,14 @@ public class WindowProgressionManager : MonoBehaviour
                 windowSections[i].fadeGroup.blocksRaycasts = isActive;
             }
         }
+        StartCoroutine(StartComments());
+
+    }
+    private IEnumerator StartComments()
+    {
+        yield return new WaitForSeconds(.3f);
+        mc.DisplayComment(commentPosition);
+        commentPosition++;
     }
 
     private IEnumerator TransitionToNextWindow()
@@ -126,7 +137,8 @@ public class WindowProgressionManager : MonoBehaviour
             // Activar y mostrar la siguiente ventana
             WindowSection nextWindow = windowSections[currentWindowIndex];
             nextWindow.windowContainer.SetActive(true);
-            
+            mc.DisplayComment(commentPosition);
+
             if (nextWindow.fadeGroup != null)
             {
                 nextWindow.fadeGroup.interactable = true;
@@ -141,6 +153,7 @@ public class WindowProgressionManager : MonoBehaviour
                     yield return null;
                 }
             }
+            commentPosition++;
         }
         else
         {

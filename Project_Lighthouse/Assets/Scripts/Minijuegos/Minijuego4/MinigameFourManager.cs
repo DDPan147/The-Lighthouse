@@ -51,6 +51,7 @@ public class MinigameFourManager : MonoBehaviour
     [Header("Player References")]
     public PlayerMovementFP playerMovement;
     public CameraController playerCamera;
+    private MinigameComments mc;
     
     [Header("Inventory Integration")]
     public PlayerInventory playerInventory;
@@ -75,7 +76,8 @@ public class MinigameFourManager : MonoBehaviour
         if (tableRepairStation) tableRepairStation.SetActive(false);
         if (clockRepairStation) clockRepairStation.SetActive(false);
         if (dollRepairStation) dollRepairStation.SetActive(false);
-        
+        mc = GetComponent<MinigameComments>();
+
         if (playerInventory == null)
             playerInventory = FindObjectOfType<PlayerInventory>();
         DisableAllVisualObjects();
@@ -173,12 +175,14 @@ public class MinigameFourManager : MonoBehaviour
                 currentStage = RepairStage.RepairingTable;
                 EnableTableRepair();
                 // Mostrar el texto de progreso al entrar en modo reparación
+                mc.DisplayComment(1);
                 if (progressTextContainer != null)
                     progressTextContainer.SetActive(true);
                 break;
             case RepairStage.RepairingTable:
                 currentStage = RepairStage.RepairingClock;
                 EnableClockRepair();
+                mc.DisplayComment(1);
                 // Asegurar que sigue visible
                 if (progressTextContainer != null)
                     progressTextContainer.SetActive(true);
@@ -186,12 +190,14 @@ public class MinigameFourManager : MonoBehaviour
             case RepairStage.RepairingClock:
                 currentStage = RepairStage.RepairingDoll;
                 EnableDollRepair();
+                mc.DisplayComment(1);
                 // Asegurar que sigue visible
                 if (progressTextContainer != null)
                     progressTextContainer.SetActive(true);
                 break;
             case RepairStage.RepairingDoll:
                 currentStage = RepairStage.Completed;
+                mc.DisplayComment(1);
                 // Ocultar el texto de progreso al completar
                 if (progressTextContainer != null)
                     progressTextContainer.SetActive(false);

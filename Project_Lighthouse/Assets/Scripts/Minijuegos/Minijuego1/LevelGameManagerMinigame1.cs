@@ -17,6 +17,7 @@ public class LevelGameManagerMinigame1 : MonoBehaviour
     public GameObject fadeOutEffect;
     public GameObject fadeOutEffectChangeCamera;
     public Button checkButton;
+    private MinigameComments mc;
     
     [Header("Configuración de Cámaras")]
     public Camera[] taskCameras; // Cámaras para cada tarea (cajones, estanterías, cubiertos)
@@ -38,6 +39,7 @@ public class LevelGameManagerMinigame1 : MonoBehaviour
         if (Instance == null) Instance = this;
         else { Destroy(gameObject); return; }
         InitializeMinigame();
+        mc = GetComponent<MinigameComments>();
     }
     
     private void InitializeMinigame()
@@ -87,6 +89,7 @@ public class LevelGameManagerMinigame1 : MonoBehaviour
 
     public void StartMinigame()
     {
+        mc.DisplayComment(0);
         correctPlacements = 0;
         isMinigameComplete = false;
         currentTaskIndex = 0;
@@ -249,6 +252,7 @@ private IEnumerator DelayedCompleteMinigame()
             fadeOutEffectChangeCamera.SetActive(false);
             Debug.Log("Efecto de fade desactivado");
         }
+        mc.DisplayComment(2);
     }
 
     private void SwitchToCamera(int index)
