@@ -1,6 +1,7 @@
 using System.Collections;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.UI;
 using UnityEngine.VFX;
 
@@ -20,6 +21,7 @@ public class Olla : MonoBehaviour
     private VisualEffect cookingVFX;
     private Minijuego2_GameManager gm;
     private bool _takeOffFood;
+    
     #endregion
     [HideInInspector] public bool takeOffFood
     {
@@ -68,6 +70,12 @@ public class Olla : MonoBehaviour
             Comida comida = other.gameObject.GetComponent<Comida>();
             if (comida.GetComponent<Selectable_MG2>().isGrabbed && comida.isReady)
             {
+                if(comida.tipoComida == Comida.TipoComida.RestosPescado && !gm.isReciepe2)
+                {
+                    Debug.Log("Esta Comida No es para esto");
+                    gm.ErrorComments(16,16);
+                    return;
+                }
                 Sequence PutFood = DOTween.Sequence();
                 PutFood.Append(other.gameObject.transform.DOMove(transform.position + new Vector3(0, 0.5f, 0), 0.5f));
                 gm.PutFoodInPot(comida);
@@ -89,23 +97,24 @@ public class Olla : MonoBehaviour
             }
             else if (!comida.isReady)
             {
+                if(comida.canBePelado && !comida.isPelado && !comida.isCutted)
+                {
+                    Debug.Log("Falta Pelar");
+                    gm.ErrorComments(4, 5);
+                }
+                else if(comida.canBeCutted && !comida.isCutted)
+                {
+                    Debug.Log("Falta Cortar");
+                    gm.ErrorComments(8, 9);
+                }
+                else if(comida.canBeRebozado && !comida.isRebozado)
+                {
+                    Debug.Log("Falta Rebozar");
+                    gm.ErrorComments(12, 13);
+                }
                 comida.transform.DOShakePosition(0.3f, 0.05f, 50, 90, false, true, ShakeRandomnessMode.Full).OnPlay(() => comida.feedbackSupervisor = false).OnComplete(() => comida.feedbackSupervisor = true);
             }
         }
-    }
-
-    IEnumerator FoodProgress()
-    {
-        for(int i = 0; i < 10; i++)
-        {
-            yield return new WaitForSeconds(timeToCook / 10);
-            potProgress.fillAmount += 0.1f;
-            if(potProgress.fillAmount >= 1)
-            {
-                isFilledWithFood = true;
-            }
-        }
-
     }
 
 }

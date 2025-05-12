@@ -29,4 +29,15 @@ public class MinigameComments : MonoBehaviour
             Debug.LogWarning("No se ha encontrado el Dialogue Manager de la escena principal.");
         }
     }
+    public void DisplayErrorComment(int index)
+    {
+        if (dm != null && !comments[index].commented)
+        {
+            dm.DisplayGUIComment(comments[index]);
+        }
+        else
+        {
+            Debug.LogWarning("No se ha encontrado el Dialogue Manager de la escena principal.");
+        }
+    }
 }

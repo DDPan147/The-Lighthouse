@@ -2572,9 +2572,17 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 2ff00e48-7531-405d-8324-46186aed7a75
     m_ActionName: 'Player/Save[/Keyboard/r]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 0618295b-0bfc-46c6-a11c-15fc105a44f9
+    m_ActionName: 'Player/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d,/Keyboard/upArrow,/Keyboard/downArrow,/Keyboard/leftArrow,/Keyboard/rightArrow]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: b3075445-19e8-47a2-bfa0-4167d74eb501
+    m_ActionName: 'Player/Interact[/Keyboard/z]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: Player
+  m_DefaultActionMap: Minijuego2Y9
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!114 &753049066
@@ -2596,13 +2604,14 @@ MonoBehaviour:
   recetaFishChips: {fileID: 2125454385}
   receta2: {fileID: 1935788156}
   ingredientesReceta: {fileID: 1403039795}
-  Comida_Cortada: {fileID: 713118295505280308, guid: 2cb26865eb8fdf34e88f798a0aefac71, type: 3}
   huesosPescado: {fileID: 2045453239920249435, guid: e46ad4bbf6aac9843876d3d2359341ee, type: 3}
   nombrePlato: {fileID: 501129289}
-  imGrabing: 0
   camaraUmbral: 100
   limitRotationCamera: 45
   speedRotation: 20
+  timeBetweenComments: 10
+  imGrabing: 0
+  isReciepe2: 0
 --- !u!4 &753049067
 Transform:
   m_ObjectHideFlags: 0
@@ -2631,13 +2640,81 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   comments:
+  - comment: "Qu\xE9 hambre..."
+    time: 2
+    speaker: 1
+    commented: 0
   - comment: "\xA1Est\xE1 empezando a oler muy bien!\r"
     time: 3
     speaker: 1
     commented: 0
-  - comment: "Qu\xE9 hambre..."
-    time: 2
+  - comment: "\rDialogo3"
+    time: 3
+    speaker: 0
+    commented: 0
+  - comment: "\rDialogo4"
+    time: 3
     speaker: 1
+    commented: 0
+  - comment: "\rFaltaPelar1"
+    time: 3
+    speaker: 0
+    commented: 0
+  - comment: "\rFaltaPelar2"
+    time: 3
+    speaker: 0
+    commented: 0
+  - comment: NoSePuedePelar1
+    time: 3
+    speaker: 0
+    commented: 0
+  - comment: NoSePuedePelar2
+    time: 3
+    speaker: 0
+    commented: 0
+  - comment: FaltaCortar1
+    time: 3
+    speaker: 0
+    commented: 0
+  - comment: FaltaCortar2
+    time: 3
+    speaker: 0
+    commented: 0
+  - comment: NoSePuedeCortar1
+    time: 3
+    speaker: 0
+    commented: 0
+  - comment: NoSePuedeCortar2
+    time: 3
+    speaker: 0
+    commented: 0
+  - comment: FaltaRebozar1
+    time: 3
+    speaker: 0
+    commented: 0
+  - comment: FaltaRebozar2
+    time: 3
+    speaker: 0
+    commented: 0
+  - comment: NoSePuedeRebozar1
+    time: 3
+    speaker: 0
+    commented: 0
+  - comment: NoSePuedeRebozar2
+    time: 3
+    speaker: 0
+    commented: 0
+  - comment: EstaComidaNoEsParaEstaReceta
+    time: 3
+    speaker: 0
+    commented: 0
+  - comment: fish&chips hecho :)
+    time: 3
+    speaker: 0
+    commented: 0
+  - comment: fish&chips hecho :)
+    time: 3
+    speaker: 0
     commented: 0
 --- !u!1 &772098362
 GameObject:
@@ -5692,7 +5769,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!108 &2139073179
 Light:
   m_ObjectHideFlags: 0
