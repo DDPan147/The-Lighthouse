@@ -9,15 +9,20 @@ public class Minijuego3_GameManager : MonoBehaviour
     private Camera cam;
     private Tuberia[] tuberias;
     public GameObject QueEsEsto;
-    public float rotatePipeSpeed;
     private VisualEffect steamVFX;
+    [Header("Public Variables")]
+    public float rotatePipeSpeed;
     public float steamTimeRate;
-
+    public int minCommentRate;
+    public int maxCommentRate;
+    private int timesRotated;
+    private MinigameComments mc;
 
     private void Awake()
     {
         cam = Camera.main;
         //tuberias = GetComponentsInChildren<Tuberia>();
+        mc = FindAnyObjectByType<MinigameComments>();
         tuberias = GameObject.FindObjectsByType<Tuberia>(FindObjectsSortMode.None);
         steamVFX = GameObject.Find("Vapor").GetComponent<VisualEffect>();
     }
@@ -51,7 +56,16 @@ public class Minijuego3_GameManager : MonoBehaviour
                     float rotation = hit.collider.gameObject.transform.eulerAngles.z;
                     rotation += 90;
                     //hit.collider.gameObject.transform.eulerAngles += new Vector3(0, 0, 90);
-                    hit.collider.gameObject.transform.DORotate(new Vector3(0, 0, rotation), rotatePipeSpeed, RotateMode.Fast).OnComplete(() => { hit.collider.gameObject.GetComponent<Tuberia>().canRotate = true; CheckPipes(); });
+                    hit.collider.gameObject.transform.DORotate(new Vector3(0, 0, rotation), rotatePipeSpeed, RotateMode.Fast).OnComplete(() =>
+                    {
+                        hit.collider.gameObject.GetComponent<Tuberia>().canRotate = true;
+                        CheckPipes();
+                        timesRotated++;
+                        if (timesRotated >= Random.Range(minCommentRate, maxCommentRate))
+                        { 
+                            PipeAndSteamComments(0, 2); 
+                        }
+                    });
                 }
                 
                 
@@ -72,7 +86,8 @@ public class Minijuego3_GameManager : MonoBehaviour
         if (correctPipes == tuberias.Length)
         {
             //Ha ganado el minijuego
-            CompleteMinigame();
+            mc.DisplayComment(6);
+            Invoke(nameof(CompleteMinigame), 5);
         }
     }
 
@@ -89,6 +104,7 @@ public class Minijuego3_GameManager : MonoBehaviour
     public IEnumerator SteamInYoFace()
     {
         steamVFX.Play();
+        PipeAndSteamComments(3, 5);
         yield return new WaitForSeconds(steamTimeRate);
         steamVFX.Stop();
     }
@@ -107,4 +123,12 @@ public class Minijuego3_GameManager : MonoBehaviour
         Debug.Log("Todo correcto");
         QueEsEsto.transform.DOMove(Camera.main.transform.position, 0.5f);
     }
+
+    #region CommentsEvents
+    public void PipeAndSteamComments(int i, int j)
+    {
+        mc.DisplayErrorComment(Random.Range(i, j + 1));
+    }
+    #endregion
+
 }

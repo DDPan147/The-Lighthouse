@@ -66,7 +66,7 @@ public class Minijuego2_GameManager : MonoBehaviour
                 Debug.Log("Terminado");
                 //Dialogo
                 mc.DisplayComment(18);
-                Invoke(nameof(CompleteMinigame), 3);
+                Invoke(nameof(CompleteMinigame), 4);
             }
         }
     }
