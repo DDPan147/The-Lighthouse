@@ -21,7 +21,7 @@ public class Player : MonoBehaviour
 
     [HideInInspector]public float splineLength;
 
-    [HideInInspector]public float moveVector;
+    [HideInInspector]public static float moveVector;
 
     [HideInInspector]public Spline transitionSpline;
     public SplineContainer spline;
@@ -277,10 +277,10 @@ public class Player : MonoBehaviour
 
     public void StartTransition()
     {
-        meshAnimator.Play("Test_Puertas");
-        /*moveState = MoveStates.Transition;
+        //meshAnimator.Play("Test_Puertas");
+        moveState = MoveStates.Transition;
         float duration = transitionSpline.GetLength() * transitionSpeed;
-        DOTween.To(() => transitionPercentage, x => transitionPercentage = x, 1, duration).OnComplete(() => EndTransition());*/
+        DOTween.To(() => transitionPercentage, x => transitionPercentage = x, 1, duration).OnComplete(() => EndTransition());
         //Play Transition Anim
     }
 
@@ -315,6 +315,7 @@ public class Player : MonoBehaviour
 
     public void EndTransition()
     {
+        Debug.Log("He acabao transicion");
         moveState = MoveStates.Control;
         transitionPercentage = 0;
         if(activeSplineSwitch != null)

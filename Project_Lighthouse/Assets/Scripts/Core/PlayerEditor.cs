@@ -48,7 +48,7 @@ public class PlayerEditor : MonoBehaviour
         distancePercentage = player.distancePercentage;
         transitionPercentage = player.transitionPercentage;
         splineLength = player.splineLength;
-        moveVector = player.moveVector;
+        moveVector = Player.moveVector;
         transitionSpline = player.transitionSpline;
         spline = player.spline;
         ControlState();
