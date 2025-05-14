@@ -189,9 +189,10 @@ public class Minijuego2_GameManager : MonoBehaviour
     {
         if (!imGrabing && context.performed && canGrab)
         {
+            //Ray ray = cam.ScreenPointToRay(VirtualMouseUI.virtualMouseInput.virtualMouse.position.value);
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
-
+            
             if (Physics.Raycast(ray, out hit))
             {
                 grabObject = hit.collider.gameObject;
