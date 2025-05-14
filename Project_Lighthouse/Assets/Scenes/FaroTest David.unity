@@ -1098,6 +1098,7 @@ MonoBehaviour:
   minigameActiveTest: 0
   cutsceneActiveTest: 0
   luna: {fileID: 0}
+  highlightMat: {fileID: 0}
   minigames:
   - sceneName: Minijuego_1
     isAvailable: 1
@@ -11852,6 +11853,7 @@ MonoBehaviour:
   minigameActiveTest: 0
   cutsceneActiveTest: 0
   luna: {fileID: 0}
+  highlightMat: {fileID: 0}
   minigames:
   - sceneName: Minijuego_1
     isAvailable: 1
@@ -16192,6 +16194,7 @@ MonoBehaviour:
   spline: {fileID: 938355139}
   triggerSwitchText: {fileID: 0}
   triggerMinigameText: {fileID: 519284176}
+  meshAnimator: {fileID: 0}
   moveState: 0
 --- !u!114 &529891559
 MonoBehaviour:
@@ -36559,7 +36562,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2559111362270586057, guid: d08b1b60c68d80e4681171e3b943c91c, type: 3}
       propertyPath: cutsceneIndex
-      value: 8
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 6641302287427514006, guid: d08b1b60c68d80e4681171e3b943c91c, type: 3}
       propertyPath: m_Name

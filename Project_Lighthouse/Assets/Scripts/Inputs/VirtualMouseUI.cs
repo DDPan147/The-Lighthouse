@@ -3,12 +3,13 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem.LowLevel;
 using UnityEngine.InputSystem.UI;
+using UnityEngine.Playables;
 
 public class VirtualMouseUI : MonoBehaviour
 {
     [SerializeField] private RectTransform canvasRectTransform;
 
-    [HideInInspector]public static VirtualMouseInput virtualMouseInput;
+    [HideInInspector]public VirtualMouseInput virtualMouseInput;
 
     private void Awake()
     {
