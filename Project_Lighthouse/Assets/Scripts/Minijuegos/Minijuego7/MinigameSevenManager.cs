@@ -92,7 +92,6 @@ public class MinigameSevenManager : MonoBehaviour
             Debug.LogWarning("minigameSevenUI no está asignado en MinigameSevenManager");
         }
         CheckEndingCondition();
-        mc.DisplayComment(1);
     }
 
     private void SetupInitialState()
@@ -138,10 +137,12 @@ public class MinigameSevenManager : MonoBehaviour
             {
                 isItemSaved = true;
                 savedImportantObjects++;
+                mc.DisplayComment(3);
             }
             else
             {
                 discardedImportantObjects++;
+                mc.DisplayComment(2);
             }
         }
         
@@ -163,7 +164,6 @@ public class MinigameSevenManager : MonoBehaviour
 
     private void UpdateGameProgress()
     {
-        mc.DisplayComment(2);
         // Actualizar iluminación basada en objetos importantes descartados
         UpdateLighting();
         
@@ -185,11 +185,13 @@ public class MinigameSevenManager : MonoBehaviour
     {
         if (discardedImportantObjects > savedImportantObjects)
         {
+            mc.DisplayComment(4);
             // Final positivo - El anciano está superando el duelo
             Debug.Log("Final positivo: El anciano está comenzando a superar la pérdida");
         }
         else
         {
+            mc.DisplayComment(5);
             // Final negativo - El anciano sigue aferrado al pasado
             Debug.Log("Final negativo: El anciano aún no puede superar la pérdida");
         }
