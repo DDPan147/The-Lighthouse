@@ -12,12 +12,14 @@ public class Olla : MonoBehaviour
     [Header("Asset Variables")]
     public GameObject foodCooked;
     public GameObject potProgressionBackground;
+
     [Header("Value Variables")]
     public float timeToCook;
     public int foodNeeded;
     #region Private Variables
     private int foodInPot;
-    private Image potProgress;
+    private Slider potProgress;
+    [HideInInspector]public GameObject canvas;
     private VisualEffect cookingVFX;
     private Minijuego2_GameManager gm;
     private bool _takeOffFood;
@@ -46,13 +48,16 @@ public class Olla : MonoBehaviour
     private void Awake()
     {
         gm = GameObject.FindAnyObjectByType<Minijuego2_GameManager>();
-        potProgress = potProgressionBackground.transform.GetChild(0).GetComponent<Image>();
+        canvas = transform.GetChild(1).gameObject;
+        potProgress = canvas.transform.GetChild(0).transform.GetChild(0).GetComponent<Slider>();
+        //potProgress = potProgressionBackground.transform.GetChild(1).GetComponent<Slider>();
         cookingVFX = GetComponentInChildren<VisualEffect>();
     }
 
     private void Start()
     {
-        potProgress.enabled = false;
+        canvas.SetActive(false);
+
     }
 
     private void Update()
@@ -87,9 +92,10 @@ public class Olla : MonoBehaviour
                     other.gameObject.SetActive(false);
                     if (foodInPot >= foodNeeded)
                     {
-                        potProgress.enabled = true;
+                        canvas.SetActive(true);
                         //StartCoroutine(FoodProgress());
-                        potProgress.DOFillAmount(1, timeToCook).OnPlay(() => cookingVFX.Play()).OnComplete(() => { isFilledWithFood = true; cookingVFX.Stop(); } );
+                        //potProgress.DOFillAmount(1, timeToCook).OnPlay(() => cookingVFX.Play()).OnComplete(() => { isFilledWithFood = true; cookingVFX.Stop(); } );
+                        potProgress.DOValue(1, timeToCook).OnPlay(() => cookingVFX.Play()).OnComplete(() => { isFilledWithFood = true; cookingVFX.Stop();});
                         
                     }
                     
