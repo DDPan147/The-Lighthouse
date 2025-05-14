@@ -79,6 +79,7 @@ public class GameManager : MonoBehaviour
         eventSystem = FindAnyObjectByType<EventSystem>().gameObject;
         audioListener = FindAnyObjectByType<AudioListener>();
         player = FindAnyObjectByType<Player>();
+        StartDay(dayCount);
     }
 
     void Update()
@@ -154,10 +155,10 @@ public class GameManager : MonoBehaviour
 
             //Show Mission On Top Of Player's Head
             //Replace Text with new mission name
-            playerMissionText.text = missions[missionIndex].missionName;
+            playerMissionText.text = missions[missionIndex].missionDesc;
             //Activate Text (intro animation)
-            playerMissionText.GetComponentInParent<Image>().DOFade(1, 0.5f).SetEase(Ease.OutQuad);
-            playerMissionText.DOFade(1, 0.5f).SetEase(Ease.OutQuad).OnComplete(() => StartCoroutine(FadeOut(missions[missionIndex].missionDesc)));
+            //playerMissionText.GetComponentInParent<Image>().DOFade(1, 0.5f).SetEase(Ease.OutQuad).SetId("Mission");
+            playerMissionText.DOFade(1, 0.5f).SetEase(Ease.OutQuad).OnComplete(() => StartCoroutine(FadeOut(missions[missionIndex].missionDesc))).SetId("Mission");
             //Play Effect On Top Of Player's Head
             //Fade Out Top Of Player's Head
             //Deactivate Text (animation)
@@ -168,29 +169,40 @@ public class GameManager : MonoBehaviour
         IEnumerator FadeOut(string _missionDesc)
         {
             yield return new WaitForSeconds(2);
-            playerMissionText.GetComponentInParent<Image>().DOFade(0, 1).SetEase(Ease.InQuad);
-            playerMissionText.DOFade(0, 1).SetEase(Ease.InQuad).OnComplete(() => ShowNewMissionOnGUI(_missionDesc));
+            //playerMissionText.GetComponentInParent<Image>().DOFade(0, 1).SetEase(Ease.InQuad);
+            playerMissionText.DOFade(0, 1).SetEase(Ease.InQuad).OnComplete(() => ShowNewMissionOnGUI(_missionDesc)).SetId("Mission");
         }
 
      
     }
     public void ShowNewMissionOnGUI(string _missionDesc)
     {
+        
         //Replace Text with New Mission Name
         GUIMissionText.text = _missionDesc;
         GUIMissionText.color = Color.white;
         //Play Animation Of New Mission
-        GUIMissionText.gameObject.transform.DOMoveX(GUIMissionText.transform.parent.position.x, 2, false).SetEase(Ease.OutBack);
+        GUIMissionText.gameObject.transform.DOMoveX(GUIMissionText.transform.parent.position.x, 2, false).SetEase(Ease.OutBack).SetId("Mission");
 
         //Display Marker Of New Mission Location (optional)
     }
-
+    
     public void CompleteMission(string _missionName)
     {
+        DOTween.Complete("Mission");
         int missionIndex = Array.FindIndex(missions, mission => mission.missionName == _missionName);
         //Mark Mission as Completed
         missions[missionIndex].isCompleted = true;
         RemoveMissionFromGUI();
+    }
+
+    public void CompleteMissionWithInterrupt(string _missionName)
+    {
+        DOTween.Complete("Mission");
+        int missionIndex = Array.FindIndex(missions, mission => mission.missionName == _missionName);
+        //Mark Mission as Completed
+        missions[missionIndex].isCompleted = true;
+        RemoveMissionFromGUIInterrupt();
     }
 
     public Mission GetMission(string _missionName)
@@ -204,6 +216,18 @@ public class GameManager : MonoBehaviour
         GUIMissionText.color = Color.green;
         //Dissappear Animation
         GUIMissionText.gameObject.transform.DOLocalMoveX(400, 2, false).SetEase(Ease.InBack);
+    }
+
+    public void RemoveMissionFromGUIInterrupt()
+    {
+        GUIMissionText.color = Color.green;
+        //Dissappear Animation
+        GUIMissionText.gameObject.transform.DOLocalMoveX(400, 2, false).SetEase(Ease.InBack).OnComplete(() =>
+        {
+            UnlockNewMission("Tutorial2");
+            StartCoroutine(MissionInteract());
+        });
+
     }
     #endregion
     #region Cutscenes
@@ -236,8 +260,8 @@ public class GameManager : MonoBehaviour
         cutsceneCamera.Priority = 0;
         player.UntoggleAnimator();
         curtain.gameObject.GetComponent<Animator>().enabled = false;
-        OnCutsceneEnded[index]?.Invoke();
         UnsetBlackBands();
+        OnCutsceneEnded[index]?.Invoke();
         Debug.Log("Ha acabado la cinemática " + index);
     }
 
@@ -274,7 +298,44 @@ public class GameManager : MonoBehaviour
         //Launch DAY 2 Screen
         //Make It Dissappear
         dayCount++;
-        StartDay(dayCount);
+        if(dayCount > 5)
+        {
+            StartDay(dayCount);
+        }
+        
+    }
+    public void UnlockTutorial1()
+    {
+        StartCoroutine(CoroutineTutorial1());
+        
+    }
+    IEnumerator CoroutineTutorial1()
+    {
+        yield return new WaitForSeconds(2);
+        UnlockNewMission("Tutorial1");
+        StartCoroutine(MissionMove());
+    }
+    IEnumerator MissionMove()
+    {
+        yield return new WaitForSeconds(4);
+        do
+        {
+            Debug.Log("Me estoy reproduciendo: Move");
+            yield return null;
+        } while (Player.moveVector == 0);
+        //CompleteMission("Tutorial1");
+        CompleteMissionWithInterrupt("Tutorial1");
+    }
+    IEnumerator MissionInteract()
+    {
+        yield return new WaitForSeconds(4);
+        do
+        {
+            Debug.Log("Me estoy reproduciendo: Interact");
+            yield return null;
+        } while (!Player.interact);
+        CompleteMission("Tutorial2");
+
     }
     #endregion
     public void CreditsRoll()

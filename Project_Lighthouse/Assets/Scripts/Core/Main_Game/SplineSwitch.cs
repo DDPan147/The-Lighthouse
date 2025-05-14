@@ -52,10 +52,6 @@ public class SplineSwitch : MonoBehaviour
 
     public void SwitchSpline()
     {
-        player.StartTransition();
-    }
-    public void SwitchSpline(int xz)
-    {
         
         if (!isOpen)
         {

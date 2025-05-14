@@ -104,7 +104,7 @@ public class MinigameFourManager : MonoBehaviour
         repairStatus.Add("Clock", false);
         repairStatus.Add("Doll", false);
         totalRepairTasks = 3; // Table, Clock, Doll
-
+        mc.DisplayComment(0);
         // Setup UI
         UpdateUI();
     }
@@ -175,14 +175,14 @@ public class MinigameFourManager : MonoBehaviour
                 currentStage = RepairStage.RepairingTable;
                 EnableTableRepair();
                 // Mostrar el texto de progreso al entrar en modo reparación
-                mc.DisplayComment(1);
+                mc.DisplayComment(2);
                 if (progressTextContainer != null)
                     progressTextContainer.SetActive(true);
                 break;
             case RepairStage.RepairingTable:
                 currentStage = RepairStage.RepairingClock;
                 EnableClockRepair();
-                mc.DisplayComment(1);
+                mc.DisplayComment(3);
                 // Asegurar que sigue visible
                 if (progressTextContainer != null)
                     progressTextContainer.SetActive(true);
@@ -190,14 +190,14 @@ public class MinigameFourManager : MonoBehaviour
             case RepairStage.RepairingClock:
                 currentStage = RepairStage.RepairingDoll;
                 EnableDollRepair();
-                mc.DisplayComment(1);
+                mc.DisplayComment(4);
                 // Asegurar que sigue visible
                 if (progressTextContainer != null)
                     progressTextContainer.SetActive(true);
                 break;
             case RepairStage.RepairingDoll:
                 currentStage = RepairStage.Completed;
-                mc.DisplayComment(1);
+                mc.DisplayComment(5);
                 // Ocultar el texto de progreso al completar
                 if (progressTextContainer != null)
                     progressTextContainer.SetActive(false);

@@ -1341,6 +1341,14 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   missions:
+  - missionName: Tutorial1
+    missionDesc: "Mu\xE9vete con < > o con LS"
+    isCompleted: 0
+    isDiscovered: 0
+  - missionName: Tutorial2
+    missionDesc: "Interact\xFAa con Z o A"
+    isCompleted: 0
+    isDiscovered: 0
   - missionName: "Ve al almac\xE9n"
     missionDesc: "Ve al <color=#B59F57>almac\xE9n</color>"
     isCompleted: 0
@@ -1382,7 +1390,31 @@ MonoBehaviour:
   curtain: {fileID: 1204172028}
   OnCutsceneEnded:
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 25131391}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: UnlockTutorial1
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Tutorial1
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1955977162}
+        m_TargetAssemblyTypeName: CutsceneEndPatch, Assembly-CSharp
+        m_MethodName: CreateTransitionForPlayer
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Tutorial1
+          m_BoolArgument: 0
+        m_CallState: 2
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 25131391}
@@ -1626,7 +1658,19 @@ MonoBehaviour:
       m_Calls: []
   OnDayStart:
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 25131391}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: CutsceneStart
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 529891558}
@@ -5584,7 +5628,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &157861243
 RectTransform:
   m_ObjectHideFlags: 0
@@ -10463,8 +10507,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.044991612, y: -0.9290619, z: 0.12051797, w: 0.34683594}
-  m_LocalPosition: {x: 81.2406, y: 33.143356, z: 30.389221}
+  m_LocalRotation: {x: 0.14426474, y: -0.2534336, z: 0.038253494, w: 0.9557697}
+  m_LocalPosition: {x: 11, y: 6.37, z: -11.45}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -10588,7 +10632,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.17550084, y: 0.20754479}
   m_AnchorMax: {x: 0.32500002, y: 0.42800003}
-  m_AnchoredPosition: {x: -77.500015, y: 3}
+  m_AnchoredPosition: {x: -77.500015, y: 33}
   m_SizeDelta: {x: 0, y: 3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &342852548
@@ -15984,7 +16028,6 @@ MonoBehaviour:
   transitionSpeed: 1
   transitionPercentage: 0
   splineLength: 14.72106
-  moveVector: 0
   transitionSpline:
     m_EditModeType: 1
     m_Knots: []
@@ -15998,7 +16041,7 @@ MonoBehaviour:
       m_Data: []
     m_ObjectData:
       m_Data: []
-  spline: {fileID: 812233369}
+  spline: {fileID: 443001150}
   triggerSwitchText: {fileID: 1189679894}
   triggerMinigameText: {fileID: 519284176}
   meshAnimator: {fileID: 0}
@@ -25446,7 +25489,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.3213982}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 20, y: 5.5}
+  m_AnchoredPosition: {x: 14, y: 37.971}
   m_SizeDelta: {x: -3, y: -29}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &913864191
@@ -32134,7 +32177,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Priority:
     Enabled: 1
-    m_Value: 10
+    m_Value: 0
   OutputChannel: 1
   StandbyUpdate: 2
   m_StreamingVersion: 20241001
@@ -41162,6 +41205,52 @@ MonoBehaviour:
       BarrelClipping: 0.25
       Anamorphism: 0
   BlendHint: 0
+--- !u!1 &1955977160
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1955977161}
+  - component: {fileID: 1955977162}
+  m_Layer: 0
+  m_Name: CutsceneEndPatch1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1955977161
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1955977160}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2025352549}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1955977162
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1955977160}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5210c839719a2064183adb2902397bcb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spline: {fileID: 1716602476}
+  knotIndex: 1
 --- !u!1001 &1968312605
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -42430,7 +42519,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.17550084, y: 0}
   m_AnchorMax: {x: 0.32500002, y: 0.22211806}
-  m_AnchoredPosition: {x: -78.50008, y: 17}
+  m_AnchoredPosition: {x: -78.50008, y: 47}
   m_SizeDelta: {x: 0, y: -1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2001458387
@@ -42745,6 +42834,7 @@ Transform:
   m_Children:
   - {fileID: 761686374}
   - {fileID: 833907816}
+  - {fileID: 1955977161}
   - {fileID: 1789362640}
   - {fileID: 607813792}
   - {fileID: 1065354603}
@@ -44484,6 +44574,10 @@ PrefabInstance:
     - target: {fileID: 6342963027816320171, guid: aec8818e5be2e2647838c7e6a53b5763, type: 3}
       propertyPath: m_Name
       value: OutToKitchen_Switch
+      objectReference: {fileID: 0}
+    - target: {fileID: 6342963027816320171, guid: aec8818e5be2e2647838c7e6a53b5763, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -252,7 +252,19 @@ private IEnumerator DelayedCompleteMinigame()
             fadeOutEffectChangeCamera.SetActive(false);
             Debug.Log("Efecto de fade desactivado");
         }
-        mc.DisplayComment(2);
+
+        if (currentTaskIndex == 1)
+        {
+            mc.DisplayComment(1);
+        }
+        if (currentTaskIndex == 2)
+        {
+            mc.DisplayComment(2);
+        }
+        if (currentTaskIndex == 3)
+        {
+            mc.DisplayComment(3);
+        }
     }
 
     private void SwitchToCamera(int index)
