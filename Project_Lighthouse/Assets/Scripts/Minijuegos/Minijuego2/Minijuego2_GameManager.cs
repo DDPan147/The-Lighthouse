@@ -14,6 +14,7 @@ public class Minijuego2_GameManager : MonoBehaviour
     public GameObject ingredientesReceta;
     public GameObject huesosPescado;
     public TMP_Text nombrePlato;
+    private VirtualMouseUI virtualMouse;
     [Header("Variables")]
     [Range(50, 150)] public float camaraUmbral;
     public float limitRotationCamera;
@@ -83,6 +84,7 @@ public class Minijuego2_GameManager : MonoBehaviour
         nombrePlato.text = "Fish&Chips" + ":";
         plato2.GetComponent<BoxCollider>().enabled = false;
         platoFishChips.GetComponent<BoxCollider>().enabled = true;
+        //virtualMouse = FindAnyObjectByType<VirtualMouseUI>();
     }
 
     void Start()
@@ -102,7 +104,7 @@ public class Minijuego2_GameManager : MonoBehaviour
 
     public void CameraMovement()
     {
-        if (Input.mousePosition.x > ScreenWidth - camaraUmbral)
+        if (Input.mousePosition.x > ScreenWidth - camaraUmbral /*|| virtualMouse.virtualMouseInput.virtualMouse.position.value.x > ScreenWidth - camaraUmbral*/)
         {
             if (cameraRotation < limitRotationCamera)
             {
@@ -110,7 +112,7 @@ public class Minijuego2_GameManager : MonoBehaviour
                 cameraRotation += Time.deltaTime * speedRotation;
             }
         }
-        if (Input.mousePosition.x < camaraUmbral)
+        if (Input.mousePosition.x < camaraUmbral /*|| virtualMouse.virtualMouseInput.virtualMouse.position.value.x < camaraUmbral*/)
         {
             if (cameraRotation > -limitRotationCamera)
             {
@@ -189,7 +191,7 @@ public class Minijuego2_GameManager : MonoBehaviour
     {
         if (!imGrabing && context.performed && canGrab)
         {
-            //Ray ray = cam.ScreenPointToRay(VirtualMouseUI.virtualMouseInput.virtualMouse.position.value);
+            //Ray ray = cam.ScreenPointToRay(virtualMouse.virtualMouseInput.virtualMouse.position.value);
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             
@@ -202,8 +204,12 @@ public class Minijuego2_GameManager : MonoBehaviour
                     grabObjectData = grabObject.GetComponent<Selectable_MG2>();
                     if (grabObjectData.canBeGrabbed)
                     {
+                        //Teclado y raton
                         Cursor.lockState = CursorLockMode.Locked;
                         Cursor.visible = false;
+                        //Mando
+                        //virtualMouse.transform.GetChild(0).gameObject.SetActive(false);
+
                         grabObjectData.isGrabbed = true;
                         imGrabing = true;
                         grabObject.transform.DOMoveY(0.3f, 0.25f, false);
@@ -230,8 +236,11 @@ public class Minijuego2_GameManager : MonoBehaviour
             {
                 case "Cuchillo":
                     grabObjectData.isGrabbed = false;
+                    //Teclado y Ratón
                     Cursor.visible = true;
                     Cursor.lockState = CursorLockMode.None;
+                    //Mando
+                    //virtualMouse.transform.GetChild(0).gameObject.SetActive(true);
                     grabObject.GetComponent<Selectable_MG2>().moveDirection = Vector2.zero;
                     grabObject.transform.DOMove(grabObject.GetComponent<Selectable_MG2>().origPosition, 0.75f);
                     grabObject = null;
@@ -239,8 +248,11 @@ public class Minijuego2_GameManager : MonoBehaviour
                     break;
                 case "Peladora":
                     grabObjectData.isGrabbed = false;
+                    //Teclado y Ratón
                     Cursor.visible = true;
                     Cursor.lockState = CursorLockMode.None;
+                    //Mando
+                    //virtualMouse.transform.GetChild(0).gameObject.SetActive(true);
                     grabObject.GetComponent<Selectable_MG2>().moveDirection = Vector2.zero;
                     grabObject.transform.DOMove(grabObject.GetComponent<Selectable_MG2>().origPosition, 0.75f);
                     grabObject = null;
@@ -248,16 +260,22 @@ public class Minijuego2_GameManager : MonoBehaviour
                     break;
                 case "Comida":
                     grabObjectData.isGrabbed = false;
+                    //Teclado y Ratón
                     Cursor.lockState = CursorLockMode.None;
                     Cursor.visible = true;
+                    //Mando
+                    //virtualMouse.transform.GetChild(0).gameObject.SetActive(true);
                     grabObject.GetComponent<Selectable_MG2>().moveDirection = Vector2.zero;
                     grabObject = null;
                     grabObjectData = null;
                     break;
                 case "Comida_Hecha":
                     grabObjectData.isGrabbed = false;
+                    //Teclado y Ratón
                     Cursor.lockState = CursorLockMode.None;
                     Cursor.visible = true;
+                    //Mando
+                    //virtualMouse.transform.GetChild(0).gameObject.SetActive(true);
                     grabObject.GetComponent<Selectable_MG2>().moveDirection = Vector2.zero;
                     grabObject = null;
                     grabObjectData = null;
