@@ -242,6 +242,10 @@ public class Player : MonoBehaviour
     void CheckIsButtonSpline(SplineSwitch _switch)
     {
 
+        if (GameManager.cutsceneActive)
+        {
+            return;
+        }
         //objetivo: si la switch es auto al entrar, se activa solo en el enter. En caso contrario, se guarda la variable en activeSplineSwitch
         //Confirmar si es in o out
         //Confirmar si la entrada es auto o no

@@ -229,6 +229,40 @@ public class GameManager : MonoBehaviour
         });
 
     }
+
+    public void UnlockTutorial1()
+    {
+        StartCoroutine(CoroutineTutorial1());
+
+    }
+    IEnumerator CoroutineTutorial1()
+    {
+        yield return new WaitForSeconds(2);
+        UnlockNewMission("Tutorial1");
+        StartCoroutine(MissionMove());
+    }
+    IEnumerator MissionMove()
+    {
+        yield return new WaitForSeconds(4);
+        do
+        {
+            Debug.Log("Me estoy reproduciendo: Move");
+            yield return null;
+        } while (Player.moveVector == 0);
+        //CompleteMission("Tutorial1");
+        CompleteMissionWithInterrupt("Tutorial1");
+    }
+    IEnumerator MissionInteract()
+    {
+        yield return new WaitForSeconds(4);
+        do
+        {
+            Debug.Log("Me estoy reproduciendo: Interact");
+            yield return null;
+        } while (!Player.interact);
+        CompleteMission("Tutorial2");
+
+    }
     #endregion
     #region Cutscenes
     /*public void CurtainFadeOut(float time)
@@ -303,39 +337,6 @@ public class GameManager : MonoBehaviour
             StartDay(dayCount);
         }
         
-    }
-    public void UnlockTutorial1()
-    {
-        StartCoroutine(CoroutineTutorial1());
-        
-    }
-    IEnumerator CoroutineTutorial1()
-    {
-        yield return new WaitForSeconds(2);
-        UnlockNewMission("Tutorial1");
-        StartCoroutine(MissionMove());
-    }
-    IEnumerator MissionMove()
-    {
-        yield return new WaitForSeconds(4);
-        do
-        {
-            Debug.Log("Me estoy reproduciendo: Move");
-            yield return null;
-        } while (Player.moveVector == 0);
-        //CompleteMission("Tutorial1");
-        CompleteMissionWithInterrupt("Tutorial1");
-    }
-    IEnumerator MissionInteract()
-    {
-        yield return new WaitForSeconds(4);
-        do
-        {
-            Debug.Log("Me estoy reproduciendo: Interact");
-            yield return null;
-        } while (!Player.interact);
-        CompleteMission("Tutorial2");
-
     }
     #endregion
     public void CreditsRoll()
