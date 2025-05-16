@@ -301,8 +301,8 @@ public class GameManager : MonoBehaviour
 
     void SetBlackBands()
     {
-        UpperBand.transform.DOLocalMoveY(210, 2, false).SetEase(Ease.InOutQuart);
-        LowerBand.transform.DOLocalMoveY(-210, 2, false).SetEase(Ease.InOutQuart);
+        UpperBand.transform.DOLocalMoveY(240, 2, false).SetEase(Ease.InOutQuart);
+        LowerBand.transform.DOLocalMoveY(-240, 2, false).SetEase(Ease.InOutQuart);
     }
     void UnsetBlackBands()
     {

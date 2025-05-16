@@ -32,6 +32,9 @@ public class Player : MonoBehaviour
     private MinigameSwitch activeMinigameSwitch;
     public TMP_Text triggerMinigameText;
 
+    private UnlockLadder activeLadderSwitch;
+    public TMP_Text triggerLadderText;
+
     [HideInInspector] public static bool interact;
 
     private GameManager gm;
@@ -156,7 +159,7 @@ public class Player : MonoBehaviour
             triggerSwitchText.enabled = false;
         }
 
-        if(activeMinigameSwitch != null && canMove && /*Input.GetKeyDown(KeyCode.Z)*/ interact)
+        if(activeMinigameSwitch != null && canMove && interact)
         {
             if (activeMinigameSwitch.usesStartPosition)
             {
@@ -172,6 +175,10 @@ public class Player : MonoBehaviour
             {
                 activeMinigameSwitch.TriggerMinigame();
             }
+        }
+        if (activeLadderSwitch != null && canMove && interact)
+        {
+            activeLadderSwitch.UnlockTheLadder();
         }
     }
 
@@ -192,6 +199,10 @@ public class Player : MonoBehaviour
         if (other.gameObject.CompareTag("CutsceneTrigger_Core"))
         {
             other.gameObject.GetComponent<CutsceneTrigger>().TriggerCutscene();
+        }
+        if (other.gameObject.CompareTag("UnlockLadder_Core"))
+        {
+            CheckCurrentLadderSwitch(other.GetComponent<UnlockLadder>());
         }
     }
 
@@ -353,12 +364,31 @@ public class Player : MonoBehaviour
         {
             triggerMinigameText.enabled = true;
             activeMinigameSwitch = _switch;
+            activeMinigameSwitch.SetHighlight(true);
         }
     }
     public void UnassignActiveMinigameSwitch()
     {
         triggerMinigameText.enabled = false;
+        activeMinigameSwitch.SetHighlight(false);
         activeMinigameSwitch = null;
+    }
+    #endregion
+    #region UnlockableLadder
+    void CheckCurrentLadderSwitch(UnlockLadder _switch)
+    {
+        //MinigameData minigame = FindAnyObjectByType<GameManager>().minigames[_switch.minigameIndex];
+
+        if (_switch.isOpen)
+        {
+            triggerLadderText.enabled = true;
+            activeLadderSwitch = _switch;
+        }
+    }
+    public void UnassignActiveLadderSwitch()
+    {
+        triggerLadderText.enabled = false;
+        activeLadderSwitch = null;
     }
     #endregion
     #region EventFunctions
@@ -371,6 +401,14 @@ public class Player : MonoBehaviour
     {
         GetComponent<Animator>().enabled = false;
         lastPosition = Vector3.zero;
+    }
+    public void ToggleCollider()
+    {
+        GetComponent<Collider>().enabled = true;
+    }
+    public void UntoggleCollider()
+    {
+        GetComponent<Collider>().enabled = false;
     }
     #endregion
     #region SignalFunctions
