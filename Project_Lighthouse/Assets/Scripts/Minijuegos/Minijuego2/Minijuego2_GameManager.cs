@@ -15,6 +15,7 @@ public class Minijuego2_GameManager : MonoBehaviour
     public GameObject huesosPescado;
     public TMP_Text nombrePlato;
     private VirtualMouseUI virtualMouse;
+    public Camera minigame2Cam;
     [Header("Variables")]
     [Range(50, 150)] public float camaraUmbral;
     public float limitRotationCamera;
@@ -78,7 +79,7 @@ public class Minijuego2_GameManager : MonoBehaviour
     private void Awake()
     {
         mc = FindAnyObjectByType<MinigameComments>();
-        cam = Camera.main;
+        cam = minigame2Cam;
         ScreenHeight = Screen.height;
         ScreenWidth = Screen.width;
         nombrePlato.text = "Fish&Chips" + ":";

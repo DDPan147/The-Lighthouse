@@ -64,7 +64,7 @@ public class Olla : MonoBehaviour
     {
         if (isFilledWithFood)
         {
-            GetComponent<Renderer>().material.color = Color.red;
+            //GetComponent<Renderer>().material.color = Color.red;
         }
     }
 
