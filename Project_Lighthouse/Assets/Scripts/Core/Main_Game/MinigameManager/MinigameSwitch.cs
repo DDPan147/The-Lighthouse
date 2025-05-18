@@ -18,12 +18,12 @@ public class MinigameSwitch : MonoBehaviour
     }
     public void TriggerMinigame()
     {
-        FindAnyObjectByType<GameManager>().LoadMinigame(minigameIndex);
+        FindFirstObjectByType<GameManager>().LoadMinigame(minigameIndex);
     }
 
-    public void SetHighlight(bool b)
+    public void Awawawa(bool b)
     {
-        if (highlight == null || rend == null) return;
+        /*if (highlight == null || rend == null) return;
         if (b)
         {
             rend.material = highlightMat;
@@ -31,6 +31,7 @@ public class MinigameSwitch : MonoBehaviour
         else
         {
             rend.material = normalMat;
-        }
+        }*/
+        Debug.Log(b);
     }
 }
