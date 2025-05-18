@@ -1,26 +1,33 @@
+using UnityEditor;
 using UnityEngine;
 
-public class MinigameSwitch : MonoBehaviour
+public class UnlockLadder : MonoBehaviour
 {
-    public int minigameIndex;
-    public bool usesStartPosition;
-    public Transform startPosition;
+    [SerializeField]private SplineSwitch[] ladders;
+    public bool isOpen;
 
     private Renderer rend;
     public GameObject highlight;
     private Material normalMat;
     private Material highlightMat;
-    void Start()
+
+    private void Start()
     {
         rend = highlight.GetComponent<Renderer>();
-        highlightMat = FindAnyObjectByType<GameManager>().highlightMat;
-        normalMat = rend.material;
     }
-    public void TriggerMinigame()
+    public void UnlockTheLadder()
     {
-        FindAnyObjectByType<GameManager>().LoadMinigame(minigameIndex);
+        //Play Ladder Animation
+        foreach(var ladder in ladders)
+        {
+            ladder.isOpen = true;
+        }
     }
 
+    public void Open()
+    {
+        isOpen = true;
+    }
     public void SetHighlight(bool b)
     {
         if (highlight == null || rend == null) return;

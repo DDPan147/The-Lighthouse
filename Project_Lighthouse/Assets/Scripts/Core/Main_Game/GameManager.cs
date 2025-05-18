@@ -301,8 +301,8 @@ public class GameManager : MonoBehaviour
 
     void SetBlackBands()
     {
-        UpperBand.transform.DOLocalMoveY(210, 2, false).SetEase(Ease.InOutQuart);
-        LowerBand.transform.DOLocalMoveY(-210, 2, false).SetEase(Ease.InOutQuart);
+        UpperBand.transform.DOLocalMoveY(240, 2, false).SetEase(Ease.InOutQuart);
+        LowerBand.transform.DOLocalMoveY(-240, 2, false).SetEase(Ease.InOutQuart);
     }
     void UnsetBlackBands()
     {
@@ -332,7 +332,8 @@ public class GameManager : MonoBehaviour
         //Launch DAY 2 Screen
         //Make It Dissappear
         dayCount++;
-        if(dayCount > 5)
+        Debug.Log("Current Day Count: " + dayCount);
+        if(dayCount < 5)
         {
             StartDay(dayCount);
         }
@@ -343,6 +344,11 @@ public class GameManager : MonoBehaviour
     {
         //Your code here
         SceneManager.LoadScene("ProvEnding");
+    }
+
+    public void Test()
+    {
+        Debug.Log("Holaaa");
     }
 
 }
