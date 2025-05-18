@@ -18,7 +18,7 @@ public class MinigameSwitch : MonoBehaviour
     }
     public void TriggerMinigame()
     {
-        FindAnyObjectByType<GameManager>().LoadMinigame(minigameIndex);
+        FindFirstObjectByType<GameManager>().LoadMinigame(minigameIndex);
     }
 
     public void SetHighlight(bool b)
