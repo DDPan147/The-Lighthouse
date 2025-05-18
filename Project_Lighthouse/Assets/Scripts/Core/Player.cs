@@ -243,10 +243,11 @@ public class Player : MonoBehaviour
         {
             interact = true;
         }
-        else if (context.canceled)
+        else
         {
             interact = false;
         }
+
     }
     #endregion
     #region SplineSystem

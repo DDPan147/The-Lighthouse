@@ -5,7 +5,6 @@ using UnityEngine;
 public class LightMovement : MonoBehaviour
 {
     #region Private Variables
-    private Camera cam;
     //private List<Vector3> movePoints = new List<Vector3>();
     private Rigidbody rb;
     private Vector3 targetPosition;
@@ -14,12 +13,12 @@ public class LightMovement : MonoBehaviour
     [SerializeField] private float speed;
     [SerializeField][Range(0, 1)] private float umbralDistance;
     public LayerMask lightFloor;
+    public Camera minigame9Camera;
     //[Tooltip("Delay entre el raton y el movimiento del objeto")]public float mouseDelay;
     #endregion
 
     private void Awake()
     {
-        cam = Camera.main;
         rb = GetComponent<Rigidbody>();
     }
 
@@ -31,7 +30,7 @@ public class LightMovement : MonoBehaviour
 
     void MouseRaycast()
     {
-        Ray ray = cam.ScreenPointToRay( Input.mousePosition );
+        Ray ray = minigame9Camera.ScreenPointToRay( Input.mousePosition );
         RaycastHit hit;
 
         if(Physics.Raycast( ray, out hit, Mathf.Infinity, lightFloor))

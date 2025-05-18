@@ -5,14 +5,10 @@ using System.Collections;
 
 public class Minigame8_GameManager : MonoBehaviour
 {
-    private Camera cam;
+    public Camera minigame8Camera;
     public GameObject canica, candado;
     private float rotation;
     public bool canRotate = true;
-    void Start()
-    {
-        cam = Camera.main;
-    }
 
     private void Update()
     {
@@ -26,7 +22,7 @@ public class Minigame8_GameManager : MonoBehaviour
     {
         if (context.performed)
         {
-            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+            Ray ray = minigame8Camera.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
             if (Physics.Raycast(ray.origin, ray.direction * 10, out hit) && canRotate)

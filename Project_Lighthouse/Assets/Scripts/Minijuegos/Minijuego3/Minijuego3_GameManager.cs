@@ -6,7 +6,8 @@ using UnityEngine.VFX;
 
 public class Minijuego3_GameManager : MonoBehaviour
 {
-    private Camera cam;
+
+    public Camera minigame3Camera;
     private Tuberia[] tuberias;
     public GameObject QueEsEsto;
     private VisualEffect steamVFX;
@@ -20,7 +21,7 @@ public class Minijuego3_GameManager : MonoBehaviour
 
     private void Awake()
     {
-        cam = Camera.main;
+
         //tuberias = GetComponentsInChildren<Tuberia>();
         mc = FindAnyObjectByType<MinigameComments>();
         tuberias = GameObject.FindObjectsByType<Tuberia>(FindObjectsSortMode.None);
@@ -43,7 +44,7 @@ public class Minijuego3_GameManager : MonoBehaviour
 
     public void OnClick(InputAction.CallbackContext context)
     {
-        Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+        Ray ray = minigame3Camera.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
         if(Physics.Raycast(ray.origin, ray.direction * 10, out hit) && context.performed)
