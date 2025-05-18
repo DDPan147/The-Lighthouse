@@ -364,13 +364,13 @@ public class Player : MonoBehaviour
         {
             triggerMinigameText.enabled = true;
             activeMinigameSwitch = _switch;
-            activeMinigameSwitch.SetHighlight(true);
+            //activeMinigameSwitch.Awawawa(true); No se por que cojones esto da puto error wtf
         }
     }
     public void UnassignActiveMinigameSwitch()
     {
         triggerMinigameText.enabled = false;
-        activeMinigameSwitch.SetHighlight(false);
+        //activeMinigameSwitch.Awawawa(false);
         activeMinigameSwitch = null;
     }
     #endregion
