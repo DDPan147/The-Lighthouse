@@ -1385,6 +1385,7 @@ MonoBehaviour:
   playerMissionText: {fileID: 118253363}
   GUIMissionHolder: {fileID: 1969245038}
   GUIMissionText: {fileID: 831814224}
+  mainMenu: {fileID: 157861242}
   cutsceneCamera: {fileID: 1675781743}
   timelineDirector: {fileID: 496440894}
   curtain: {fileID: 1204172028}
@@ -5628,7 +5629,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &157861243
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5663,6 +5664,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bb0492fd842e844a8d8fd290bc1d61e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gm: {fileID: 25131391}
 --- !u!64 &158557984
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -10421,8 +10423,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.08899361, y: -0.74800473, z: 0.10246388, w: 0.64966935}
-  m_LocalPosition: {x: 13.21, y: 6.43, z: 10.06}
+  m_LocalRotation: {x: 0.044991612, y: -0.9290619, z: 0.12051797, w: 0.34683594}
+  m_LocalPosition: {x: 81.2406, y: 33.143356, z: 30.389221}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -15801,7 +15803,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 1, y: 0.4905514, z: 1}
   m_Center: {x: 0, y: 0.2547253, z: 0}
@@ -16391,6 +16393,18 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 98ffa835-9348-473d-a6c1-debb4352f3c7
     m_ActionName: 'Minijuego3Y8/Click[/Mouse/leftButton]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 8f18cbac-19ea-4c83-9a4c-594515847e8e
+    m_ActionName: 'Player/Grab[/Mouse/rightButton]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: a691cea8-84f7-4722-af9b-848281886b61
+    m_ActionName: 'Player/Cut[/Mouse/leftButton]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 0f9f0bc2-6984-41af-bcf0-e240caff13ba
+    m_ActionName: 'Player/MoveMouse[/Mouse/delta]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -32092,7 +32106,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Priority:
     Enabled: 1
-    m_Value: 0
+    m_Value: 1
   OutputChannel: 1
   StandbyUpdate: 2
   m_StreamingVersion: 20241001

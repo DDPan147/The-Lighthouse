@@ -57,6 +57,10 @@ public class Player : MonoBehaviour
         gm = FindAnyObjectByType<GameManager>();
     }
 
+    /*void StartUp()
+    {
+
+    }*/
     void Update()
     {
         Debug.Log("MinigameActive " + GameManager.minigameActive);
