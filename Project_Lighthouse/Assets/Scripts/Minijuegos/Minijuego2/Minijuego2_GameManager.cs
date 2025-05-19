@@ -369,8 +369,8 @@ public class Minijuego2_GameManager : MonoBehaviour
                         Comida comida_Cortada = peladora.Comida.GetComponent<Comida>();
                         if (comida_Cortada.canBePelado)
                         {
-                            peladora.Comida.transform.Find("Forma").gameObject.SetActive(false);
-                            Instantiate(comida_Cortada.comida_Pelada, peladora.Comida.transform);
+                            /*peladora.Comida.transform.Find("Forma").gameObject.SetActive(false);
+                            Instantiate(comida_Cortada.comida_Pelada, peladora.Comida.transform);*/
                             comida_Cortada.isPelado = true;
                             peladora.thereIsFood = false;
                         }

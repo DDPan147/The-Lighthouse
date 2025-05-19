@@ -24,6 +24,9 @@ public class Comida : MonoBehaviour
     [HideInInspector] public Material comidaMat;
     public GameObject comida_Cortada;
     [Tooltip("Null if it doesn't have")]public GameObject comida_Pelada;
+    public Material normalMat;
+    public Material peladoMat;
+    private Material mat;
     private float moveSpeed = 0.4f;
     [HideInInspector] public bool thereIsBread;
     [HideInInspector] public bool feedbackSupervisor = true;
@@ -37,8 +40,13 @@ public class Comida : MonoBehaviour
         {
             rebozadoObj = transform.Find("Rebozado").gameObject;
         }
+        else if(tipoComida == TipoComida.Patata || tipoComida == TipoComida.Zanahoria)
+        {
+            mat = GetComponentInChildren<Renderer>().material;
+        }
         objData = GetComponent<Selectable_MG2>();
         rb = GetComponent<Rigidbody>();
+        
     }
 
     void Update()
@@ -51,10 +59,13 @@ public class Comida : MonoBehaviour
                 if(isPelado)
                 {
                     canBeCutted = true;
+                    mat = peladoMat;
+                    Debug.Log("KKPAwn");
                 }
                 else
                 {
                     canBePelado = true;
+                    mat = normalMat;
                 }
                 canBeRebozado = false;
 
@@ -67,10 +78,12 @@ public class Comida : MonoBehaviour
                 if (isPelado)
                 {
                     canBeCutted = true;
+                    mat = peladoMat;
                 }
                 else
                 {
                     canBePelado = true;
+                    mat = normalMat;
                 }
                 canBeRebozado = false;
 
