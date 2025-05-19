@@ -40,6 +40,7 @@ public class GameManager : MonoBehaviour
     [Space(30)]
     [Header("Cutscenes")]
 
+    [SerializeField] private GameObject mainMenu;
     [SerializeField] private CinemachineCamera cutsceneCamera;
     [SerializeField] private PlayableDirector timelineDirector;
     [SerializeField] private Image curtain;
@@ -70,16 +71,20 @@ public class GameManager : MonoBehaviour
     public UnityEvent[] OnDayStart = new UnityEvent[4];
     public static int dayCount;
 
-
-
     void Start()
     {
-        dayCount = 1;
         mainCamera = Camera.main;
         eventSystem = FindAnyObjectByType<EventSystem>().gameObject;
         audioListener = FindAnyObjectByType<AudioListener>();
         player = FindAnyObjectByType<Player>();
+    }
+
+    public void StartUp()
+    {
+        mainMenu.SetActive(false);
+        dayCount = 1;
         StartDay(dayCount);
+        player.ToggleCollider();
     }
 
     void Update()
@@ -344,11 +349,6 @@ public class GameManager : MonoBehaviour
     {
         //Your code here
         SceneManager.LoadScene("ProvEnding");
-    }
-
-    public void Test()
-    {
-        Debug.Log("Holaaa");
     }
 
 }
