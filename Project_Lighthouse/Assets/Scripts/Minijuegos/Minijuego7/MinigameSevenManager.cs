@@ -5,6 +5,13 @@ using System.Collections;
 
 public class MinigameSevenManager : MonoBehaviour
 {
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            EndMinigame();
+        }
+    }
     #region Singleton
     public static MinigameSevenManager Instance { get; private set; }
     private void Awake()

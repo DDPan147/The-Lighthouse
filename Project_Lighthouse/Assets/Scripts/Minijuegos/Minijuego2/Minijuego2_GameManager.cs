@@ -96,6 +96,7 @@ public class Minijuego2_GameManager : MonoBehaviour
 
     void Update()
     {
+
         CameraMovement();
         if(Input.GetKeyDown(KeyCode.Tab))
         {
