@@ -60,7 +60,6 @@ public class Comida : MonoBehaviour
                 {
                     canBeCutted = true;
                     mat = peladoMat;
-                    Debug.Log("KKPAwn");
                 }
                 else
                 {
