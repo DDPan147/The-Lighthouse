@@ -417,8 +417,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46febb44ff4b3be4c9a7d78b14e847ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cloudObj: {fileID: 3719224745730887644, guid: ecaaa45cafd4b7c4e9ea19f90d5664c5, type: 3}
-  badCloudObj: {fileID: 3719224745730887644, guid: 037f0b49c94669e40a0c1a616c54746f, type: 3}
+  cloudObj:
+  - {fileID: 512073842604110172, guid: 0eef1f680a979b04f85449c74baf0919, type: 3}
+  - {fileID: 1569621791840413714, guid: 89a171f72175d3d4fb0553ba5d30da2b, type: 3}
+  - {fileID: 4525957056477846804, guid: c3f46e0985b3aab4d954cf73b1a8997c, type: 3}
+  - {fileID: 5960292774798592191, guid: ab7709eb9abbf4c458b251f41de81e17, type: 3}
+  - {fileID: 4044237162496122767, guid: 95419c7414e947248a929b0862018955, type: 3}
+  - {fileID: 7796560313190307784, guid: a7cb4a67714cb934897f81a679b02a1f, type: 3}
+  - {fileID: 5018421799444165090, guid: 4d25b7ef49c12894e90d81f011930333, type: 3}
+  - {fileID: 5536359641784858926, guid: e147707898a001d4dbc78c8886cc5b98, type: 3}
+  badCloudObj:
+  - {fileID: 6594695978674214218, guid: 69bb49c5114133f4ba9b000ac50b6def, type: 3}
+  - {fileID: 6855720081787155482, guid: 46ba803eaf42f3d47af35bcf6d42fe3e, type: 3}
+  - {fileID: 6433685455305924881, guid: 5f534257aa46bae49b22c88a496a32f9, type: 3}
+  - {fileID: 2046034049257765483, guid: 4bf9e509a534a42449b0dbdd6b571381, type: 3}
+  - {fileID: 2295243292750988456, guid: eb4ea5d02ea781344887b2ca2f82ae36, type: 3}
+  - {fileID: 2736996848606958581, guid: a8784912aeb819f4fa995e9683f023a9, type: 3}
+  - {fileID: 9102504338406401367, guid: 48c98fd113ec82b449348ad8ae5fc413, type: 3}
+  - {fileID: 2692571856209427242, guid: c287a8cd0c0d4b741a02090470ee2338, type: 3}
+  - {fileID: 4899988527029509484, guid: 7737525abff899f49a770243d52de3fd, type: 3}
   spawnTimeClouds: 2
 --- !u!65 &1595760754
 BoxCollider:

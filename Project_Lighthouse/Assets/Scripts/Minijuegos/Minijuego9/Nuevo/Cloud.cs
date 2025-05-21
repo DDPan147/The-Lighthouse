@@ -32,18 +32,22 @@ public class Cloud : MonoBehaviour
     public float timeFadeIn;
     private Rigidbody rb;
     private VisualEffect explodeEffect;
+    private GameObject child;
     private void Awake()
     {
+        child = transform.GetChild(0).gameObject;
         mainRenderer = GetComponent<Renderer>();
         mainMat = mainRenderer.material;
         rb = GetComponent<Rigidbody>();
         explodeEffect = GetComponent<VisualEffect>();
+        child.SetActive(false);
     }
 
     void Start()
     {
         pointsText.enabled = false;
         initialScale = transform.localScale;
+
         FadeIn();
         InitialMovement();
     }
@@ -60,6 +64,7 @@ public class Cloud : MonoBehaviour
 
     void FadeOut()
     {
+        child.SetActive(false);
         mainMat.DOFade(0f, 0.5f).OnComplete(() =>
         {
             pointsText.enabled = true;
@@ -72,8 +77,8 @@ public class Cloud : MonoBehaviour
 
     void FadeIn()
     {
-        mainMat.color = new Color(mainMat.color.r, mainMat.color.g, mainMat.color.b, 0);
-        mainMat.DOFade(1, timeFadeIn);
+        mainMat.SetColor(Shader.PropertyToID("_BaseColor"), new Color(mainMat.GetColor("_BaseColor").r, mainMat.GetColor("_BaseColor").g, mainMat.GetColor("_BaseColor").b, 0));
+        mainMat.DOFade(1, "_BaseColor" ,timeFadeIn).OnComplete(() => child.SetActive(true));
     }
 
     void InitialMovement()

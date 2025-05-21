@@ -5,8 +5,8 @@ public class CloudSpawn : MonoBehaviour
     private BoxCollider boxCollider;
 
     [Header("Prefabs de Nubes")]
-    public GameObject cloudObj;
-    public GameObject badCloudObj;
+    public GameObject[] cloudObj;
+    public GameObject[] badCloudObj;
     [Header("Variables")]
     public float spawnTimeClouds;
     void Start()
@@ -42,16 +42,21 @@ public class CloudSpawn : MonoBehaviour
         GameObject cloud;
         if(random == 4)
         {
-            cloud = Instantiate(badCloudObj, transform);
+            cloud = Instantiate(badCloudObj[RandomCloud(0, badCloudObj.Length - 1)], transform.position, Quaternion.Euler(new Vector3(0, 180, 0)));
             cloud.transform.position = GetRandomPointInCollider();
-            cloud.transform.eulerAngles = new Vector3(0, 0, 0);
         }
         else
         {
-            cloud = Instantiate(cloudObj, transform);
+            cloud = Instantiate(cloudObj[RandomCloud(0, cloudObj.Length - 1)], transform.position, Quaternion.Euler(new Vector3(0, 180, 0)));
             cloud.transform.position = GetRandomPointInCollider();
-            cloud.transform.eulerAngles = new Vector3(0, 0, 0);
         }
         
+    }
+
+    int RandomCloud(int min, int max)
+    {
+        int result = 0;
+        result = Random.Range(min, max);
+        return result;
     }
 }
