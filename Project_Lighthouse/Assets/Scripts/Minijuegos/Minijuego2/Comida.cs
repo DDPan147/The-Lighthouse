@@ -40,10 +40,10 @@ public class Comida : MonoBehaviour
         {
             rebozadoObj = transform.Find("Rebozado").gameObject;
         }
-        else if(tipoComida == TipoComida.Patata || tipoComida == TipoComida.Zanahoria)
+        /*else if(tipoComida == TipoComida.Patata || tipoComida == TipoComida.Zanahoria)
         {
             mat = GetComponentInChildren<Renderer>().material;
-        }
+        }*/
         objData = GetComponent<Selectable_MG2>();
         rb = GetComponent<Rigidbody>();
         
@@ -59,12 +59,12 @@ public class Comida : MonoBehaviour
                 if(isPelado)
                 {
                     canBeCutted = true;
-                    mat = peladoMat;
+                    //mat = peladoMat;
                 }
                 else
                 {
                     canBePelado = true;
-                    mat = normalMat;
+                    //mat = normalMat;
                 }
                 canBeRebozado = false;
 

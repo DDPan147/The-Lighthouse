@@ -4,7 +4,7 @@ using UnityEngine;
 public class Tuberia : MonoBehaviour
 {
     public bool isPart1Connected, isPart2Connected, isConnected;
-    [HideInInspector] public bool canRotate = true;
+    public bool canRotate = true;
 
     void Update()
     {

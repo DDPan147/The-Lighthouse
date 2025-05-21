@@ -87,6 +87,8 @@ public class Minijuego3_GameManager : MonoBehaviour
         if (correctPipes == tuberias.Length)
         {
             //Ha ganado el minijuego
+            Debug.Log("Gana :)");
+            CancelInvoke("RandomSteamGenerator");
             mc.DisplayComment(6);
             Invoke(nameof(CompleteMinigame), 5);
         }
