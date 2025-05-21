@@ -48,6 +48,7 @@ public class RoomPart : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+        Debug.Log(gameObject.name + " has detected: " + other.gameObject.name + " with tag " + other.gameObject.tag);
         if (other.gameObject.CompareTag("Player"))
         {
             
