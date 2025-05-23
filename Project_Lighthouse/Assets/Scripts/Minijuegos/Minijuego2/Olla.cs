@@ -11,7 +11,6 @@ public class Olla : MonoBehaviour
     public bool isFilledWithFood;
     [Header("Asset Variables")]
     public GameObject foodCooked;
-    public GameObject potProgressionBackground;
 
     [Header("Value Variables")]
     public float timeToCook;
@@ -22,6 +21,8 @@ public class Olla : MonoBehaviour
     [HideInInspector]public GameObject canvas;
     private VisualEffect cookingVFX;
     private Minijuego2_GameManager gm;
+    [HideInInspector] public bool firstFood;
+    [HideInInspector] public bool lastFood;
     private bool _takeOffFood;
     
     #endregion
@@ -50,7 +51,6 @@ public class Olla : MonoBehaviour
         gm = GameObject.FindAnyObjectByType<Minijuego2_GameManager>();
         canvas = transform.GetChild(1).gameObject;
         potProgress = canvas.transform.GetChild(0).transform.GetChild(0).GetComponent<Slider>();
-        //potProgress = potProgressionBackground.transform.GetChild(1).GetComponent<Slider>();
         cookingVFX = GetComponentInChildren<VisualEffect>();
     }
 
@@ -60,13 +60,7 @@ public class Olla : MonoBehaviour
 
     }
 
-    private void Update()
-    {
-        if (isFilledWithFood)
-        {
-            //GetComponent<Renderer>().material.color = Color.red;
-        }
-    }
+
 
     private void OnTriggerEnter(Collider other)
     {
@@ -81,6 +75,7 @@ public class Olla : MonoBehaviour
                     gm.ErrorComments(16,16);
                     return;
                 }
+                if (foodInPot == 0) firstFood = true;
                 Sequence PutFood = DOTween.Sequence();
                 PutFood.Append(other.gameObject.transform.DOMove(transform.position + new Vector3(0, 0.5f, 0), 0.5f));
                 gm.PutFoodInPot(comida);
@@ -93,8 +88,6 @@ public class Olla : MonoBehaviour
                     if (foodInPot >= foodNeeded)
                     {
                         canvas.SetActive(true);
-                        //StartCoroutine(FoodProgress());
-                        //potProgress.DOFillAmount(1, timeToCook).OnPlay(() => cookingVFX.Play()).OnComplete(() => { isFilledWithFood = true; cookingVFX.Stop(); } );
                         potProgress.DOValue(1, timeToCook).OnPlay(() => cookingVFX.Play()).OnComplete(() => { isFilledWithFood = true; cookingVFX.Stop();});
                         
                     }
