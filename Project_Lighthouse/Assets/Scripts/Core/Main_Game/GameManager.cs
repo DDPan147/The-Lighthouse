@@ -317,7 +317,7 @@ public class GameManager : MonoBehaviour
     public void LunaMoverGrito()
     {
         //Voy a tener que desactivar todo lol
-        luna.transform.position = new Vector3(1.45f, 3.47f, -4.86f);
+        luna.transform.position = new Vector3(1.45f, 13.47f, -4.86f);
         luna.GetComponent<MeshRenderer>().enabled = false;
     }
     #endregion

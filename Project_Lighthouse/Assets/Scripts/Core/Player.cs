@@ -19,6 +19,8 @@ public class Player : MonoBehaviour
     public float transitionPercentage;
     private Vector3 lastPosition;
 
+    [HideInInspector]public RoomPart currentRoom;
+
     [HideInInspector]public float splineLength;
 
     [HideInInspector]public static float moveVector;
@@ -107,19 +109,16 @@ public class Player : MonoBehaviour
             transform.rotation = Quaternion.LookRotation(newDirection, transform.up);
         }
         triggerSwitchText.enabled = false;
-        Debug.Log("Im on cutscene");
     }
     private void TransitionState()
     {
         Vector3 currentPosition = transitionSpline.EvaluatePosition(transitionPercentage);
         transform.position = currentPosition;
-        Debug.Log("Im on transition");
         triggerSwitchText.enabled = false;
     }
 
     private void ControlState()
     {
-        Debug.Log("Im on control");
 
         //Transform Input Data into Movement
         //moveVector = Input.GetAxis("Horizontal");
@@ -180,7 +179,7 @@ public class Player : MonoBehaviour
                 activeMinigameSwitch.TriggerMinigame();
             }
         }
-        if (activeLadderSwitch != null && canMove && interact)
+        else if (activeLadderSwitch != null && canMove && interact)
         {
             activeLadderSwitch.UnlockTheLadder();
         }
@@ -335,7 +334,6 @@ public class Player : MonoBehaviour
 
     public void EndTransition()
     {
-        Debug.Log("He acabao transicion");
         moveState = MoveStates.Control;
         transitionPercentage = 0;
         if(activeSplineSwitch != null)

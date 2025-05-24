@@ -2,6 +2,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using Unity.Cinemachine;
+using System;
+using Unity.VisualScripting;
+using System.Collections;
 
 public class RoomPart : MonoBehaviour
 {
@@ -28,9 +31,11 @@ public class RoomPart : MonoBehaviour
     public FadeTarget[] targets;
     public float fadeTime;
 
+    private Player player;
     //DOTween
-    List<Tween> fadeInTweens = new List<Tween>();
-    List<Tween> fadeOutTweens = new List<Tween>();
+    public int numberOfTweens;
+    public List<Tween> fadeInTweens = new List<Tween>();
+    public List<Tween> fadeOutTweens = new List<Tween>();
 
     void Start()
     {
@@ -39,11 +44,12 @@ public class RoomPart : MonoBehaviour
             targets[i].mat = targets[i].target.GetComponent<Renderer>().material;
             targets[i].initialAlpha = targets[i].mat.color.a;
         }
+        player = FindAnyObjectByType<Player>();
     }
 
     void Update()
     {
-        
+        numberOfTweens = fadeInTweens.Count;
     }
 
     void OnTriggerEnter(Collider other)
@@ -51,7 +57,10 @@ public class RoomPart : MonoBehaviour
         Debug.Log(gameObject.name + " has detected: " + other.gameObject.name + " with tag " + other.gameObject.tag);
         if (other.gameObject.CompareTag("Player"))
         {
-            
+            fadeInTweens.Clear();
+
+            player.currentRoom = this;
+
             if(fadeOutTweens.Count > 0)
             {
                 foreach (Tween fadeOutTween in fadeOutTweens)
@@ -60,10 +69,11 @@ public class RoomPart : MonoBehaviour
                 }
             }
 
-            foreach(FadeTarget target in targets)
+            foreach (FadeTarget target in targets)
             {
                 Tween fadeInTween = DOTween.ToAlpha(() => target.mat.color, x => target.mat.color = x, target.amount, fadeTime).SetEase(Ease.OutCubic);
                 fadeInTweens.Add(fadeInTween);
+                
             }
         }
     }
@@ -76,6 +86,17 @@ public class RoomPart : MonoBehaviour
             fadeOutTween = DOTween.ToAlpha(() => mat.color, x => mat.color = x, initialAlpha, fadeTime).SetEase(Ease.InCubic);
         }*/
 
+        if (other.gameObject.CompareTag("Player"))
+        {
+            StartCoroutine(TriggerExitDelay());
+        }
+    }
+
+    IEnumerator TriggerExitDelay()
+    {
+        yield return null;
+        fadeOutTweens.Clear();
+
         if (fadeInTweens.Count > 0)
         {
             foreach (Tween fadeInTween in fadeInTweens)
@@ -86,6 +107,19 @@ public class RoomPart : MonoBehaviour
 
         foreach (FadeTarget target in targets)
         {
+            if(player.currentRoom == this)
+            {
+                player.currentRoom = null;
+            }
+            if (player.currentRoom != null)
+            {
+                if (Array.Exists(player.currentRoom.targets, newTarget => newTarget.target == target.target))
+                {
+                    continue;
+                }
+            }
+
+
             Tween fadeOutTween = DOTween.ToAlpha(() => target.mat.color, x => target.mat.color = x, target.initialAlpha, fadeTime).SetEase(Ease.OutCubic);
             fadeOutTweens.Add(fadeOutTween);
         }

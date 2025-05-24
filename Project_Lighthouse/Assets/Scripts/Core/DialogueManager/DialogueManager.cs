@@ -209,7 +209,6 @@ public class DialogueManager : MonoBehaviour
         else
         {
             target.text = currentSentence.sentenceText;
-            Debug.Log("Nueva sentence: " + currentSentence.sentenceText);
             target.transform.GetChild(1).GetComponent<TMP_Text>().text = "";
             target.transform.GetChild(1).GetComponent<TextEffect>().enabled = false;
             target.transform.parent.transform.DOScale(1, popupScaleDuration).SetEase(Ease.OutBack).OnComplete(() =>
