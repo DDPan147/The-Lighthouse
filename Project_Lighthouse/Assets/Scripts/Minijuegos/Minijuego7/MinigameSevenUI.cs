@@ -102,6 +102,9 @@ public class MinigameSevenUI : MonoBehaviour
             
             if (objectDescriptionText != null)
                 objectDescriptionText.text = objectType.GetObjectDescription();
+
+            if (objectIcon != null)
+                objectIcon.sprite = objectType.GetObjectIcon().sprite;
             
             if (emotionalValueText != null)
                 emotionalValueText.text = $"Valor emocional: {(objectType.isImportantObject ? "Alto" : "Bajo")}";
