@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TypeObject : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class TypeObject : MonoBehaviour
 
     [SerializeField] private string objectDescription;
     [SerializeField] private float emotionalWeight;
+    [SerializeField] private Image iconObject;
     
     public string GetObjectDescription() => objectDescription;
+    public Image GetObjectIcon() => iconObject;
 }
