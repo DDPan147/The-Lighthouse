@@ -2,9 +2,9 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Knife : MonoBehaviour
+public class KitchenTool : MonoBehaviour
 {
-    public bool isCutting;
+    public bool isDoing;
     [HideInInspector] public bool thereIsFood;
     [HideInInspector] public bool feedbackSupervisor = true;
     [HideInInspector] public GameObject Comida;

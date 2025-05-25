@@ -9,8 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 836471833211094643}
-  - component: {fileID: 904909346256893181}
   - component: {fileID: 6474400508393940210}
+  - component: {fileID: 4526109093921180126}
+  - component: {fileID: 1427222940751173570}
   m_Layer: 0
   m_Name: Cuchillo_Minijuego2
   m_TagString: Cuchillo
@@ -34,22 +35,6 @@ Transform:
   - {fileID: 816374977418210587}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &904909346256893181
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7387162545703932680}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 575847bf590123f41ba405f35372f633, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isCutting: 0
-  thereIsFood: 0
-  feedbackSupervisor: 1
-  Comida: {fileID: 0}
 --- !u!65 &6474400508393940210
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -71,6 +56,38 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.106156945, y: 0.41511595, z: 0.4067161}
   m_Center: {x: -0.0009345114, y: -0.16118401, z: 0.061265588}
+--- !u!114 &4526109093921180126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7387162545703932680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30d853f3a835ca74a86d87a01a1cd003, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isGrabbed: 0
+  canBeGrabbed: 0
+  moveDirection: {x: 0, y: 0}
+  origPosition: {x: 0, y: 0, z: 0}
+--- !u!114 &1427222940751173570
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7387162545703932680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd397084cb3b0134fa4eec2fa62ed299, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isDoing: 0
+  thereIsFood: 0
+  feedbackSupervisor: 1
+  Comida: {fileID: 0}
 --- !u!1001 &927426831156169456
 PrefabInstance:
   m_ObjectHideFlags: 0
