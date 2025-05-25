@@ -68,7 +68,7 @@ public class Minijuego2_GameManager : MonoBehaviour
                 Debug.Log("Terminado");
                 //Dialogo
                 mc.DisplayComment(18);
-                Invoke(nameof(CompleteMinigame), 4);
+                Invoke(nameof(CompleteMinigame), 2.6f);
             }
         }
     }
@@ -178,7 +178,16 @@ public class Minijuego2_GameManager : MonoBehaviour
     #region CommentsEvents
     public void TimeComments()
     {
-        int random = Random.Range(0, 4);
+        int random;
+        if (finishRecipe1 == false)
+        {
+            random = Random.Range(0, 3);
+        }
+        else
+        {
+            random = Random.Range(1, 4);
+        }
+        
         mc.DisplayErrorComment(random);
     }
     public void ErrorComments(int i, int j)
@@ -227,6 +236,11 @@ public class Minijuego2_GameManager : MonoBehaviour
                         grabObject.GetComponent<Olla>().isFilledWithFood = false;
                         //grabObject = grabObject.GetComponent<Olla>().foodCooked;
                         //grabObjectData = grabObject.GetComponent<Selectable_MG2>();
+                    }
+                    else if(finishRecipe1 == true)
+                    {
+                        ErrorComments(19, 20);
+                        Debug.Log("Se necesita una cuchara para la sopa");
                     }
                 }
             }

@@ -9,6 +9,9 @@ public class Minigame8_GameManager : MonoBehaviour
     public GameObject canica, candado;
     private float rotation;
     public bool canRotate = true;
+    private int timesRotate;
+    public int minCommentRate, maxCommentRate;
+    [HideInInspector]public MinigameComments mc;
 
     private void Update()
     {
@@ -33,6 +36,7 @@ public class Minigame8_GameManager : MonoBehaviour
                     rotation += 90;
                     transform.DORotate(new Vector3(candado.transform.localEulerAngles.x,candado.transform.localEulerAngles.y, rotation), 0.5f, RotateMode.Fast).OnComplete(() =>
                     {
+                        timesRotate++;
                         canica.GetComponent<Pelota>().MoveMarble();
                         StartCoroutine(CanRotate());
                     });
@@ -43,9 +47,14 @@ public class Minigame8_GameManager : MonoBehaviour
                     rotation += -90;
                     transform.DORotate(new Vector3(candado.transform.localEulerAngles.x,candado.transform.localEulerAngles.y, rotation), 0.5f, RotateMode.Fast).OnComplete(() =>
                     {
+                        timesRotate++;
                         canica.GetComponent<Pelota>().MoveMarble();
                         StartCoroutine(CanRotate());
                     });
+                }
+                if(timesRotate >= Random.Range(minCommentRate, maxCommentRate))
+                {
+                    RotateComments(0, 4);
                 }
             }
         }
@@ -72,5 +81,10 @@ public class Minigame8_GameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f);
         canRotate = true;
+    }
+
+    public void RotateComments(int i, int j)
+    {
+        mc.DisplayErrorComment(Random.Range(i, j + 1));
     }
 }

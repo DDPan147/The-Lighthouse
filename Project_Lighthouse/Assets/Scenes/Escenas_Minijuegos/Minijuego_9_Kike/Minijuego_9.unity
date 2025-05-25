@@ -673,6 +673,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1765725578}
   - component: {fileID: 1765725579}
+  - component: {fileID: 1765725580}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -709,6 +710,83 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   totalCloudsKilled: 0
   cloudNumberToKill: 10
+--- !u!114 &1765725580
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1765725577}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03ea2e1a159507841bad01052bfbfaba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  comments:
+  - comment: "\xA1Eso es, debo deshacerme de los pensamientos negativos!"
+    time: 3
+    speaker: 0
+    commented: 0
+  - comment: Voy por buen camino.
+    time: 2
+    speaker: 0
+    commented: 0
+  - comment: El dolor de cabeza disminuye.
+    time: 2
+    speaker: 0
+    commented: 0
+  - comment: Bien. Ya queda poco.
+    time: 2
+    speaker: 0
+    commented: 0
+  - comment: Ugh! Eso no.
+    time: 2
+    speaker: 0
+    commented: 0
+  - comment: "No, no creo que fuera buena decisi\xF3n."
+    time: 2
+    speaker: 0
+    commented: 0
+  - comment: "Eso duele\u2026"
+    time: 2
+    speaker: 0
+    commented: 0
+  - comment: "\u2026"
+    time: 1.5
+    speaker: 0
+    commented: 0
+  - comment: "\u2026\u2026."
+    time: 1.5
+    speaker: 0
+    commented: 0
+  - comment: "\u2026\u2026\u2026\u2026."
+    time: 1.5
+    speaker: 0
+    commented: 0
+  - comment: "Uf\u2026"
+    time: 1.5
+    speaker: 0
+    commented: 0
+  - comment: "Todo esto\u2026"
+    time: 1.5
+    speaker: 0
+    commented: 0
+  - comment: "Creo\u2026"
+    time: 1.5
+    speaker: 0
+    commented: 0
+  - comment: Creo que ha llegado el momento.
+    time: 2
+    speaker: 0
+    commented: 0
+  - comment: "Debo aceptar la realidad y seguir adelante\u2026"
+    time: 2
+    speaker: 0
+    commented: 0
+  - comment: Con una sonrisa.
+    time: 2
+    speaker: 0
+    commented: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

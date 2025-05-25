@@ -7,15 +7,15 @@ public class Minijuego9_GameManager : MonoBehaviour
 {
     public int totalCloudsKilled;
     public int cloudNumberToKill;
-    
+    [HideInInspector] public MinigameComments mc;
 
+    private void Awake()
+    {
+        mc = GetComponent<MinigameComments>();
+    }
 
     void Update()
     {
-        if(totalCloudsKilled >= cloudNumberToKill)
-        {
-            CompleteMinigame();
-        }
         if(Input.GetKeyDown(KeyCode.Tab))
         {
             CompleteMinigame();
@@ -36,5 +36,29 @@ public class Minijuego9_GameManager : MonoBehaviour
             Debug.LogWarning("No se ha encontrado el Game Manager de la escena principal. No se va a volver al juego");
         }
     }
+
+    public IEnumerator FinishMinigame9Sequence()
+    {
+        mc.DisplayComment(7);
+        yield return new WaitForSecondsRealtime(1.5f);
+        mc.DisplayComment(8);
+        yield return new WaitForSecondsRealtime(1.5f);
+        mc.DisplayComment(9);
+        yield return new WaitForSecondsRealtime(1.5f);
+        mc.DisplayComment(10);
+        yield return new WaitForSecondsRealtime(1.5f);
+        mc.DisplayComment(11);
+        yield return new WaitForSecondsRealtime(1.5f);
+        mc.DisplayComment(12);
+        yield return new WaitForSecondsRealtime(1.5f);
+        mc.DisplayComment(13);
+        yield return new WaitForSecondsRealtime(2f);
+        mc.DisplayComment(14);
+        yield return new WaitForSecondsRealtime(2f);
+        mc.DisplayComment(15);
+        yield return new WaitForSecondsRealtime(2f);
+        CompleteMinigame();
+    }
+
 
 }
