@@ -14,6 +14,7 @@ public class ClockGear : MonoBehaviour
     public TypeDragDrop type = TypeDragDrop.ResetPos;
     public int correctSlotPosition;
     private Vector3 initialPosition;
+    private Rigidbody rb;
     
     [Header("Material detection")]
     public Material outlineMaterial;
@@ -42,6 +43,7 @@ public class ClockGear : MonoBehaviour
 
     private void Awake()
     {
+        rb = GetComponent<Rigidbody>();
         outlineMaterial = GetComponent<MeshRenderer>().materials[1];
         initialPosition = transform.position;
         originalScale = transform.localScale;
@@ -139,6 +141,7 @@ public class ClockGear : MonoBehaviour
                 // Opcional: Hacer algo cuando termine la rotación
                 Debug.Log($"Engranaje {gearID} completó su rotación");
             });
+        rb.constraints = RigidbodyConstraints.FreezeAll; // Congelar el Rigidbody para evitar movimiento
     }
 
     private void AnimateToPosition(Vector3 targetPosition)
