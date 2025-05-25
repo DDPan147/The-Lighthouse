@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Linq;
 using UnityEngine;
@@ -28,6 +29,10 @@ public class WindowProgressionManager : MonoBehaviour
 
     private int currentWindowIndex = 0;
     private bool isTransitioning = false;
+
+    [Header("Cristal Arreglado")]
+    public GameObject cristalArreglado;
+    public WindowCompletionEffect defCompletionEffect;
 
     private void Start()
     {
@@ -157,29 +162,49 @@ public class WindowProgressionManager : MonoBehaviour
         }
         else
         {
-            ShowCompletionPanel();
+            ShowCompletionEffect();
         }
 
         isTransitioning = false;
     }
 
-    private void ShowCompletionPanel()
+    private void ShowCompletionEffect()
     {
-        if (completionPanel != null)
+        if (cristalArreglado != null)
         {
-            completionPanel.SetActive(true);
+            cristalArreglado.SetActive(true);
+            StartCoroutine(PlayAnimationCompleted());
         }
+        
+    }
 
-        /*Alvaro*/ //Function to complete minigame and return to lobby
-        GameManager gm = FindAnyObjectByType<GameManager>();
-        if (gm != null)
+    private IEnumerator PlayAnimationCompleted()
+    {
+        if (defCompletionEffect != null)
         {
-            gm.MinigameCompleted(5);
+            defCompletionEffect.PlayCompletionEffect();
+            yield return new WaitForSeconds(defCompletionEffect.sweepDuration + 0.5f);
+            if (completionPanel != null)
+            {
+                completionPanel.SetActive(true);
+            }
+
+            /*Alvaro*/ //Function to complete minigame and return to lobby
+            GameManager gm = FindAnyObjectByType<GameManager>();
+            if (gm != null)
+            {
+                gm.MinigameCompleted(5);
+            }
+            else
+            {
+                Debug.LogWarning("No se ha encontrado el Game Manager de la escena principal. No se va a volver al juego");
+            }
         }
         else
         {
-            Debug.LogWarning("No se ha encontrado el Game Manager de la escena principal. No se va a volver al juego");
+            Debug.LogWarning("No se ha asignado un efecto de finalización por defecto.");
         }
+
+        
     }
-    
 }

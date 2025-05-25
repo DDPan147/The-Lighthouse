@@ -63,7 +63,7 @@ public class WindowRestorationUIManager : MonoBehaviour
 
         gameManager.onMinigameComplete.AddListener(() => {
             Debug.Log("Minigame Completed");
-            ShowCompletionScreen();
+            //ShowCompletionScreen();
         });
     }
 
@@ -87,7 +87,7 @@ public class WindowRestorationUIManager : MonoBehaviour
 
     public void ShowCompletionScreen()
     {
-        completionPanel.SetActive(true);
+        //completionPanel.SetActive(true);
         GameManager gm = FindFirstObjectByType<GameManager>();
         if (gm != null)
         {
@@ -107,12 +107,6 @@ public class WindowRestorationUIManager : MonoBehaviour
             gameManager.onFragmentPlaced.RemoveAllListeners();
             gameManager.onMinigameComplete.RemoveAllListeners();
         }
-    }
-
-    public void OnContinueButtonClicked()
-    {
-        // Aquí puedes poner la lógica para continuar al siguiente nivel
-        // o cerrar el minijuego
     }
     
 }
