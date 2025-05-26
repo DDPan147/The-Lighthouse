@@ -10,7 +10,7 @@ public class LightControler : MonoBehaviour
     private bool start;
     private Camera cam;
     private Vector3 rayDirection;
-    public Minijuego9_GameManager gm;
+    [HideInInspector]public Minijuego9_GameManager gm;
     private GameObject activeCloud;
     private Material matActiveCloud;
     private bool canHit;
