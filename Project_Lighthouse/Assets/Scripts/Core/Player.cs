@@ -506,12 +506,19 @@ public class Player : MonoBehaviour
             CalculateGrass();
             if (isOnGrass)
             {
-                //string
-                //sm.PlayRandomInRange
+                string[] soundNames = new string[] {"PasosHierba1", "PasosHierba2", "PasosHierba3" };
+                if(!sm.FindSound("PasosHierba1").source.isPlaying && !sm.FindSound("PasosHierba2").source.isPlaying && !sm.FindSound("PasosHierba3").source.isPlaying)
+                {
+                    sm.PlayRandomInRange(soundNames);
+                }
             }
             else
             {
-
+                string[] soundNames = new string[] { "PasosMadera1", "PasosMadera2", "PasosMadera3" };
+                if (!sm.FindSound("PasosMadera1").source.isPlaying && !sm.FindSound("PasosMadera2").source.isPlaying && !sm.FindSound("PasosMadera3").source.isPlaying)
+                {
+                    sm.PlayRandomInRange(soundNames); 
+                }
             }
 
         }
