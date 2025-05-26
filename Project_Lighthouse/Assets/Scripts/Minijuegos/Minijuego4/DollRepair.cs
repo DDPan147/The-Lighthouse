@@ -146,22 +146,46 @@ public class DollRepair : MonoBehaviour
     IEnumerator MovePart(Transform parte, Transform destino)
     {
         repairingObject = true;
-        
+
         // Actualizar feedback si existe
         if (feedbackText != null)
         {
-            feedbackText.text = $"Reparando muñeca... ({actualPart+1}/{dollParts.Length})";
+            feedbackText.text = $"Reparando muñeca... ({actualPart + 1}/{dollParts.Length})";
         }
-        
-        while (Vector3.Distance(parte.position, destino.position) > 0.01f)
+
+        // Guardar los valores iniciales y finales para interpolación
+        Vector3 startPos = parte.position;
+        Quaternion startRot = parte.rotation;
+        //Vector3 startScale = parte.localScale;
+
+        Vector3 targetPos = destino.position;
+        Quaternion targetRot = destino.rotation;
+        //Vector3 targetScale = destino.localScale;
+
+        float journey = 0f;
+        float journeyLength = Vector3.Distance(startPos, targetPos);
+
+        while (journey <= journeyLength)
         {
             fixingPart = true;
-            parte.position = Vector3.MoveTowards(parte.position, destino.position, movementSpeed * Time.deltaTime);
+            float fractionOfJourney = journey / journeyLength;
+
+            // Interpolar posición, rotación y escala
+            parte.position = Vector3.Lerp(startPos, targetPos, fractionOfJourney);
+            parte.rotation = Quaternion.Lerp(startRot, targetRot, fractionOfJourney);
+            //parte.localScale = Vector3.Lerp(startScale, targetScale, fractionOfJourney);
+
+            journey += movementSpeed * Time.deltaTime;
             yield return null;
         }
-        parte.position = destino.position + partOffset;
+
+        // Asegurar valores finales exactos
+        parte.position = destino.position;
+        parte.rotation = destino.rotation;
+        //parte.localScale = destino.localScale;
+
         repairingObject = false;
-        
+
         // Actualizar feedback cuando se completa una parte
         if (feedbackText != null && actualPart >= dollParts.Length)
         {
