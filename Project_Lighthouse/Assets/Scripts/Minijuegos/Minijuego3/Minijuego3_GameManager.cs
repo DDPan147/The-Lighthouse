@@ -90,7 +90,7 @@ public class Minijuego3_GameManager : MonoBehaviour
             Debug.Log("Gana :)");
             CancelInvoke("RandomSteamGenerator");
             mc.DisplayComment(6);
-            Invoke(nameof(CompleteMinigame), 5);
+            Invoke(nameof(CompleteMinigame), 3);
         }
     }
 

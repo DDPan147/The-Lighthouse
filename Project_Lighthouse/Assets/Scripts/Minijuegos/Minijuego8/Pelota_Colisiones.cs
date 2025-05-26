@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Pelota_Colisiones : MonoBehaviour
@@ -27,7 +28,15 @@ public class Pelota_Colisiones : MonoBehaviour
         {
             //Ganas el Minijuego
             haGanado = true;
-            candado.SendMessage("Win");
+            candadoScript.mc.DisplayComment(4);
+            
+            StartCoroutine(CompleteMinigame(4f));
         }
+    }
+
+    public IEnumerator CompleteMinigame(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        candado.SendMessage("Win");
     }
 }

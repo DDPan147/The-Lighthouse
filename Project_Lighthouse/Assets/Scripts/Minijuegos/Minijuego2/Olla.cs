@@ -11,11 +11,13 @@ public class Olla : MonoBehaviour
     public bool isFilledWithFood;
     [Header("Asset Variables")]
     public GameObject foodCooked;
-
+    public Transform[] foodPositions;
     [Header("Value Variables")]
     public float timeToCook;
     public int foodNeeded;
     #region Private Variables
+    private GameObject[] foods;
+    private GameObject cookedFood;
     private int foodInPot;
     private Slider potProgress;
     [HideInInspector]public GameObject canvas;
@@ -37,10 +39,10 @@ public class Olla : MonoBehaviour
             _takeOffFood = value;
             if (_takeOffFood == true)
             {
-                GameObject food = Instantiate(foodCooked, transform.position, Quaternion.identity);
+                //GameObject food = Instantiate(foodCooked, transform.position, Quaternion.identity);
                 Sequence TakeOffFood = DOTween.Sequence();
-                TakeOffFood.Append(food.transform.DOMoveY(transform.position.y + 0.5f, 0.5f));
-                TakeOffFood.Append(food.transform.DOMove(transform.position + new Vector3(0, 0.2f, -0.5f), 0.5f));
+                TakeOffFood.Append(cookedFood.transform.DOMoveY(transform.position.y + 0.5f, 0.5f));
+                TakeOffFood.Append(cookedFood.transform.DOMove(transform.position + new Vector3(0, 0.2f, -0.5f), 0.5f));
             }
             
         }
@@ -52,12 +54,12 @@ public class Olla : MonoBehaviour
         canvas = transform.GetChild(1).gameObject;
         potProgress = canvas.transform.GetChild(0).transform.GetChild(0).GetComponent<Slider>();
         cookingVFX = GetComponentInChildren<VisualEffect>();
+        foods = new GameObject[foodPositions.Length];
     }
 
     private void Start()
     {
         canvas.SetActive(false);
-
     }
 
 
@@ -76,19 +78,29 @@ public class Olla : MonoBehaviour
                     return;
                 }
                 if (foodInPot == 0) firstFood = true;
+                foods[foodInPot] = other.gameObject;
                 Sequence PutFood = DOTween.Sequence();
                 PutFood.Append(other.gameObject.transform.DOMove(transform.position + new Vector3(0, 0.5f, 0), 0.5f));
                 gm.PutFoodInPot(comida);
                 gm.imGrabing = false;
-                PutFood.Append(other.gameObject.transform.DOMove(transform.position, 0.5f));
+                PutFood.Append(other.gameObject.transform.DOMove(foodPositions[foodInPot].position, 0.5f));
                 PutFood.OnComplete(() =>
                 {
                     foodInPot++;
-                    other.gameObject.SetActive(false);
+                    //other.gameObject.SetActive(false);
                     if (foodInPot >= foodNeeded)
                     {
                         canvas.SetActive(true);
-                        potProgress.DOValue(1, timeToCook).OnPlay(() => cookingVFX.Play()).OnComplete(() => { isFilledWithFood = true; cookingVFX.Stop();});
+                        potProgress.DOValue(1, timeToCook).OnPlay(() => cookingVFX.Play()).OnComplete(() => 
+                        {
+                            isFilledWithFood = true;
+                            cookingVFX.Stop();
+                            for(int i = 0; i < foods.Length; i++)
+                            {
+                                foods[i].SetActive(false);
+                            }
+                            cookedFood = Instantiate(foodCooked, transform.position, Quaternion.identity);
+                        });
                         
                     }
                     
@@ -113,6 +125,15 @@ public class Olla : MonoBehaviour
                 }
                 comida.transform.DOShakePosition(0.3f, 0.05f, 50, 90, false, true, ShakeRandomnessMode.Full).OnPlay(() => comida.feedbackSupervisor = false).OnComplete(() => comida.feedbackSupervisor = true);
             }
+        }
+
+        if (other.gameObject.CompareTag("Cuchara") && isFilledWithFood && gm.finishRecipe1)
+        {
+            Debug.Log("Sopita");
+            other.GetComponent<Cuchara>().hasFood = true;
+            other.transform.GetChild(1).gameObject.SetActive(true);
+            canvas.SetActive(false);
+            isFilledWithFood = false;
         }
     }
 

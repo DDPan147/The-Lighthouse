@@ -10,14 +10,16 @@ public class LightControler : MonoBehaviour
     private bool start;
     private Camera cam;
     private Vector3 rayDirection;
-    public GameObject gm;
+    public Minijuego9_GameManager gm;
     private GameObject activeCloud;
     private Material matActiveCloud;
     private bool canHit;
+    private int maxCloudKill;
     void Start()
     {
-        gm = GameObject.FindAnyObjectByType<Minijuego9_GameManager>().gameObject;
+        gm = GameObject.FindAnyObjectByType<Minijuego9_GameManager>();
         cam = Camera.main;
+        maxCloudKill = gm.cloudNumberToKill;
     }
 
 
@@ -35,9 +37,42 @@ public class LightControler : MonoBehaviour
                 //matActiveCloud = activeCloud.GetComponent<Renderer>().material;   Aun no (hacer que pierda opacidad mientras es eliminado)
                 activeCloud.transform.DOShakeScale(1f, 0.25f, 50, 45, true, ShakeRandomnessMode.Full).OnComplete(() =>
                 {
-                    gm.GetComponent<Minijuego9_GameManager>().totalCloudsKilled += activeCloud.GetComponent<Cloud>().points;
+                    gm.totalCloudsKilled += activeCloud.GetComponent<Cloud>().points;
                     activeCloud.GetComponent<Cloud>().isDying = true;
                     activeCloud = null;
+                    if(gm.totalCloudsKilled == 1)
+                    {
+                        gm.mc.DisplayComment(0);
+                    }
+                    else if(gm.totalCloudsKilled == gm.cloudNumberToKill / 4)
+                    {
+                        gm.mc.DisplayComment(1);
+                    }
+                    else if(gm.totalCloudsKilled == gm.cloudNumberToKill / 2)
+                    {
+                        gm.mc.DisplayComment(2);
+                    }
+                    else if(gm.totalCloudsKilled == gm.cloudNumberToKill * 3 / 4)
+                    {
+                        gm.mc.DisplayComment(3);
+                    }
+                    else if(gm.totalCloudsKilled >= gm.cloudNumberToKill)
+                    {
+                        StartCoroutine(gm.FinishMinigame9Sequence());
+                    }
+                }).SetId("Shake");
+                canHit = false;
+            }
+            if (hit.collider.gameObject.CompareTag("NubeMala") && canHit)
+            {
+                activeCloud = hit.collider.gameObject;
+                //matActiveCloud = activeCloud.GetComponent<Renderer>().material;   Aun no (hacer que pierda opacidad mientras es eliminado)
+                activeCloud.transform.DOShakeScale(1f, 0.25f, 50, 45, true, ShakeRandomnessMode.Full).OnComplete(() =>
+                {
+                    gm.totalCloudsKilled += activeCloud.GetComponent<Cloud>().points;
+                    activeCloud.GetComponent<Cloud>().isDying = true;
+                    activeCloud = null;
+                    BadCloudsComments();
                 }).SetId("Shake");
                 canHit = false;
             }
@@ -52,26 +87,9 @@ public class LightControler : MonoBehaviour
             canHit = true;
         }
     }
-
-    /*public void OnMove(InputAction.CallbackContext context)
+    public void BadCloudsComments()
     {
-        if(start)
-        {
-            moveDirection = context.ReadValue<Vector2>();
-            moveDirection *= Time.deltaTime * moveSpeed;
-        }
+        gm.mc.DisplayErrorComment(Random.Range(4, 7));
     }
 
-    public void OnClick(InputAction.CallbackContext context)
-    {
-        if(context.performed)
-        {
-            start = true;
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-        }
-    }
-    */
-
-    
 }
