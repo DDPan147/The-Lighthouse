@@ -4,7 +4,6 @@ public class Pelota : MonoBehaviour
 {
     private Rigidbody rb;
     //public GameObject canica;
-    public GameObject candado;
 
     public Vector3 whatIsDown;  
     void Start()
@@ -19,6 +18,8 @@ public class Pelota : MonoBehaviour
     public void MoveMarble()
     {
         rb.linearVelocity = whatIsDown;
+        rb.constraints = RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationX;
     }
+
 
 }
