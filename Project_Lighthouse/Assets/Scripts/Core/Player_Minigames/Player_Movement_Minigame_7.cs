@@ -8,6 +8,8 @@ public class Player_Movement_Minigame_7 : MonoBehaviour
     private Rigidbody rb;
     private PlayerOnGround ground;
     private Collider grabCollider;
+    public GameObject abueloPrefab;
+    public Animator animator;
 
     // --- Movimiento general ---
     [SerializeField] private Vector3 velocity;
@@ -62,6 +64,7 @@ public class Player_Movement_Minigame_7 : MonoBehaviour
             RunWithoutAcceleration();
         }
 
+
     }
     public void OnMoveCallback(InputAction.CallbackContext context)
     {
@@ -70,10 +73,27 @@ public class Player_Movement_Minigame_7 : MonoBehaviour
         directionZ = inputDirection.y;
         isMoving = inputDirection != Vector2.zero;
 
+
         if (isMoving)
         {
+            animator.SetBool("Idle", false);
+            animator.SetBool("isWalking", isMoving);
             ground.UpdatePlayerDirection(transform.position);
+            Vector3 moveDirection = new Vector3(directionX, 0f, directionZ);
+            if (moveDirection != Vector3.zero)
+            {
+                abueloPrefab.transform.rotation = Quaternion.LookRotation(-moveDirection);
+                // O para rotación suave:
+                // transform.rotation = Quaternion.Slerp(transform.rotation, 
+                //     Quaternion.LookRotation(moveDirection), rotationSpeed * Time.deltaTime);
+            }
         }
+        else
+        {
+            animator.SetBool("Idle", true);
+            animator.SetBool("isWalking", false);
+        }
+
     }
     private void RunWithAcceleration()
     {
