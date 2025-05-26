@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Experimental.GlobalIllumination;
 
 public class SkyboxChange : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class SkyboxChange : MonoBehaviour
     public Material daySkybox; 
     public Material nightSkybox; 
     private Material mat;
+    public DirectionalLight directionalLight;
     private void Awake()
     {
         mat = GetComponent<Renderer>().material;
