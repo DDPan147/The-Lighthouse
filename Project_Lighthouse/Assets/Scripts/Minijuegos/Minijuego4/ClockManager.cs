@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class ClockManager : MonoBehaviour
@@ -48,10 +49,18 @@ public class ClockManager : MonoBehaviour
         //     completionSound.Play();
 
         // Notificar al modo de reparación
+        StartCoroutine(CompleteClockLevel());
+    }
+
+    IEnumerator CompleteClockLevel()
+    {
+        yield return new WaitForSeconds(1f); // Espera para ver la animación
         if (repairMode != null)
         {
             repairMode.OnClockFixed();
         }
         MinigameFourManager.Instance.OnClockFixed();
     }
+
+
 }

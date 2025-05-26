@@ -6,13 +6,19 @@ using System.Collections;
 public class Minigame8_GameManager : MonoBehaviour
 {
     public Camera minigame8Camera;
-    public GameObject canica, candado;
-    private float rotation;
+    public GameObject canica, candado, marco;
     public bool canRotate = true;
     private int timesRotate;
     public int minCommentRate, maxCommentRate;
     [HideInInspector]public MinigameComments mc;
+    [HideInInspector]public float rotationX, rotationY, rotationZ;
 
+    private void Awake()
+    {
+        rotationX = candado.transform.localEulerAngles.x;
+        rotationY = candado.transform.localEulerAngles.y;
+        mc = GetComponent<MinigameComments>();
+    }
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Tab))
@@ -30,11 +36,12 @@ public class Minigame8_GameManager : MonoBehaviour
 
             if (Physics.Raycast(ray.origin, ray.direction * 10, out hit) && canRotate)
             {
+                Debug.Log(hit.collider.name);
                 if (hit.collider.gameObject.CompareTag("Tuberia"))
                 {
                     canRotate = false;
-                    rotation += 90;
-                    transform.DORotate(new Vector3(candado.transform.localEulerAngles.x,candado.transform.localEulerAngles.y, rotation), 0.5f, RotateMode.Fast).OnComplete(() =>
+                    rotationZ += 90;
+                    candado.transform.DOLocalRotate(new Vector3(rotationX,rotationY, rotationZ), 0.5f, RotateMode.Fast).OnComplete(() =>
                     {
                         timesRotate++;
                         canica.GetComponent<Pelota>().MoveMarble();
@@ -44,8 +51,8 @@ public class Minigame8_GameManager : MonoBehaviour
                 if (hit.collider.gameObject.CompareTag("Tuberia_Entrada"))
                 {
                     canRotate = false;
-                    rotation += -90;
-                    transform.DORotate(new Vector3(candado.transform.localEulerAngles.x,candado.transform.localEulerAngles.y, rotation), 0.5f, RotateMode.Fast).OnComplete(() =>
+                    rotationZ += -90;
+                    candado.transform.DOLocalRotate(new Vector3(rotationX,rotationY, rotationZ), 0.5f, RotateMode.Fast).OnComplete(() =>
                     {
                         timesRotate++;
                         canica.GetComponent<Pelota>().MoveMarble();
@@ -64,7 +71,7 @@ public class Minigame8_GameManager : MonoBehaviour
     public void Win()
     {
         Debug.Log("Has Ganado");
-        candado.transform.DORotate(new Vector3(0, 90, 0), 1.5f, RotateMode.Fast);
+        
 
         GameManager gm = FindAnyObjectByType<GameManager>();
         if (gm != null)
@@ -79,7 +86,7 @@ public class Minigame8_GameManager : MonoBehaviour
 
     public IEnumerator CanRotate()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.8f);
         canRotate = true;
     }
 
