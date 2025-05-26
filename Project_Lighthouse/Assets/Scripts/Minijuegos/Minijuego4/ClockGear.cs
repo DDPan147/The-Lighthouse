@@ -150,7 +150,7 @@ public class ClockGear : MonoBehaviour
         transform.DOMove(targetPosition, snapDuration)
             .SetEase(snapEase)
             .OnComplete(() => {
-                transform.DOPunchScale(Vector3.one * 0.1f, 0.2f, 1, 0.5f);
+                transform.DOPunchScale(new Vector3(0.1f, 0.1f, 0.1f) * 0.1f, 0.01f, 1, 0.5f);
             });
     }
 

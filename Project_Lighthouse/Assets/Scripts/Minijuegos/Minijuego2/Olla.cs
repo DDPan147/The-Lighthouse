@@ -12,6 +12,8 @@ public class Olla : MonoBehaviour
     [Header("Asset Variables")]
     public GameObject foodCooked;
     public Transform[] foodPositions;
+    public VisualEffect cookingVFX;
+    public VisualEffect extraVFX;
     [Header("Value Variables")]
     public float timeToCook;
     public int foodNeeded;
@@ -21,7 +23,7 @@ public class Olla : MonoBehaviour
     private int foodInPot;
     private Slider potProgress;
     [HideInInspector]public GameObject canvas;
-    private VisualEffect cookingVFX;
+    
     private Minijuego2_GameManager gm;
     [HideInInspector] public bool firstFood;
     [HideInInspector] public bool lastFood;
@@ -53,7 +55,6 @@ public class Olla : MonoBehaviour
         gm = GameObject.FindAnyObjectByType<Minijuego2_GameManager>();
         canvas = transform.GetChild(1).gameObject;
         potProgress = canvas.transform.GetChild(0).transform.GetChild(0).GetComponent<Slider>();
-        cookingVFX = GetComponentInChildren<VisualEffect>();
         foods = new GameObject[foodPositions.Length];
     }
 
@@ -84,18 +85,36 @@ public class Olla : MonoBehaviour
                 gm.PutFoodInPot(comida);
                 gm.imGrabing = false;
                 PutFood.Append(other.gameObject.transform.DOMove(foodPositions[foodInPot].position, 0.5f));
+                foodInPot++;
                 PutFood.OnComplete(() =>
                 {
-                    foodInPot++;
+                    
                     //other.gameObject.SetActive(false);
                     if (foodInPot >= foodNeeded)
                     {
                         canvas.SetActive(true);
-                        potProgress.DOValue(1, timeToCook).OnPlay(() => cookingVFX.Play()).OnComplete(() => 
+                        potProgress.DOValue(1, timeToCook).OnPlay(() => 
+                        { 
+                            if(cookingVFX != null)
+                            {
+                                cookingVFX.Play();
+                            }
+                            if(extraVFX != null)
+                            {
+                                extraVFX.Play();
+                            }
+                        }).OnComplete(() => 
                         {
                             isFilledWithFood = true;
-                            cookingVFX.Stop();
-                            for(int i = 0; i < foods.Length; i++)
+                            if (cookingVFX != null)
+                            {
+                                cookingVFX.Stop();
+                            }
+                            if (extraVFX != null)
+                            {
+                                extraVFX.Stop();
+                            }
+                            for (int i = 0; i < foods.Length; i++)
                             {
                                 foods[i].SetActive(false);
                             }
@@ -134,6 +153,7 @@ public class Olla : MonoBehaviour
             other.transform.GetChild(1).gameObject.SetActive(true);
             canvas.SetActive(false);
             isFilledWithFood = false;
+            lastFood = true;
         }
     }
 
