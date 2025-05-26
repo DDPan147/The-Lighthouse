@@ -1,10 +1,12 @@
 using System;
+using System.Linq;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.Splines;
+using UnityEngine.Splines.Interpolators;
 
 public class Player : MonoBehaviour
 {
@@ -41,7 +43,12 @@ public class Player : MonoBehaviour
 
     private GameManager gm;
 
-    [SerializeField]private Animator meshAnimator;
+    public float currentSplineValue;
+
+    public int nodeToSelect;
+
+
+    
 
     public enum MoveStates
     {
@@ -50,6 +57,14 @@ public class Player : MonoBehaviour
     }
 
     [HideInInspector]public MoveStates moveState;
+
+    //Animation
+    [SerializeField] private Animator meshAnimator;
+
+    private float walkAmount;
+    [SerializeField]private bool hasTorchlight;
+    [SerializeField]private bool isOnStairs;
+
 
     #region Unity Functions and State Machine
     void Start()
@@ -67,6 +82,7 @@ public class Player : MonoBehaviour
     {
         Debug.Log("MinigameActive " + GameManager.minigameActive);
         Debug.Log("CutsceneActive " + GameManager.cutsceneActive);
+        AnimationControl();
         if (!GameManager.minigameActive && !GameManager.cutsceneActive)
         {
             if (moveState == MoveStates.Control)
@@ -115,6 +131,7 @@ public class Player : MonoBehaviour
         Vector3 currentPosition = transitionSpline.EvaluatePosition(transitionPercentage);
         transform.position = currentPosition;
         triggerSwitchText.enabled = false;
+        walkAmount = 1;
     }
 
     private void ControlState()
@@ -125,6 +142,10 @@ public class Player : MonoBehaviour
         if (!canMove) moveVector = 0;
         distancePercentage -= moveVector * speed * Time.deltaTime / splineLength;
         distancePercentage = Mathf.Clamp01(distancePercentage);
+
+
+        //For animator
+        walkAmount = moveVector;
 
         //Player Movement Across Spline
         Vector3 currentPosition = spline.EvaluatePosition(distancePercentage);
@@ -148,7 +169,11 @@ public class Player : MonoBehaviour
         Vector3 newDirection = new Vector3(direction.x, 0, direction.z);
         if (newDirection.magnitude > 0)
         {
-            transform.rotation = Quaternion.LookRotation(newDirection, transform.up);
+            if(Vector3.Cross(newDirection, transform.up) != Vector3.zero)
+            {
+                transform.rotation = Quaternion.LookRotation(newDirection, transform.up);
+            }
+            
         }
 
 
@@ -296,10 +321,9 @@ public class Player : MonoBehaviour
 
     public void StartTransition()
     {
-        //meshAnimator.Play("Test_Puertas");
         moveState = MoveStates.Transition;
         float duration = transitionSpline.GetLength() * transitionSpeed;
-        DOTween.To(() => transitionPercentage, x => transitionPercentage = x, 1, duration).OnComplete(() => EndTransition());
+        DOTween.To(() => transitionPercentage, x => transitionPercentage = x, 1, duration).OnComplete(() => EndTransition()).SetEase(Ease.Linear);
         //Play Transition Anim
     }
 
@@ -307,7 +331,7 @@ public class Player : MonoBehaviour
     {
         moveState = MoveStates.Transition;
         float duration = transitionSpline.GetLength() * transitionSpeed;
-        DOTween.To(() => transitionPercentage, x => transitionPercentage = x, 1, duration).OnComplete(() => onCompleteAction());
+        DOTween.To(() => transitionPercentage, x => transitionPercentage = x, 1, duration).OnComplete(() => onCompleteAction()).SetEase(Ease.Linear);
         //Play Transition Anim
     }
 
@@ -427,5 +451,109 @@ public class Player : MonoBehaviour
 
         transform.position = spline.EvaluatePosition(distancePercentage);
     }
+    #endregion
+    #region Animations
+    void AnimationControl()
+    {
+        //Cutscene or Gameplay
+        meshAnimator.SetBool("isCutscene", GameManager.cutsceneActive);
+
+        //isWalk
+        bool isWalk = walkAmount != 0;
+        meshAnimator.SetBool("isWalk", isWalk);
+
+        //walkState
+        int walkState = 0;
+
+        CalculateStairs();
+
+        if (hasTorchlight)
+        {
+            walkState = 1;
+        }
+        else if (isOnStairs)
+        {
+            if(walkAmount < 0)
+            {
+                walkState = 2;
+            }
+            else
+            {
+                walkState = 3;
+            }
+        }
+        else if (spline.gameObject.GetComponent<SplineAdditionalData>().isLadder)
+        {
+            walkState = 4;
+        }
+        meshAnimator.SetInteger("WalkState", walkState);
+        
+        
+
+
+    }
+
+    private void CalculateStairs()
+    {
+        var datavaluesA = spline[0].GetOrCreateFloatData("IsStairs");
+
+        if (datavaluesA.Count != 0)
+        {
+            int segment = GetCurrentSegment(spline[0], distancePercentage);
+
+            if (ExistsWithinArray(datavaluesA, segment) && ExistsWithinArray(datavaluesA, segment + 1))
+            {
+                isOnStairs = true;
+            }
+            else
+            {
+                isOnStairs = false;
+            }
+        }
+        else
+        {
+            isOnStairs = false;
+        }
+    }
+
+    int GetCurrentSegment(Spline spline, float t)
+    {
+
+
+        float totalLength = spline.GetLength();
+
+        float accumulatedLength = 0f;
+
+        for (int i = 0; i < spline.GetCurveCount(); i++)
+        {
+            float segmentLength = spline.GetCurveLength(i);
+
+            float normalizedStart = accumulatedLength / totalLength;
+            float normalizedEnd = (accumulatedLength + segmentLength) / totalLength;
+
+            if (t >= normalizedStart && t <= normalizedEnd)
+            {
+                return i;
+            }
+
+            accumulatedLength += segmentLength;
+        }
+
+        return -1;
+    }
+
+    bool ExistsWithinArray(SplineData<float> dataPoints, int knot)
+    {
+        foreach(var point in dataPoints)
+        {
+            if(point.Index == knot)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     #endregion
 }
