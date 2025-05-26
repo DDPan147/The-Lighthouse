@@ -36,14 +36,14 @@ public class SkyboxChange : MonoBehaviour
         mat.SetColor("_DeepWaterColor", dayWaterColour[0]);
         mat.SetColor("_WaterColor", dayWaterColour[1]);
         mat.SetColor("_ShallowWaterColor", dayWaterColour[2]);
-        RenderSettings.skybox = daySkybox;
+        UnityEngine.RenderSettings.skybox = daySkybox;
     }
     void SetNightColours()
     {
         mat.SetColor("_DeepWaterColor", nightWaterColour[0]);
         mat.SetColor("_WaterColor", nightWaterColour[1]);
         mat.SetColor("_ShallowWaterColor", nightWaterColour[2]);
-        RenderSettings.skybox = nightSkybox;
+        UnityEngine.RenderSettings.skybox = nightSkybox;
     }
 
 }
