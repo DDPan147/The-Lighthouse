@@ -109,15 +109,16 @@ public class Player : MonoBehaviour
 
         //Player Rotation Across Spline
         Vector3 direction;
-        if (lastPosition == Vector3.zero)
+        Vector3 nextPosition = spline.EvaluatePosition(distancePercentage + 0.05f);
+        direction = nextPosition - currentPosition;
+        /*if (lastPosition == Vector3.zero)
         {
-            Vector3 nextPosition = spline.EvaluatePosition(distancePercentage + 0.05f);
-            direction = nextPosition - currentPosition;
+            
         }
         else
         {
             direction = currentPosition - lastPosition;
-        }
+        }*/
 
         lastPosition = currentPosition;
         Vector3 newDirection = new Vector3(direction.x, 0, direction.z);
@@ -490,6 +491,16 @@ public class Player : MonoBehaviour
 
         transform.position = spline.EvaluatePosition(distancePercentage);
     }
+
+    public void AnimPatch_Position(Transform desiredPosition)
+    {
+        transform.position = desiredPosition.position;
+    }
+
+    public void AnimPatch_Rotation(float rot)
+    {
+        transform.rotation = Quaternion.Euler(transform.eulerAngles.x, rot, transform.eulerAngles.z);
+    }
     #endregion
     #region Animations
     void AnimationAndSoundControl()
@@ -497,6 +508,10 @@ public class Player : MonoBehaviour
         //Cutscene or Gameplay
         meshAnimator.SetBool("isCutscene", GameManager.cutsceneActive);
 
+        if (GameManager.cutsceneActive)
+        {
+            return;
+        }
         //isWalk
         bool isWalk = walkAmount != 0;
         meshAnimator.SetBool("isWalk", isWalk);
