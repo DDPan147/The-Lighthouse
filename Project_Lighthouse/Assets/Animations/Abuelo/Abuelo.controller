@@ -105,11 +105,12 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Game_Walk_StairsDown
-  m_Speed: 1
+  m_Speed: 1.4
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -5506889676892029597}
   - {fileID: -1789373083258146159}
+  - {fileID: 8343435066402654593}
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
@@ -157,7 +158,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: PushButton
+  m_Name: Cut_PushButton
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -552,7 +553,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Giro180
+  m_Name: Cut_Giro180
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -762,13 +763,16 @@ AnimatorStateTransition:
   - m_ConditionMode: 7
     m_ConditionEvent: WalkState
     m_EventTreshold: 2
+  - m_ConditionMode: 7
+    m_ConditionEvent: WalkState
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -3672017086422139279}
   m_Solo: 0
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.25
+  m_TransitionDuration: 0
   m_TransitionOffset: 0
   m_ExitTime: 1
   m_HasExitTime: 0
@@ -805,7 +809,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: SentarseConLuna
+  m_Name: Cut_SentarseConLuna
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -884,7 +888,7 @@ AnimatorStateMachine:
     m_Position: {x: 1170, y: -130, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -3821264707200229599}
-    m_Position: {x: 90, y: -400, z: 0}
+    m_Position: {x: 860, y: -270, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 7099256846724918692}
     m_Position: {x: -330, y: 260, z: 0}
@@ -917,13 +921,13 @@ AnimatorStateMachine:
     m_Position: {x: 1180, y: 190, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -6980192661576165514}
-    m_Position: {x: 90, y: -350, z: 0}
+    m_Position: {x: 860, y: -220, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -1087585673084742803}
-    m_Position: {x: 90, y: -300, z: 0}
+    m_Position: {x: 860, y: -170, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -129016533416165744}
-    m_Position: {x: 90, y: -250, z: 0}
+    m_Position: {x: 860, y: -120, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 2556292771590935506}
     m_Position: {x: 320, y: 170, z: 0}
@@ -993,7 +997,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Agacharse_Levantarse_Linterna
+  m_Name: Cut_Agacharse_Levantarse_Linterna
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -1019,7 +1023,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: SentarseConLunaLoop
+  m_Name: Cut_SentarseConLunaLoop
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -1266,11 +1270,12 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Game_Walk_StairsUp
-  m_Speed: 1
+  m_Speed: 1.4
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -3457951618212085692}
   - {fileID: 5723698782353062583}
+  - {fileID: 6563027074799817634}
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
@@ -1320,7 +1325,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Game_WalkLadder
-  m_Speed: 1
+  m_Speed: 1.55
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 1067800130655142234}
@@ -1334,7 +1339,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 4081561965435786171, guid: e1e88c9d4458fc740b4840513fb6206f, type: 3}
+  m_Motion: {fileID: 4081561965435786171, guid: 6de0a5d1faa9b004fb4300cd9563a86b, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: isCutscene
@@ -1611,9 +1616,9 @@ AnimatorStateTransition:
   m_PrefabAsset: {fileID: 0}
   m_Name: 
   m_Conditions:
-  - m_ConditionMode: 7
+  - m_ConditionMode: 6
     m_ConditionEvent: WalkState
-    m_EventTreshold: 3
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -3672017086422139279}
   m_Solo: 0
@@ -1658,7 +1663,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Game_Walk_Light
-  m_Speed: 1
+  m_Speed: 1.55
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -4080805226556198062}
@@ -1672,12 +1677,40 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -8589510948655593510, guid: e1e88c9d4458fc740b4840513fb6206f, type: 3}
+  m_Motion: {fileID: -8589510948655593510, guid: 287e49e27832f9d4681194094e6e3063, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!1101 &6563027074799817634
+AnimatorStateTransition:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_Conditions:
+  - m_ConditionMode: 7
+    m_ConditionEvent: WalkState
+    m_EventTreshold: 3
+  - m_ConditionMode: 7
+    m_ConditionEvent: WalkState
+    m_EventTreshold: 0
+  m_DstStateMachine: {fileID: 0}
+  m_DstState: {fileID: -3672017086422139279}
+  m_Solo: 0
+  m_Mute: 0
+  m_IsExit: 0
+  serializedVersion: 3
+  m_TransitionDuration: 0
+  m_TransitionOffset: 0
+  m_ExitTime: 1
+  m_HasExitTime: 0
+  m_HasFixedDuration: 1
+  m_InterruptionSource: 0
+  m_OrderedInterruption: 1
+  m_CanTransitionToSelf: 1
 --- !u!1101 &6589848021773081400
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -1860,6 +1893,31 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!1101 &8343435066402654593
+AnimatorStateTransition:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_Conditions:
+  - m_ConditionMode: 6
+    m_ConditionEvent: WalkState
+    m_EventTreshold: 0
+  m_DstStateMachine: {fileID: 0}
+  m_DstState: {fileID: -3672017086422139279}
+  m_Solo: 0
+  m_Mute: 0
+  m_IsExit: 0
+  serializedVersion: 3
+  m_TransitionDuration: 0.25
+  m_TransitionOffset: 0
+  m_ExitTime: 1
+  m_HasExitTime: 0
+  m_HasFixedDuration: 1
+  m_InterruptionSource: 0
+  m_OrderedInterruption: 1
+  m_CanTransitionToSelf: 1
 --- !u!1101 &8480611995356330010
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
