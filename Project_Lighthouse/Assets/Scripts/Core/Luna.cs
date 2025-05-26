@@ -7,6 +7,8 @@ public class Luna : MonoBehaviour
     [SerializeField]private SplineContainer spline;
     [SerializeField]private bool attachedToSpline;
     [SerializeField]private float distancePercentage;
+    [SerializeField]private Material faceMaterial;
+    private int faceIndex;
     void Start()
     {
         
@@ -18,6 +20,7 @@ public class Luna : MonoBehaviour
         {
             SplineMovement();
         }
+        faceMaterial.mainTextureOffset = new Vector2(faceMaterial.mainTextureOffset.x, 0.1f * faceIndex);
     }
 
     void SplineMovement()
@@ -58,5 +61,10 @@ public class Luna : MonoBehaviour
     public void SetPercentage(float percentage)
     {
         distancePercentage = percentage;
+    }
+
+    public void TextureChange(int index)
+    {
+        faceIndex = index;
     }
 }

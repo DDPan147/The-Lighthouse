@@ -41,21 +41,11 @@ public class DialogueManager : MonoBehaviour
     public enum Emotion
     {
         Default,
-        Abuelo_Triste,
-        Abuelo_Molesto,
-        Abuelo_Enfadado,
-        Abuelo_Alegre,
-        Abuelo_Pregunta,
-        Abuelo_Asustado,
-        Abuelo_Preocupado,
-        Luna_Triste,
-        Luna_Asco,
-        Luna_Indignada,
-        Luna_Traviesa,
-        Luna_Alegre,
-        Luna_Emocionada,
-        Luna_Pregunta,
-        Luna_Preocupada,
+        Hablar1,
+        Hablar2,
+        Pregunta,
+        Preocupado,
+        Asustado
 
     }
 
@@ -213,6 +203,12 @@ public class DialogueManager : MonoBehaviour
             target.transform.GetChild(1).GetComponent<TextEffect>().enabled = false;
             target.transform.parent.transform.DOScale(1, popupScaleDuration).SetEase(Ease.OutBack).OnComplete(() =>
             {
+                if (currentSentence.hasAnimation)
+                {
+                    int num = Random.Range(0, 2);
+                    player.meshAnimator.SetTrigger("Talk" + num);
+                }
+                
                 sm.Play("Texto");
                 StartCoroutine(WaitForNextSentence(target, currentSentence));
                 StartCoroutine(TypeSentence(currentSentence, target.transform.GetChild(1).GetComponent<TMP_Text>()));
@@ -336,36 +332,16 @@ public class DialogueManager : MonoBehaviour
         {
             case Emotion.Default:
                 return null;
-            case Emotion.Abuelo_Triste:
-                return "AbueloPregunta";
-            case Emotion.Abuelo_Molesto:
+            case Emotion.Hablar1:
                 return "AbueloHablar1";
-            case Emotion.Abuelo_Enfadado:
+            case Emotion.Hablar2:
+                return "AbueloHablar2";
+            case Emotion.Pregunta:
+                return "AbueloPregunta";
+            case Emotion.Preocupado:
                 return "AbueloPreocupado";
-            /*case Emotion.Abuelo_Alegre:
-                break;
-            case Emotion.Abuelo_Pregunta:
-                break;
-            case Emotion.Abuelo_Asustado:
-                break;
-            case Emotion.Abuelo_Preocupado:
-                break;
-            case Emotion.Luna_Triste:
-                break;
-            case Emotion.Luna_Asco:
-                break;
-            case Emotion.Luna_Indignada:
-                break;
-            case Emotion.Luna_Traviesa:
-                break;
-            case Emotion.Luna_Alegre:
-                break;
-            case Emotion.Luna_Emocionada:
-                break;
-            case Emotion.Luna_Pregunta:
-                break;
-            case Emotion.Luna_Preocupada:
-                break;*/
+            case Emotion.Asustado:
+                return "AbueloAsustado";
             default:
                 return null;
         }

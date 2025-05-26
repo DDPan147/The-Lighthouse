@@ -10,6 +10,7 @@ public class Sentence
 {
     [TextArea(3, 10)]
     public string sentenceText;
+    public bool hasAnimation;
     public DialogueManager.Speaker speaker;
     public DialogueEvent sentenceEvent;
     public DialogueManager.Emotion emotionSound;

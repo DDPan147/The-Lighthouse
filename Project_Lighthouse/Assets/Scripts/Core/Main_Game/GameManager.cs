@@ -72,6 +72,7 @@ public class GameManager : MonoBehaviour
     [Space(30)]
     [Header("DaySystem")]
     public UnityEvent[] OnDayStart = new UnityEvent[4];
+    [SerializeField]private TMP_Text dayTracker;
     public static int dayCount;
 
     void Start()
@@ -341,13 +342,19 @@ public class GameManager : MonoBehaviour
     public void EndDay()
     {
         //Launch DAY 2 Screen
-        //Make It Dissappear
-        dayCount++;
-        Debug.Log("Current Day Count: " + dayCount);
-        if(dayCount < 5)
+        dayTracker.DOFade(1, 2).SetEase(Ease.InOutQuart).OnComplete(() =>
         {
-            StartDay(dayCount);
-        }
+            dayTracker.DOFade(0, 2).SetEase(Ease.InOutQuart).OnComplete(() =>
+            {
+                dayCount++;
+                Debug.Log("Current Day Count: " + dayCount);
+                if (dayCount < 5)
+                {
+                    StartDay(dayCount);
+                }
+            });
+        });
+        
         
     }
     #endregion

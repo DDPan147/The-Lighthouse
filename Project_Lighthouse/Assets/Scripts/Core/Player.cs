@@ -56,7 +56,9 @@ public class Player : MonoBehaviour
 
     //Animation&Sound
     [SerializeField] private SoundManager sm;
-    [SerializeField] private Animator meshAnimator;
+    [SerializeField] public Animator meshAnimator;
+    [SerializeField] private Material faceMaterial;
+    private int faceIndex;
 
     private int walkState;
     private float walkAmount;
@@ -99,6 +101,10 @@ public class Player : MonoBehaviour
         {
             CutsceneState();
         }
+        else if (GameManager.minigameActive)
+        {
+            walkAmount = 0;
+        }
     }
 
     private void CutsceneState()
@@ -133,7 +139,15 @@ public class Player : MonoBehaviour
         Vector3 currentPosition = transitionSpline.EvaluatePosition(transitionPercentage);
         transform.position = currentPosition;
         triggerSwitchText.enabled = false;
-        walkAmount = 1;
+
+        if (canMove)
+        {
+            walkAmount = 1;
+        }
+        else
+        {
+            walkAmount = 0;
+        }
 
         Vector3 direction;
         if (lastPosition == Vector3.zero)
@@ -146,6 +160,7 @@ public class Player : MonoBehaviour
             direction = currentPosition - lastPosition;
         }
 
+        
         lastPosition = currentPosition;
 
         Vector3 newDirection = new Vector3(direction.x, 0, direction.z);
@@ -503,8 +518,16 @@ public class Player : MonoBehaviour
     }
     #endregion
     #region Animations
+    public void TextureChange(int index)
+    {
+        faceIndex = index;
+    }
     void AnimationAndSoundControl()
     {
+
+        //FaceTexture
+        faceMaterial.mainTextureOffset = new Vector2(faceMaterial.mainTextureOffset.x, 0.1f * faceIndex);
+
         //Cutscene or Gameplay
         meshAnimator.SetBool("isCutscene", GameManager.cutsceneActive);
 
