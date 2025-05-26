@@ -507,7 +507,7 @@ public class Player : MonoBehaviour
             if (isOnGrass)
             {
                 //string
-                sm.PlayRandomInRange
+                //sm.PlayRandomInRange
             }
             else
             {
