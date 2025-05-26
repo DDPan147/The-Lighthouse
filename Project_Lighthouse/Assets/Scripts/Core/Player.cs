@@ -43,10 +43,6 @@ public class Player : MonoBehaviour
 
     private GameManager gm;
 
-    public float currentSplineValue;
-
-    public int nodeToSelect;
-
 
     
 
@@ -58,12 +54,16 @@ public class Player : MonoBehaviour
 
     [HideInInspector]public MoveStates moveState;
 
-    //Animation
+    //Animation&Sound
+    [SerializeField] private SoundManager sm;
     [SerializeField] private Animator meshAnimator;
 
+    private int walkState;
     private float walkAmount;
     [SerializeField]private bool hasTorchlight;
     [SerializeField]private bool isOnStairs;
+
+    [SerializeField] private bool isOnGrass;
 
 
     #region Unity Functions and State Machine
@@ -72,6 +72,7 @@ public class Player : MonoBehaviour
         splineLength = spline.CalculateLength();
         canMove = true;
         gm = FindAnyObjectByType<GameManager>();
+        sm = FindAnyObjectByType<SoundManager>();
     }
 
     /*void StartUp()
@@ -82,7 +83,7 @@ public class Player : MonoBehaviour
     {
         Debug.Log("MinigameActive " + GameManager.minigameActive);
         Debug.Log("CutsceneActive " + GameManager.cutsceneActive);
-        AnimationControl();
+        AnimationAndSoundControl();
         if (!GameManager.minigameActive && !GameManager.cutsceneActive)
         {
             if (moveState == MoveStates.Control)
@@ -132,6 +133,29 @@ public class Player : MonoBehaviour
         transform.position = currentPosition;
         triggerSwitchText.enabled = false;
         walkAmount = 1;
+
+        Vector3 direction;
+        if (lastPosition == Vector3.zero)
+        {
+            Vector3 nextPosition = spline.EvaluatePosition(distancePercentage + 0.05f);
+            direction = nextPosition - currentPosition;
+        }
+        else
+        {
+            direction = currentPosition - lastPosition;
+        }
+
+        lastPosition = currentPosition;
+
+        Vector3 newDirection = new Vector3(direction.x, 0, direction.z);
+        if (newDirection.magnitude > 0)
+        {
+            if (Vector3.Cross(newDirection, transform.up) != Vector3.zero)
+            {
+                transform.rotation = Quaternion.LookRotation(newDirection, transform.up);
+            }
+
+        }
     }
 
     private void ControlState()
@@ -152,32 +176,47 @@ public class Player : MonoBehaviour
         transform.position = currentPosition;
 
         //Player Rotation Across Spline
-
-        Vector3 direction;
-        if (lastPosition == Vector3.zero)
+        if (!spline.GetComponent<SplineAdditionalData>().isLadder)
         {
-            Vector3 nextPosition = spline.EvaluatePosition(distancePercentage + 0.05f);
-            direction = nextPosition - currentPosition;
+            Vector3 direction;
+            if (lastPosition == Vector3.zero)
+            {
+                Vector3 nextPosition = spline.EvaluatePosition(distancePercentage + 0.05f);
+                direction = nextPosition - currentPosition;
+            }
+            else
+            {
+                direction = currentPosition - lastPosition;
+            }
+
+            lastPosition = currentPosition;
+
+            Vector3 newDirection = new Vector3(direction.x, 0, direction.z);
+            if (newDirection.magnitude > 0)
+            {
+                if (Vector3.Cross(newDirection, transform.up) != Vector3.zero)
+                {
+                    transform.rotation = Quaternion.LookRotation(newDirection, transform.up);
+                }
+
+            }
         }
         else
         {
-            direction = currentPosition - lastPosition;
-        }
-
-        lastPosition = currentPosition;
-            
-        Vector3 newDirection = new Vector3(direction.x, 0, direction.z);
-        if (newDirection.magnitude > 0)
-        {
-            if(Vector3.Cross(newDirection, transform.up) != Vector3.zero)
+            Vector3 direction;
+            Vector3 nextPosition = spline.EvaluatePosition(distancePercentage + 0.05f);
+            direction = nextPosition - currentPosition;
+            Vector3 newDirection = new Vector3(direction.x, 0, direction.z);
+            if (newDirection.magnitude > 0)
             {
-                transform.rotation = Quaternion.LookRotation(newDirection, transform.up);
+                if (Vector3.Cross(newDirection, transform.up) != Vector3.zero)
+                {
+                    transform.rotation = Quaternion.LookRotation(newDirection, transform.up);
+                }
+
             }
-            
         }
-
-
-        if (activeSplineSwitch != null && canMove)
+            if (activeSplineSwitch != null && canMove)
         {
             activeSplineSwitch.SwitchSpline();
             triggerSwitchText.enabled = true;
@@ -453,7 +492,7 @@ public class Player : MonoBehaviour
     }
     #endregion
     #region Animations
-    void AnimationControl()
+    void AnimationAndSoundControl()
     {
         //Cutscene or Gameplay
         meshAnimator.SetBool("isCutscene", GameManager.cutsceneActive);
@@ -462,37 +501,107 @@ public class Player : MonoBehaviour
         bool isWalk = walkAmount != 0;
         meshAnimator.SetBool("isWalk", isWalk);
 
+        if (isWalk)
+        {
+            CalculateGrass();
+            if (isOnGrass)
+            {
+                //string
+                //sm.PlayRandomInRange
+            }
+            else
+            {
+
+            }
+
+        }
+
         //walkState
-        int walkState = 0;
 
+
+        if (moveState == MoveStates.Control)
+        {
+            GetWalkState();
+        }
+        else
+        {
+            walkState = 0;
+        }
+
+        meshAnimator.SetInteger("WalkState", walkState);
+
+
+
+
+    }
+
+    private void GetWalkState()
+    {
         CalculateStairs();
-
+        
         if (hasTorchlight)
         {
             walkState = 1;
         }
         else if (isOnStairs)
         {
-            if(walkAmount < 0)
-            {
-                walkState = 2;
-            }
-            else
+            if (walkAmount < 0)
             {
                 walkState = 3;
+            }
+            else if (walkAmount > 0)
+            {
+                walkState = 2;
             }
         }
         else if (spline.gameObject.GetComponent<SplineAdditionalData>().isLadder)
         {
             walkState = 4;
         }
-        meshAnimator.SetInteger("WalkState", walkState);
-        
-        
+        else
+        {
+            walkState = 0;
+        }
 
-
+        if (walkState > 1)
+        {
+            if (walkAmount == 0)
+            {
+                meshAnimator.speed = 0;
+            }
+            else
+            {
+                meshAnimator.speed = 1;
+            }
+        }
+        else
+        {
+            meshAnimator.speed = 1;
+        }
     }
 
+    private void CalculateGrass()
+    {
+        var datavaluesA = spline[0].GetOrCreateFloatData("IsGrass");
+
+        if (datavaluesA.Count != 0)
+        {
+            int segment = GetCurrentSegment(spline[0], distancePercentage);
+
+            if (ExistsWithinArray(datavaluesA, segment) && ExistsWithinArray(datavaluesA, segment + 1))
+            {
+                isOnGrass = true;
+            }
+            else
+            {
+                isOnGrass = false;
+            }
+        }
+        else
+        {
+            isOnGrass = false;
+        }
+    }
     private void CalculateStairs()
     {
         var datavaluesA = spline[0].GetOrCreateFloatData("IsStairs");

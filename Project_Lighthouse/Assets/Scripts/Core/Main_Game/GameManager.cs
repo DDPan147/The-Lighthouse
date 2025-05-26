@@ -18,6 +18,9 @@ public class GameManager : MonoBehaviour
 
 
     public Material highlightMat;
+
+    //[Header("SoundManager")]
+    private SoundManager sm;
     [Header("MinigameManager")]
     public MinigameData[] minigames;
 
@@ -77,6 +80,9 @@ public class GameManager : MonoBehaviour
         eventSystem = FindAnyObjectByType<EventSystem>().gameObject;
         audioListener = FindAnyObjectByType<AudioListener>();
         player = FindAnyObjectByType<Player>();
+        sm = FindAnyObjectByType<SoundManager>();
+
+        sm.Play("Menu");
     }
 
     public void StartUp()
