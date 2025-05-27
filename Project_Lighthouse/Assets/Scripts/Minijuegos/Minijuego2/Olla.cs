@@ -127,7 +127,11 @@ public class Olla : MonoBehaviour
                             {
                                 foods[i].SetActive(false);
                             }
-                            cookedFood = Instantiate(foodCooked, transform.position, Quaternion.identity);
+                            if (isPan)
+                            {
+                                cookedFood = Instantiate(foodCooked, transform.position, Quaternion.identity);
+                            }
+                            
                         });
                         
                     }
