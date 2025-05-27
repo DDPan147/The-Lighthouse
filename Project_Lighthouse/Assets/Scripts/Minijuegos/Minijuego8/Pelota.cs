@@ -17,6 +17,10 @@ public class Pelota : MonoBehaviour
 
     public void MoveMarble()
     {
+        if(SoundManager.instance != null)
+        {
+            SoundManager.instance.Play("BallRolling");
+        }
         rb.linearVelocity = whatIsDown;
         rb.constraints = RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationX;
     }

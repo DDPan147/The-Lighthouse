@@ -17,6 +17,7 @@ public class Olla : MonoBehaviour
     [Header("Value Variables")]
     public float timeToCook;
     public int foodNeeded;
+    public bool isPan;
     #region Private Variables
     private GameObject[] foods;
     private GameObject cookedFood;
@@ -94,8 +95,12 @@ public class Olla : MonoBehaviour
                     {
                         canvas.SetActive(true);
                         potProgress.DOValue(1, timeToCook).OnPlay(() => 
-                        { 
-                            if(cookingVFX != null)
+                        {
+                            if(SoundManager.instance != null)
+                            {
+                                SoundManager.instance.Play("Freir");
+                            }
+                            if (cookingVFX != null)
                             {
                                 cookingVFX.Play();
                             }
@@ -106,6 +111,10 @@ public class Olla : MonoBehaviour
                         }).OnComplete(() => 
                         {
                             isFilledWithFood = true;
+                            if (SoundManager.instance != null)
+                            {
+                                SoundManager.instance.Stop("Freir");
+                            }
                             if (cookingVFX != null)
                             {
                                 cookingVFX.Stop();

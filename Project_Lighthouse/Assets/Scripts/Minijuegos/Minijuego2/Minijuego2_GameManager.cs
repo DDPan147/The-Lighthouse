@@ -350,11 +350,15 @@ public class Minijuego2_GameManager : MonoBehaviour
                     if (context.performed && knife.thereIsFood && knife.feedbackSupervisor)
                     {
                         Comida comida_Cortada = knife.Comida.GetComponent<Comida>();
-                        if (comida_Cortada.canBeCutted && !comida_Cortada.isPelado)
+                        if (comida_Cortada.canBeCutted && !comida_Cortada.isPelado && !comida_Cortada.isCutted)
                         {
+                            if(SoundManager.instance != null)
+                            {
+                                SoundManager.instance.Play("Cortar");
+                            }
                             knife.Comida.transform.Find("Forma").gameObject.SetActive(false);
                             Instantiate(comida_Cortada.comida_Cortada, knife.Comida.transform);
-                            if(comida_Cortada.tipoComida == Comida.TipoComida.Pescado && !comida_Cortada.isCutted)
+                            if(comida_Cortada.tipoComida == Comida.TipoComida.Pescado)
                             {
                                 Instantiate(huesosPescado, new Vector3(comida_Cortada.transform.position.x, comida_Cortada.transform.position.y, comida_Cortada.transform.position.z + 0.25f), Quaternion.identity, ingredientesReceta.transform.parent.transform);
                             }
@@ -363,6 +367,10 @@ public class Minijuego2_GameManager : MonoBehaviour
                         }
                         else if(comida_Cortada.canBeCutted && comida_Cortada.isPelado)
                         {
+                            if (SoundManager.instance != null)
+                            {
+                                SoundManager.instance.Play("Cortar");
+                            }
                             knife.Comida.transform.GetChild(1).gameObject.SetActive(false);
                             Instantiate(comida_Cortada.comida_Cortada, knife.Comida.transform);
                             comida_Cortada.isCutted = true;
@@ -395,6 +403,13 @@ public class Minijuego2_GameManager : MonoBehaviour
                         Comida comida_Cortada = peladora.Comida.GetComponent<Comida>();
                         if (comida_Cortada.canBePelado)
                         {
+                            string[] soundNames = new string[2];
+                            soundNames[0] = "Pelar1";
+                            soundNames[1] = "Pelar2";
+                            if(SoundManager.instance != null)
+                            {
+                                SoundManager.instance.PlayRandomInRange(soundNames);
+                            }
                             peladora.Comida.transform.Find("Forma").gameObject.SetActive(false);
                             Instantiate(comida_Cortada.comida_Pelada, peladora.Comida.transform);
                             comida_Cortada.isPelado = true;
@@ -446,6 +461,10 @@ public class Minijuego2_GameManager : MonoBehaviour
                     Comida comida = grabObject.GetComponent<Comida>();
                     if (context.performed && comida.thereIsBread && comidaObjData.isGrabbed && comida.isCutted && comida.canBeRebozado)
                     {
+                        if(SoundManager.instance != null)
+                        {
+                            SoundManager.instance.Play("Empanar");
+                        }
                         comida.isRebozado = true;
                     }
                     else if (!comida.canBeRebozado && comida.thereIsBread)
