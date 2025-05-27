@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class GearSlot : MonoBehaviour
@@ -20,32 +21,67 @@ public class GearSlot : MonoBehaviour
             clockManager = FindObjectOfType<ClockManager>();
         }
     }
-    
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Gear"))
         {
-            isOccupied = true;
-            currentGear = other.GetComponent<ClockGear>();
-            
-            if (clockManager != null)
+            ClockGear gear = other.GetComponent<ClockGear>();
+            if (gear != null)
             {
-                clockManager.CheckCompletion();
+                Debug.Log($"Gear {gear.gearID} entró en slot {slotPosition}");
             }
         }
     }
-    
+
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Gear"))
         {
-            isOccupied = false;
-            currentGear = null;
-            
-            if (clockManager != null)
+            ClockGear gear = other.GetComponent<ClockGear>();
+            if (gear == currentGear && !gear.isDragging)
             {
-                clockManager.CheckCompletion();
+                Debug.Log($"Gear {gear.gearID} salió del slot {slotPosition}");
+                isOccupied = false;
+                currentGear = null;
+
+                if (clockManager != null)
+                {
+                    clockManager.CheckCompletion();
+                }
             }
+        }
+    }
+    public void SetGearInSlot(ClockGear gear)
+    {
+        isOccupied = true;
+        currentGear = gear;
+        Debug.Log($"Slot {slotPosition} ahora tiene el gear {gear.gearID}");
+
+        if (clockManager != null)
+        {
+            clockManager.CheckCompletion();
+        }
+    }
+
+    public void ClearSlot()
+    {
+        isOccupied = false;
+        currentGear = null;
+        Debug.Log($"Slot {slotPosition} fue limpiado");
+
+        if (clockManager != null)
+        {
+            clockManager.CheckCompletion();
+        }
+    }
+
+    private IEnumerator DelayedCheck()
+    {
+        yield return new WaitForSeconds(0.1f); // Pequeño delay
+        if (clockManager != null)
+        {
+            clockManager.CheckCompletion();
         }
     }
 }

@@ -20,19 +20,33 @@ public class ClockManager : MonoBehaviour
     {
         if (isClockFixed) return;
 
+        Debug.Log("Checking completion...");
+
         bool allCorrect = true;
+        int correctCount = 0;
+
         foreach (GearSlot slot in gearSlots)
         {
-            if (!slot.isOccupied || slot.currentGear.correctSlotPosition != slot.slotPosition)
+            Debug.Log($"Slot {slot.slotPosition}: Occupied={slot.isOccupied}, " +
+                      $"Gear={slot.currentGear?.gearID}, " +
+                      $"CorrectPos={slot.currentGear?.correctSlotPosition}");
+
+            if (!slot.isOccupied ||
+                slot.currentGear == null ||
+                slot.currentGear.correctSlotPosition != slot.slotPosition ||
+                slot.currentGear.isDragging) // Verificar que no esté siendo arrastrado
             {
                 allCorrect = false;
                 break;
             }
+            correctCount++;
         }
 
-        if (allCorrect)
+        Debug.Log($"Correct gears in place: {correctCount}/{gearSlots.Length}");
+
+        if (allCorrect && correctCount == gearSlots.Length)
         {
-            Debug.Log("All clocks are occupied");
+            Debug.Log("All gears correctly placed!");
             CompleteClockRepair();
         }
     }
