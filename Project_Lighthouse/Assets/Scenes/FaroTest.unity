@@ -6388,8 +6388,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 333322356}
   m_HandleRect: {fileID: 333322355}
   m_Direction: 2
-  m_Value: -0.00003530311
-  m_Size: 0.46633404
+  m_Value: -0.000005987077
+  m_Size: 0.46635377
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -23839,7 +23839,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 147.82523}
+  m_AnchoredPosition: {x: 0, y: 147.8209}
   m_SizeDelta: {x: 0, y: 277}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &958517329 stripped
@@ -34033,346 +34033,11 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 5734508254771371975, guid: aba9bffbd9b34ad48a1feb6221a3d2eb, type: 3}
   m_PrefabInstance: {fileID: 7832117336957096632}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1287346467
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1287346468}
-  - component: {fileID: 1287346469}
-  m_Layer: 0
-  m_Name: SoundManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1287346468
+--- !u!4 &1287346468 stripped
 Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 2723508485678291759, guid: b9e77ebb986602f40bd7683b1f0f8d26, type: 3}
+  m_PrefabInstance: {fileID: 6028992991905854284}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1287346467}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 973.84753, y: 339.22968, z: -131.60132}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 469017355}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1287346469
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1287346467}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8464d573591f5b24e9eb71f0823c0ab1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sounds:
-  - type: 1
-    name: AbrirPuerta
-    clip: {fileID: 8300000, guid: e2ee2cfec7fcbfd43b91a342a4015e3f, type: 3}
-    volume: 1
-    loop: 0
-    source: {fileID: 0}
-  - type: 1
-    name: CerrarPuerta
-    clip: {fileID: 8300000, guid: b0c6dc41725e5614c91f78423a19a946, type: 3}
-    volume: 1
-    loop: 0
-    source: {fileID: 0}
-  - type: 1
-    name: ApagarLuz
-    clip: {fileID: 8300000, guid: 0d0e95d99bd409143bf3707436b173c9, type: 3}
-    volume: 1
-    loop: 0
-    source: {fileID: 0}
-  - type: 1
-    name: Cortar
-    clip: {fileID: 8300000, guid: 897ef72d923118e44a3f6a18083a8539, type: 3}
-    volume: 1
-    loop: 0
-    source: {fileID: 0}
-  - type: 1
-    name: ExteriorNoche
-    clip: {fileID: 8300000, guid: a10cfa644d32c174daee4415486704c4, type: 3}
-    volume: 1
-    loop: 0
-    source: {fileID: 0}
-  - type: 1
-    name: ExteriorViento
-    clip: {fileID: 8300000, guid: 317d991030e017e4b9dce31868e40770, type: 3}
-    volume: 1
-    loop: 0
-    source: {fileID: 0}
-  - type: 1
-    name: Freir
-    clip: {fileID: 8300000, guid: c8d19737b991a274c9d00abd92b6c21a, type: 3}
-    volume: 1
-    loop: 0
-    source: {fileID: 0}
-  - type: 1
-    name: InteriorFaro
-    clip: {fileID: 8300000, guid: 104a6a446bd0d5f498b5b2a2c0b70681, type: 3}
-    volume: 1
-    loop: 0
-    source: {fileID: 0}
-  - type: 1
-    name: PasosHierba1
-    clip: {fileID: 8300000, guid: e15c97d5bcbd6724f9bda34bb4509c07, type: 3}
-    volume: 1
-    loop: 0
-    source: {fileID: 0}
-  - type: 1
-    name: PasosHierba2
-    clip: {fileID: 8300000, guid: d8aa4e2c059a59b4e8cef8f67f48f2e2, type: 3}
-    volume: 1
-    loop: 0
-    source: {fileID: 0}
-  - type: 1
-    name: PasosHierba3
-    clip: {fileID: 8300000, guid: 2a0c821de5e74a7479834088de417a51, type: 3}
-    volume: 1
-    loop: 0
-    source: {fileID: 0}
-  - type: 1
-    name: PasosMadera1
-    clip: {fileID: 8300000, guid: 6df9c40a4b19a5444af21b8009962bad, type: 3}
-    volume: 1
-    loop: 0
-    source: {fileID: 0}
-  - type: 1
-    name: PasosMadera2
-    clip: {fileID: 8300000, guid: 69e8eafd04c62e54ca5767acea9cb762, type: 3}
-    volume: 1
-    loop: 0
-    source: {fileID: 0}
-  - type: 1
-    name: PasosMadera3
-    clip: {fileID: 8300000, guid: a2b690cd2fba9334f8f753c7144be3e5, type: 3}
-    volume: 1
-    loop: 0
-    source: {fileID: 0}
-  - type: 1
-    name: Pelar1
-    clip: {fileID: 8300000, guid: e9645712eebde914a9d15bf13a01c2cf, type: 3}
-    volume: 1
-    loop: 0
-    source: {fileID: 0}
-  - type: 1
-    name: Pelar2
-    clip: {fileID: 8300000, guid: 129d6e6fa5f7f284fa0bc17e832cb56d, type: 3}
-    volume: 1
-    loop: 0
-    source: {fileID: 0}
-  - type: 1
-    name: Texto
-    clip: {fileID: 8300000, guid: 8596116e6c57ab14e914e77bc4bbb457, type: 3}
-    volume: 1
-    loop: 1
-    source: {fileID: 0}
-  - type: 1
-    name: Empanar
-    clip: {fileID: 8300000, guid: 40907ba0e1eb8f5479129dce0a8dcf30, type: 3}
-    volume: 1
-    loop: 0
-    source: {fileID: 0}
-  - type: 1
-    name: EstruendoGas
-    clip: {fileID: 8300000, guid: 6c4c736e50cbdd84c939c5f6372dfbb9, type: 3}
-    volume: 1
-    loop: 0
-    source: {fileID: 0}
-  - type: 1
-    name: GolpearMadera1
-    clip: {fileID: 8300000, guid: 273b7851569fd96428c53dfc96abd5b1, type: 3}
-    volume: 1
-    loop: 0
-    source: {fileID: 0}
-  - type: 1
-    name: GolpearMadera2
-    clip: {fileID: 8300000, guid: 96c4698e34f1f4d459cfc5da4bcfa8c0, type: 3}
-    volume: 1
-    loop: 0
-    source: {fileID: 0}
-  - type: 1
-    name: GrifoAgua
-    clip: {fileID: 8300000, guid: c0e86d7013185b747a9a6f8330c3c8c9, type: 3}
-    volume: 1
-    loop: 0
-    source: {fileID: 0}
-  - type: 1
-    name: Switch
-    clip: {fileID: 8300000, guid: dbf67d43e37d5d5439959456b797ab43, type: 3}
-    volume: 1
-    loop: 0
-    source: {fileID: 0}
-  - type: 1
-    name: Tuberia
-    clip: {fileID: 8300000, guid: 9bb6d5c4f7456ed4ebd807352a19055b, type: 3}
-    volume: 0.5
-    loop: 0
-    source: {fileID: 0}
-  - type: 1
-    name: Tuberia2
-    clip: {fileID: 8300000, guid: a5d91b2a59888b646be6fb11e3be37e1, type: 3}
-    volume: 0.5
-    loop: 0
-    source: {fileID: 0}
-  - type: 1
-    name: Vapor
-    clip: {fileID: 8300000, guid: 32d4aaa635026c44686211e39952359d, type: 3}
-    volume: 1
-    loop: 0
-    source: {fileID: 0}
-  - type: 1
-    name: AbueloAsustado
-    clip: {fileID: 8300000, guid: ad35bfc314c000d40865c8ace6e50282, type: 3}
-    volume: 1
-    loop: 0
-    source: {fileID: 0}
-  - type: 1
-    name: AbueloHablar1
-    clip: {fileID: 8300000, guid: f2d520333b77edb4e995ca532ead8aac, type: 3}
-    volume: 1
-    loop: 0
-    source: {fileID: 0}
-  - type: 1
-    name: AbueloHablar2
-    clip: {fileID: 8300000, guid: 1ad696884e174e54aa843de602e78b1f, type: 3}
-    volume: 1
-    loop: 0
-    source: {fileID: 0}
-  - type: 1
-    name: AbueloPregunta
-    clip: {fileID: 8300000, guid: 8762de1e286fe794a9064009d14e37c8, type: 3}
-    volume: 1
-    loop: 0
-    source: {fileID: 0}
-  - type: 1
-    name: AbueloPreocupado
-    clip: {fileID: 8300000, guid: 563db044216d1054a98818dff8568e52, type: 3}
-    volume: 1
-    loop: 0
-    source: {fileID: 0}
-  - type: 1
-    name: ColocarPiezas1
-    clip: {fileID: 8300000, guid: 7a1e6b93338cc4e4fb61c0a6422484e0, type: 3}
-    volume: 1
-    loop: 0
-    source: {fileID: 0}
-  - type: 1
-    name: ColocarPiezas2
-    clip: {fileID: 8300000, guid: 6c7106ca81435de4f830cb61d8daf815, type: 3}
-    volume: 1
-    loop: 0
-    source: {fileID: 0}
-  - type: 1
-    name: Exhausto
-    clip: {fileID: 8300000, guid: 499ee958d8b56e4478449da2099be30e, type: 3}
-    volume: 1
-    loop: 0
-    source: {fileID: 0}
-  - type: 1
-    name: PickFlashlight
-    clip: {fileID: 8300000, guid: ae1c30dd99e51734fb6c1b598c2bbe7b, type: 3}
-    volume: 1
-    loop: 0
-    source: {fileID: 0}
-  - type: 1
-    name: PowerDown
-    clip: {fileID: 8300000, guid: 295abcef9e8fa8047b2329e2ffcea9bb, type: 3}
-    volume: 1
-    loop: 0
-    source: {fileID: 0}
-  - type: 1
-    name: ColocarPiezas1
-    clip: {fileID: 8300000, guid: 7a1e6b93338cc4e4fb61c0a6422484e0, type: 3}
-    volume: 1
-    loop: 0
-    source: {fileID: 0}
-  - type: 1
-    name: AbrirPanelFusibles
-    clip: {fileID: 8300000, guid: 091d4a9839baf2d4fa0ab0605fa64fad, type: 3}
-    volume: 1
-    loop: 0
-    source: {fileID: 0}
-  - type: 1
-    name: BallCrush
-    clip: {fileID: 8300000, guid: 76be2ee4eb67a6540878226c8253936c, type: 3}
-    volume: 1
-    loop: 0
-    source: {fileID: 0}
-  - type: 1
-    name: BallRolling
-    clip: {fileID: 8300000, guid: ca4f6d2d595475c48ac2241f9663bb54, type: 3}
-    volume: 1
-    loop: 0
-    source: {fileID: 0}
-  - type: 1
-    name: Coger
-    clip: {fileID: 8300000, guid: a8a6586f7d311824ab0c86019f39f769, type: 3}
-    volume: 1
-    loop: 0
-    source: {fileID: 0}
-  - type: 1
-    name: FaroSeEnciende
-    clip: {fileID: 8300000, guid: e61d0dab2f794a3418b9b3672a7f0264, type: 3}
-    volume: 1
-    loop: 0
-    source: {fileID: 0}
-  - type: 1
-    name: PuzleSolvedColorsin
-    clip: {fileID: 8300000, guid: 64e255b9be3a14447811e86098fb6c0e, type: 3}
-    volume: 1
-    loop: 0
-    source: {fileID: 0}
-  - type: 1
-    name: RuidoBlanco
-    clip: {fileID: 8300000, guid: f8788ea8f7cac8e4ead5a8626ac51090, type: 3}
-    volume: 1
-    loop: 0
-    source: {fileID: 0}
-  - type: 0
-    name: MainTheme
-    clip: {fileID: 8300000, guid: d3028614f6f39d84aa736885b710dc08, type: 3}
-    volume: 1
-    loop: 1
-    source: {fileID: 0}
-  - type: 0
-    name: Menu
-    clip: {fileID: 8300000, guid: 5e11f2926da73774ea2f3e32b03fc37d, type: 3}
-    volume: 1
-    loop: 1
-    source: {fileID: 0}
-  - type: 0
-    name: NieblaTurbio
-    clip: {fileID: 8300000, guid: 62a3f0a69cc8f9846a06c3edde82abd7, type: 3}
-    volume: 1
-    loop: 1
-    source: {fileID: 0}
-  - type: 0
-    name: Final
-    clip: {fileID: 8300000, guid: ebfbaddc559b900469c64bec1dbd458a, type: 3}
-    volume: 1
-    loop: 1
-    source: {fileID: 0}
-  currentTheme:
-    type: 0
-    name: 
-    clip: {fileID: 0}
-    volume: 0
-    loop: 0
-    source: {fileID: 0}
 --- !u!1 &1288370003
 GameObject:
   m_ObjectHideFlags: 0
@@ -49956,6 +49621,63 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1001 &6028992991905854284
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 469017355}
+    m_Modifications:
+    - target: {fileID: 2723508485678291759, guid: b9e77ebb986602f40bd7683b1f0f8d26, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 973.84753
+      objectReference: {fileID: 0}
+    - target: {fileID: 2723508485678291759, guid: b9e77ebb986602f40bd7683b1f0f8d26, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 339.22968
+      objectReference: {fileID: 0}
+    - target: {fileID: 2723508485678291759, guid: b9e77ebb986602f40bd7683b1f0f8d26, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -131.60132
+      objectReference: {fileID: 0}
+    - target: {fileID: 2723508485678291759, guid: b9e77ebb986602f40bd7683b1f0f8d26, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2723508485678291759, guid: b9e77ebb986602f40bd7683b1f0f8d26, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2723508485678291759, guid: b9e77ebb986602f40bd7683b1f0f8d26, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2723508485678291759, guid: b9e77ebb986602f40bd7683b1f0f8d26, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2723508485678291759, guid: b9e77ebb986602f40bd7683b1f0f8d26, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2723508485678291759, guid: b9e77ebb986602f40bd7683b1f0f8d26, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2723508485678291759, guid: b9e77ebb986602f40bd7683b1f0f8d26, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6912728073135724058, guid: b9e77ebb986602f40bd7683b1f0f8d26, type: 3}
+      propertyPath: m_Name
+      value: SoundManager
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b9e77ebb986602f40bd7683b1f0f8d26, type: 3}
 --- !u!1 &6641302286645647765
 GameObject:
   m_ObjectHideFlags: 0

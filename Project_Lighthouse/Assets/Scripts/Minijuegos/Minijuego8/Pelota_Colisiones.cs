@@ -21,6 +21,11 @@ public class Pelota_Colisiones : MonoBehaviour
         if (collision.gameObject.CompareTag("Obstaculo"))
         {
             //candadoScript.canRotate = true;
+            if(SoundManager.instance != null)
+            {
+                SoundManager.instance.Stop("BallRolling");
+                SoundManager.instance.Play("BallCrush");
+            }
         }
     }
 
@@ -41,6 +46,10 @@ public class Pelota_Colisiones : MonoBehaviour
 
     public IEnumerator CompleteMinigame(float seconds)
     {
+        if(SoundManager.instance != null)
+        {
+            SoundManager.instance.Play("PuzleSolvedColorsin");
+        }
         candadoScript.marco.transform.DOLocalRotate(new Vector3(candadoScript.marco.transform.localEulerAngles.x, candadoScript.marco.transform.localEulerAngles.y + 90, candadoScript.marco.transform.localEulerAngles.z), 1.5f, RotateMode.Fast).OnComplete(() => llave.GetComponent<VisualEffect>().Play());
         yield return new WaitForSeconds(seconds);
         candadoScript.Win();

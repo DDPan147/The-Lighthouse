@@ -53,11 +53,20 @@ public class Minijuego3_GameManager : MonoBehaviour
             {
                 if(hit.collider.gameObject.GetComponent<Tuberia>().canRotate)
                 {
+                    string[] sfxNames = new string[2];
+                    sfxNames[0] = "Tuberia";
+                    sfxNames[1] = "Tuberia2";
                     hit.collider.gameObject.GetComponent<Tuberia>().canRotate = false;
                     float rotation = hit.collider.gameObject.transform.eulerAngles.z;
                     rotation += 90;
                     //hit.collider.gameObject.transform.eulerAngles += new Vector3(0, 0, 90);
-                    hit.collider.gameObject.transform.DORotate(new Vector3(0, 0, rotation), rotatePipeSpeed, RotateMode.Fast).OnComplete(() =>
+                    hit.collider.gameObject.transform.DORotate(new Vector3(0, 0, rotation), rotatePipeSpeed, RotateMode.Fast).OnPlay(() =>
+                    {
+                        if(SoundManager.instance != null)
+                        {
+                            SoundManager.instance.PlayRandomInRange(sfxNames);
+                        }
+                    }).OnComplete(() =>
                     {
                         hit.collider.gameObject.GetComponent<Tuberia>().canRotate = true;
                         CheckPipes();
@@ -107,8 +116,18 @@ public class Minijuego3_GameManager : MonoBehaviour
     public IEnumerator SteamInYoFace()
     {
         steamVFX.Play();
+        if(SoundManager.instance != null)
+        {
+            SoundManager.instance.Play("EstruendoGas");
+            SoundManager.instance.Play("Vapor");
+        }
         PipeAndSteamComments(3, 5);
         yield return new WaitForSeconds(steamTimeRate);
+        if (SoundManager.instance != null)
+        {
+            SoundManager.instance.Stop("EstruendoGas");
+            SoundManager.instance.Stop("Vapor");
+        }
         steamVFX.Stop();
     }
 
