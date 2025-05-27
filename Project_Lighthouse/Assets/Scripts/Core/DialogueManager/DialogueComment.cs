@@ -14,6 +14,9 @@ public class Sentence
     public DialogueManager.Speaker speaker;
     public DialogueEvent sentenceEvent;
     public DialogueManager.Emotion emotionSound;
+
+    public DialogueManager.AbueloFaces abueloFace;
+    public DialogueManager.LunaFaces lunaFace;
 }
 [System.Serializable]
 public class DialogueComment

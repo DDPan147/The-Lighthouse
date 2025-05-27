@@ -526,7 +526,7 @@ public class Player : MonoBehaviour
     {
 
         //FaceTexture
-        faceMaterial.mainTextureOffset = new Vector2(faceMaterial.mainTextureOffset.x, 0.1f * faceIndex);
+        faceMaterial.mainTextureOffset = new Vector2(faceMaterial.mainTextureOffset.x, 0.1f * (faceIndex + 1));
 
         //Cutscene or Gameplay
         meshAnimator.SetBool("isCutscene", GameManager.cutsceneActive);

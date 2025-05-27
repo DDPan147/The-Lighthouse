@@ -46,10 +46,36 @@ public class DialogueManager : MonoBehaviour
         Pregunta,
         Preocupado,
         Asustado
-
     }
 
-    [SerializeField] private GameObject GUICommentHolder;
+    public enum AbueloFaces
+    {
+        Normal,
+        Triste,
+        Molesto,
+        Enfadado,
+        Alegre,
+        Serio,
+        Pregunta,
+        Asustado,
+        Preocupado
+    }
+
+    public enum LunaFaces
+    {
+        Normal,
+	    Triste,
+        Asco,
+	    Indignada,
+	    Traviesa,
+	    Alegre,
+	    Emocionada,
+	    Pregunta,
+	    Preocupada,
+        Terrorifica
+    }
+
+[SerializeField] private GameObject GUICommentHolder;
     [SerializeField] private TMP_Text textDisplayGUI;
     [SerializeField] private TMP_Text textDisplayAbuelo;
     [SerializeField] private TMP_Text textDisplayLuna;
@@ -59,6 +85,7 @@ public class DialogueManager : MonoBehaviour
 
     private SoundManager sm;
     private Player player;
+    private Luna luna;
 
     private IEnumerator activeCoroutine;
     private void Awake()
@@ -79,6 +106,7 @@ public class DialogueManager : MonoBehaviour
     {
         sm = FindAnyObjectByType<SoundManager>();
         player = FindAnyObjectByType<Player>();
+        luna = FindAnyObjectByType<Luna>();
     }
 
     private void Update()
@@ -208,7 +236,8 @@ public class DialogueManager : MonoBehaviour
                     int num = Random.Range(0, 2);
                     player.meshAnimator.SetTrigger("Talk" + num);
                 }
-                
+                player.TextureChange((int)currentSentence.abueloFace);
+                luna.TextureChange((int)currentSentence.lunaFace);
                 sm.Play("Texto");
                 StartCoroutine(WaitForNextSentence(target, currentSentence));
                 StartCoroutine(TypeSentence(currentSentence, target.transform.GetChild(1).GetComponent<TMP_Text>()));

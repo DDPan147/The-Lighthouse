@@ -42,7 +42,8 @@ public class RoomPart : MonoBehaviour
         for(int i = 0; i < targets.Length; i++)
         {
             targets[i].mat = targets[i].target.GetComponent<Renderer>().material;
-            targets[i].initialAlpha = targets[i].mat.color.a;
+            //targets[i].initialAlpha = targets[i].mat.color.a;
+            targets[i].initialAlpha = targets[i].mat.GetFloat("_Alpha");
         }
         player = FindAnyObjectByType<Player>();
     }
@@ -71,7 +72,8 @@ public class RoomPart : MonoBehaviour
 
             foreach (FadeTarget target in targets)
             {
-                Tween fadeInTween = DOTween.ToAlpha(() => target.mat.color, x => target.mat.color = x, target.amount, fadeTime).SetEase(Ease.OutCubic);
+                //Tween fadeInTween = DOTween.ToAlpha(() => target.mat.color, x => target.mat.color = x, target.amount, fadeTime).SetEase(Ease.OutCubic);
+                Tween fadeInTween = target.mat.DOFloat(target.amount, "_Alpha", fadeTime);
                 fadeInTweens.Add(fadeInTween);
                 
             }
@@ -120,7 +122,8 @@ public class RoomPart : MonoBehaviour
             }
 
 
-            Tween fadeOutTween = DOTween.ToAlpha(() => target.mat.color, x => target.mat.color = x, target.initialAlpha, fadeTime).SetEase(Ease.OutCubic);
+            //Tween fadeOutTween = DOTween.ToAlpha(() => target.mat.color, x => target.mat.color = x, target.initialAlpha, fadeTime).SetEase(Ease.OutCubic);
+            Tween fadeOutTween = target.mat.DOFloat(target.initialAlpha, "_Alpha", fadeTime);
             fadeOutTweens.Add(fadeOutTween);
         }
     }
