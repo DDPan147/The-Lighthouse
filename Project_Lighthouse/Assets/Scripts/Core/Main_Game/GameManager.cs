@@ -325,7 +325,7 @@ public class GameManager : MonoBehaviour
     {
         //Voy a tener que desactivar todo lol
         luna.transform.position = new Vector3(1.45f, 13.47f, -4.86f);
-        luna.GetComponent<MeshRenderer>().enabled = false;
+        luna.transform.GetChild(0).gameObject.SetActive(false);
     }
     #endregion
     #region Day System
