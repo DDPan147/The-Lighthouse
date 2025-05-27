@@ -1004,12 +1004,37 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 25131391}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: EndDay
-        m_Mode: 1
+        m_MethodName: CutsceneStart
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 5
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 529891558}
+        m_TargetAssemblyTypeName: Player, Assembly-CSharp
+        m_MethodName: ChangeSpline
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1856659563}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Splines.SplineContainer,
+            Unity.Splines
+          m_IntArgument: 5
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 529891558}
+        m_TargetAssemblyTypeName: Player, Assembly-CSharp
+        m_MethodName: SetPercentage
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 5
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -6389,7 +6414,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 333322355}
   m_Direction: 2
   m_Value: -0.0000020645093
-  m_Size: 0.46634164
+  m_Size: 0.46635377
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
