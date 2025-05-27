@@ -377,7 +377,7 @@ public class Player : MonoBehaviour
     public void StartTransition()
     {
         moveState = MoveStates.Transition;
-        float duration = transitionSpline.GetLength() * transitionSpeed;
+        float duration = transitionSpline.GetLength() / transitionSpeed;
         DOTween.To(() => transitionPercentage, x => transitionPercentage = x, 1, duration).OnComplete(() => EndTransition()).SetEase(Ease.Linear);
         //Play Transition Anim
     }
@@ -385,7 +385,7 @@ public class Player : MonoBehaviour
     public void StartTransition(Action onCompleteAction)
     {
         moveState = MoveStates.Transition;
-        float duration = transitionSpline.GetLength() * transitionSpeed;
+        float duration = transitionSpline.GetLength() / transitionSpeed;
         DOTween.To(() => transitionPercentage, x => transitionPercentage = x, 1, duration).OnComplete(() => onCompleteAction()).SetEase(Ease.Linear);
         //Play Transition Anim
     }
@@ -406,7 +406,7 @@ public class Player : MonoBehaviour
     public void RevertTransition()
     {
         moveState = MoveStates.Transition;
-        float duration = transitionSpline.GetLength() * transitionSpeed;
+        float duration = transitionSpline.GetLength() / transitionSpeed;
         DOTween.To(() => transitionPercentage, x => transitionPercentage = x, 0, duration).OnComplete(() => EndTransition());//OnComplete(() => completeAction());
         //Play Transition Anim
     }
