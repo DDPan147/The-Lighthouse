@@ -57,6 +57,9 @@ public class MinigameSevenManager : MonoBehaviour
     [SerializeField] private GameObject endGameUI;
     [SerializeField] private MinigameSevenUI _minigameSevenUIgameUI;
 
+    [Header("Screen Dim Effect")]
+    [SerializeField] private EdgeDimEffect edgeDimEffect;
+
     #endregion
 
     #region Game Flow Methods
@@ -145,6 +148,8 @@ public class MinigameSevenManager : MonoBehaviour
                 isItemSaved = true;
                 savedImportantObjects++;
                 mc.DisplayComment(3);
+
+                ApplyScreenDim();
             }
             else
             {
@@ -262,6 +267,16 @@ public class MinigameSevenManager : MonoBehaviour
 
         // Asegurarse de que la intensidad final sea exactamente la deseada
         mainLight.intensity = Mathf.Clamp(mainLight.intensity, Mathf.Min(startIntensity, objectiveIntensity), Mathf.Max(startIntensity, objectiveIntensity));;
+    }
+
+    private void ApplyScreenDim()
+    {
+        if (edgeDimEffect != null)
+        {
+            // Calcular intensidad basada en objetos importantes guardados
+            float dimProgress = (float)savedImportantObjects / totalImportantObjects;
+            edgeDimEffect.SetDimIntensity(dimProgress);
+        }
     }
     #endregion
 
