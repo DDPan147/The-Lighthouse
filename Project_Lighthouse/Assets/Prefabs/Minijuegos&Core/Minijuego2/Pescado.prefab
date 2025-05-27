@@ -56,8 +56,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.38779515, y: 0.09243828, z: 0.15936399}
-  m_Center: {x: 0.00853315, y: 0.005207658, z: 0.000015377998}
+  m_Size: {x: 0.53268313, y: 0.09243828, z: 0.34118724}
+  m_Center: {x: 0.0011764914, y: 0.005207658, z: -0.030767798}
 --- !u!54 &1799534905232757450
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -109,6 +109,8 @@ MonoBehaviour:
   comidaMat: {fileID: 0}
   comida_Cortada: {fileID: 713118295505280308, guid: 2cb26865eb8fdf34e88f798a0aefac71, type: 3}
   comida_Pelada: {fileID: 0}
+  normalMat: {fileID: 0}
+  peladoMat: {fileID: 0}
   thereIsBread: 0
   feedbackSupervisor: 1
 --- !u!114 &5368508308748410776
@@ -144,7 +146,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &5578901940124586366
 Transform:
   m_ObjectHideFlags: 0
@@ -153,13 +155,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9010793710520402150}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.38032913, y: 0.1371722, z: 0.1371722}
-  m_ConstrainProportionsScale: 0
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: 0.007, y: -0.031, z: 0}
+  m_LocalScale: {x: 1.1, y: 1.1, z: 1.1}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 2003494707668291691}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!33 &208285692434299313
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -167,7 +169,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9010793710520402150}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: -1682020894952176617, guid: 9c2d1cfcca07ce54dabe81f6bae1badb, type: 3}
 --- !u!23 &8753050367641431135
 MeshRenderer:
   m_ObjectHideFlags: 0
