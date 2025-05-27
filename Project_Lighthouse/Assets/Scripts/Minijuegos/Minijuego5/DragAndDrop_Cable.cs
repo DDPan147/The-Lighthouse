@@ -55,10 +55,10 @@ public class DragAndDrop_Cable: MonoBehaviour
 
     private void SetMeshVisibility(bool isVisible)
     {
-        if(meshRenderer != null)
+        /*if(meshRenderer != null)
         {
             meshRenderer.enabled = isVisible;
-        }
+        }*/
     }
 
     private Vector3 GetMousePos()
@@ -87,7 +87,7 @@ public class DragAndDrop_Cable: MonoBehaviour
             if (currentSlot != null && currentSlot.slotPosition == correctSlotPosition)
             {
                 Debug.Log("Tipo reset encajando en el slot correcto");
-                transform.position = currentSlot.transform.position;
+                transform.position = currentSlot.transform.position - Vector3.forward * 0.5f;
                 SetMeshVisibility(false); // Muestra el mesh
                 gm.cableConnections[correctSlotPosition] = true;
 
@@ -118,15 +118,15 @@ public class DragAndDrop_Cable: MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log("He chocado con algo");
         DragAndDrop_Connection slot = other.GetComponent<DragAndDrop_Connection>();
         if (slot != null)
         {
             if (correctSlotPosition == slot.slotPosition)
             {
-                
+                Debug.Log("Posicion correcta, puedes proceder a soltar el objeto");
+                currentSlot = slot; // Marca que el objeto esta en el slot correcto
             }
-            Debug.Log("Posicion correcta, puedes proceder a soltar el objeto");
-            currentSlot = slot; // Marca que el objeto esta en el slot correcto
         }
     }
 
