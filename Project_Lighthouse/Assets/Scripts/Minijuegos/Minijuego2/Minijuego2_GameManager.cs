@@ -354,7 +354,7 @@ public class Minijuego2_GameManager : MonoBehaviour
                         {
                             knife.Comida.transform.Find("Forma").gameObject.SetActive(false);
                             Instantiate(comida_Cortada.comida_Cortada, knife.Comida.transform);
-                            if(comida_Cortada.tipoComida == Comida.TipoComida.Pescado)
+                            if(comida_Cortada.tipoComida == Comida.TipoComida.Pescado && !comida_Cortada.isCutted)
                             {
                                 Instantiate(huesosPescado, new Vector3(comida_Cortada.transform.position.x, comida_Cortada.transform.position.y, comida_Cortada.transform.position.z + 0.25f), Quaternion.identity, ingredientesReceta.transform.parent.transform);
                             }

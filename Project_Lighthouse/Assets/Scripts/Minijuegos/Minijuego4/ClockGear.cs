@@ -1,4 +1,5 @@
 using DG.Tweening;
+using System.Collections;
 using UnityEngine;
 
 public class ClockGear : MonoBehaviour
@@ -24,7 +25,7 @@ public class ClockGear : MonoBehaviour
     private Vector3 mousePos;
     [SerializeField] private float zDepth;
     [SerializeField] private bool isOnMouse;
-    private bool isDragging = false;
+    public bool isDragging = false;
     
     [Header("Efectos")]
     [SerializeField] private float dragSpeed = 10f;
@@ -45,6 +46,8 @@ public class ClockGear : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         outlineMaterial = GetComponent<MeshRenderer>().materials[1];
+        rb.isKinematic = true;
+        rb.useGravity = false;
         initialPosition = transform.position;
         originalScale = transform.localScale;
         SetOutlineVisibility(false);
@@ -100,14 +103,31 @@ public class ClockGear : MonoBehaviour
     {
         isDragging = true;
         mousePos = Input.mousePosition - GetMousePosDepth();
+
+        // Activar física solo para detección de triggers durante el arrastre
+        if (rb != null)
+        {
+            rb.isKinematic = false;
+            rb.useGravity = false;
+            rb.constraints = RigidbodyConstraints.FreezeAll; // Congelar todo movimiento
+        }
     }
 
     private void OnMouseUp()
     {
         isDragging = false;
         isOnMouse = false;
+        // Mantener configuración para permitir detección
+        if (rb != null)
+        {
+            rb.linearVelocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+        }
         StickGearToSlot();
-        currentSlot = null;
+        if (currentSlot != null && currentSlot.slotPosition != correctSlotPosition)
+        {
+            currentSlot = null;
+        }
     }
 
     private void StickGearToSlot()
@@ -116,7 +136,10 @@ public class ClockGear : MonoBehaviour
         {
             AnimateToPosition(slotPos.position);
             outlineMaterial.SetColor("_Color", Color.green);
-            ClockManager.Instance.CheckCompletion();
+
+            currentSlot.SetGearInSlot(this);
+
+            StartCoroutine(DelayedCompletion());
             StartGearRotation();
             PlaySparkEffect(slotPos.position);
         }
@@ -124,6 +147,10 @@ public class ClockGear : MonoBehaviour
         {
             AnimateToPosition(initialPosition);
             SetOutlineVisibility(false);
+            if (currentSlot != null)
+            {
+                currentSlot.ClearSlot();
+            }
         }
     }
 
@@ -150,7 +177,7 @@ public class ClockGear : MonoBehaviour
         transform.DOMove(targetPosition, snapDuration)
             .SetEase(snapEase)
             .OnComplete(() => {
-                transform.DOPunchScale(new Vector3(0.1f, 0.1f, 0.1f) * 0.1f, 0.01f, 1, 0.5f);
+                transform.DOPunchScale(new Vector3(0.1f, 0.1f, 0.1f) * 0.1f, 0.1f, 1, 0.5f);
             });
     }
 
@@ -192,5 +219,11 @@ public class ClockGear : MonoBehaviour
             // Destruir el sistema de partículas después de que termine
             Destroy(sparkInstance.gameObject, sparkInstance.main.duration + 0.5f);
         }
+    }
+
+    private IEnumerator DelayedCompletion()
+    {
+        yield return new WaitForSeconds(snapDuration + 0.1f); // Esperar a que termine la animación
+        ClockManager.Instance.CheckCompletion();
     }
 }
