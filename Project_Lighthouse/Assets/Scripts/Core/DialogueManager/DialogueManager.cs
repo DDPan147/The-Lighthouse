@@ -399,6 +399,11 @@ public class DialogueManager : MonoBehaviour
         sentencePass = true;
     }
 
+    public void ForceEndGUIComment()
+    {
+        StopAllCoroutines();
+        GUICommentHolder.SetActive(false);
+    }
     //David: Kike por que vas al dentista
     //Kike: []
     //Álvaro: *decepcionado consigo mismo*

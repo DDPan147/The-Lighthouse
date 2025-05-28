@@ -34,7 +34,7 @@ public class LunaFantasma : MonoBehaviour
 
         if (move)
         {
-            DOTween.To(() => distancePercentage, x => distancePercentage = x, 1, 2).SetEase(Ease.Linear);
+            DOTween.To(() => distancePercentage, x => distancePercentage = x, 1, 3).SetEase(Ease.Linear);
         }
     }
 
