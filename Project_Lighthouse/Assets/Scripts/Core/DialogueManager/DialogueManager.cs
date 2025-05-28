@@ -236,8 +236,8 @@ public class DialogueManager : MonoBehaviour
                     int num = Random.Range(0, 2);
                     player.meshAnimator.SetTrigger("Talk" + num);
                 }
-                player.TextureChange((int)currentSentence.abueloFace);
-                luna.TextureChange((int)currentSentence.lunaFace);
+                player.TextureChange((int)currentSentence.abueloFace + 1);
+                luna.TextureChange((int)currentSentence.lunaFace + 1);
                 sm.Play("Texto");
                 StartCoroutine(WaitForNextSentence(target, currentSentence));
                 StartCoroutine(TypeSentence(currentSentence, target.transform.GetChild(1).GetComponent<TMP_Text>()));

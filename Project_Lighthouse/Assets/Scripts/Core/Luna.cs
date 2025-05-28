@@ -8,7 +8,7 @@ public class Luna : MonoBehaviour
     [SerializeField]private bool attachedToSpline;
     [SerializeField]private float distancePercentage;
     [SerializeField]private Material faceMaterial;
-    private int faceIndex = 1;
+    [SerializeField]private int faceIndex = 1;
     void Start()
     {
         faceIndex = 1;
