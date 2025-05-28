@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using DG.Tweening;
 using System.Collections;
+using UnityEngine.UI;
 
 public class Minigame8_GameManager : MonoBehaviour
 {
@@ -12,12 +13,17 @@ public class Minigame8_GameManager : MonoBehaviour
     public int minCommentRate, maxCommentRate;
     [HideInInspector]public MinigameComments mc;
     [HideInInspector]public float rotationX, rotationY, rotationZ;
-
+    [Header("ArrowSprites")]
+    public Image leftArrow, rightArrow;
+    public Sprite leftArrowSelectedSprite, rightArrowSelectedSprite;
+    private Sprite leftArrowSprite, rightArrowSprite;
     private void Awake()
     {
         rotationX = candado.transform.localEulerAngles.x;
         rotationY = candado.transform.localEulerAngles.y;
         mc = GetComponent<MinigameComments>();
+        leftArrowSprite = leftArrow.sprite;
+        rightArrowSprite = rightArrow.sprite;
     }
     private void Update()
     {
@@ -39,6 +45,7 @@ public class Minigame8_GameManager : MonoBehaviour
                 Debug.Log(hit.collider.name);
                 if (hit.collider.gameObject.CompareTag("Tuberia"))
                 {
+                    leftArrow.sprite = leftArrowSelectedSprite;
                     canRotate = false;
                     rotationZ += 90;
                     candado.transform.DOLocalRotate(new Vector3(rotationX,rotationY, rotationZ), 0.5f, RotateMode.Fast).OnComplete(() =>
@@ -50,6 +57,7 @@ public class Minigame8_GameManager : MonoBehaviour
                 }
                 if (hit.collider.gameObject.CompareTag("Tuberia_Entrada"))
                 {
+                    rightArrow.sprite = rightArrowSelectedSprite;
                     canRotate = false;
                     rotationZ += -90;
                     candado.transform.DOLocalRotate(new Vector3(rotationX,rotationY, rotationZ), 0.5f, RotateMode.Fast).OnComplete(() =>
@@ -65,7 +73,19 @@ public class Minigame8_GameManager : MonoBehaviour
                 }
             }
         }
-        
+
+        if (context.canceled)
+        {
+            StartCoroutine(ReturnNormalSprites());
+        }
+
+    }
+
+    public IEnumerator ReturnNormalSprites()
+    {
+        yield return new WaitForSeconds(0.5f);
+        leftArrow.sprite = leftArrowSprite;
+        rightArrow.sprite = rightArrowSprite;
     }
 
     public void Win()
@@ -86,7 +106,7 @@ public class Minigame8_GameManager : MonoBehaviour
 
     public IEnumerator CanRotate()
     {
-        yield return new WaitForSeconds(0.8f);
+        yield return new WaitForSeconds(0.9f);
         canRotate = true;
     }
 
