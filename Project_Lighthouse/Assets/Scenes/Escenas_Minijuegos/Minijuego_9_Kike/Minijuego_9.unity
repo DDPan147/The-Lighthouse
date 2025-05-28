@@ -191,7 +191,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 8b1e1e8d79e1ba74897b31b54168a072, type: 2}
+  - {fileID: 2100000, guid: acd56921841b28546af48b83bd1a824d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -710,6 +710,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   totalCloudsKilled: 0
   cloudNumberToKill: 10
+  mc: {fileID: 0}
 --- !u!114 &1765725580
 MonoBehaviour:
   m_ObjectHideFlags: 0
