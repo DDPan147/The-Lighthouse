@@ -2,6 +2,8 @@ using UnityEngine.Audio;
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Rendering;
+using DG.Tweening;
 
 public class SoundManager : MonoBehaviour
 {
@@ -102,6 +104,25 @@ public class SoundManager : MonoBehaviour
         else return null;
     }
     //Fade out
+
+    public void FadeOut(string name)
+    {
+        Sound s = Array.Find(sounds, sound => sound.name == name);
+        if (s == null) return;
+        s.source.DOFade(0, 4).SetEase(Ease.InOutSine).OnComplete(() =>
+        {
+            Stop(name);
+            SetVolume(name, s.volume);
+
+        });
+    }
+    public void FadeIn(string name)
+    {
+        Sound s = Array.Find(sounds, sound => sound.name == name);
+        if (s == null) return;
+        SetVolume(name, 0);
+        s.source.DOFade(s.volume, 4).SetEase(Ease.InOutSine);
+    }
     public void StopAllSfx()
     {
         foreach (Sound s in sounds)
@@ -131,5 +152,12 @@ public class SoundManager : MonoBehaviour
                 s.source.Stop();
             }
         }
+    }
+
+    public void ChangeCurrentTheme(string name)
+    {
+        FadeOut(currentTheme.name);
+        Play(name);
+        FadeIn(name);
     }
 }

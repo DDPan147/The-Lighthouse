@@ -75,6 +75,7 @@ public class Player : MonoBehaviour
         canMove = true;
         gm = FindAnyObjectByType<GameManager>();
         sm = FindAnyObjectByType<SoundManager>();
+        faceIndex = 1;
     }
 
     /*void StartUp()
@@ -526,7 +527,7 @@ public class Player : MonoBehaviour
     {
 
         //FaceTexture
-        faceMaterial.mainTextureOffset = new Vector2(faceMaterial.mainTextureOffset.x, 0.1f * (faceIndex + 1));
+        faceMaterial.mainTextureOffset = new Vector2(faceMaterial.mainTextureOffset.x, -0.1f * faceIndex);
 
         //Cutscene or Gameplay
         meshAnimator.SetBool("isCutscene", GameManager.cutsceneActive);
