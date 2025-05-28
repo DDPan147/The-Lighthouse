@@ -341,7 +341,7 @@ public class GameManager : MonoBehaviour
 
     public void EndDay()
     {
-        //Launch DAY 2 Screen
+        dayTracker.text = "Day " + (dayCount + 1);
         dayTracker.DOFade(1, 2).SetEase(Ease.InOutQuart).OnComplete(() =>
         {
             dayTracker.DOFade(0, 2).SetEase(Ease.InOutQuart).OnComplete(() =>
