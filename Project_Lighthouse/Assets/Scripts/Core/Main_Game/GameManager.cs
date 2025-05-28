@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
 
     //[Header("SoundManager")]
     private SoundManager sm;
+    private DialogueManager dm;
     [Header("MinigameManager")]
     public MinigameData[] minigames;
 
@@ -82,6 +83,7 @@ public class GameManager : MonoBehaviour
         audioListener = FindAnyObjectByType<AudioListener>();
         player = FindAnyObjectByType<Player>();
         sm = FindAnyObjectByType<SoundManager>();
+        dm = FindAnyObjectByType<DialogueManager>();
 
         sm.Play("Menu");
     }
@@ -121,8 +123,8 @@ public class GameManager : MonoBehaviour
 
     public void MinigameCompleted(int index)
     {
-        //Activar Evento Final en escena (feedback visual de que el minijuego se ha completado
-
+        //Desactivar Comentarios del narrador
+        dm.ForceEndGUIComment();
         //Descargar (Unload) escena de minijuego
         SceneManager.UnloadSceneAsync(minigames[index].sceneName);
 
@@ -143,7 +145,8 @@ public class GameManager : MonoBehaviour
 
     public void CloseMinigame(int index)
     {
-        //Activar Evento Final en escena (feedback visual de que el minijuego se ha completado
+        //Desactivar Comentarios del narrador
+        dm.ForceEndGUIComment();
 
         //Descargar (Unload) escena de minijuego
         SceneManager.UnloadSceneAsync(minigames[index].sceneName);
