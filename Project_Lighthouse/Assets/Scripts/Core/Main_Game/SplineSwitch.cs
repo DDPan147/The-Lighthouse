@@ -7,6 +7,7 @@ public class SplineSwitch : MonoBehaviour
     public SplineContainer[] splines = new SplineContainer[2];
 
     public bool isOpen = true;
+    public bool isDoor;
     [Tooltip("Does this spline switch work automatically, or a button has to be pressed? (In is always 0 to 1)")]
     public bool isButtonIn;
     [Tooltip("Does this spline switch work automatically, or a button has to be pressed? (Out is always 1 to 0)")]
@@ -27,7 +28,8 @@ public class SplineSwitch : MonoBehaviour
     private Material normalMatIn;
     private Material normalMatOut;
     private Material highlightMat;
-    //public float highlightWidth;
+
+    public Light[] luces;
 
 
 
@@ -41,8 +43,7 @@ public class SplineSwitch : MonoBehaviour
         rendOut = highlightOut.GetComponent<Renderer>();
         normalMatIn = rendIn.material;
         normalMatOut = rendOut.material;
-        /*if (highlightIn != null) highlightMatIn = highlightIn.GetComponent<Renderer>().materials[1];
-        if (highlightOut != null) highlightMatOut = highlightOut.GetComponent<Renderer>().materials[1];*/
+        SetDoorLights();
     }
 
     void Update()
@@ -113,7 +114,6 @@ public class SplineSwitch : MonoBehaviour
             if (highlightIn == null || rendIn == null) return;
             if (b)
             {
-                //highlightMatIn.SetFloat("_Scale", highlightWidth);
                 rendIn.material = highlightMat;
             }
             else
@@ -184,5 +184,16 @@ public class SplineSwitch : MonoBehaviour
     public void UnlockSplineSwitch(bool value)
     {
         isOpen = value;
+        SetDoorLights();
+    }
+
+    void SetDoorLights()
+    {
+        if (luces.Length == 0) return;
+
+        foreach(Light luz in luces)
+        {
+            luz.enabled = isOpen;
+        }
     }
 }
