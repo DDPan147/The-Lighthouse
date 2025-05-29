@@ -83,7 +83,7 @@ public class Cloud : MonoBehaviour
 
     void InitialMovement()
     {
-        Vector2 randomDirection = new Vector2(UnityEngine.Random.Range(-1.0f,1.0f), UnityEngine.Random.Range(-0.5f,0.5f));
+        Vector2 randomDirection = new Vector2(UnityEngine.Random.Range(-0.35f,0.35f), UnityEngine.Random.Range(-0.15f,0.15f));
 
         rb.linearVelocity = new Vector3(randomDirection.x, randomDirection.y, 0).normalized;
         Debug.Log(rb.linearVelocity);
