@@ -52,7 +52,7 @@ public class Player : MonoBehaviour
         Transition
     }
 
-    [HideInInspector]public MoveStates moveState;
+    public MoveStates moveState;
 
     //Animation&Sound
     [SerializeField] private SoundManager sm;
@@ -60,6 +60,7 @@ public class Player : MonoBehaviour
     [SerializeField] private Material faceMaterial;
     private int faceIndex;
 
+    private bool cutsceneEndPatch;
     private int walkState;
     private float walkAmount;
     [SerializeField]private bool hasTorchlight;
@@ -141,7 +142,7 @@ public class Player : MonoBehaviour
         transform.position = currentPosition;
         triggerSwitchText.enabled = false;
 
-        if (canMove)
+        if (canMove || cutsceneEndPatch)
         {
             walkAmount = 1;
         }
@@ -278,6 +279,7 @@ public class Player : MonoBehaviour
         }
         if (other.gameObject.CompareTag("MissionTrigger_Core"))
         {
+            Debug.Log(other.gameObject.name);
             other.gameObject.GetComponent<MissionTrigger>().TriggerMission();
         }
         if (other.gameObject.CompareTag("CutsceneTrigger_Core"))
@@ -396,8 +398,15 @@ public class Player : MonoBehaviour
         Spline newSpline = new Spline(0);
         newSpline.Add(transform.position);
         newSpline.Add(_spline[0][knotIndex].Position);
+        cutsceneEndPatch = true;
 
-        
+
+        Action cutsceneTransitionPatch = new Action(() =>
+        {
+            cutsceneEndPatch = false;
+            EndTransition();
+        });
+
         transitionSpline = newSpline;
         StartTransition();
         ChangeSpline(_spline);
@@ -421,6 +430,7 @@ public class Player : MonoBehaviour
             activeSplineSwitch.SetHighlight(true);
         }
     }
+
 
     /*void TakePath(Spline path, Action onCompleteAction)
     {
@@ -537,7 +547,16 @@ public class Player : MonoBehaviour
             return;
         }
         //isWalk
-        bool isWalk = walkAmount != 0;
+        bool isWalk;
+        if (moveState == MoveStates.Control)
+        {
+            isWalk = walkAmount != 0 && distancePercentage != 1 && distancePercentage != 0;
+        }
+        else
+        {
+            isWalk = walkAmount != 0;
+        }
+         
         meshAnimator.SetBool("isWalk", isWalk);
 
         if (isWalk)
@@ -708,6 +727,11 @@ public class Player : MonoBehaviour
         }
 
         return false;
+    }
+
+    public void GetTorchlight(bool b)
+    {
+        hasTorchlight = b;
     }
 
     #endregion

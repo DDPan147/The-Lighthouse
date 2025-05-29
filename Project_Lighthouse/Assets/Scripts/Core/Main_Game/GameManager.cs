@@ -62,14 +62,6 @@ public class GameManager : MonoBehaviour
 
     [HideInInspector]public UnityEvent OnEveryCutsceneStart;
     [HideInInspector]public UnityEvent OnEveryCutsceneEnd;
-    /*[System.Serializable]
-    public struct CutsceneSetup
-    {
-        public int cutsceneIndex;
-        public SplineContainer playerSpline;
-        public SplineContainer lunaSpline;
-        public SplineContainer cameraSpline;
-    }*/
 
     [Space(30)]
     [Header("DaySystem")]
