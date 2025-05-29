@@ -159,7 +159,7 @@ public class Olla : MonoBehaviour
             }
         }
 
-        if (other.gameObject.CompareTag("Cuchara") && isFilledWithFood && gm.finishRecipe1)
+        /*if (other.gameObject.CompareTag("Cuchara") && isFilledWithFood && gm.finishRecipe1)
         {
             Debug.Log("Sopita");
             other.GetComponent<Cuchara>().hasFood = true;
@@ -167,7 +167,7 @@ public class Olla : MonoBehaviour
             canvas.SetActive(false);
             isFilledWithFood = false;
             lastFood = true;
-        }
+        }*/
     }
 
 }

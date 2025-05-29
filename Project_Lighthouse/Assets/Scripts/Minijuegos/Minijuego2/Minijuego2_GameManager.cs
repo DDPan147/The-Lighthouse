@@ -401,7 +401,7 @@ public class Minijuego2_GameManager : MonoBehaviour
                     if (context.performed && peladora.thereIsFood && peladora.feedbackSupervisor)
                     {
                         Comida comida_Cortada = peladora.Comida.GetComponent<Comida>();
-                        if (comida_Cortada.canBePelado)
+                        if (comida_Cortada.canBePelado && !comida_Cortada.isPelado)
                         {
                             string[] soundNames = new string[2];
                             soundNames[0] = "Pelar1";
@@ -425,37 +425,26 @@ public class Minijuego2_GameManager : MonoBehaviour
 
                     }
                     break; 
-                    /*case "Cuchara":
+                    case "Cuchara":
                     Selectable_MG2 cucharaObjData = grabObject.GetComponent<Selectable_MG2>();
-                    KitchenTool cuchara = grabObject.GetComponent<KitchenTool>();
+                    Cuchara cuchara = grabObject.GetComponent<Cuchara>();
                     if (context.performed && cucharaObjData.isGrabbed)
                     {
-                        imPelando = true;
+                        //imPelando = true;
                     }
                     else if (context.canceled && cucharaObjData.isGrabbed)
                     {
-                        imPelando = false;
+                        //imPelando = false;
                     }
-                    if (context.performed && cuchara.thereIsFood && cuchara.feedbackSupervisor)
+                    if (context.performed && cuchara.thereIsPot && finishRecipe1 && !cuchara.hasFood)
                     {
-                        Comida comida_Cortada = cuchara.Comida.GetComponent<Comida>();
-                        if (comida_Cortada.canBePelado)
-                        {
-                            cuchara.Comida.transform.Find("Forma").gameObject.SetActive(false);
-                            Instantiate(comida_Cortada.comida_Pelada, cuchara.Comida.transform);
-                            comida_Cortada.isPelado = true;
-                            cuchara.thereIsFood = false;
-                        }
-                        else
-                        {
-                            // Feedback de que la comida no se puede pelar
-                            Debug.Log("No se puede pelar");
-                            ErrorComments(6, 7);
-                            comida_Cortada.gameObject.transform.DOShakePosition(0.3f, 0.05f, 50, 90, false, true, ShakeRandomnessMode.Full).OnPlay(() => cuchara.feedbackSupervisor = false).OnComplete(() => cuchara.feedbackSupervisor = true);
-                        }
-
+                        cuchara.GetSoup();
                     }
-                    break;*/
+                    else if(context.performed && cuchara.thereIsPlato && cuchara.hasFood)
+                    {
+                        cuchara.PutSoup(plato2);
+                    }
+                    break;
                 case "Comida":
                     Selectable_MG2 comidaObjData = grabObject.GetComponent<Selectable_MG2>();
                     Comida comida = grabObject.GetComponent<Comida>();
