@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
 
 
     public Material highlightMat;
+    public Material highlightMinigameMat;
 
     //[Header("SoundManager")]
     private SoundManager sm;
