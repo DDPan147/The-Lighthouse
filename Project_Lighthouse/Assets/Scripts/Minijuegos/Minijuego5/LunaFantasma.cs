@@ -17,12 +17,15 @@ public class LunaFantasma : MonoBehaviour
 
     void Update()
     {
-        Vector3 currentPosition = spline.EvaluatePosition(distancePercentage);
-        transform.position = currentPosition;
+        if (move)
+        {
+            Vector3 currentPosition = spline.EvaluatePosition(distancePercentage);
+            transform.position = currentPosition;
 
-        Vector3 nextPosition = spline.EvaluatePosition(distancePercentage + 0.05f);
-        Vector3 direction = nextPosition - currentPosition;
-        transform.rotation = Quaternion.LookRotation(direction, transform.up);
+            Vector3 nextPosition = spline.EvaluatePosition(distancePercentage + 0.05f);
+            Vector3 direction = nextPosition - currentPosition;
+            transform.rotation = Quaternion.LookRotation(direction, transform.up);
+        }
     }
 
     public void ToggleAnim()
