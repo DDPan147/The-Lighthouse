@@ -56,6 +56,7 @@ public class DragDrop_Item : MonoBehaviour
     [Header("Restricciones")]
     [SerializeField] private bool canRotate = false;
     [SerializeField] private Vector2 rotationLimits;
+    [SerializeField] private Collider itemCollider;
     
     [Header("Animación")]
     [SerializeField] private float snapDuration = 0.3f;
@@ -72,6 +73,7 @@ public class DragDrop_Item : MonoBehaviour
         outlineMaterial = GetComponent<MeshRenderer>().materials[1];
         originalEmissionColor = glowMaterial.GetColor("_EmissionColor");
         originalEmissionIntensity = CalculateColorIntensity(originalEmissionColor);
+        itemCollider = GetComponent<Collider>();
         initialPosition = transform.position;
         originalScale = transform.localScale;
         SetOutlineVisibility(false);
@@ -144,6 +146,7 @@ public class DragDrop_Item : MonoBehaviour
             {
                 AnimateToPosition(slotPos.position);
                 outlineMaterial.SetColor("_Color", Color.green);
+                itemCollider.enabled = false; // Desactiva el collider para evitar más interacciones
                 if (currentMinigame == Minigame.Minigame1)
                 {
                     LevelGameManagerMinigame1.Instance.OnFragmentCorrectlyPlaced(currentSlot.slotPosition);
@@ -176,6 +179,8 @@ public class DragDrop_Item : MonoBehaviour
                 if (currentSlot.slotPosition == correctSlotPosition)
                 {
                     outlineMaterial.SetColor("_Color", Color.green);
+                    itemCollider.enabled = false; // Desactiva el collider para evitar más interacciones
+
                     if (currentMinigame == Minigame.Minigame1)
                     {
                         LevelGameManagerMinigame1.Instance.OnFragmentCorrectlyPlaced(currentSlot.slotPosition);
