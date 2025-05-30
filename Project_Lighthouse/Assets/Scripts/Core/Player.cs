@@ -508,11 +508,26 @@ public class Player : MonoBehaviour
         Debug.Log("Se abre la puerta");
         if (activeSplineSwitch.CheckInOut())
         {
-            activeSplineSwitch.highlightIn.transform.parent.GetComponent<Animator>().Play("OpenDoor");
+            if (!activeSplineSwitch.doorReverse)
+            {
+                activeSplineSwitch.highlightIn.transform.parent.GetComponent<Animator>().Play("OpenDoorInside");
+            }
+            else
+            {
+                activeSplineSwitch.highlightIn.transform.parent.GetComponent<Animator>().Play("OpenDoor");
+            }
+            
         }
         else
         {
-            activeSplineSwitch.highlightOut.transform.parent.GetComponent<Animator>().Play("OpenDoor");
+            if (!activeSplineSwitch.doorReverse)
+            {
+                activeSplineSwitch.highlightOut.transform.parent.GetComponent<Animator>().Play("OpenDoor");
+            }
+            else
+            {
+                activeSplineSwitch.highlightOut.transform.parent.GetComponent<Animator>().Play("OpenDoorInside");
+            }
         }
     }
     #endregion

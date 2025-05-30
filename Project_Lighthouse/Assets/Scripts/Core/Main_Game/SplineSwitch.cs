@@ -9,6 +9,7 @@ public class SplineSwitch : MonoBehaviour
 
     public bool isOpen = true;
     public bool isDoor;
+    public bool doorReverse;
     [Tooltip("Does this spline switch work automatically, or a button has to be pressed? (In is always 0 to 1)")]
     public bool isButtonIn;
     [Tooltip("Does this spline switch work automatically, or a button has to be pressed? (Out is always 1 to 0)")]
