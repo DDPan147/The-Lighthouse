@@ -40,6 +40,6 @@ public class LunaFantasma : MonoBehaviour
 
     void Dissappear()
     {
-        mat.DOFloat(0, "_Alpha", 1);
+        mat.DOFloat(0, "_Alpha", 1).OnComplete(() => { Destroy(this.gameObject); });
     }
 }

@@ -360,4 +360,9 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene("ProvEnding");
     }
 
+    public void ResetGame()
+    {
+        SceneManager.LoadScene("FaroTest");
+    }
+
 }

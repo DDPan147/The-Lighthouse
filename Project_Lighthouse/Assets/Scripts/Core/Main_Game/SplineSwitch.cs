@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Splines;
 
@@ -53,22 +54,124 @@ public class SplineSwitch : MonoBehaviour
 
     public void SwitchSpline()
     {
-        
-        if (!isOpen)
+        if (isDoor)
         {
-            //Some effect for not opened door
-            return;
-        }
-
-        //IN
-        if (CheckInOut())
-        {
-            if (isButtonIn && !/*Input.GetKeyDown(KeyCode.Z)*/ Player.interact)
+            if (!isOpen)
             {
+                //Some effect for not opened door
                 return;
             }
 
-            SetHighlight(false);
+            //IN
+            if (CheckInOut())
+            {
+                if (isButtonIn && !/*Input.GetKeyDown(KeyCode.Z)*/ Player.interact)
+                {
+                    return;
+                }
+                if (!player.meshAnimator.GetCurrentAnimatorStateInfo(0).IsName("Game_OpenNaNoor"))
+                {
+                    player.meshAnimator.SetTrigger("DoorOpen");
+                    StartCoroutine(SwitchSplineCoroutine());
+                }
+
+            }
+
+            //OUT
+            else
+            {
+                if (isButtonOut && !/*Input.GetKeyDown(KeyCode.Z)*/ Player.interact)
+                {
+                    return;
+                }
+
+                if (!player.meshAnimator.GetCurrentAnimatorStateInfo(0).IsName("Game_OpenNaNoor"))
+                {
+                    player.meshAnimator.SetTrigger("DoorOpen");
+                    StartCoroutine(SwitchSplineCoroutine());
+                }
+
+                
+                /*
+                SetHighlight(false);
+                player.spline = splines[0];
+                player.splineLength = splines[0].CalculateLength();
+                player.distancePercentage = GetTForKnot(splines[0].Spline, transitionKnotIndexOut);
+
+                player.transitionSpline = BuildTransitionSpline(player.transform.position, splines[0], splines[0][0][transitionKnotIndexOut]);
+                player.StartTransition();
+
+                if (!isButtonIn)
+                {
+                    player.UnassignActiveSplineSwitch();
+                }
+                */
+            }
+        }
+        else
+        {
+            if (!isOpen)
+            {
+                //Some effect for not opened door
+                return;
+            }
+
+            //IN
+            if (CheckInOut())
+            {
+                if (isButtonIn && !/*Input.GetKeyDown(KeyCode.Z)*/ Player.interact)
+                {
+                    return;
+                }
+
+                SetHighlight(false);
+                player.spline = splines[1];
+                player.splineLength = splines[1].CalculateLength();
+                player.distancePercentage = GetTForKnot(splines[1].Spline, transitionKnotIndexIn);
+                player.transitionSpline = BuildTransitionSpline(player.transform.position, splines[1], splines[1][0][transitionKnotIndexIn]);
+                player.StartTransition();
+
+                if (!isButtonOut)
+                {
+                    player.UnassignActiveSplineSwitch();
+                }
+                
+
+            }
+
+            //OUT
+            else
+            {
+                if (isButtonOut && !/*Input.GetKeyDown(KeyCode.Z)*/ Player.interact)
+                {
+                    return;
+                }
+                
+                SetHighlight(false);
+                player.spline = splines[0];
+                player.splineLength = splines[0].CalculateLength();
+                player.distancePercentage = GetTForKnot(splines[0].Spline, transitionKnotIndexOut);
+
+                player.transitionSpline = BuildTransitionSpline(player.transform.position, splines[0], splines[0][0][transitionKnotIndexOut]);
+                player.StartTransition();
+
+                if (!isButtonIn)
+                {
+                    player.UnassignActiveSplineSwitch();
+                }
+                
+            }
+        }
+    }
+
+    private IEnumerator SwitchSplineCoroutine()
+    {
+        SetHighlight(false);
+        player.canMove = false;
+        yield return new WaitForSeconds(5.0f);
+        if (CheckInOut())
+        {
+            player.canMove = true;
             player.spline = splines[1];
             player.splineLength = splines[1].CalculateLength();
             player.distancePercentage = GetTForKnot(splines[1].Spline, transitionKnotIndexIn);
@@ -79,18 +182,10 @@ public class SplineSwitch : MonoBehaviour
             {
                 player.UnassignActiveSplineSwitch();
             }
-
         }
-
-        //OUT
         else
         {
-            if (isButtonOut && !/*Input.GetKeyDown(KeyCode.Z)*/ Player.interact)
-            {
-                return;
-            }
-
-            SetHighlight(false);
+            player.canMove = true;
             player.spline = splines[0];
             player.splineLength = splines[0].CalculateLength();
             player.distancePercentage = GetTForKnot(splines[0].Spline, transitionKnotIndexOut);
@@ -103,11 +198,13 @@ public class SplineSwitch : MonoBehaviour
                 player.UnassignActiveSplineSwitch();
             }
         }
+        
     }
 
     public void SetHighlight(bool b)
     {
         
+
         //IN
         if (CheckInOut())
         {

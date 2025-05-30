@@ -503,6 +503,18 @@ public class Player : MonoBehaviour
     {
         GetComponent<Collider>().enabled = false;
     }
+    public void OpenDoor()
+    {
+        Debug.Log("Se abre la puerta");
+        if (activeSplineSwitch.CheckInOut())
+        {
+            activeSplineSwitch.highlightIn.transform.parent.GetComponent<Animator>().Play("OpenDoor");
+        }
+        else
+        {
+            activeSplineSwitch.highlightOut.transform.parent.GetComponent<Animator>().Play("OpenDoor");
+        }
+    }
     #endregion
     #region SignalFunctions
     public void ChangeSpline(SplineContainer _spline)
@@ -621,7 +633,14 @@ public class Player : MonoBehaviour
         }
         else if (spline.gameObject.GetComponent<SplineAdditionalData>().isLadder)
         {
-            walkState = 4;
+            if (walkAmount < 0)
+            {
+                walkState = 4;
+            }
+            else if (walkAmount > 0)
+            {
+                walkState = 5;
+            }
         }
         else
         {
