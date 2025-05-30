@@ -15,6 +15,7 @@ public class SkyboxChange : MonoBehaviour
     [Header("Light Settings")]
     public GameObject directionalLight;
     private Light _directionalLight;
+    public Vector3 dayRotation, nightRotation;
     public Color dayLight;
     public Color nightLight;
     [Header("Fog Settings")]
@@ -57,6 +58,7 @@ public class SkyboxChange : MonoBehaviour
         waterShaderMat.SetColor("_WaterColor", dayWaterColour[1]);
         waterShaderMat.SetColor("_ShallowWaterColor", dayWaterColour[2]);
         UnityEngine.RenderSettings.skybox = daySkybox;
+        directionalLight.transform.eulerAngles = dayRotation;
         _directionalLight.color = dayLight;
         fogVFX.SetVector4("FogColor", dayFogColor);
     }
@@ -66,6 +68,7 @@ public class SkyboxChange : MonoBehaviour
         waterShaderMat.SetColor("_WaterColor", nightWaterColour[1]);
         waterShaderMat.SetColor("_ShallowWaterColor", nightWaterColour[2]);
         UnityEngine.RenderSettings.skybox = nightSkybox;
+        directionalLight.transform.eulerAngles = nightRotation;
         _directionalLight.color = nightLight;
         fogVFX.SetVector4("FogColor", nightFogColor);
     }
