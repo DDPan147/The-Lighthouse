@@ -8,8 +8,8 @@ public class TypeObject : MonoBehaviour
     [SerializeField] private ObjectType currentType;
 
     public bool isImportantObject => currentType == ObjectType.Important;
-
-    [SerializeField] private string objectDescription;
+    
+    [SerializeField][TextArea(3,10)] private string objectDescription;
     [SerializeField] private float emotionalWeight;
     [SerializeField] private Image iconObject;
     

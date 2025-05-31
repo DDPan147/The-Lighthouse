@@ -31,21 +31,22 @@ public class Player_Movement_Minigame_7 : MonoBehaviour
 
     // --- Parametros de movimiento ---
     [Header("Movement Stats")]
-    [SerializeField, Range(0f, 20f)][Tooltip("Maximum movement speed")] public float maxSpeed = 10f;
-    [SerializeField, Range(0f, 100f)][Tooltip("How fast to reach max speed")] public float maxAcceleration = 52f;
+    [SerializeField, Range(0f, 5f)][Tooltip("Maximum movement speed")] public float maxSpeed = 5f;
+    [SerializeField, Range(0f, 20f)][Tooltip("How fast to reach max speed")] public float maxAcceleration = 20f;
     [SerializeField, Range(0f, 100f)][Tooltip("How fast to stop after letting go")] public float maxDecceleration = 52f;
     [SerializeField, Range(0f, 100f)][Tooltip("How fast to stop when changing direction")] public float maxTurnSpeed = 80f;
     [SerializeField][Tooltip("Friction to apply against movement on stick")] private float friction;
     [SerializeField][Tooltip("Magnitude of the force of bounce")] private float bounceForce = 5f;
 
     [HideInInspector] public bool isMovementBlocked = false;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         ground = GetComponent<PlayerOnGround>();
+        rb.freezeRotation = true;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (isMovementBlocked) return;
@@ -55,96 +56,60 @@ public class Player_Movement_Minigame_7 : MonoBehaviour
 
         velocity = rb.linearVelocity;
 
-        desiredVelocity = new Vector3(directionX, 0f, directionZ) * Mathf.Max(maxSpeed - friction, 0f);
+        Vector3 input = new Vector3(directionX, 0f, directionZ).normalized;
+        desiredVelocity = input * maxSpeed;
     }
+
     private void FixedUpdate()
     {
+        if (isMovementBlocked) return;
+
         if (onGround)
         {
-            RunWithAcceleration();
+            ApplyGroundMovement();
         }
         else
         {
-            RunWithoutAcceleration();
+            
         }
-
-
     }
+
     public void OnMoveCallback(InputAction.CallbackContext context)
     {
         if (isMovementBlocked) return;
 
         inputDirection = context.ReadValue<Vector2>();
-        directionX = inputDirection.x; // Movimiento horizontal
+        directionX = inputDirection.x;
         directionZ = inputDirection.y;
         isMoving = inputDirection != Vector2.zero;
 
+        animator.SetBool("Idle", !isMoving);
+        animator.SetBool("isWalking", isMoving);
 
         if (isMoving)
         {
-            animator.SetBool("Idle", false);
-            animator.SetBool("isWalking", isMoving);
             ground.UpdatePlayerDirection(transform.position);
             Vector3 moveDirection = new Vector3(directionX, 0f, directionZ);
             if (moveDirection != Vector3.zero)
             {
                 abueloPrefab.transform.rotation = Quaternion.LookRotation(-moveDirection);
-                // O para rotación suave:
-                // transform.rotation = Quaternion.Slerp(transform.rotation, 
-                //     Quaternion.LookRotation(moveDirection), rotationSpeed * Time.deltaTime);
             }
         }
-        else
-        {
-            animator.SetBool("Idle", true);
-            animator.SetBool("isWalking", false);
-        }
-
     }
-    private void RunWithAcceleration()
+
+    private void ApplyGroundMovement()
     {
-        acceleration = onGround ? maxAcceleration : 0f;
-        deceleration = onGround ? maxDecceleration : 0f;
-        turnSpeed = onGround ? maxTurnSpeed : 0f;
+        Vector3 currentVelocity = rb.linearVelocity;
+        Vector3 velocityChange = desiredVelocity - currentVelocity;
+        velocityChange.y = 0f; // keep gravity effect untouched
 
-        if (isMoving)
-        {
-            if (Mathf.Sign(directionX) != Mathf.Sign(velocity.x))
-            {
-                maxSpeedChange = turnSpeed * Time.deltaTime;
-            }
-            else
-            {
-                maxSpeedChange = acceleration * Time.deltaTime;
-            }
-            if (Mathf.Sign(directionZ) != Mathf.Sign(velocity.z))
-            {
-                maxSpeedChange = turnSpeed * Time.deltaTime;
-            }
-            else
-            {
-                maxSpeedChange = acceleration * Time.deltaTime;
-            }
-        }
-        else
-        {
-            maxSpeedChange = deceleration * Time.deltaTime;
-        }
-        ApplyMovement();
+        float appliedAcceleration = isMoving ? maxAcceleration : maxDecceleration;
+
+        Vector3 clampedVelocityChange = Vector3.ClampMagnitude(velocityChange, appliedAcceleration * Time.fixedDeltaTime);
+        rb.AddForce(clampedVelocityChange, ForceMode.VelocityChange);
     }
 
-    private void RunWithoutAcceleration()
-    {
-        rb.linearVelocity = new Vector3(0f,0f,0f);
-    }
-
-    private void ApplyMovement()
-    {
-        velocity.x = Mathf.MoveTowards(velocity.x, desiredVelocity.x, maxSpeedChange);
-        velocity.z = Mathf.MoveTowards(velocity.z, desiredVelocity.z, maxSpeedChange);
-
-        rb.linearVelocity = velocity;
-    }
+  
 
     private void OnCollisionEnter(Collision collision)
     {

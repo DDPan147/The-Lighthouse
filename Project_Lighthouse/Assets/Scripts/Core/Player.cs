@@ -524,13 +524,22 @@ public class Player : MonoBehaviour
         }
         else
         {
-            if (!activeSplineSwitch.doorReverse)
+            GameObject target;
+            if(activeSplineSwitch.gameObject.name != "OutToKitchen_Switch")
             {
-                activeSplineSwitch.highlightOut.transform.parent.GetComponent<Animator>().Play("OpenDoor");
+                target = activeSplineSwitch.highlightOut;
             }
             else
             {
-                activeSplineSwitch.highlightOut.transform.parent.GetComponent<Animator>().Play("OpenDoorInside");
+                target = activeSplineSwitch.highlightIn;
+            }
+            if (!activeSplineSwitch.doorReverse)
+            {
+                target.transform.parent.GetComponent<Animator>().Play("OpenDoor");
+            }
+            else
+            {
+                target.transform.parent.GetComponent<Animator>().Play("OpenDoorInside");
             }
         }
     }
