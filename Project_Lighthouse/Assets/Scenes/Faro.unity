@@ -22296,6 +22296,8 @@ MonoBehaviour:
   daySkybox: {fileID: 2100000, guid: d9dca9ae1786c394f9e79c637aa9a7bf, type: 2}
   nightSkybox: {fileID: 2100000, guid: 2039a0ad0a9d05549928b70362f54902, type: 2}
   directionalLight: {fileID: 0}
+  dayRotation: {x: 0, y: 0, z: 0}
+  nightRotation: {x: 0, y: 0, z: 0}
   dayLight: {r: 0, g: 0, b: 0, a: 0}
   nightLight: {r: 0, g: 0, b: 0, a: 0}
   fogVFX: {fileID: 0}
@@ -33249,6 +33251,63 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2143160002}
   m_Mesh: {fileID: 8064714046239612751, guid: 1bd38b83c9b37b84ca5cebe6452a8c00, type: 3}
+--- !u!1001 &3965496851519228498
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5989780897020977492, guid: 519cb22c0705470438d108b042c69cb4, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.395
+      objectReference: {fileID: 0}
+    - target: {fileID: 5989780897020977492, guid: 519cb22c0705470438d108b042c69cb4, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 11.387
+      objectReference: {fileID: 0}
+    - target: {fileID: 5989780897020977492, guid: 519cb22c0705470438d108b042c69cb4, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.488
+      objectReference: {fileID: 0}
+    - target: {fileID: 5989780897020977492, guid: 519cb22c0705470438d108b042c69cb4, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5989780897020977492, guid: 519cb22c0705470438d108b042c69cb4, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5989780897020977492, guid: 519cb22c0705470438d108b042c69cb4, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5989780897020977492, guid: 519cb22c0705470438d108b042c69cb4, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5989780897020977492, guid: 519cb22c0705470438d108b042c69cb4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5989780897020977492, guid: 519cb22c0705470438d108b042c69cb4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5989780897020977492, guid: 519cb22c0705470438d108b042c69cb4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6364757601316207598, guid: 519cb22c0705470438d108b042c69cb4, type: 3}
+      propertyPath: m_Name
+      value: "\xDAltimosUtensilios"
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 519cb22c0705470438d108b042c69cb4, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -33270,3 +33329,4 @@ SceneRoots:
   - {fileID: 264547029}
   - {fileID: 1595389311}
   - {fileID: 1425565317}
+  - {fileID: 3965496851519228498}
