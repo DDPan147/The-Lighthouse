@@ -37,6 +37,8 @@ public class Player_Movement_Minigame_7 : MonoBehaviour
     [SerializeField, Range(0f, 100f)][Tooltip("How fast to stop when changing direction")] public float maxTurnSpeed = 80f;
     [SerializeField][Tooltip("Friction to apply against movement on stick")] private float friction;
     [SerializeField][Tooltip("Magnitude of the force of bounce")] private float bounceForce = 5f;
+
+    [HideInInspector] public bool isMovementBlocked = false;
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -46,6 +48,8 @@ public class Player_Movement_Minigame_7 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (isMovementBlocked) return;
+
         onGround = ground.GetOnGround();
         onWall = ground.GetOnWall();
 
@@ -68,6 +72,8 @@ public class Player_Movement_Minigame_7 : MonoBehaviour
     }
     public void OnMoveCallback(InputAction.CallbackContext context)
     {
+        if (isMovementBlocked) return;
+
         inputDirection = context.ReadValue<Vector2>();
         directionX = inputDirection.x; // Movimiento horizontal
         directionZ = inputDirection.y;
