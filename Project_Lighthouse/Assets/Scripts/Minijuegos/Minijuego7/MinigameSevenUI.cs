@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using EasyTextEffects.Editor.MyBoxCopy.Extensions;
 
 public class MinigameSevenUI : MonoBehaviour
 {
@@ -107,8 +108,9 @@ public class MinigameSevenUI : MonoBehaviour
                 objectIcon.sprite = objectType.GetObjectIcon().sprite;
             
             if (emotionalValueText != null)
-                emotionalValueText.text = $"Valor emocional: {(objectType.isImportantObject ? "Alto" : "Bajo")}";
-            
+                emotionalValueText.text = $"{(objectType.isImportantObject ? "Alto" : "Bajo")}";
+                emotionalValueText.color = objectType.isImportantObject ? Color.red : Color.green;
+
             // Animar panel
             if (uiAnimator != null)
                 uiAnimator.SetTrigger("ShowObjectInfo");
