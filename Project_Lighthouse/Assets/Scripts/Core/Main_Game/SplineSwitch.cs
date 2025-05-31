@@ -73,6 +73,7 @@ public class SplineSwitch : MonoBehaviour
                 if (!player.meshAnimator.GetCurrentAnimatorStateInfo(0).IsName("Game_OpenNaNoor"))
                 {
                     player.meshAnimator.SetTrigger("DoorOpen");
+                    
                     StartCoroutine(SwitchSplineCoroutine());
                 }
 
@@ -169,7 +170,8 @@ public class SplineSwitch : MonoBehaviour
     {
         SetHighlight(false);
         player.canMove = false;
-        yield return new WaitForSeconds(5.0f);
+        player.CorrectDoorRotation(highlightIn.transform);
+        yield return new WaitForSeconds(4.15f);
         if (CheckInOut())
         {
             player.canMove = true;

@@ -194,47 +194,51 @@ public class Player : MonoBehaviour
         transform.position = currentPosition;
 
         //Player Rotation Across Spline
-        if (!spline.GetComponent<SplineAdditionalData>().isLadder)
+        if (canMove)
         {
-            Vector3 direction;
-            if (lastPosition == Vector3.zero)
+            if (!spline.GetComponent<SplineAdditionalData>().isLadder)
             {
-                Vector3 nextPosition = spline.EvaluatePosition(distancePercentage + 0.05f);
-                direction = nextPosition - currentPosition;
+                Vector3 direction;
+                if (lastPosition == Vector3.zero)
+                {
+                    Vector3 nextPosition = spline.EvaluatePosition(distancePercentage + 0.05f);
+                    direction = nextPosition - currentPosition;
+                }
+                else
+                {
+                    direction = currentPosition - lastPosition;
+                }
+
+                lastPosition = currentPosition;
+
+                Vector3 newDirection = new Vector3(direction.x, 0, direction.z);
+                if (newDirection.magnitude > 0)
+                {
+                    if (Vector3.Cross(newDirection, transform.up) != Vector3.zero)
+                    {
+                        transform.rotation = Quaternion.LookRotation(newDirection, transform.up);
+                    }
+
+                }
             }
             else
             {
-                direction = currentPosition - lastPosition;
-            }
-
-            lastPosition = currentPosition;
-
-            Vector3 newDirection = new Vector3(direction.x, 0, direction.z);
-            if (newDirection.magnitude > 0)
-            {
-                if (Vector3.Cross(newDirection, transform.up) != Vector3.zero)
+                Vector3 direction;
+                Vector3 nextPosition = spline.EvaluatePosition(distancePercentage + 0.05f);
+                direction = nextPosition - currentPosition;
+                Vector3 newDirection = new Vector3(direction.x, 0, direction.z);
+                if (newDirection.magnitude > 0)
                 {
-                    transform.rotation = Quaternion.LookRotation(newDirection, transform.up);
-                }
+                    if (Vector3.Cross(newDirection, transform.up) != Vector3.zero)
+                    {
+                        transform.rotation = Quaternion.LookRotation(newDirection, transform.up);
+                    }
 
+                }
             }
         }
-        else
-        {
-            Vector3 direction;
-            Vector3 nextPosition = spline.EvaluatePosition(distancePercentage + 0.05f);
-            direction = nextPosition - currentPosition;
-            Vector3 newDirection = new Vector3(direction.x, 0, direction.z);
-            if (newDirection.magnitude > 0)
-            {
-                if (Vector3.Cross(newDirection, transform.up) != Vector3.zero)
-                {
-                    transform.rotation = Quaternion.LookRotation(newDirection, transform.up);
-                }
 
-            }
-        }
-            if (activeSplineSwitch != null && canMove)
+        if (activeSplineSwitch != null && canMove)
         {
             activeSplineSwitch.SwitchSpline();
             triggerSwitchText.enabled = true;
@@ -528,6 +532,19 @@ public class Player : MonoBehaviour
             {
                 activeSplineSwitch.highlightOut.transform.parent.GetComponent<Animator>().Play("OpenDoorInside");
             }
+        }
+    }
+    public void CorrectDoorRotation(Transform door)
+    {
+        Vector3 direction = (door.position + door.right * -0.8f) - transform.position;
+        Vector3 newDirection = new Vector3(direction.x, 0, direction.z);
+        if (newDirection.magnitude > 0)
+        {
+            if (Vector3.Cross(newDirection, transform.up) != Vector3.zero)
+            {
+                transform.rotation = Quaternion.LookRotation(newDirection, transform.up);
+            }
+
         }
     }
     #endregion
