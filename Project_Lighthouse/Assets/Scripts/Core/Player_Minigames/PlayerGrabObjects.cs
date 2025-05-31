@@ -15,7 +15,11 @@ public class PlayerGrabObjects : MonoBehaviour
     [SerializeField] private TypeObject _objectType;
     [SerializeField] private TMP_Text _playerText;
     private bool objectGrabbed = false;
-    
+
+    [Header("Animation")]
+    [SerializeField] private Animator playerAnimator;
+    [SerializeField] private string grabAnimationTrigger = "Grab";
+
     [Header("Papelera")]
     [SerializeField] private GameObject keyPromptUI;
     private bool isNearTrashbin = false;
@@ -35,7 +39,7 @@ public class PlayerGrabObjects : MonoBehaviour
         
         if (gameUI == null)
             gameUI = FindObjectOfType<MinigameSevenUI>();
-        
+
         UpdatePromptText("");
     }
     
@@ -71,7 +75,7 @@ public class PlayerGrabObjects : MonoBehaviour
     //Suscribimos los inputs
     public void OnGrab(InputAction.CallbackContext context)
     {
-        if (objectToGrab != null)
+        if (context.performed && objectToGrab != null && canGrab)
         {
             GrabObject();
         }
@@ -137,23 +141,63 @@ public class PlayerGrabObjects : MonoBehaviour
         }
     }
     #endregion
-    
+
     //Agarramos el objeto en caso de que el collider encuentre un objeto
+    private bool isGrabbing = false; // Nueva variable
+
     private void GrabObject()
     {
-        if (canGrab && objectToGrab != null)
+        if (canGrab && objectToGrab != null && !isGrabbing) // Agregar !isGrabbing
+        {
+            isGrabbing = true; // Bloquear múltiples ejecuciones
+
+            // SOLO activar la animación aquí, NO la lógica de agarre
+            if (playerAnimator != null)
+            {
+                playerAnimator.SetTrigger(grabAnimationTrigger);
+            }
+
+            // Iniciar la corrutina que manejará todo el proceso
+            StartCoroutine(GrabObjectWithAnimation());
+        }
+        else
+        {
+            Debug.Log("No hay objeto para capturar o ya está agarrando");
+        }
+    }
+
+    private IEnumerator GrabObjectWithAnimation()
+    {
+        // Desactivar movimiento durante la animación
+        if (playerMovement != null)
+        {
+            playerMovement.isMovementBlocked = true;
+        }
+
+        // Esperar un tiempo para que la animación se reproduzca
+        yield return new WaitForSeconds(6.3f);
+
+        // AQUÍ ejecutar la lógica de agarre (solo una vez)
+        if (objectToGrab != null)
         {
             objectToGrab.transform.parent = transform;
             objectToGrab.transform.localPosition = _objectPositionOffset;
             Collider collider = objectToGrab.GetComponent<Collider>();
-            collider.enabled = false;
+            if (collider != null)
+            {
+                collider.enabled = false;
+            }
             canGrab = false;
             objectGrabbed = true;
         }
-        else
+
+        // Desbloquear movimiento
+        if (playerMovement != null)
         {
-            Debug.Log("No hay objeto para capturar");
+            playerMovement.isMovementBlocked = false;
         }
+
+        isGrabbing = false; // Permitir nuevos agarres
     }
     private void CheckTag(Collider other)
     {
