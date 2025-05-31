@@ -510,6 +510,7 @@ public class Player : MonoBehaviour
     public void OpenDoor()
     {
         Debug.Log("Se abre la puerta");
+        sm.Play("AbrirPuerta");
         if (activeSplineSwitch.CheckInOut())
         {
             if (!activeSplineSwitch.doorReverse)
