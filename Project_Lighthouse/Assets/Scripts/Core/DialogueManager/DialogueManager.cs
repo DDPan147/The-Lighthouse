@@ -109,7 +109,7 @@ public class DialogueManager : MonoBehaviour
         luna = FindAnyObjectByType<Luna>();
     }
 
-    private void Update()
+    private void LateUpdate()
     {
         CanvasLookToScreen();
     }
