@@ -1825,7 +1825,15 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3170300503285848629, guid: fad9391bff11a0545913ddd1de567d8a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1149079021}
+    - targetCorrespondingSourceObject: {fileID: 9064296515478706816, guid: fad9391bff11a0545913ddd1de567d8a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2067555805}
   m_SourcePrefab: {fileID: 100100000, guid: fad9391bff11a0545913ddd1de567d8a, type: 3}
+--- !u!1 &291387490 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9064296515478706816, guid: fad9391bff11a0545913ddd1de567d8a, type: 3}
+  m_PrefabInstance: {fileID: 291387489}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &336607941
 GameObject:
   m_ObjectHideFlags: 0
@@ -9514,6 +9522,14 @@ Camera:
   m_CorrespondingSourceObject: {fileID: 8536730243986811343, guid: fad9391bff11a0545913ddd1de567d8a, type: 3}
   m_PrefabInstance: {fileID: 291387489}
   m_PrefabAsset: {fileID: 0}
+--- !u!81 &2067555805
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 291387490}
+  m_Enabled: 1
 --- !u!1 &2072520205
 GameObject:
   m_ObjectHideFlags: 0
