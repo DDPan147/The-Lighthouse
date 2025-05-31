@@ -131,12 +131,33 @@ public class LevelGameManagerMinigame1 : MonoBehaviour
         }
     }
 
+    private int CalculateCorrectPlacementsForCurrentTask()
+    {
+        int count = 0;
+        for (int i = 0; i < itemSlots.Length; i++)
+        {
+            if (slotTaskIndices[i] == currentTaskIndex)
+            {
+                int slotPos = itemSlots[i].slotPosition;
+                if (slotCompletionStatus.ContainsKey(slotPos) && slotCompletionStatus[slotPos])
+                {
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
     public void OnFragmentCorrectlyPlaced(int slotPosition)
     {
         if (isMinigameComplete) return;
         Debug.Log("OnFragmentCorrectlyPlaced");
         slotCompletionStatus[slotPosition] = true;
-        correctPlacements = slotCompletionStatus.Count(kvp => kvp.Value);
+
+        // ✅ SOLUCIÓN: Solo incrementar el contador, no recalcular todo
+        correctPlacements++;
+
+        Debug.Log($"Total items colocados correctamente: {correctPlacements}");
         LightManager.Instance.UpdateLighting();
         onFragmentPlaced?.Invoke(slotPosition);
         CheckTaskCompletion();
@@ -322,7 +343,7 @@ private IEnumerator DelayedCompleteMinigame()
         {
             fragment.ResetPosition();
         }
-        
+
         currentTaskIndex = 0;
         SwitchToCamera(currentTaskIndex);
         UpdateActiveItemsAndSlots();

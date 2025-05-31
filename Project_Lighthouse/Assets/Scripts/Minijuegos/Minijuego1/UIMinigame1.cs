@@ -197,7 +197,7 @@ public class UIMinigame1 : MonoBehaviour
         
         if (nextTaskIndex < 3) // Ajusta este número según la cantidad de tareas
         {
-            string[] taskNames = new string[] { "Cajones", "Estantería", "Cubiertos" };
+            string[] taskNames = new string[] { "Panel", "Encimera", "Mesa" };
             if (nextTaskIndex < taskNames.Length)
                 taskName = taskNames[nextTaskIndex];
             else

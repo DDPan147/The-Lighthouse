@@ -149,10 +149,12 @@ public class DragDrop_Item : MonoBehaviour
                 itemCollider.enabled = false; // Desactiva el collider para evitar más interacciones
                 if (currentMinigame == Minigame.Minigame1)
                 {
+                    currentSlot.meshMat.enabled = false; // Desactiva el mesh del slot
                     LevelGameManagerMinigame1.Instance.OnFragmentCorrectlyPlaced(currentSlot.slotPosition);
                 }
                 else
                 {
+                    currentSlot.meshMat.enabled = false; // Desactiva el mesh del slot
                     WindowRestorationManager.Instance.OnFragmentCorrectlyPlaced(currentSlot.slotPosition);
                 }
                 IncreaseEmissionIntensity();
@@ -180,7 +182,7 @@ public class DragDrop_Item : MonoBehaviour
                 {
                     outlineMaterial.SetColor("_Color", Color.green);
                     itemCollider.enabled = false; // Desactiva el collider para evitar más interacciones
-
+                    currentSlot.meshMat.enabled = false; // Desactiva el mesh del slot
                     if (currentMinigame == Minigame.Minigame1)
                     {
                         LevelGameManagerMinigame1.Instance.OnFragmentCorrectlyPlaced(currentSlot.slotPosition);
