@@ -8617,8 +8617,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 333322356}
   m_HandleRect: {fileID: 333322355}
   m_Direction: 2
-  m_Value: 0
-  m_Size: 0.5502888
+  m_Value: -0.0000073495007
+  m_Size: 0.55028504
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -19263,7 +19263,7 @@ PlayableDirector:
   m_GameObject: {fileID: 496440892}
   m_Enabled: 1
   serializedVersion: 3
-  m_PlayableAsset: {fileID: 11400000, guid: 362f21826472e5641bc25a35e1e73963, type: 2}
+  m_PlayableAsset: {fileID: 11400000, guid: 41d2f6293f6801148b88322cdca51879, type: 2}
   m_InitialState: 0
   m_WrapMode: 2
   m_DirectorUpdateMode: 1
@@ -19597,6 +19597,8 @@ PlayableDirector:
     value: {fileID: 2068654388}
   - key: {fileID: 8801811845312888377, guid: 612846aa7bc9a724a8aac46039221374, type: 2}
     value: {fileID: 1027834495}
+  - key: {fileID: 7344673019104232817, guid: 41d2f6293f6801148b88322cdca51879, type: 2}
+    value: {fileID: 1675781740}
   m_ExposedReferences:
     m_References:
     - 3361eda14bdf8994c8dabb81abafe432: {fileID: 1436715195}
@@ -42222,7 +42224,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 124.57002}
+  m_AnchoredPosition: {x: 0, y: 124.570915}
   m_SizeDelta: {x: 0, y: 277}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &955351824
@@ -57894,7 +57896,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f33b77790724a5249b37b680a7878a2d, type: 2}
+  - {fileID: 2100000, guid: f9ea89d397c8aa74fa170c918f63bf66, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -74343,7 +74345,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 410902532}
-  m_LocalEulerAnglesHint: {x: 0, y: 359, z: 0}
+  m_LocalEulerAnglesHint: {x: 9, y: 90, z: 350}
 --- !u!95 &1675781740
 Animator:
   serializedVersion: 7
@@ -79292,7 +79294,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1805851487
 Transform:
   m_ObjectHideFlags: 0
@@ -79577,7 +79579,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2559111362270586057, guid: d08b1b60c68d80e4681171e3b943c91c, type: 3}
       propertyPath: cutsceneIndex
-      value: 3
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6641302287427514006, guid: d08b1b60c68d80e4681171e3b943c91c, type: 3}
       propertyPath: m_Name
