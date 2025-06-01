@@ -38,7 +38,7 @@ public class PlayerGrabObjects : MonoBehaviour
             keyPromptUI.SetActive(false);
         
         if (gameUI == null)
-            gameUI = FindObjectOfType<MinigameSevenUI>();
+            gameUI = FindAnyObjectByType<MinigameSevenUI>();
 
         UpdatePromptText("");
     }
@@ -67,7 +67,7 @@ public class PlayerGrabObjects : MonoBehaviour
 
         if (objectGrabbed && !isNearTrashbin)
         {
-            UpdatePromptText("Press R to Save Object");
+            UpdatePromptText("R para guardar el objeto");
         }
     }
     #region Inputs
@@ -210,13 +210,13 @@ public class PlayerGrabObjects : MonoBehaviour
     {
         if (other.CompareTag("Objeto"))
         {
-            UpdatePromptText("Press E to grab object");
+            UpdatePromptText("E para coger objeto");
             objectToGrab = other.gameObject;
             canGrab = true;
         }
         else if (other.CompareTag("Trashbin") && objectToGrab != null)
         {
-            UpdatePromptText("Press Q to throw object");
+            UpdatePromptText("Q para tirar objeto");
             isNearTrashbin = true;
             trashBinScript = other.gameObject.GetComponent<PlayEffectsTrashbin>();
             // Mostrar el popup
