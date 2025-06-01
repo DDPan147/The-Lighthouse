@@ -15,6 +15,13 @@ public class WindowProgressionManager : MonoBehaviour
         public bool isCompleted = false;
         public WindowCompletionEffect completionEffect;
     }
+    private void Update()
+    {
+        if (Input.GetKey(KeyCode.Tab) && Input.GetKeyDown(KeyCode.RightControl))
+        {
+            DebugGameCompleted();
+        }
+    }
 
     [Header("Configuración de Ventanas")]
     [SerializeField] private WindowSection[] windowSections;
@@ -182,6 +189,10 @@ public class WindowProgressionManager : MonoBehaviour
     {
         if (defCompletionEffect != null)
         {
+            if (SoundManager.instance != null)
+            {
+                SoundManager.instance.Play("PuzleSolvedColorsin");
+            }
             defCompletionEffect.PlayCompletionEffect();
             yield return new WaitForSeconds(defCompletionEffect.sweepDuration + 0.5f);
             if (completionPanel != null)
@@ -206,5 +217,19 @@ public class WindowProgressionManager : MonoBehaviour
         }
 
         
+    }
+
+    private void DebugGameCompleted()
+    {/*Alvaro*/ //Function to complete minigame and return to lobby
+        GameManager gm = FindAnyObjectByType<GameManager>();
+        if (gm != null)
+        {
+            gm.MinigameCompleted(5);
+        }
+        else
+        {
+            Debug.LogWarning("No se ha encontrado el Game Manager de la escena principal. No se va a volver al juego");
+        }
+
     }
 }

@@ -230,6 +230,10 @@ public class MesaReparacion : MonoBehaviour
             yield return null;
         }
         pata.position = destino.position + legOffset;
+        if (SoundManager.instance != null)
+        {
+            SoundManager.instance.Play("Cortar");
+        }
         repairingObject = false;
         
         // Actualizar feedback cuando se completa una pata

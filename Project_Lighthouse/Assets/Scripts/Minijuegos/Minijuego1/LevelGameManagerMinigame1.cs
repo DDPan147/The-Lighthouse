@@ -51,6 +51,23 @@ public class LevelGameManagerMinigame1 : MonoBehaviour
         }
         ValidateSetup();
     }
+    private void Update()
+    {
+        if (Input.GetKey(KeyCode.Tab) && Input.GetKeyDown(KeyCode.RightControl))
+        {
+            // Llamar al GameManager para volver al lobby
+            GameManager gm = FindAnyObjectByType<GameManager>();
+            if (gm != null)
+            {
+                gm.MinigameCompleted(0);
+                Debug.Log("Llamando a GameManager.MinigameCompleted(0)");
+            }
+            else
+            {
+                Debug.LogWarning("No se ha encontrado el Game Manager de la escena principal. No se va a volver al juego");
+            }
+        }
+    }
 
     private void ValidateSetup()
     {
@@ -153,8 +170,6 @@ public class LevelGameManagerMinigame1 : MonoBehaviour
         if (isMinigameComplete) return;
         Debug.Log("OnFragmentCorrectlyPlaced");
         slotCompletionStatus[slotPosition] = true;
-
-        // ✅ SOLUCIÓN: Solo incrementar el contador, no recalcular todo
         correctPlacements++;
 
         Debug.Log($"Total items colocados correctamente: {correctPlacements}");
@@ -225,36 +240,39 @@ public class LevelGameManagerMinigame1 : MonoBehaviour
     }
 }
 
-// Añadir este nuevo método para retrasar ligeramente la finalización
-private IEnumerator DelayedCompleteMinigame()
-{
-    // Esperar un momento para que el jugador vea que colocó correctamente el último objeto
-    yield return new WaitForSeconds(1.5f);
-    
-    // Activar efecto de fade out final si existe
-    if (fadeOutEffect != null)
+    // Añadir este nuevo método para retrasar ligeramente la finalización
+    private IEnumerator DelayedCompleteMinigame()
     {
-        fadeOutEffect.SetActive(true);
-        
-        // Asegurarse de que el efecto de fade se inicie
-        GDTFadeEffect fadeEffect = fadeOutEffect.GetComponent<GDTFadeEffect>();
-        if (fadeEffect != null)
+        if (SoundManager.instance != null)
         {
-            fadeEffect.StartEffect();
+            SoundManager.instance.Play("PuzleSolvedColorsin");
         }
-        
-        // Esperar a que termine el fade
-        yield return new WaitForSeconds(1f);
+        // Esperar un momento para que el jugador vea que colocó correctamente el último objeto
+        yield return new WaitForSeconds(1.5f);
+
+        // Activar efecto de fade out final si existe
+        if (fadeOutEffect != null)
+        {
+            fadeOutEffect.SetActive(true);
+
+            // Asegurarse de que el efecto de fade se inicie
+            GDTFadeEffect fadeEffect = fadeOutEffect.GetComponent<GDTFadeEffect>();
+            if (fadeEffect != null)
+            {
+                fadeEffect.StartEffect();
+            }
+            // Esperar a que termine el fade
+            yield return new WaitForSeconds(1f);
+        }
+
+        // Completar el minijuego
+        CompleteMinigame();
     }
-    
-    // Completar el minijuego
-    CompleteMinigame();
-}
 
     private IEnumerator TransitionToNextTask()
     {
         Debug.Log("Iniciando coroutine TransitionToNextTask");
-        
+
         // Esperar 1 segundo para el fade out
         yield return new WaitForSeconds(1f);
         

@@ -175,7 +175,14 @@ public class PlayerGrabObjects : MonoBehaviour
         }
 
         // Esperar un tiempo para que la animación se reproduzca
-        yield return new WaitForSeconds(6.3f);
+        yield return new WaitForSeconds(2.3f);
+
+
+        if (SoundManager.instance != null)
+        {
+            SoundManager.instance.Play("Coger");
+        }
+        yield return new WaitForSeconds(4f);
 
         // AQUÍ ejecutar la lógica de agarre (solo una vez)
         if (objectToGrab != null)

@@ -136,6 +136,10 @@ public class ClockGear : MonoBehaviour
     {
         if (currentSlot != null && currentSlot.slotPosition == correctSlotPosition)
         {
+            if (SoundManager.instance != null)
+            {
+                SoundManager.instance.Play("Switch");
+            }
             AnimateToPosition(slotPos.position);
             outlineMaterial.SetColor("_Color", Color.green);
 
