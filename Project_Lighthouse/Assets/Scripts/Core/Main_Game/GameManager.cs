@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour
     public bool cutsceneActiveTest;
     public GameObject luna;
 
-
+    public GameObject mapButton;
     public Material highlightMat;
     public Material highlightMinigameMat;
 
@@ -93,6 +93,8 @@ public class GameManager : MonoBehaviour
     {
         minigameActiveTest = minigameActive;
         cutsceneActiveTest = cutsceneActive;
+        mapButton.SetActive(!cutsceneActive && !minigameActive);
+
     }
     #region MinigameManager
     public void LoadMinigame(int index)
