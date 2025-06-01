@@ -8990,8 +8990,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 333322356}
   m_HandleRect: {fileID: 333322355}
   m_Direction: 2
-  m_Value: -0.0000019598667
-  m_Size: 0.5502888
+  m_Value: 0
+  m_Size: 0.55027544
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -42772,7 +42772,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 124.57027}
+  m_AnchoredPosition: {x: 0, y: 124.570015}
   m_SizeDelta: {x: 0, y: 277}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &955351824
@@ -94044,6 +94044,10 @@ PrefabInstance:
     - target: {fileID: 2294354019812600821, guid: b9e77ebb986602f40bd7683b1f0f8d26, type: 3}
       propertyPath: sounds.Array.data[2].volume
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2294354019812600821, guid: b9e77ebb986602f40bd7683b1f0f8d26, type: 3}
+      propertyPath: sounds.Array.data[44].volume
+      value: 0.75
       objectReference: {fileID: 0}
     - target: {fileID: 2294354019812600821, guid: b9e77ebb986602f40bd7683b1f0f8d26, type: 3}
       propertyPath: sounds.Array.data[48].volume
