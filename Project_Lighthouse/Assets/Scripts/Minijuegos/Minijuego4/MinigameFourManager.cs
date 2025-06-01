@@ -17,7 +17,14 @@ public class MinigameFourManager : MonoBehaviour
         Instance = this;
     }
     #endregion
-    
+
+    private void Update()
+    {
+        if (Input.GetKey(KeyCode.Tab) && Input.GetKeyDown(KeyCode.RightControl))
+        {
+            DebugCompleteLevel();
+        }
+    }
     public enum RepairStage { CollectingItems, RepairingTable, RepairingClock, RepairingDoll, Completed }
     public RepairStage currentStage = RepairStage.CollectingItems;
     
@@ -395,7 +402,11 @@ public class MinigameFourManager : MonoBehaviour
 
     private IEnumerator CompleteLevel()
     {
-        yield return new WaitForSeconds(.3f);
+        if (SoundManager.instance != null)
+        {
+            SoundManager.instance.Play("PuzleSolvedColorsin");
+        }
+        yield return new WaitForSeconds(1f);
 
         playerMovement.canMove = false;
 

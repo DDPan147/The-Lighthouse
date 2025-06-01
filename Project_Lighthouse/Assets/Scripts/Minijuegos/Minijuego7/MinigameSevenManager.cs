@@ -7,7 +7,7 @@ public class MinigameSevenManager : MonoBehaviour
 {
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Tab))
+        if (Input.GetKey(KeyCode.Tab) && Input.GetKeyDown(KeyCode.RightControl))
         {
             EndMinigame();
         }
@@ -72,7 +72,7 @@ public class MinigameSevenManager : MonoBehaviour
 
         mc = FindObjectOfType<MinigameComments>();
     }
-    
+
     public void StartMinigame()
     {
         isGameActive = true;
@@ -100,6 +100,16 @@ public class MinigameSevenManager : MonoBehaviour
         else
         {
             Debug.LogWarning("minigameSevenUI no está asignado en MinigameSevenManager");
+        }
+        // /*Alvaro*/ //Function to complete minigame and return to lobby
+        GameManager gm = FindAnyObjectByType<GameManager>();
+        if (gm != null)
+        {
+            gm.MinigameCompleted(6);
+        }
+        else
+        {
+            Debug.LogWarning("No se ha encontrado el Game Manager de la escena principal. No se va a volver al juego");
         }
         CheckEndingCondition();
     }
@@ -189,8 +199,17 @@ public class MinigameSevenManager : MonoBehaviour
     {
         if (processedObjects >= totalObjects)
         {
-            EndMinigame();
+            StartCoroutine(EndMinigameAfterDelay());
         }
+    }
+    private IEnumerator EndMinigameAfterDelay()
+    {
+        if (SoundManager.instance != null)
+        {
+            SoundManager.instance.Play("PuzleSolvedColorsin");
+        }
+        yield return new WaitForSeconds(1f); // Esperar 2 segundos antes de finalizar el minijuego
+        EndMinigame();
     }
 
     private void CheckEndingCondition()

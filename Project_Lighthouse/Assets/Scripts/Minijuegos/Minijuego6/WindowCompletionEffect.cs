@@ -31,7 +31,6 @@ public class WindowCompletionEffect : MonoBehaviour
     {
         if (windowMaterial == null)
             return;
-            
         // Asegurarse de que el material tiene las propiedades necesarias
         windowMaterial.SetColor(HighlightColorID, highlightColor);
         windowMaterial.SetFloat(HighlightIntensityID, highlightIntensity);
