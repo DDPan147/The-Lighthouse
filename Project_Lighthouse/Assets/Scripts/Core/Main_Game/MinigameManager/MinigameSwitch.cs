@@ -12,9 +12,9 @@ public class MinigameSwitch : MonoBehaviour
     private Material highlightMat;
     void Start()
     {
-        rend = highlight.GetComponent<Renderer>();
-        highlightMat = FindAnyObjectByType<GameManager>().highlightMat;
-        normalMat = rend.material;
+        //rend = highlight.GetComponent<Renderer>();
+        //highlightMat = FindAnyObjectByType<GameManager>().highlightMat;
+        //normalMat = rend.material;
     }
     public void TriggerMinigame()
     {
