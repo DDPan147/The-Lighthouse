@@ -1,6 +1,7 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class GameManager_Minijuego5 : MonoBehaviour
 {
@@ -9,7 +10,7 @@ public class GameManager_Minijuego5 : MonoBehaviour
     public bool hasWon;
 
     public DragAndDrop_Cable[] cables;
-    public ParticleSystem ps;
+    public VisualEffect[] ps;
 
     private MinigameComments mc;
     [SerializeField]private MinigameComment[] comments;
@@ -77,7 +78,12 @@ public class GameManager_Minijuego5 : MonoBehaviour
             }
             else
             {
-                foreach(DragAndDrop_Cable cable in cables)
+                //Particulas
+                foreach(VisualEffect p in ps)
+                {
+                    p.Play();
+                }
+                foreach (DragAndDrop_Cable cable in cables)
                 {
                     cable.ResetPosition();
                 }
@@ -95,7 +101,7 @@ public class GameManager_Minijuego5 : MonoBehaviour
         mc.DisplayComment(4);
         yield return new WaitForSeconds(3);
         hasWon = true;
-        ps.Play();
+        
         GameManager gm = FindAnyObjectByType<GameManager>();
         if (gm != null)
         {
