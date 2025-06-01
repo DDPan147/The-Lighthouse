@@ -45,7 +45,12 @@ public class DialogueManager : MonoBehaviour
         Hablar2,
         Pregunta,
         Preocupado,
-        Asustado
+        Asustado,
+        LunaContenta,
+        LunaIlusionada,
+        LunaEmocionada,
+        LunaPregunta,
+        LunaTimida
     }
 
     public enum AbueloFaces
@@ -236,6 +241,12 @@ public class DialogueManager : MonoBehaviour
                     int num = Random.Range(0, 2);
                     player.meshAnimator.SetTrigger("Talk" + num);
                 }
+
+                if (currentSentence.lunaHasAnimation)
+                {
+                    int num = Random.Range(0, 2);
+                    luna.meshAnimator.SetTrigger("Talk" + num);
+                }
                 player.TextureChange((int)currentSentence.abueloFace + 1);
                 luna.TextureChange((int)currentSentence.lunaFace + 1);
                 sm.Play("Texto");
@@ -371,6 +382,16 @@ public class DialogueManager : MonoBehaviour
                 return "AbueloPreocupado";
             case Emotion.Asustado:
                 return "AbueloAsustado";
+            case Emotion.LunaContenta:
+                return "LunaContenta";
+            case Emotion.LunaIlusionada:
+                return "LunaIlusionada";
+            case Emotion.LunaEmocionada:
+                return "LunaEmocionada";
+            case Emotion.LunaPregunta:
+                return "LunaPregunta";
+            case Emotion.LunaTimida:
+                return "LunaTimida";
             default:
                 return null;
         }
