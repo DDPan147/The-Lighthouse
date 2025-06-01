@@ -49,6 +49,7 @@ public class Pelota_Colisiones : MonoBehaviour
         if(SoundManager.instance != null)
         {
             SoundManager.instance.Play("PuzleSolvedColorsin");
+            SoundManager.instance.Stop("BallRolling");
         }
         candadoScript.marco.transform.DOLocalRotate(new Vector3(candadoScript.marco.transform.localEulerAngles.x, candadoScript.marco.transform.localEulerAngles.y + 90, candadoScript.marco.transform.localEulerAngles.z), 1.5f, RotateMode.Fast).OnComplete(() => llave.GetComponent<VisualEffect>().Play());
         yield return new WaitForSeconds(seconds);
