@@ -3,6 +3,7 @@ using System.Linq;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.Splines;
@@ -30,11 +31,10 @@ public class Player : MonoBehaviour
     [HideInInspector]public Spline transitionSpline;
     public SplineContainer spline;
     private SplineSwitch activeSplineSwitch;
-    public TMP_Text triggerSwitchText;
+    public Image triggerInteract;
 
 
     private MinigameSwitch activeMinigameSwitch;
-    public TMP_Text triggerMinigameText;
 
     private UnlockLadder activeLadderSwitch;
     public TMP_Text triggerLadderText;
@@ -135,13 +135,13 @@ public class Player : MonoBehaviour
         {
             transform.rotation = Quaternion.LookRotation(newDirection, transform.up);
         }
-        triggerSwitchText.enabled = false;
+        triggerInteract.enabled = false;
     }
     private void TransitionState()
     {
         Vector3 currentPosition = transitionSpline.EvaluatePosition(transitionPercentage);
         transform.position = currentPosition;
-        triggerSwitchText.enabled = false;
+        triggerInteract.enabled = false;
 
         if (canMove || cutsceneEndPatch)
         {
@@ -242,11 +242,11 @@ public class Player : MonoBehaviour
         if (activeSplineSwitch != null && canMove)
         {
             activeSplineSwitch.SwitchSpline();
-            triggerSwitchText.enabled = true;
+            triggerInteract.enabled = true;
         }
         else
         {
-            triggerSwitchText.enabled = false;
+            triggerInteract.enabled = false;
         }
 
         if(activeMinigameSwitch != null && canMove && interact)
@@ -460,14 +460,14 @@ public class Player : MonoBehaviour
 
          if(minigame.isAvailable && !minigame.isCompleted)
         {
-            triggerMinigameText.enabled = true;
+            triggerInteract.enabled = true;
             activeMinigameSwitch = _switch;
             //activeMinigameSwitch.Awawawa(true); No se por que cojones esto da puto error wtf
         }
     }
     public void UnassignActiveMinigameSwitch()
     {
-        triggerMinigameText.enabled = false;
+        triggerInteract.enabled = false;
         //activeMinigameSwitch.Awawawa(false);
         activeMinigameSwitch = null;
     }

@@ -7,7 +7,7 @@ public class LunaFantasma : MonoBehaviour
     public SplineContainer spline;
     private float distancePercentage;
 
-    private Material mat;
+    [SerializeField]private Material mat;
 
     public bool move;
     void Start()
