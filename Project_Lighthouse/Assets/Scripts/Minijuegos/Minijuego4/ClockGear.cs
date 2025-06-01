@@ -16,6 +16,7 @@ public class ClockGear : MonoBehaviour
     public int correctSlotPosition;
     private Vector3 initialPosition;
     private Rigidbody rb;
+    private Collider gearCollider;
     
     [Header("Material detection")]
     public Material outlineMaterial;
@@ -51,6 +52,7 @@ public class ClockGear : MonoBehaviour
         initialPosition = transform.position;
         originalScale = transform.localScale;
         SetOutlineVisibility(false);
+        gearCollider = GetComponent<Collider>();
     }
 
     private void Update()
@@ -138,10 +140,13 @@ public class ClockGear : MonoBehaviour
             outlineMaterial.SetColor("_Color", Color.green);
 
             currentSlot.SetGearInSlot(this);
+            gearCollider.enabled = false; // Desactivar colisión para evitar más interacciones
+            currentSlot.meshMat.enabled = false;
 
             StartCoroutine(DelayedCompletion());
             StartGearRotation();
             PlaySparkEffect(slotPos.position);
+
         }
         else
         {

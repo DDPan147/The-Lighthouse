@@ -9,6 +9,7 @@ public class GearSlot : MonoBehaviour
     public bool isOccupied = false;
     public ClockGear currentGear;
     private ClockManager clockManager;
+    public MeshRenderer meshMat;
 
     private void Awake()
     {
@@ -19,6 +20,10 @@ public class GearSlot : MonoBehaviour
         if (clockManager == null)
         {
             clockManager = FindObjectOfType<ClockManager>();
+        }
+        if (meshMat == null)
+        {
+            meshMat = GetComponent<MeshRenderer>();
         }
     }
 
