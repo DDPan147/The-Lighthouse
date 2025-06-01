@@ -9,7 +9,7 @@ public class Luna : MonoBehaviour
     [SerializeField]private float distancePercentage;
     [SerializeField]private Material faceMaterial;
     [SerializeField]private int faceIndex = 1;
-    [SerializeField] private Animator meshAnimator;
+    public Animator meshAnimator;
     void Start()
     {
         faceIndex = 1;
