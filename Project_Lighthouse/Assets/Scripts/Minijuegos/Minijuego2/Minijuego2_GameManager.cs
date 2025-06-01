@@ -98,7 +98,7 @@ public class Minijuego2_GameManager : MonoBehaviour
     {
 
         CameraMovement();
-        if(Input.GetKeyDown(KeyCode.Tab))
+        if(Input.GetKey(KeyCode.Tab) && Input.GetKeyDown(KeyCode.RightControl))
         {
             CompleteMinigame();
         }

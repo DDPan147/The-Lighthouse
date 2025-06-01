@@ -36,7 +36,7 @@ public class Minijuego3_GameManager : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Tab))
+        if(Input.GetKey(KeyCode.Tab) && Input.GetKeyDown(KeyCode.RightControl))
         {
             CompleteMinigame();
         }
