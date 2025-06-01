@@ -5,12 +5,14 @@ using UnityEngine.VFX;
 
 public class SkyboxChange : MonoBehaviour
 {
+    public static SkyboxChange instance;
     [Header("Water Settings")]
     public Color[] dayWaterColour;
     public Color[] nightWaterColour;
     [Header("SkyBox Settings")]
     public Material daySkybox; 
-    public Material nightSkybox; 
+    public Material nightSkybox;
+    public Material MJ9Skybox;
     private Material waterShaderMat;
     [Header("Light Settings")]
     public GameObject directionalLight;
@@ -25,6 +27,14 @@ public class SkyboxChange : MonoBehaviour
 
     private void Awake()
     {
+        if(instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
         waterShaderMat = GetComponent<Renderer>().material;
         if(directionalLight == null)
         {
@@ -71,6 +81,11 @@ public class SkyboxChange : MonoBehaviour
         directionalLight.transform.eulerAngles = nightRotation;
         _directionalLight.color = nightLight;
         fogVFX.SetVector4("FogColor", nightFogColor);
+    }
+
+    public void SetMinigame9Skybox()
+    {
+        UnityEngine.RenderSettings.skybox = MJ9Skybox;
     }
 
 }
