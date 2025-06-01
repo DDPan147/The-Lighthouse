@@ -50,7 +50,7 @@ public class SkyboxChange : MonoBehaviour
         waterShader.*/
     }
 
-    private void Update()
+    /*private void Update()
     {
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
@@ -60,7 +60,7 @@ public class SkyboxChange : MonoBehaviour
         {
             SetDayColours();
         }
-    }
+    }*/
 
     public void SetDayColours()
     {
