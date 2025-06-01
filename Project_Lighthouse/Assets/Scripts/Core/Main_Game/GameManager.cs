@@ -69,6 +69,10 @@ public class GameManager : MonoBehaviour
     [SerializeField]private TMP_Text dayTracker;
     public static int dayCount;
 
+
+    //Credits
+
+
     void Start()
     {
         mainCamera = Camera.main;
@@ -78,9 +82,16 @@ public class GameManager : MonoBehaviour
         sm = FindAnyObjectByType<SoundManager>();
         dm = FindAnyObjectByType<DialogueManager>();
 
-        sm.Play("Menu");
+        StartCoroutine("DelayPlay");
     }
 
+    public IEnumerator DelayPlay()
+    {
+        yield return new WaitForSeconds(1);
+        FindAnyObjectByType<MainMenu>().StartFadeIn();
+        yield return new WaitForSeconds(2);
+        sm.Play("Menu");
+    }
     public void StartUp()
     {
         mainMenu.SetActive(false);
@@ -93,7 +104,7 @@ public class GameManager : MonoBehaviour
     {
         minigameActiveTest = minigameActive;
         cutsceneActiveTest = cutsceneActive;
-        mapButton.SetActive(!cutsceneActive && !minigameActive);
+        mapButton.SetActive(!cutsceneActive && !minigameActive && !mainMenu.activeSelf);
 
     }
     #region MinigameManager
@@ -359,7 +370,20 @@ public class GameManager : MonoBehaviour
     public void CreditsRoll()
     {
         //Your code here
-        SceneManager.LoadScene("ProvEnding");
+        /*GameObject cinemachineCamera = GameObject.Find("CinemachineCameraCutscene");
+        GameObject cinemachineMainMenu = GameObject.Find("CinemachineMainMenu");
+        cinemachineCamera.GetComponent<Animator>().enabled = false;
+        cinemachineCamera.DOMove();*/
+        player.GetComponent<Collider>().enabled = false;
+        player.gameObject.SetActive(false);
+        SoundManager.instance.FadeOut(SoundManager.instance.currentTheme.name);
+        Invoke("ResetGame", 5);
+        //SceneManager.LoadScene("ProvEnding");
+    }
+
+    void PlayerDestroy()
+    {
+        
     }
 
     public void ResetGame()

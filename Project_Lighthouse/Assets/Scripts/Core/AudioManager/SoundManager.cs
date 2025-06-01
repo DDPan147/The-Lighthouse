@@ -97,6 +97,12 @@ public class SoundManager : MonoBehaviour
         if (s == null) return;
         s.source.volume = volume;
     }
+    public void SetVolumeToZero(string name)
+    {
+        Sound s = Array.Find(sounds, sound => sound.name == name);
+        if (s == null) return;
+        s.source.volume = 0;
+    }
     public Sound FindSound(string name)
     {
         Sound s = Array.Find(sounds, sound => sound.name == name);
