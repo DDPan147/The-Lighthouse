@@ -52,14 +52,14 @@ public class SkyboxChange : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.DownArrow))
+        /*if (Input.GetKeyDown(KeyCode.DownArrow))
         {
             SetNightColours();
         }
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
             SetDayColours();
-        }
+        }*/
     }
 
     public void SetDayColours()
