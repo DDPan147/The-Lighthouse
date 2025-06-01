@@ -70,6 +70,8 @@ public class SkyboxChange : MonoBehaviour
         UnityEngine.RenderSettings.skybox = daySkybox;
         directionalLight.transform.eulerAngles = dayRotation;
         _directionalLight.color = dayLight;
+        _directionalLight.intensity = 2;
+        _directionalLight.shadows = LightShadows.Soft;
         fogVFX.SetVector4("FogColor", dayFogColor);
     }
     public void SetNightColours()
@@ -80,6 +82,8 @@ public class SkyboxChange : MonoBehaviour
         UnityEngine.RenderSettings.skybox = nightSkybox;
         directionalLight.transform.eulerAngles = nightRotation;
         _directionalLight.color = nightLight;
+        _directionalLight.intensity = 0.5f;
+        _directionalLight.shadows = LightShadows.None;
         fogVFX.SetVector4("FogColor", nightFogColor);
     }
 
