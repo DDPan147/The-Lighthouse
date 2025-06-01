@@ -7,7 +7,7 @@ public class LunaFantasma : MonoBehaviour
     public SplineContainer spline;
     private float distancePercentage;
 
-    public Material mat;
+    private Material mat;
 
     public bool move;
     void Start()
@@ -44,5 +44,10 @@ public class LunaFantasma : MonoBehaviour
     void Dissappear()
     {
         mat.DOFloat(0, "_Alpha", 1).OnComplete(() => { Destroy(this.gameObject); });
+    }
+
+    private void OnDestroy()
+    {
+        mat.SetFloat("_Alpha", 0);
     }
 }

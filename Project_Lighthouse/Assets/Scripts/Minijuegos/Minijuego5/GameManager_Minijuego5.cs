@@ -20,7 +20,7 @@ public class GameManager_Minijuego5 : MonoBehaviour
     {
         cables = FindObjectsByType<DragAndDrop_Cable>(FindObjectsSortMode.InstanceID);
         mc = GetComponent<MinigameComments>();
-
+        SoundManager.instance.Play("AbrirPanelFusibles");
         Invoke("FirstComment", 1);
         Invoke("SecondComment", 4);
         
@@ -90,6 +90,7 @@ public class GameManager_Minijuego5 : MonoBehaviour
     IEnumerator Victory()
     {
         mc.DisplayComment(3);
+        SoundManager.instance.Play("PowerOn");
         yield return new WaitForSeconds(2);
         mc.DisplayComment(4);
         yield return new WaitForSeconds(3);

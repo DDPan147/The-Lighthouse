@@ -63,6 +63,7 @@ public class Player : MonoBehaviour
     private bool cutsceneEndPatch;
     private int walkState;
     private float walkAmount;
+    [SerializeField] private Light torchlight;
     [SerializeField]private bool hasTorchlight;
     [SerializeField]private bool isOnStairs;
 
@@ -657,7 +658,16 @@ public class Player : MonoBehaviour
     private void GetWalkState()
     {
         CalculateStairs();
-        
+
+        if (hasTorchlight)
+        {
+            torchlight.enabled = true;
+        }
+        else
+        {
+            torchlight.enabled = false;
+        }
+
         if (hasTorchlight)
         {
             walkState = 1;
