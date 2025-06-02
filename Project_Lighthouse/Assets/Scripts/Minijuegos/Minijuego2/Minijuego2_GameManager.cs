@@ -222,7 +222,7 @@ public class Minijuego2_GameManager : MonoBehaviour
 
                         grabObjectData.isGrabbed = true;
                         imGrabing = true;
-                        grabObject.transform.DOMoveY(0.4f, 0.25f, false);
+                        grabObject.transform.DOMoveY(grabObject.transform.position.y + 0.2f, 0.25f, false);
                     }
                     
                 }

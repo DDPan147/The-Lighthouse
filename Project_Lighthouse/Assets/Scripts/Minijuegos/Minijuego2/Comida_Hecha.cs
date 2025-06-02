@@ -10,8 +10,10 @@ public class Comida_Hecha : MonoBehaviour
     private bool thereIsDish;
     private Transform dropPoint;
     public bool isFirstFood;
+    private Rigidbody rb;
     void Start()
     {
+        rb = GetComponent<Rigidbody>();
         gameManager = GameObject.FindAnyObjectByType<Minijuego2_GameManager>();
         objData = GetComponent<Selectable_MG2>();
     }
@@ -49,6 +51,16 @@ public class Comida_Hecha : MonoBehaviour
             objData.isGrabbed = false;
             objData.canBeGrabbed = false;
         }
+
+        if (objData.isGrabbed)
+        {
+            rb.useGravity = false;
+        }
+        else
+        {
+            rb.useGravity = true;
+        }
+
     }
 
     private void OnTriggerEnter(Collider other)
