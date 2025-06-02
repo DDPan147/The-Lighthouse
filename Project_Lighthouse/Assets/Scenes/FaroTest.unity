@@ -8994,8 +8994,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 333322356}
   m_HandleRect: {fileID: 333322355}
   m_Direction: 2
-  m_Value: -0.0000004899667
-  m_Size: 0.5502888
+  m_Value: 0
+  m_Size: 0.55025077
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -42805,7 +42805,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 124.57006}
+  m_AnchoredPosition: {x: 0, y: 124.57001}
   m_SizeDelta: {x: 0, y: 277}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &955351824
@@ -79966,6 +79966,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -49.483
       objectReference: {fileID: 0}
+    - target: {fileID: 1633222438802116228, guid: e0d30be009651df4684150ecef3e6592, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 10.85
+      objectReference: {fileID: 0}
     - target: {fileID: 1670866624373224944, guid: e0d30be009651df4684150ecef3e6592, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -81163,7 +81167,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2559111362270586057, guid: d08b1b60c68d80e4681171e3b943c91c, type: 3}
       propertyPath: cutsceneIndex
-      value: 9
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6641302287427514006, guid: d08b1b60c68d80e4681171e3b943c91c, type: 3}
       propertyPath: m_Name
