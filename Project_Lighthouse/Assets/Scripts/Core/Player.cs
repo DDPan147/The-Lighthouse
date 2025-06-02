@@ -8,6 +8,7 @@ using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.Splines;
 using UnityEngine.Splines.Interpolators;
+using Unity.VisualScripting.Antlr3.Runtime;
 
 public class Player : MonoBehaviour
 {
@@ -32,6 +33,7 @@ public class Player : MonoBehaviour
     public SplineContainer spline;
     private SplineSwitch activeSplineSwitch;
     public Image triggerInteract;
+    public Image triggerInteract2;
 
 
     private MinigameSwitch activeMinigameSwitch;
@@ -276,7 +278,10 @@ public class Player : MonoBehaviour
     {
         if (other.gameObject.CompareTag("SplineSwitch") && moveState != MoveStates.Transition)
         {
-            CheckIsButtonSpline(other.gameObject.GetComponent<SplineSwitch>());
+            if (other.gameObject.GetComponent<SplineSwitch>().isOpen)
+            {
+                CheckIsButtonSpline(other.gameObject.GetComponent<SplineSwitch>());
+            }
         }
         if (other.gameObject.CompareTag("MinigameSwitch_Core"))
         {
@@ -366,7 +371,7 @@ public class Player : MonoBehaviour
 
         if (condition)
         {
-            if(activeSplineSwitch != null) activeSplineSwitch.SetHighlight(false);
+            if(activeSplineSwitch != null ) activeSplineSwitch.SetHighlight(false);
             activeSplineSwitch = _switch;
             activeSplineSwitch.SetHighlight(true);
         }
@@ -460,14 +465,14 @@ public class Player : MonoBehaviour
 
          if(minigame.isAvailable && !minigame.isCompleted)
         {
-            triggerInteract.enabled = true;
+            triggerInteract2.enabled = true;
             activeMinigameSwitch = _switch;
             //activeMinigameSwitch.Awawawa(true); No se por que cojones esto da puto error wtf
         }
     }
     public void UnassignActiveMinigameSwitch()
     {
-        triggerInteract.enabled = false;
+        triggerInteract2.enabled = false;
         //activeMinigameSwitch.Awawawa(false);
         activeMinigameSwitch = null;
     }

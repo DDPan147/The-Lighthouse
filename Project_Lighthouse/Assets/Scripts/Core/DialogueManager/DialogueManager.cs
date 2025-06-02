@@ -88,6 +88,7 @@ public class DialogueManager : MonoBehaviour
     [SerializeField]private Color colorAbuelo;
     [SerializeField]private Color colorLuna;
 
+    public Animator mapAnim;
     private SoundManager sm;
     private Player player;
     private Luna luna;
@@ -122,6 +123,9 @@ public class DialogueManager : MonoBehaviour
     {
         sentences.Clear();
         player.canMove = false;
+        //mapAnim.Play("ACP_MapaEscondido");
+
+        //sm.Play("MeterMapa");
         StopAllCoroutines();
 
         foreach (Sentence sentence in _comment.sentences)

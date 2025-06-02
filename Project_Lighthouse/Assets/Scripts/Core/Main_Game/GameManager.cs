@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
     //[Header("SoundManager")]
     private SoundManager sm;
     private DialogueManager dm;
+    public Animator mapAnim;
     [Header("MinigameManager")]
     public MinigameData[] minigames;
 
@@ -306,8 +307,8 @@ public class GameManager : MonoBehaviour
         player.ToggleAnimator();
         curtain.gameObject.GetComponent<Animator>().enabled = true;
         SetBlackBands();
-
-
+        //mapAnim.Play("ACP_MapaEscondido");
+        //sm.Play("MeterMapa");
     }
     public void CutsceneEnd(int index)
     {
