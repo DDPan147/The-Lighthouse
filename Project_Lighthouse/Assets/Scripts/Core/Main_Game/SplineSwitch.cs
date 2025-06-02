@@ -206,8 +206,8 @@ public class SplineSwitch : MonoBehaviour
 
     public void SetHighlight(bool b)
     {
-        
 
+        
         //IN
         if (CheckInOut())
         {
