@@ -11,6 +11,7 @@ public class LightControler : MonoBehaviour
     private Camera cam;
     private Vector3 rayDirection;
     [HideInInspector]public Minijuego9_GameManager gm;
+    [HideInInspector]public CloudSpawn cloudSpawn;
     private GameObject activeCloud;
     private Material matActiveCloud;
     private bool canHit;
@@ -18,6 +19,7 @@ public class LightControler : MonoBehaviour
     void Start()
     {
         gm = GameObject.FindAnyObjectByType<Minijuego9_GameManager>();
+        cloudSpawn = GameObject.FindAnyObjectByType<CloudSpawn>();
         cam = Camera.main;
         maxCloudKill = gm.cloudNumberToKill;
     }
@@ -58,6 +60,7 @@ public class LightControler : MonoBehaviour
                     }
                     else if(gm.totalCloudsKilled >= gm.cloudNumberToKill)
                     {
+                        cloudSpawn.CancelInvoke("SpawnCloud");
                         StartCoroutine(gm.FinishMinigame9Sequence());
                     }
                 }).SetId("Shake");

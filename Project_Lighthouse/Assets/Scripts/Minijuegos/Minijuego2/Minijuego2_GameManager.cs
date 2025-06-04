@@ -167,6 +167,8 @@ public class Minijuego2_GameManager : MonoBehaviour
         GameManager gm = FindAnyObjectByType<GameManager>();
         if (gm != null)
         {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
             gm.MinigameCompleted(1);
         }
         else
