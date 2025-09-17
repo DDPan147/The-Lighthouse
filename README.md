@@ -1,4 +1,4 @@
-# Proyecto II Juego 2D
+# The Lighthouse
 
 
 
